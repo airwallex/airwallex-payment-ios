@@ -145,6 +145,7 @@
 		D8269FBA2DB7701E00E179EB /* AWXRedirectActionProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E0571429C95A6A0099388A /* AWXRedirectActionProviderTests.m */; };
 		D8269FBB2DB7702400E179EB /* AWXCardProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1829B8C3291B3B7000D0D2CA /* AWXCardProviderTests.m */; };
 		D8316DC22E6AF16D002A42BA /* SchemaFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8316DC12E6AF16D002A42BA /* SchemaFieldValidator.swift */; };
+		D83AD9C82EF544A600649996 /* CompoundItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83AD9C72EF544A600649996 /* CompoundItem.swift */; };
 		D84E94D52D68324600CDC04C /* WechatOpenSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */; };
 		D85041C82DA7957A0074BA7F /* AirwallexPaymentSheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D850407B2DA795470074BA7F /* AirwallexPaymentSheet.framework */; };
 		D85041D42DA79A0B0074BA7F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D85041D32DA79A0B0074BA7F /* Security.framework */; };
@@ -352,8 +353,6 @@
 		D8D36F362E5C5CB0005618D4 /* Font+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EE92E5C5CB0005618D4 /* Font+Extensions.swift */; };
 		D8D36F372E5C5CB0005618D4 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EEA2E5C5CB0005618D4 /* ImageLoader.swift */; };
 		D8D36F382E5C5CB0005618D4 /* NSLayoutConstraint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EEB2E5C5CB0005618D4 /* NSLayoutConstraint+Extensions.swift */; };
-		D8D36F392E5C5CB0005618D4 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EEC2E5C5CB0005618D4 /* Palette.swift */; };
-		D8D36F3A2E5C5CB0005618D4 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EED2E5C5CB0005618D4 /* UIColor+Extensions.swift */; };
 		D8D36F3B2E5C5CB0005618D4 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EEE2E5C5CB0005618D4 /* UIImage+Extensions.swift */; };
 		D8D36F3C2E5C5CB0005618D4 /* UIStackView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EEF2E5C5CB0005618D4 /* UIStackView+Extensions.swift */; };
 		D8D36F3D2E5C5CB0005618D4 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EF02E5C5CB0005618D4 /* UITextField+Extensions.swift */; };
@@ -372,6 +371,8 @@
 		D8D370A22E5EDD8F005618D4 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87D72D9E335D00D082EC /* MockURLProtocol.swift */; };
 		D8D3712B2E604F5A005618D4 /* AWXAPIClient+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D3712A2E604F5A005618D4 /* AWXAPIClient+Extension.swift */; };
 		D8D3726D2E617332005618D4 /* ProviderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D3726C2E617332005618D4 /* ProviderFactory.swift */; };
+		D8FA4FC62EFA48D70010E912 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EEC2E5C5CB0005618D4 /* Palette.swift */; };
+		D8FA52882EFA64240010E912 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EED2E5C5CB0005618D4 /* UIColor+Extensions.swift */; };
 		D8FAFB812D8ACC4100147805 /* AWXProviderDelegateSpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */; };
 /* End PBXBuildFile section */
 
@@ -623,6 +624,7 @@
 		D81983EA2D6F1C70008008A3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D8316DC12E6AF16D002A42BA /* SchemaFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaFieldValidator.swift; sourceTree = "<group>"; };
 		D8352B4D2DA640B10025BE9E /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		D83AD9C72EF544A600649996 /* CompoundItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundItem.swift; sourceTree = "<group>"; };
 		D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WechatOpenSDK.xcframework; path = ../Frameworks/WechatOpenSDK.xcframework; sourceTree = "<group>"; };
 		D850407B2DA795470074BA7F /* AirwallexPaymentSheet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AirwallexPaymentSheet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D85041C42DA7957A0074BA7F /* AirwallexPaymentSheetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirwallexPaymentSheetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1387,7 +1389,9 @@
 		D8D36E6A2E5C5CAC005618D4 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				D8D36EED2E5C5CB0005618D4 /* UIColor+Extensions.swift */,
 				D8D36E682E5C5CAC005618D4 /* LoadingSpinnerView.swift */,
+				D8D36EEC2E5C5CB0005618D4 /* Palette.swift */,
 				D8D36E692E5C5CAC005618D4 /* UIViewController+Extensions.swift */,
 			);
 			path = UI;
@@ -1438,6 +1442,7 @@
 				D8D36E9F2E5C5CB0005618D4 /* CollectionViewContext.swift */,
 				D8D36EA02E5C5CB0005618D4 /* CollectionViewManager.swift */,
 				D8D36EA12E5C5CB0005618D4 /* LabelCell.swift */,
+				D83AD9C72EF544A600649996 /* CompoundItem.swift */,
 				D8D36EA22E5C5CB0005618D4 /* ListHeaderFooterProvider.swift */,
 				D8D36EA32E5C5CB0005618D4 /* SectionController.swift */,
 				D8D36EA42E5C5CB0005618D4 /* SectionDisplayHandler.swift */,
@@ -1588,8 +1593,6 @@
 				D8D36EE92E5C5CB0005618D4 /* Font+Extensions.swift */,
 				D8D36EEA2E5C5CB0005618D4 /* ImageLoader.swift */,
 				D8D36EEB2E5C5CB0005618D4 /* NSLayoutConstraint+Extensions.swift */,
-				D8D36EEC2E5C5CB0005618D4 /* Palette.swift */,
-				D8D36EED2E5C5CB0005618D4 /* UIColor+Extensions.swift */,
 				D8D36EEE2E5C5CB0005618D4 /* UIImage+Extensions.swift */,
 				D8D36EEF2E5C5CB0005618D4 /* UIStackView+Extensions.swift */,
 				D8D36EF02E5C5CB0005618D4 /* UITextField+Extensions.swift */,
@@ -2319,6 +2322,7 @@
 				D8D36F222E5C5CB0005618D4 /* ApplePayCell.swift in Sources */,
 				D8D36F232E5C5CB0005618D4 /* BankSelectionCell.swift in Sources */,
 				D8D36F242E5C5CB0005618D4 /* CardBrandView.swift in Sources */,
+				D83AD9C82EF544A600649996 /* CompoundItem.swift in Sources */,
 				D8D36F252E5C5CB0005618D4 /* CellSeparator.swift in Sources */,
 				D8D36F262E5C5CB0005618D4 /* CheckBoxCell.swift in Sources */,
 				D8D36F272E5C5CB0005618D4 /* CheckoutButtonCell.swift in Sources */,
@@ -2339,8 +2343,6 @@
 				D8D36F362E5C5CB0005618D4 /* Font+Extensions.swift in Sources */,
 				D8D36F372E5C5CB0005618D4 /* ImageLoader.swift in Sources */,
 				D8D36F382E5C5CB0005618D4 /* NSLayoutConstraint+Extensions.swift in Sources */,
-				D8D36F392E5C5CB0005618D4 /* Palette.swift in Sources */,
-				D8D36F3A2E5C5CB0005618D4 /* UIColor+Extensions.swift in Sources */,
 				D8D36F3B2E5C5CB0005618D4 /* UIImage+Extensions.swift in Sources */,
 				D8D36F3C2E5C5CB0005618D4 /* UIStackView+Extensions.swift in Sources */,
 				D8D36F3D2E5C5CB0005618D4 /* UITextField+Extensions.swift in Sources */,
@@ -2364,6 +2366,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8FA52882EFA64240010E912 /* UIColor+Extensions.swift in Sources */,
+				D8FA4FC62EFA48D70010E912 /* Palette.swift in Sources */,
 				D8D36E732E5C5CAC005618D4 /* Array+Extensions.swift in Sources */,
 				D8D36E742E5C5CAC005618D4 /* AWXBrandType+Extensions.swift in Sources */,
 				D8D36E752E5C5CAC005618D4 /* AWXCard+Extensions.swift in Sources */,

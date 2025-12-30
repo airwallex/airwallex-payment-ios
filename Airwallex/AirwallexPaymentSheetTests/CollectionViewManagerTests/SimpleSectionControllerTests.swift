@@ -28,7 +28,7 @@ class SimpleSectionControllerTests: XCTestCase {
         )
         mockContext = MockCollectionViewContext()
     }
-
+    
     @MainActor func testSectionAndItemInitialization() {
         let sectionController = SimpleSectionController(
             section: "payment",
@@ -64,9 +64,10 @@ class SimpleSectionControllerTests: XCTestCase {
             cellProvider: { _, _, _ in mockCell }
         )
         sectionController.bind(context: mockContext)
-        
-        let cell = sectionController.cell(for: "TestItem", at: IndexPath(item: 0, section: 0))
-        
+    
+        let sectionItem = CompoundItem("payment", "TestItem")
+        let cell = sectionController.cell(for: sectionItem, at: IndexPath(item: 0, section: 0))
+    
         XCTAssertEqual(cell, mockCell)
     }
     
@@ -82,34 +83,35 @@ class SimpleSectionControllerTests: XCTestCase {
         
         XCTAssertEqual(layout, mockSectionLayout)
     }
-
+    
     @MainActor func testSelectionHandler() {
-        var selectedItem: String?
+        var selectedSectionItem: CompoundItem<String, String>?
         var selectedIndexPath: IndexPath?
         var selectedCell: UICollectionViewCell?
-
+    
         let mockCell = UICollectionViewCell()
         let sectionController = SimpleSectionController(
             section: "payment",
             item: "TestItem",
             layout: mockSectionLayout,
             cellProvider: { _, _, _ in mockCell },
-            selectionHandler: { item, indexPath, cell in
-                selectedItem = item
+            selectionHandler: { sectionItem, indexPath, cell in
+                selectedSectionItem = sectionItem
                 selectedIndexPath = indexPath
                 selectedCell = cell
             }
         )
         mockContext.mockCell = mockCell
         sectionController.bind(context: mockContext)
-        sectionController.collectionView(didSelectItem: "TestItem", at: IndexPath(item: 0, section: 0))
-        
-        XCTAssertEqual(selectedItem, "TestItem")
+        let sectionItem = CompoundItem("payment", "TestItem")
+        sectionController.collectionView(didSelectItem: sectionItem, at: IndexPath(item: 0, section: 0))
+    
+        XCTAssertEqual(selectedSectionItem, sectionItem)
         XCTAssertEqual(selectedIndexPath, IndexPath(item: 0, section: 0))
         XCTAssertEqual(selectedCell, mockCell)
     }
 }
-
+    
 // Mock for NSCollectionLayoutEnvironment
 private class NSCollectionLayoutEnvironmentMock: NSObject, NSCollectionLayoutEnvironment {
     var container: NSCollectionLayoutContainer {
@@ -119,7 +121,7 @@ private class NSCollectionLayoutEnvironmentMock: NSObject, NSCollectionLayoutEnv
         return UITraitCollection()
     }
 }
-
+    
 // Mock for NSCollectionLayoutContainer
 private class NSCollectionLayoutContainerMock: NSObject, NSCollectionLayoutContainer {
     var effectiveContentInsets: NSDirectionalEdgeInsets {

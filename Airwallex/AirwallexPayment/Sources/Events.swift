@@ -162,6 +162,11 @@ extension ErrorLoggable {
         guard !ProcessInfo.isRunningUnitTest else { return }
         Risk.log(event: event.rawValue, screen: screen?.rawValue)
     }
+    @_spi(AWX) public
+    static func log(_ event: Risk.Events, screen: RiskEvent.Page? = nil) {
+        guard !ProcessInfo.isRunningUnitTest else { return }
+        Risk.log(event: event, screen: screen?.rawValue)
+    }
 }
 
 extension ProcessInfo {

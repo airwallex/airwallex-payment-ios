@@ -43,6 +43,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, readonly, nullable) AWXPaymentAttempt *latestPaymentAttempt;
 
+/**
+ ID of the PaymentConsent related to this PaymentIntent
+ */
+@property (nonatomic, readonly, nullable) NSString *paymentConsentId;
+
 @end
 
 @class AWXWeChatPaySDKResponse, AWXRedirectResponse;

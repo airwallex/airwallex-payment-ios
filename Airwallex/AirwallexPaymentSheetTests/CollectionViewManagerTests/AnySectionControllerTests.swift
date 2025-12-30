@@ -18,9 +18,9 @@ import XCTest
     override func setUp() {
         super.setUp()
         mockContext = MockCollectionViewContext()
-        mockSectionController = MockSectionController(section: "TestSection", items: ["Item1", "Item2"])
+        mockSectionController = MockSectionController(section: "TestSection", items: [.item1, .item2])
     }
-
+    
     func testSectionControllerProtocolMethods() {
         let anySectionController = mockSectionController.anySectionController()
         anySectionController.bind(context: mockContext)
@@ -28,57 +28,58 @@ import XCTest
         XCTAssert(mockSectionController === anySectionController.embededSectionController)
         
         XCTAssertEqual(anySectionController.section, "TestSection")
-        XCTAssertEqual(anySectionController.items, ["Item1", "Item2"])
+        XCTAssertEqual(anySectionController.items, [.item1, .item2])
         XCTAssert(anySectionController.context === mockSectionController.context)
         
         // Test updateItemsIfNecessary
         anySectionController.updateItemsIfNecessary()
         XCTAssertTrue(mockSectionController.updateItemsIfNecessaryCalled)
-
+    
         // Test cell(for:at:)
         let indexPath = IndexPath(item: 0, section: 0)
-        XCTAssertNotNil(anySectionController.cell(for: "Item1", at: indexPath))
-        XCTAssertEqual(mockSectionController.cellForItemAtIndexPathCalled?.0, "Item1")
-        XCTAssertEqual(mockSectionController.cellForItemAtIndexPathCalled?.1, indexPath)
-
+        let sectionItem1 = CompoundItem("TestSection", String.item1)
+        XCTAssertNotNil(anySectionController.cell(for: sectionItem1, at: indexPath))
+        XCTAssertEqual(mockSectionController.cellForItemAtIndexPathCalled?.sectionItem, sectionItem1)
+        XCTAssertEqual(mockSectionController.cellForItemAtIndexPathCalled?.indexPath, indexPath)
+    
         // Test supplementaryView(for:at:)
         _ = anySectionController.supplementaryView(for: "Header", at: indexPath)
-        XCTAssertEqual(mockSectionController.supplementaryViewForElementKindAtIndexPathCalled?.0, "Header")
-        XCTAssertEqual(mockSectionController.supplementaryViewForElementKindAtIndexPathCalled?.1, indexPath)
-
+        XCTAssertEqual(mockSectionController.supplementaryViewForElementKindAtIndexPathCalled?.elementKind, "Header")
+        XCTAssertEqual(mockSectionController.supplementaryViewForElementKindAtIndexPathCalled?.indexPath, indexPath)
+    
         // Test collectionView(didSelectItem:at:)
-        anySectionController.collectionView(didSelectItem: "Item1", at: indexPath)
-        XCTAssertEqual(mockSectionController.didSelectItemCalled?.0, "Item1")
-        XCTAssertEqual(mockSectionController.didSelectItemCalled?.1, indexPath)
-
-        // Test willDisplay(cell:itemIdentifier:at:)
+        anySectionController.collectionView(didSelectItem: sectionItem1, at: indexPath)
+        XCTAssertEqual(mockSectionController.didSelectItemCalled?.sectionItem, sectionItem1)
+        XCTAssertEqual(mockSectionController.didSelectItemCalled?.indexPath, indexPath)
+    
+        // Test willDisplay(cell:sectionItem:at:)
         let mockCell = UICollectionViewCell()
-        anySectionController.willDisplay(cell: mockCell, itemIdentifier: "Item1", at: indexPath)
-        XCTAssertEqual(mockSectionController.willDisplayCellCalled?.0, mockCell)
-        XCTAssertEqual(mockSectionController.willDisplayCellCalled?.1, "Item1")
-        XCTAssertEqual(mockSectionController.willDisplayCellCalled?.2, indexPath)
-
-        // Test didEndDisplaying(cell:itemIdentifier:at:)
-        anySectionController.didEndDisplaying(cell: mockCell, itemIdentifier: "Item1", at: indexPath)
-        XCTAssertEqual(mockSectionController.didEndDisplayingCellCalled?.0, mockCell)
-        XCTAssertEqual(mockSectionController.didEndDisplayingCellCalled?.1, "Item1")
-        XCTAssertEqual(mockSectionController.didEndDisplayingCellCalled?.2, indexPath)
-
+        anySectionController.willDisplay(cell: mockCell, sectionItem: sectionItem1, at: indexPath)
+        XCTAssertEqual(mockSectionController.willDisplayCellCalled?.cell, mockCell)
+        XCTAssertEqual(mockSectionController.willDisplayCellCalled?.sectionItem, sectionItem1)
+        XCTAssertEqual(mockSectionController.willDisplayCellCalled?.indexPath, indexPath)
+    
+        // Test didEndDisplaying(cell:sectionItem:at:)
+        anySectionController.didEndDisplaying(cell: mockCell, sectionItem: sectionItem1, at: indexPath)
+        XCTAssertEqual(mockSectionController.didEndDisplayingCellCalled?.cell, mockCell)
+        XCTAssertEqual(mockSectionController.didEndDisplayingCellCalled?.sectionItem, sectionItem1)
+        XCTAssertEqual(mockSectionController.didEndDisplayingCellCalled?.indexPath, indexPath)
+    
         // Test willDisplay(supplementaryView:at:)
         let mockSupplementaryView = UICollectionReusableView()
         anySectionController.willDisplay(supplementaryView: mockSupplementaryView, at: indexPath)
-        XCTAssertEqual(mockSectionController.willDisplaySupplementaryViewCalled?.0, mockSupplementaryView)
-        XCTAssertEqual(mockSectionController.willDisplaySupplementaryViewCalled?.1, indexPath)
-
+        XCTAssertEqual(mockSectionController.willDisplaySupplementaryViewCalled?.view, mockSupplementaryView)
+        XCTAssertEqual(mockSectionController.willDisplaySupplementaryViewCalled?.indexPath, indexPath)
+    
         // Test didEndDisplaying(supplementaryView:at:)
         anySectionController.didEndDisplaying(supplementaryView: mockSupplementaryView, at: indexPath)
-        XCTAssertEqual(mockSectionController.didEndDisplayingSupplementaryViewCalled?.0, mockSupplementaryView)
-        XCTAssertEqual(mockSectionController.didEndDisplayingSupplementaryViewCalled?.1, indexPath)
-
+        XCTAssertEqual(mockSectionController.didEndDisplayingSupplementaryViewCalled?.view, mockSupplementaryView)
+        XCTAssertEqual(mockSectionController.didEndDisplayingSupplementaryViewCalled?.indexPath, indexPath)
+    
         // Test sectionWillDisplay
         anySectionController.sectionWillDisplay()
         XCTAssertTrue(mockSectionController.sectionDisplaying)
-
+    
         // Test sectionDidEndDisplaying
         anySectionController.sectionDidEndDisplaying()
         XCTAssertFalse(mockSectionController.sectionDisplaying)
@@ -88,4 +89,9 @@ import XCTest
         let anySectionController = mockSectionController.anySectionController()
         XCTAssert(anySectionController.embededSectionController === mockSectionController)
     }
+}
+    
+private extension String {
+    static let item1 = "item1"
+    static let item2 = "item2"
 }

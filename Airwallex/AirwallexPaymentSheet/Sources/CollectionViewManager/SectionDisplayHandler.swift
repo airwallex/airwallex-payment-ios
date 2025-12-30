@@ -10,10 +10,12 @@ import UIKit
 
 @MainActor
 class SectionDisplayHandler<SectionType: Hashable & Sendable, ItemType: Hashable & Sendable>: NSObject {
+
+    typealias SectionItem = CompoundItem<SectionType, ItemType>
     
     private class ItemHolder: RawRepresentable {
-        let rawValue: ItemType
-        required init(rawValue: ItemType) {
+        let rawValue: SectionItem
+        required init(rawValue: SectionItem) {
             self.rawValue = rawValue
         }
     }
@@ -37,9 +39,9 @@ class SectionDisplayHandler<SectionType: Hashable & Sendable, ItemType: Hashable
     
     func mapCell(_ cell: UICollectionViewCell,
                  to sectionController: AnySectionController<SectionType, ItemType>,
-                 itemIdentifier: ItemType) {
+                 sectionItem: SectionItem) {
         viewToSectionMap.setObject(sectionController, forKey: cell)
-        viewToItemMap.setObject(ItemHolder(rawValue: itemIdentifier), forKey: cell)
+        viewToItemMap.setObject(ItemHolder(rawValue: sectionItem), forKey: cell)
     }
     
     func unmap(_ view: UICollectionReusableView) {
@@ -53,28 +55,28 @@ class SectionDisplayHandler<SectionType: Hashable & Sendable, ItemType: Hashable
         viewToSectionMap.object(forKey: view)
     }
     
-    func itemIdentifierByCell(_ cell: UICollectionViewCell) -> ItemType? {
+    func sectionItemByCell(_ cell: UICollectionViewCell) -> SectionItem? {
         viewToItemMap.object(forKey: cell)?.rawValue
     }
     
     // MARK: -
     func willDisplay(cell: UICollectionViewCell,
                      for sectionController: AnySectionController<SectionType, ItemType>,
-                     itemIdentifier: ItemType,
+                     sectionItem: SectionItem,
                      indexPath: IndexPath) {
-        mapCell(cell, to: sectionController, itemIdentifier: itemIdentifier)
+        mapCell(cell, to: sectionController, sectionItem: sectionItem)
         sectionController.willDisplay(
             cell: cell,
-            itemIdentifier: itemIdentifier,
+            sectionItem: sectionItem,
             at: indexPath
         )
-        
+    
         count(willDisplay: cell, for: sectionController, indexPath: indexPath)
     }
     
     func didEndDisplaying(cell: UICollectionViewCell, indexPath: IndexPath) {
         guard let sectionController = sectionControllerByView(cell),
-            let itemIdentifier = itemIdentifierByCell(cell) else {
+            let sectionItem = sectionItemByCell(cell) else {
                 assert(false, "mapping breaks")
             unmap(cell)
             return
@@ -82,7 +84,7 @@ class SectionDisplayHandler<SectionType: Hashable & Sendable, ItemType: Hashable
         unmap(cell)
         sectionController.didEndDisplaying(
             cell: cell,
-            itemIdentifier: itemIdentifier,
+            sectionItem: sectionItem,
             at: indexPath
         )
         count(didEndDisplaying:cell, for: sectionController, indexPath: indexPath)
@@ -107,7 +109,7 @@ class SectionDisplayHandler<SectionType: Hashable & Sendable, ItemType: Hashable
         count(didEndDisplaying: supplementaryView, for: sectionController, indexPath: indexPath)
     }
 }
-
+    
 private extension SectionDisplayHandler {
     func count(willDisplay reusableView: UICollectionReusableView,
                for sectionController: AnySectionController<SectionType, ItemType>,

@@ -522,6 +522,33 @@ class PaymentSessionHandlerTests: XCTestCase {
         XCTAssert(!mockPaymentResultDelegate.isLoading)
     }
 
+    // MARK: - Tests for showIndicator property
+
+    func testShowIndicatorDefaultValue() {
+        XCTAssertTrue(mockSessionHandler.showIndicator)
+    }
+
+    func testProviderDidStartRequestWithShowIndicatorFalse() {
+        mockSessionHandler.showIndicator = false
+        mockSessionHandler.providerDidStartRequest(mockProvider)
+        XCTAssertFalse(mockPaymentResultDelegate.isLoading)
+    }
+
+    func testProviderDidEndRequestWithShowIndicatorFalse() {
+        mockSessionHandler.showIndicator = false
+        mockSessionHandler.providerDidStartRequest(mockProvider)
+        XCTAssertFalse(mockPaymentResultDelegate.isLoading)
+        mockSessionHandler.providerDidEndRequest(mockProvider)
+        XCTAssertFalse(mockPaymentResultDelegate.isLoading)
+    }
+
+    func testShowIndicatorDidSetStopsLoading() {
+        mockSessionHandler.providerDidStartRequest(mockProvider)
+        XCTAssertTrue(mockPaymentResultDelegate.isLoading)
+        mockSessionHandler.showIndicator = false
+        XCTAssertFalse(mockPaymentResultDelegate.isLoading)
+    }
+
     func testProviderDidInitializePaymentIntentId() {
         let mockIntentId = "mock_intent_id"
         let session = AWXRecurringSession()

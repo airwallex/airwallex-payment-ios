@@ -212,8 +212,12 @@
                 self.nextActionHandler = handler;
             }
         } else {
-            if (self.paymentConsent.Id && [self.delegate respondsToSelector:@selector(provider:didCompleteWithPaymentConsentId:)]) {
-                [self.delegate provider:self didCompleteWithPaymentConsentId:self.paymentConsent.Id];
+            if ([self.delegate respondsToSelector:@selector(provider:didCompleteWithPaymentConsentId:)]) {
+                if (self.paymentConsent.Id) {
+                    [self.delegate provider:self didCompleteWithPaymentConsentId:self.paymentConsent.Id];
+                } else if (response.paymentConsentId) {
+                    [self.delegate provider:self didCompleteWithPaymentConsentId:response.paymentConsentId];
+                }
             }
             [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusSuccess error:nil];
         }

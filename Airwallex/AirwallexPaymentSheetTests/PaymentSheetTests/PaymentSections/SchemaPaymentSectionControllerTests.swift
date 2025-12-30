@@ -66,8 +66,8 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         XCTAssert(sectionController.items.contains("shopper_name"))
         XCTAssert(sectionController.items.contains("shopper_email"))
         XCTAssert(sectionController.items.contains("shopper_phone"))
-        XCTAssert(sectionController.items.contains("bank_name"))
-        XCTAssertFalse(sectionController.items.contains(SchemaPaymentSectionController.Item.accordionKey))
+        XCTAssert(sectionController.items.contains(.bankName))
+        XCTAssertFalse(sectionController.items.contains(.accordionKey))
     }
     
     func testInit_Accordionlayout() async {
@@ -78,9 +78,9 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         XCTAssertEqual(sectionController.section, .schemaPayment("online_banking"))
         XCTAssertEqual(sectionController.layout, .accordion)
         try? await Task.sleep(nanoseconds: 100_000)
-        XCTAssert(sectionController.items.contains(SchemaPaymentSectionController.Item.accordionKey))
+        XCTAssert(sectionController.items.contains(.accordionKey))
         mockViewController.view.layoutIfNeeded()
-        guard let cell = sectionController.context.cellForItem(SchemaPaymentSectionController.Item.accordionKey) as? AccordionPaymentMethodCell else {
+        guard let cell = sectionController.context.cellForItem(sectionController.sectionItem(.accordionKey)) as? AccordionPaymentMethodCell else {
             XCTFail()
             return
         }
@@ -94,26 +94,26 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         try? await Task.sleep(nanoseconds: 1000_000_000)
         mockViewController.view.layoutIfNeeded()
         // check shopper name prefill
-        guard let nameCell = sectionController.context.cellForItem("shopper_name") as? InfoCollectorCell else {
+        guard let nameCell = sectionController.context.cellForItem(sectionController.sectionItem("shopper_name")) as? InfoCollectorCell else {
             XCTFail()
             return
         }
         XCTAssertEqual(nameCell.viewModel?.text, mockMethodProvider.session.billing?.fullName)
         // check email prefill
-        guard let emailCell = sectionController.context.cellForItem("shopper_email") as? InfoCollectorCell else {
+        guard let emailCell = sectionController.context.cellForItem(sectionController.sectionItem("shopper_email")) as? InfoCollectorCell else {
             XCTFail()
             return
         }
         XCTAssertEqual(emailCell.viewModel?.text, mockMethodProvider.session.billing?.email)
         // check phone number prefill
-        guard let phoneNumberCell = sectionController.context.cellForItem("shopper_phone") as? InfoCollectorCell else {
+        guard let phoneNumberCell = sectionController.context.cellForItem(sectionController.sectionItem("shopper_phone")) as? InfoCollectorCell else {
             XCTFail()
             return
         }
         XCTAssertEqual(phoneNumberCell.viewModel?.text, mockMethodProvider.session.billing?.phoneNumber)
         
         // check bank selection prefill
-        guard let bankCell = sectionController.context.cellForItem("bank_name") as? BankSelectionCell else {
+        guard let bankCell = sectionController.context.cellForItem(sectionController.sectionItem(.bankName)) as? BankSelectionCell else {
             XCTFail()
             return
         }
@@ -127,7 +127,7 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         try? await Task.sleep(nanoseconds: 1000_000_000)
         mockViewController.view.layoutIfNeeded()
         
-        guard let bankCell = sectionController.context.cellForItem("bank_name") as? BankSelectionCell else {
+        guard let bankCell = sectionController.context.cellForItem(sectionController.sectionItem(.bankName)) as? BankSelectionCell else {
             XCTFail()
             return
         }
@@ -138,7 +138,7 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         // checkout validation
         XCTAssertNil(bankCell.viewModel?.errorHint)
         bankCell.viewModel?.bank = nil
-        guard let checkoutCell = sectionController.context.cellForItem(SchemaPaymentSectionController.Item.checkoutButton) as? CheckoutButtonCell else {
+        guard let checkoutCell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
             XCTFail()
             return
         }
@@ -153,7 +153,7 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         try? await Task.sleep(nanoseconds: 1000_000_000)
         mockViewController.view.layoutIfNeeded()
         // check shopper name prefill
-        guard let nameCell = sectionController.context.cellForItem("shopper_name") as? InfoCollectorCell else {
+        guard let nameCell = sectionController.context.cellForItem(sectionController.sectionItem("shopper_name")) as? InfoCollectorCell else {
             XCTFail()
             return
         }
@@ -162,11 +162,19 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         // checkout validation
         XCTAssertNil(nameCell.viewModel?.errorHint)
         nameCell.viewModel?.text = nil
-        guard let checkoutCell = sectionController.context.cellForItem(SchemaPaymentSectionController.Item.checkoutButton) as? CheckoutButtonCell else {
+        guard let checkoutCell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
             XCTFail()
             return
         }
         checkoutCell.viewModel?.checkoutAction()
         XCTAssertNotNil(nameCell.viewModel?.errorHint)
     }
+}
+
+// MARK: - Item Identifiers (mirroring SchemaPaymentSectionController)
+private extension String {
+    static let accordionKey = "accordionKey"
+    static let bankName = "bankName"
+    static let redirectReminder = "redirectReminder"
+    static let checkoutButton = "checkoutButton"
 }
