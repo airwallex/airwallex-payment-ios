@@ -9,9 +9,10 @@
 import UIKit
 
 class SimpleSectionController<SectionType: Hashable & Sendable, ItemType: Hashable & Sendable>: SectionController {
-    
-    typealias CellProvider = (CollectionViewContext<SectionType, ItemType>, ItemType, IndexPath) -> UICollectionViewCell
-    typealias SelectionHandler = (ItemType, IndexPath, UICollectionViewCell) -> Void
+
+    typealias SectionItem = CompoundItem<SectionType, ItemType>
+    typealias CellProvider = (CollectionViewContext<SectionType, ItemType>, SectionItem, IndexPath) -> UICollectionViewCell
+    typealias SelectionHandler = (SectionItem, IndexPath, UICollectionViewCell) -> Void
     
     private let cellProvider: CellProvider
     private let layout: NSCollectionLayoutSection
@@ -39,18 +40,18 @@ class SimpleSectionController<SectionType: Hashable & Sendable, ItemType: Hashab
         self.context = context
     }
     
-    func cell(for itemIdentifier: ItemType, at indexPath: IndexPath) -> UICollectionViewCell {
-        return cellProvider(context, itemIdentifier, indexPath)
+    func cell(for sectionItem: SectionItem, at indexPath: IndexPath) -> UICollectionViewCell {
+        return cellProvider(context, sectionItem, indexPath)
     }
     
     func layout(environment: any NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
         return layout
     }
     
-    func collectionView(didSelectItem item: ItemType, at indexPath: IndexPath) {
-        guard let cell = context.cellForItem(item) else { return }
+    func collectionView(didSelectItem sectionItem: SectionItem, at indexPath: IndexPath) {
+        guard let cell = context.cellForItem(sectionItem) else { return }
         if let selectionHandler {
-            selectionHandler(item, indexPath, cell)
+            selectionHandler(sectionItem, indexPath, cell)
         } else {
             context.endEditing()
         }

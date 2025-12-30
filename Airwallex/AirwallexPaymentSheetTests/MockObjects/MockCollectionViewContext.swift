@@ -11,6 +11,8 @@ import UIKit
 @testable import AirwallexPaymentSheet
 
 class MockCollectionViewContext: CollectionViewContext<String, String> {
+
+    typealias SectionItem = CompoundItem<String, String>
     
     private var mockCollectionView: UICollectionView
     private var mockViewController: UIViewController
@@ -28,8 +30,8 @@ class MockCollectionViewContext: CollectionViewContext<String, String> {
         )
         let mockCollectionViewLayout = UICollectionViewCompositionalLayout(section: mockSectionLayout)
         mockCollectionView = UICollectionView(frame: .zero, collectionViewLayout: mockCollectionViewLayout)
-        let mockDataSource = UICollectionViewDiffableDataSource<String, String>(collectionView: mockCollectionView) { _, _, _ in return nil }
-        
+        let mockDataSource = UICollectionViewDiffableDataSource<String, SectionItem>(collectionView: mockCollectionView) { _, _, _ in return nil }
+    
         super.init(
             viewController: mockViewController,
             collectionView: mockCollectionView,
@@ -42,11 +44,11 @@ class MockCollectionViewContext: CollectionViewContext<String, String> {
     
     var mockCell: UICollectionViewCell?
     
-    override func cellForItem(_ item: String) -> UICollectionViewCell? {
+    override func cellForItem(_ item: SectionItem) -> UICollectionViewCell? {
         return mockCell
     }
     
-    override func dequeueReusableCell<T>(_ cellClass: T.Type, for item: String, indexPath: IndexPath) -> T where T : UICollectionViewCell, T : ViewReusable {
+    override func dequeueReusableCell<T>(_ cellClass: T.Type, for sectionItem: SectionItem, indexPath: IndexPath) -> T where T : UICollectionViewCell, T : ViewReusable {
         return T()
     }
     

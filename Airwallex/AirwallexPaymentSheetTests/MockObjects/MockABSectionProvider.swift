@@ -12,19 +12,19 @@ import UIKit
 @testable import AirwallexPaymentSheet
 
 @MainActor
-
+    
 enum Section: CaseIterable {
     case A
     case B
 }
-
-enum Item {
+    
+enum Item: String {
     case A1
     case A2
     case B1
     case B2
 }
-
+    
 class MockABSectionProvider: CollectionViewSectionProvider {
     
     enum Status {

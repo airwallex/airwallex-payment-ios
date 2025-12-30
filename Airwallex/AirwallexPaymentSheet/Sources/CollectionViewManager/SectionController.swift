@@ -14,6 +14,9 @@ import UIKit
     associatedtype SectionType: Hashable, Sendable
     associatedtype ItemType: Hashable, Sendable
     
+    /// Type alias for the compound item type
+    typealias SectionItem = CompoundItem<SectionType, ItemType>
+    
     /// CollectionViewContext provides a connection between your section controller
     /// and collectionView and it's dataSource
     /// it will be updated right after section controller being initialized
@@ -24,8 +27,8 @@ import UIKit
     /// this must be unique
     var section: SectionType { get }
     
-    /// this will to item identifier to work with UICollectionViewDiffableDataSource
-    /// must be unique
+    /// Raw items for this section. The CollectionViewManager will wrap these
+    /// in SectionItem to ensure global uniqueness across all sections.
     var items: [ItemType] { get }
     
     /// will be called by CollectionViewManager after section controlelr is initialized
@@ -34,16 +37,16 @@ import UIKit
     
     /// this method will be called in the `cellProvider` of the `UICollectionViewDiffableDataSource`
     /// - Parameters:
-    ///   - item: item identifier of the cell
+    ///   - sectionItem: the compound item identifier containing section and raw item
     ///   - indexPath: index path of the cell
     /// - Returns: cell
-    func cell(for item: ItemType, at indexPath: IndexPath) -> UICollectionViewCell
+    func cell(for sectionItem: SectionItem, at indexPath: IndexPath) -> UICollectionViewCell
     
     /// this method will be called in the `sectionProvider` of the `UICollectionViewCompositionalLayout`
     /// - Parameter environment: layout environment
     /// - Returns: layout of the section
     func layout(environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection
-
+    
     
     /// this will be called in the `supplementaryViewProvider` of `UICollectionViewDiffableDataSource`
     /// - Parameters:
@@ -54,9 +57,9 @@ import UIKit
     
     /// will be called when cell seletected
     /// - Parameters:
-    ///   - item: item identifier for the selected cell
+    ///   - sectionItem: the compound item identifier for the selected cell
     ///   - indexPath: index path of the selected cell
-    func collectionView(didSelectItem item: ItemType, at indexPath: IndexPath)
+    func collectionView(didSelectItem sectionItem: SectionItem, at indexPath: IndexPath)
     
     /// this method will be called in `CollectionViewContext.performUpdates(...)`
     /// this will be the place for you to update items in your section controller
@@ -65,16 +68,16 @@ import UIKit
     /// Called just before a cell is displayed on the screen.
     /// - Parameters:
     ///   - cell: The `UICollectionViewCell` that is about to be displayed.
-    ///   - itemIdentifier: The unique identifier for the item.
+    ///   - sectionItem: The compound item identifier.
     ///   - indexPath: The `IndexPath` of the cell in the collection view.
-    func willDisplay(cell: UICollectionViewCell, itemIdentifier: ItemType, at indexPath: IndexPath)
+    func willDisplay(cell: UICollectionViewCell, sectionItem: SectionItem, at indexPath: IndexPath)
     
     /// Called when a cell is removed from the screen (no longer visible).
     /// - Parameters:
     ///   - cell: The `UICollectionViewCell` that was displayed but is now being removed.
-    ///   - itemIdentifier: The unique identifier for the item.
+    ///   - sectionItem: The compound item identifier.
     ///   - indexPath: The `IndexPath` of the removed cell.
-    func didEndDisplaying(cell: UICollectionViewCell, itemIdentifier: ItemType, at indexPath: IndexPath)
+    func didEndDisplaying(cell: UICollectionViewCell, sectionItem: SectionItem, at indexPath: IndexPath)
     
     /// Called just before a supplementary view (e.g., header or footer) is displayed.
     /// - Parameters:
@@ -94,8 +97,13 @@ import UIKit
     /// Called when the section managed by this section controller is no longer visible.
     func sectionDidEndDisplaying()
 }
-
+    
 extension SectionController {
+    
+    /// Convenience method to create a SectionItem for this section
+    func sectionItem(_ item: ItemType) -> SectionItem {
+        SectionItem(section, item)
+    }
     
     func updateItemsIfNecessary() {
         // do nothing by default
@@ -106,7 +114,7 @@ extension SectionController {
         fatalError()
     }
     
-    func collectionView(didSelectItem itemIdentifier: ItemType, at indexPath: IndexPath) {
+    func collectionView(didSelectItem sectionItem: SectionItem, at indexPath: IndexPath) {
         // do nothing by default
     }
     
@@ -114,11 +122,11 @@ extension SectionController {
         AnySectionController(self)
     }
     
-    func willDisplay(cell: UICollectionViewCell, itemIdentifier: ItemType, at indexPath: IndexPath) {
+    func willDisplay(cell: UICollectionViewCell, sectionItem: SectionItem, at indexPath: IndexPath) {
         // do nothing by default
     }
     
-    func didEndDisplaying(cell: UICollectionViewCell, itemIdentifier: ItemType, at indexPath: IndexPath) {
+    func didEndDisplaying(cell: UICollectionViewCell, sectionItem: SectionItem, at indexPath: IndexPath) {
         // do nothing by default
     }
     
@@ -138,22 +146,24 @@ extension SectionController {
         // do nothing by default
     }
 }
-
+    
 /// Type erasor for SectionController
 class AnySectionController<SectionType: Hashable & Sendable, ItemType: Hashable & Sendable>: SectionController {
     
+    typealias SectionItem = CompoundItem<SectionType, ItemType>
+    
     let embededSectionController: any SectionController
-    private let _cellProvider: (ItemType, IndexPath) -> UICollectionViewCell
+    private let _cellProvider: (SectionItem, IndexPath) -> UICollectionViewCell
     private let _layoutProvider: (NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection
     private let _supplementaryViewProvider: (String, IndexPath) -> UICollectionReusableView
-    private let _didSelectHandler: (ItemType, IndexPath) -> Void
+    private let _didSelectHandler: (SectionItem, IndexPath) -> Void
     private let _items: () -> [ItemType]
     private let _section: () -> SectionType
     private let _context: () -> CollectionViewContext<SectionType, ItemType>
     private let _bindContext: (CollectionViewContext<SectionType, ItemType>) -> Void
     private let _updateItemsIfNecessary: () -> Void
-    private let _willDisplayCell: (UICollectionViewCell, ItemType, IndexPath) -> Void
-    private let _didEndDisplayingCell: (UICollectionViewCell, ItemType, IndexPath) -> Void
+    private let _willDisplayCell: (UICollectionViewCell, SectionItem, IndexPath) -> Void
+    private let _didEndDisplayingCell: (UICollectionViewCell, SectionItem, IndexPath) -> Void
     private let _willDisplaySupplementaryView: (UICollectionReusableView, IndexPath) -> Void
     private let _didEndDisplayingSupplementaryView: (UICollectionReusableView, IndexPath) -> Void
     private let _sectionWillDisplay: () -> Void
@@ -174,8 +184,8 @@ class AnySectionController<SectionType: Hashable & Sendable, ItemType: Hashable 
         self._section = { sectionController.section }
         self._context = { sectionController.context }
         self._updateItemsIfNecessary = { sectionController.updateItemsIfNecessary() }
-        self._willDisplayCell = sectionController.willDisplay(cell:itemIdentifier:at:)
-        self._didEndDisplayingCell = sectionController.didEndDisplaying(cell:itemIdentifier:at:)
+        self._willDisplayCell = sectionController.willDisplay(cell:sectionItem:at:)
+        self._didEndDisplayingCell = sectionController.didEndDisplaying(cell:sectionItem:at:)
         self._willDisplaySupplementaryView = sectionController.willDisplay(supplementaryView:at:)
         self._didEndDisplayingSupplementaryView = sectionController.didEndDisplaying(supplementaryView:at:)
         self._sectionWillDisplay = sectionController.sectionWillDisplay
@@ -186,8 +196,8 @@ class AnySectionController<SectionType: Hashable & Sendable, ItemType: Hashable 
         _bindContext(context)
     }
     
-    func cell(for itemIdentifier: ItemType, at indexPath: IndexPath) -> UICollectionViewCell {
-        return _cellProvider(itemIdentifier, indexPath)
+    func cell(for sectionItem: SectionItem, at indexPath: IndexPath) -> UICollectionViewCell {
+        return _cellProvider(sectionItem, indexPath)
     }
     
     func layout(environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
@@ -198,20 +208,20 @@ class AnySectionController<SectionType: Hashable & Sendable, ItemType: Hashable 
         return _supplementaryViewProvider(elementKind, indexPath)
     }
     
-    func collectionView(didSelectItem itemIdentifier: ItemType, at indexPath: IndexPath) {
-        _didSelectHandler(itemIdentifier, indexPath)
+    func collectionView(didSelectItem sectionItem: SectionItem, at indexPath: IndexPath) {
+        _didSelectHandler(sectionItem, indexPath)
     }
     
     func updateItemsIfNecessary() {
         _updateItemsIfNecessary()
     }
     
-    func willDisplay(cell: UICollectionViewCell, itemIdentifier: ItemType, at indexPath: IndexPath) {
-        _willDisplayCell(cell, itemIdentifier, indexPath)
+    func willDisplay(cell: UICollectionViewCell, sectionItem: SectionItem, at indexPath: IndexPath) {
+        _willDisplayCell(cell, sectionItem, indexPath)
     }
     
-    func didEndDisplaying(cell: UICollectionViewCell, itemIdentifier: ItemType, at indexPath: IndexPath) {
-        _didEndDisplayingCell(cell, itemIdentifier, indexPath)
+    func didEndDisplaying(cell: UICollectionViewCell, sectionItem: SectionItem, at indexPath: IndexPath) {
+        _didEndDisplayingCell(cell, sectionItem, indexPath)
     }
     
     func willDisplay(supplementaryView: UICollectionReusableView, at indexPath: IndexPath) {

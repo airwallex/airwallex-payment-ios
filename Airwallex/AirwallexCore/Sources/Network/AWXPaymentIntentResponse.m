@@ -16,6 +16,7 @@
 @property (nonatomic, copy, readwrite) NSString *status;
 @property (nonatomic, strong, readwrite, nullable) AWXConfirmPaymentNextAction *nextAction;
 @property (nonatomic, strong, readwrite, nullable) AWXPaymentAttempt *latestPaymentAttempt;
+@property (nonatomic, copy, readwrite, nullable) NSString *paymentConsentId;
 
 @end
 
@@ -36,6 +37,10 @@
     NSDictionary *latestPaymentAttempt = json[@"latest_payment_attempt"];
     if (latestPaymentAttempt && [latestPaymentAttempt isKindOfClass:[NSDictionary class]]) {
         response.latestPaymentAttempt = [AWXPaymentAttempt decodeFromJSON:latestPaymentAttempt];
+    }
+    NSString *paymentConsentId = json[@"payment_consent_id"];
+    if (paymentConsentId && [paymentConsentId isKindOfClass:[NSString class]]) {
+        response.paymentConsentId = paymentConsentId;
     }
     return response;
 }

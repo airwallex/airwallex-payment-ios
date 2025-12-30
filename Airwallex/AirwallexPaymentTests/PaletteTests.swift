@@ -9,7 +9,6 @@
 import UIKit
 import XCTest
 @testable import AirwallexPayment
-@testable import AirwallexPaymentSheet
 import AirwallexCore
 
 class PaletteTests: XCTestCase {

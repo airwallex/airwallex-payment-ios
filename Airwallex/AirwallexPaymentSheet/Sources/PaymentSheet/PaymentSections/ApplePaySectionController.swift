@@ -11,9 +11,14 @@ import Foundation
 @_spi(AWX) import AirwallexPayment
 import AirwallexCore
 #endif
-
-class ApplePaySectionController: SectionController {
     
+// MARK: - Item Identifiers
+private extension String {
+    static let applePayButton = "applePayButton"
+}
+    
+class ApplePaySectionController: SectionController {
+    typealias SectionItem = CompoundItem<PaymentSectionType, String>
     private let session: AWXSession
     private let methodType: AWXPaymentMethodType
     private var paymentSessionHandler: PaymentSessionHandler?
@@ -25,13 +30,14 @@ class ApplePaySectionController: SectionController {
         assert(methodType.name == AWXApplePayKey)
         self.session = session
         self.methodType = methodType
-        self.items = [ methodType.name ]
         self.methodProvider = methodProvider
     }
     
     let section = PaymentSectionType.applePay
     
-    private(set) var items: [String]
+    var items: [String] {
+        [.applePayButton]
+    }
     
     private(set) var context: CollectionViewContext<PaymentSectionType, String>!
     
@@ -39,8 +45,8 @@ class ApplePaySectionController: SectionController {
         self.context = context
     }
     
-    func cell(for itemIdentifier: String, at indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = context.dequeueReusableCell(ApplePayCell.self, for: itemIdentifier, indexPath: indexPath)
+    func cell(for sectionItem: SectionItem, at indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = context.dequeueReusableCell(ApplePayCell.self, for: sectionItem, indexPath: indexPath)
         let viewModel = ApplePayViewModel { [weak self] in
             guard let self , let viewController = self.context.viewController else { return }
             AnalyticsLogger.log(action: .tapPayButton, extraInfo: [.paymentMethod: methodType.name])
@@ -66,7 +72,7 @@ class ApplePaySectionController: SectionController {
         return cell
     }
     
-    func collectionView(didSelectItem item: String, at indexPath: IndexPath) {
+    func collectionView(didSelectItem sectionItem: SectionItem, at indexPath: IndexPath) {
         context.endEditing()
     }
     

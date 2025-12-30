@@ -8,18 +8,24 @@
 
 import UIKit
 
+/// Context that bridges section controllers with the collection view and its data source.
+/// All item operations use SectionItem to ensure global uniqueness.
 class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Sendable> {
+
+    /// Type alias for the compound item type
+    typealias SectionItem = CompoundItem<Section, Item>
+    
     private(set) weak var viewController: UIViewController?
     private weak var collectionView: UICollectionView!
     private weak var layout: UICollectionViewCompositionalLayout!
-    private var dataSource: UICollectionViewDiffableDataSource<Section, Item>
+    private var dataSource: UICollectionViewDiffableDataSource<Section, SectionItem>
     private var _performUpdates: (Bool, Bool) -> Void
     private var _performUpdatesForSection: (Section, Bool, Bool, Bool) -> Void
     
     init(viewController: UIViewController,
          collectionView: UICollectionView,
          layout: UICollectionViewCompositionalLayout,
-         dataSource: UICollectionViewDiffableDataSource<Section, Item>,
+         dataSource: UICollectionViewDiffableDataSource<Section, SectionItem>,
          performSectionUpdates: @escaping (Section, Bool, Bool, Bool) -> Void,
          performUpdates: @escaping (Bool, Bool) -> Void) {
         self.viewController = viewController
@@ -30,17 +36,17 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         self._performUpdatesForSection = performSectionUpdates
     }
     
-    func currentSnapshot() -> NSDiffableDataSourceSnapshot<Section, Item> {
+    func currentSnapshot() -> NSDiffableDataSourceSnapshot<Section, SectionItem> {
         return dataSource.snapshot()
     }
     
-    func applySnapshot(_ snapshot: NSDiffableDataSourceSnapshot<Section, Item>,
+    func applySnapshot(_ snapshot: NSDiffableDataSourceSnapshot<Section, SectionItem>,
                        animatingDifferences: Bool = false,
                        completion: (() -> Void)? = nil) {
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences, completion: completion)
     }
     
-    func invalidateLayout(for items: [Item]) {
+    func invalidateLayout(for items: [SectionItem]) {
         var indexPaths = [IndexPath]()
         for item in items {
             guard let indexPath = dataSource.indexPath(for: item) else { continue }
@@ -64,25 +70,25 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
-    func reload(items: [Item], animatingDifferences: Bool = false) {
+    func reload(items: [SectionItem], animatingDifferences: Bool = false) {
         var snapshot = dataSource.snapshot()
         let existingItems = Set(snapshot.itemIdentifiers)
         assert(existingItems.isSuperset(of: items), "reload items not existing")
-        let items = Array(existingItems.intersection(items))
-        snapshot.reloadItems(items)
+        let itemsToReload = items.filter { existingItems.contains($0) }
+        snapshot.reloadItems(itemsToReload)
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
     /// Reconfigures cells instead of reloading them.
     /// Calling this method will not trigger any `UICollectionViewDataSource` methods.
     /// - Parameters:
-    ///   - items: The items that need to be reconfigured.
+    ///   - items: The SectionItem identifiers that need to be reconfigured.
     ///   - invalidateLayout: A boolean indicating whether to invalidate the layout of the items.
     ///   - configurer: A closure that allows you to configure each cell.
     ///     - If no closure is provided, the method attempts to cast the cell to `ViewConfigurable` and call `reconfigure`,
     ///       which updates the cell using the current `viewModel` without replacing it.
     ///     - `Important!` If you need to configure the cell with a new `viewModel`, you should provide a `configurer` block and update the cell in the block
-    func reconfigure(items: [Item],
+    func reconfigure(items: [SectionItem],
                      invalidateLayout: Bool,
                      configurer: ((UICollectionViewCell) -> Void)? = nil) {
         guard !items.isEmpty else { return }
@@ -108,12 +114,12 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         //            dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
-    func delete(items: [Item], animatingDifferences: Bool = false) {
+    func delete(items: [SectionItem], animatingDifferences: Bool = false) {
         var snapshot = dataSource.snapshot()
         let existingItems = Set(snapshot.itemIdentifiers)
         assert(existingItems.isSuperset(of: items), "delete items not existing")
-        let items = Array(existingItems.intersection(items))
-        snapshot.deleteItems(items)
+        let itemsToDelete = items.filter { existingItems.contains($0) }
+        snapshot.deleteItems(itemsToDelete)
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
@@ -128,12 +134,12 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         _performUpdatesForSection(section, updateItems, forceReload, animatingDifferences)
     }
     
-    func scroll(to item: Item, position: UICollectionView.ScrollPosition, animated: Bool = false) {
+    func scroll(to item: SectionItem, position: UICollectionView.ScrollPosition, animated: Bool = false) {
         guard let indexPath = dataSource.indexPath(for: item) else { return }
         collectionView.scrollToItem(at: indexPath, at: position, animated: animated)
     }
     
-    func cellForItem(_ item: Item) -> UICollectionViewCell? {
+    func cellForItem(_ item: SectionItem) -> UICollectionViewCell? {
         guard let indexPath = dataSource.indexPath(for: item) else { return nil }
         return collectionView.cellForItem(at: indexPath)
     }
@@ -153,9 +159,9 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         collectionView.endEditing(force)
     }
     
-    func activateNextRespondableCell(section: Section, itemIdentifier: Item) -> Bool {
+    func activateNextRespondableCell(section: Section, sectionItem: SectionItem) -> Bool {
         let snapshot = dataSource.snapshot()
-        guard let indexPath = dataSource.indexPath(for: itemIdentifier) else {
+        guard let indexPath = dataSource.indexPath(for: sectionItem) else {
             return false
         }
         let itemCount = snapshot.numberOfItems(inSection: section)
@@ -196,10 +202,10 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         registeredDecorationViews.insert(key)
     }
     
-    func dequeueReusableCell<T: UICollectionViewCell & ViewReusable>(_ cellClass: T.Type, for item: Item, indexPath: IndexPath) -> T {
+    func dequeueReusableCell<T: UICollectionViewCell & ViewReusable>(_ cellClass: T.Type, for sectionItem: SectionItem, indexPath: IndexPath) -> T {
         register(cellClass)
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellClass.reuseIdentifier, for: indexPath) as! T
-        cell.accessibilityIdentifier = String(describing: item)
+        cell.accessibilityIdentifier = String(describing: sectionItem.item)
         return cell
     }
     
