@@ -775,10 +775,10 @@ private extension IntegrationDemoListViewController {
                         title: "Error"
                     )
                 case .paymentAttemptNotFound:
-                    showAlert(
-                        message: "Payment attempt not found",
-                        title: "Error"
-                    )
+                    // Ignore payment attempt not found error
+                    // usually this is caused by LPM recurring transaction
+                    // which use legacy create/verify payemnt consent instead of confirm payment intent
+                    break
                 }
             } catch {
                 stopLoading()
