@@ -75,6 +75,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
             text: prefilledAddress?.street,
             placeholder: NSLocalizedString("Street", bundle: .paymentSheet, comment: "billing street placeholder"),
             isEnabled: !reusePrefilledAddress,
+            clearButtonMode: .whileEditing,
             returnKeyType: .next,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )
@@ -83,6 +84,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
             text: prefilledAddress?.state,
             placeholder: NSLocalizedString("State", bundle: .paymentSheet, comment: "billing state placeholder"),
             isEnabled: !reusePrefilledAddress,
+            clearButtonMode: .whileEditing,
             returnKeyType: .next,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )
@@ -91,6 +93,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
             text: prefilledAddress?.city,
             placeholder: NSLocalizedString("City", bundle: .paymentSheet, comment: "billing city placeholder"),
             isEnabled: !reusePrefilledAddress,
+            clearButtonMode: .whileEditing,
             returnKeyType: .next,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )
@@ -99,6 +102,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
             text: prefilledAddress?.postcode,
             placeholder: NSLocalizedString("Postal code", bundle: .paymentSheet, comment: "billing postal code placeholder"),
             isEnabled: !reusePrefilledAddress,
+            clearButtonMode: .whileEditing,
             returnKeyType: .next,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )

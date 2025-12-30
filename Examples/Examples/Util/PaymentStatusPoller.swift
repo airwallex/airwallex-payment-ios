@@ -72,8 +72,11 @@ class PaymentStatusPoller {
                 }
 
                 // Fetch status
+                if wentToBackgroundDuringRequest {
+                    wentToBackgroundDuringRequest = false
+                    attempts = 0
+                }
                 debugLog("Poll attempt #\(attempts + 1)")
-                wentToBackgroundDuringRequest = false
                 let intent: PaymentIntent
                 do {
                     intent = try await apiClient.retrievePaymentIntent(intentId)
