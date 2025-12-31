@@ -22,7 +22,7 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  Airwallex: 7d0fb0e48484d9f8a8ae7cd87a30f9d412c3495c
+  Airwallex: ba6eaca57bdcdf8bfa7247f0eddcd1e2523c3d03
   OCMock: 589f2c84dacb1f5aaf6e4cec1f292551fe748e74
 
 PODFILE CHECKSUM: 5892010fc0b398d43001fed8ad3d3aa4d0e38525

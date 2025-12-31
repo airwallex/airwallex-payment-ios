@@ -420,6 +420,7 @@
 			buildConfigurationList = 085BD40423CC64B9002E8F27 /* Build configuration list for PBXNativeTarget "Examples" */;
 			buildPhases = (
 				9386CD168F30B04867D5EF44 /* [CP] Check Pods Manifest.lock */,
+				E8A1B2C3D4E5F6A7B8C9D0E1 /* Run SwiftLint */,
 				085BD3E723CC64B6002E8F27 /* Sources */,
 				085BD3E823CC64B6002E8F27 /* Frameworks */,
 				085BD3E923CC64B6002E8F27 /* Resources */,
@@ -625,6 +626,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${PROJECT_DIR}/../scripts/generate_spm_public_headers.sh\n";
+		};
+		E8A1B2C3D4E5F6A7B8C9D0E1 /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Skip SwiftLint on CI\nif [ \"$CI\" = \"true\" ] || [ -n \"$GITHUB_ACTIONS\" ] || [ -n \"$BITRISE_IO\" ]; then\n  echo \"Skipping SwiftLint on CI\"\n  exit 0\nfi\n\n# Auto-install pre-commit hook if not present\nHOOK_SOURCE=\"$SRCROOT/../scripts/pre-commit\"\nHOOK_TARGET=\"$SRCROOT/../.git/hooks/pre-commit\"\n\nif [ -f \"$HOOK_SOURCE\" ] && [ ! -L \"$HOOK_TARGET\" ]; then\n  ln -sf \"../../scripts/pre-commit\" \"$HOOK_TARGET\"\n  chmod +x \"$HOOK_SOURCE\"\n  echo \"Pre-commit hook installed\"\nfi\n\nif test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\ncd \"$SRCROOT/..\"  # Navigate to workspace root where .swiftlint.yml lives\n\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

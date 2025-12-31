@@ -1,0 +1,43 @@
+# https://realm.github.io/SwiftLint/rule-directory.html
+
+included:
+  - Airwallex       # SDK source code (all modules)
+  - Examples        # Example app code
+
+excluded:
+  - Pods
+  - DerivedData
+  - .build
+  - "**/*Tests"     # Exclude test targets
+
+disabled_rules:
+  - cyclomatic_complexity
+  - line_length
+  - todo
+  - file_length
+  - type_body_length
+  - force_cast
+  - xctfail_message
+  - force_try
+
+opt_in_rules:
+  - multiline_parameters
+  - sorted_imports
+  - closure_spacing
+
+identifier_name:
+  allowed_symbols: _
+  min_length: 1
+  max_length: 100
+  validates_start_with_lowercase: off
+
+function_body_length:
+  warning: 150
+  error: 300
+
+nesting:
+  type_level: 3
+
+large_tuple:
+  warning: 4
+  error: 5
