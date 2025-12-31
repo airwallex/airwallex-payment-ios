@@ -6,20 +6,20 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
-import Foundation
 import Airwallex
+import Foundation
 
 class DirectAPIClient: APIClient {
     init() {
         let client = MockAPIClient.shared()
-        client.apiKey = ExamplesKeys.apiKey;
-        client.clientID = ExamplesKeys.clientId;
+        client.apiKey = ExamplesKeys.apiKey
+        client.clientID = ExamplesKeys.clientId
     }
     
     init(apiKey: String?, clientID: String?) {
         let client = MockAPIClient.shared()
-        client.apiKey = apiKey;
-        client.clientID = clientID;
+        client.apiKey = apiKey
+        client.clientID = clientID
     }
     
     func createPaymentIntent(request: PaymentIntentRequest, completion: @escaping (Result<AWXPaymentIntent, Error>) -> Void) {
@@ -119,9 +119,10 @@ class DirectAPIClient: APIClient {
 }
 
 extension DirectAPIClient: CustomerFetchable {
-    func createCustomer(firstName: String?, lastName: String?, email: String?, phoneNumber: String?, additionalInfo: Dictionary<String, Any>?, metadata: Dictionary<String, Int>, apiKey: String?, clientID: String?, completion: @escaping (Customer?, (any Error)?) -> Void) {
+    // swiftlint:disable:next function_parameter_count
+    func createCustomer(firstName: String?, lastName: String?, email: String?, phoneNumber: String?, additionalInfo: [String: Any]?, metadata: [String: Int], apiKey: String?, clientID: String?, completion: @escaping (Customer?, (any Error)?) -> Void) {
         createCustomer(request: CustomerRequest(firstName: firstName, lastName: lastName, email: email, phoneNumber: phoneNumber, additionalInfo: additionalInfo, metadata: metadata, apiKey: apiKey, clientID: clientID)) { result in
-            switch (result) {
+            switch result {
             case .success(let customer):
                 completion(customer, nil)
             case .failure(let error):

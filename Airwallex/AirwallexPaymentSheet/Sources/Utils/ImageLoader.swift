@@ -9,7 +9,7 @@
 import UIKit
 #if canImport(AirwallexPayment)
 @_spi(AWX) import AirwallexPayment
-#endif 
+#endif
 
 actor ImageFetcher {
     private var session: URLSession
@@ -114,7 +114,7 @@ public class ImageLoader {
     private let cache = NSCache<NSURL, UIImage>()
     private let fetcher: ImageFetcher
     
-    public init(session: URLSession = URLSession.shared){
+    public init(session: URLSession = URLSession.shared) {
         self.fetcher = ImageFetcher(session: session)
     }
     
@@ -159,4 +159,3 @@ public extension UIImageView {
         }
     }
 }
-

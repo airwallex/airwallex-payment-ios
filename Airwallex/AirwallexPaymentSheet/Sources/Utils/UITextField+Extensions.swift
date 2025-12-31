@@ -6,8 +6,8 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 #if canImport(AirwallexCore)
 import AirwallexCore
@@ -111,7 +111,7 @@ extension UITextField {
     }
     
     func updateContentAndCursor(plainText: String,
-                               maxLength: Int = Int.max) {
+                                maxLength: Int = Int.max) {
         let before = text ?? ""
         var after = plainText
         if let endIndex = after.index(after.startIndex, offsetBy: maxLength, limitedBy: after.endIndex) {
@@ -160,4 +160,3 @@ extension UITextField {
             .eraseToAnyPublisher()
     }
 }
-

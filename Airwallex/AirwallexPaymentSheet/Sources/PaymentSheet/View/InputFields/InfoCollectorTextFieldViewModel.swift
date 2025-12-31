@@ -207,7 +207,7 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if let returnActionHandler  {
+        if let returnActionHandler {
             let success = returnActionHandler(textField)
             if !success {
                 textField.resignFirstResponder()

@@ -19,6 +19,8 @@ disabled_rules:
   - force_cast
   - xctfail_message
   - force_try
+  - leading_whitespace
+  - trailing_comma
 
 opt_in_rules:
   - multiline_parameters
@@ -41,3 +43,6 @@ nesting:
 large_tuple:
   warning: 4
   error: 5
+
+trailing_whitespace:
+  ignores_empty_lines: true

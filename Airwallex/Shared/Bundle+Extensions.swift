@@ -6,17 +6,17 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import Foundation
 import AirwallexCore
+import Foundation
 
-fileprivate class BundleProvider {
+private class BundleProvider {
     static let bundle = Bundle(for: BundleProvider.self)
 }
 
 extension Bundle {
     static func decode<T: AWXJSONDecodable>(file: String, withExtension: String? = "json") -> T? {
         guard let data = Bundle.dataOfFile(file, withExtension: withExtension),
-              let object = try? JSONSerialization.jsonObject(with: data) as? [AnyHashable : Any],
+              let object = try? JSONSerialization.jsonObject(with: data) as? [AnyHashable: Any],
               let model = T.decode(fromJSON: object) else {
             return nil
         }

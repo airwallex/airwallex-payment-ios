@@ -87,7 +87,7 @@ class SectionDisplayHandler<SectionType: Hashable & Sendable, ItemType: Hashable
             sectionItem: sectionItem,
             at: indexPath
         )
-        count(didEndDisplaying:cell, for: sectionController, indexPath: indexPath)
+        count(didEndDisplaying: cell, for: sectionController, indexPath: indexPath)
     }
     
     func willDisplay(supplementaryView: UICollectionReusableView,

@@ -65,7 +65,7 @@ import AirwallexCore
             AWXSDKErrorDomain
         }
         
-        public var errorUserInfo: [String : Any] {
+        public var errorUserInfo: [String: Any] {
             [NSLocalizedDescriptionKey: errorDescription]
         }
         
@@ -175,7 +175,7 @@ import AirwallexCore
             ]
         )
     }
-    //  MARK: - Launch by Payment Method
+    // MARK: - Launch by Payment Method
     
     /// Launches the Airwallex card payment flow.
     /// - Parameters:

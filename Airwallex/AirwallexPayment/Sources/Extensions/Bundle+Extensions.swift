@@ -8,7 +8,7 @@
 
 import Foundation
 
-fileprivate class BundleProvider {
+private class BundleProvider {
     static let bundle = Bundle(for: BundleProvider.self)
 }
 

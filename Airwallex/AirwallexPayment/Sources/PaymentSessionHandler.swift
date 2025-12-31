@@ -51,7 +51,7 @@ public class PaymentSessionHandler: NSObject {
             AWXSDKErrorDomain
         }
         
-        var errorUserInfo: [String : Any] {
+        var errorUserInfo: [String: Any] {
             [NSLocalizedDescriptionKey: errorDescription]
         }
         
@@ -141,7 +141,7 @@ public class PaymentSessionHandler: NSObject {
     
     // UI Integration support
     @_spi(AWX) public typealias DismissActionBlock = (@escaping () -> Void) -> Void
-    var dismissAction: DismissActionBlock? = nil
+    var dismissAction: DismissActionBlock?
     
     lazy var providerFactory: ProviderFactoryProtocol = ProviderFactory()
     
@@ -533,7 +533,7 @@ extension PaymentSessionHandler: AWXProviderDelegate {
             if let name = methodType?.name {
                 AnalyticsLogger.log(
                     action: .paymentSuccess,
-                    extraInfo: [.paymentMethod : name]
+                    extraInfo: [.paymentMethod: name]
                 )
             } else {
                 AnalyticsLogger.log(action: .paymentSuccess)

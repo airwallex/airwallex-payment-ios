@@ -6,9 +6,9 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
+import Combine
 import UIKit
 @preconcurrency import WebKit
-import Combine
 
 class WebViewController: UIViewController {
     private lazy var webView: WKWebView = {
@@ -32,7 +32,7 @@ class WebViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private var cancellable: AnyCancellable? = nil
+    private var cancellable: AnyCancellable?
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -6,8 +6,8 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
-import Foundation
 import Airwallex
+import Foundation
 
 protocol APIClient {
     func createPaymentIntent(request: PaymentIntentRequest, completion: @escaping (Result<AWXPaymentIntent, Error>) -> Void)
@@ -55,13 +55,14 @@ extension Airwallex {
 }
 
 @objc protocol CustomerFetchable {
+    // swiftlint:disable:next function_parameter_count
     func createCustomer(
         firstName: String?,
         lastName: String?,
         email: String?,
         phoneNumber: String?,
-        additionalInfo: Dictionary<String, Any>?,
-        metadata: Dictionary<String, Int>,
+        additionalInfo: [String: Any]?,
+        metadata: [String: Int],
         apiKey: String?,
         clientID: String?,
         completion: @escaping (Customer?, Error?) -> Void
@@ -102,9 +103,10 @@ class DemoStoreAPIClient: APIClient, CustomerFetchable {
         post(path: "/api/v1/pa/customers/create", encodable: request, completion: completion)
     }
     
-    func createCustomer(firstName: String?, lastName: String?, email: String?, phoneNumber: String?, additionalInfo: Dictionary<String, Any>?, metadata: Dictionary<String, Int>, apiKey: String?, clientID: String?, completion: @escaping (Customer?, Error?) -> Void) {
+    // swiftlint:disable:next function_parameter_count
+    func createCustomer(firstName: String?, lastName: String?, email: String?, phoneNumber: String?, additionalInfo: [String: Any]?, metadata: [String: Int], apiKey: String?, clientID: String?, completion: @escaping (Customer?, Error?) -> Void) {
         createCustomer(request: CustomerRequest(firstName: firstName, lastName: lastName, email: email, phoneNumber: phoneNumber, additionalInfo: additionalInfo, metadata: metadata, apiKey: apiKey, clientID: clientID)) { result in
-            switch (result) {
+            switch result {
             case .success(let customer):
                 completion(customer, nil)
             case .failure(let error):

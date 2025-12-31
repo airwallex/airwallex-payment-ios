@@ -6,8 +6,8 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import UIKit
 import Airwallex
+import UIKit
 
 class ConfigTextField: UIView {
     

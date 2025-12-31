@@ -6,7 +6,6 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-
 #if canImport(AirwallexCore)
 import AirwallexCore
 #endif
@@ -109,7 +108,7 @@ class ApplePayProvider: PaymentProvider {
             AnalyticsLogger.log(
                 pageView: .applePaySheet,
                 extraInfo: [
-                    .supportedNetworks : unifiedSession.applePayOptions?.supportedNetworks ?? []
+                    .supportedNetworks: unifiedSession.applePayOptions?.supportedNetworks ?? []
                 ]
             )
         }
@@ -201,7 +200,6 @@ extension ApplePayProvider: PKPaymentAuthorizationControllerDelegate {
                 case .failure(let error):
                     complete(with: nil, error: error)
                 }
-                break
             }
         }
     }

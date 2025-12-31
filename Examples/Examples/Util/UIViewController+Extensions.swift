@@ -6,8 +6,8 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import Foundation
 import Airwallex
+import Foundation
 
 extension UIViewController {
     
@@ -17,7 +17,7 @@ extension UIViewController {
         var size = image.size
         size.width += offset
         let renderer = UIGraphicsImageRenderer(size: size)
-        let newImage = renderer.image { context in
+        let newImage = renderer.image { _ in
             image.draw(at: .init(x: offset, y: 0))
         }.withTintColor(.awxColor(.textPrimary), renderingMode: .alwaysOriginal)
         navigationController?.navigationBar.backIndicatorImage = newImage

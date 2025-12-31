@@ -8,8 +8,8 @@
 
 import UIKit
 #if canImport(AirwallexPayment)
-@_spi(AWX) import AirwallexPayment
 import AirwallexCore
+@_spi(AWX) import AirwallexPayment
 #endif
     
 // MARK: - Item Identifiers
@@ -351,7 +351,7 @@ class CardPaymentConsentSectionController: SectionController {
             return nil
         }
         
-        var image: UIImage? = nil
+        var image: UIImage?
         if let cardBrand = AWXCardValidator.shared().brand(forCardName: brand) {
             image = UIImage.image(for: cardBrand.type)
         }
