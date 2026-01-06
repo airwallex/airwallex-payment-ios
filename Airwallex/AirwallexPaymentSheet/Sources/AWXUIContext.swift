@@ -94,12 +94,6 @@ import AirwallexCore
         }
     }
     
-    weak var delegate: AWXPaymentResultDelegate?
-    
-    /// One-time dismiss action, will be set every time `launchPayment(from:style:)` is called
-    /// and consumed in `PaymentSessionHandler` after payment success/failure/cancellation.
-    var dismissAction: PaymentSessionHandler.DismissActionBlock?
-    
     @objc public static let shared = AWXUIContext()
     private override init() {}
 }
@@ -308,11 +302,16 @@ private extension AWXUIContext {
         
         // update logger.session for UI integration
         AnalyticsLogger.shared().session = session
-        AWXUIContext.shared.delegate = paymentResultDelegate
         
         // Risk event
         RiskLogger.log(.transactionInitiated)
         
+        // Create PaymentUIContext for this payment flow
+        let paymentUIContext = PaymentUIContext(
+            delegate: paymentResultDelegate,
+            dismissAction: nil // Will be set after we know the dismiss behavior
+        )
+
         switch launchStyle {
         case .push:
             guard let nav = hostingVC.navigationController else {
@@ -324,10 +323,11 @@ private extension AWXUIContext {
             }
             let paymentVC = PaymentViewController(
                 methodProvider: paymentMethodProvider,
+                paymentUIContext: paymentUIContext,
                 layout: layout
             )
-            nav.pushViewController(paymentVC, animated: true)
-            AWXUIContext.shared.dismissAction = { [weak paymentVC, weak nav] completion in
+            // Set dismiss action on paymentUIContext
+            paymentUIContext.dismissAction = { [weak paymentVC, weak nav] completion in
                 guard let paymentVC, let nav else {
                     completion()
                     return
@@ -346,9 +346,11 @@ private extension AWXUIContext {
                 }
                 nav.popToViewController(targetVC, animated: true)
             }
+            nav.pushViewController(paymentVC, animated: true)
         case .present:
             let paymentVC = PaymentViewController(
                 methodProvider: paymentMethodProvider,
+                paymentUIContext: paymentUIContext,
                 layout: layout
             )
             let nav = UINavigationController(rootViewController: paymentVC)
@@ -366,8 +368,8 @@ private extension AWXUIContext {
                     nav.navigationBar.compactScrollEdgeAppearance = appearance
                 }
             }
-            hostingVC.present(nav, animated: true)
-            AWXUIContext.shared.dismissAction = { [weak nav] completion in
+            // Set dismiss action on paymentUIContext
+            paymentUIContext.dismissAction = { [weak nav] completion in
                 guard let nav else {
                     completion()
                     return
@@ -376,6 +378,7 @@ private extension AWXUIContext {
                     completion()
                 }
             }
+            hostingVC.present(nav, animated: true)
         }
     }
     

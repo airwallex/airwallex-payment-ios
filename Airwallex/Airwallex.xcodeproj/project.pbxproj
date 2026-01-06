@@ -144,6 +144,10 @@
 		D8269FB92DB7701E00E179EB /* AWXPaymentFormViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1803601E2873D73A003EA943 /* AWXPaymentFormViewModelTests.m */; };
 		D8269FBA2DB7701E00E179EB /* AWXRedirectActionProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E0571429C95A6A0099388A /* AWXRedirectActionProviderTests.m */; };
 		D8269FBB2DB7702400E179EB /* AWXCardProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1829B8C3291B3B7000D0D2CA /* AWXCardProviderTests.m */; };
+		D829FE082F0D11380056EE6E /* PaymentUIContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D829FE072F0D11380056EE6E /* PaymentUIContext.swift */; };
+		D829FE142F0D11450056EE6E /* AWXPaymentElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = D829FE102F0D11450056EE6E /* AWXPaymentElement.swift */; };
+		D829FE152F0D11450056EE6E /* AWXPaymentElementDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D829FE112F0D11450056EE6E /* AWXPaymentElementDelegate.swift */; };
+		D829FE162F0D11450056EE6E /* EmbeddedPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D829FE122F0D11450056EE6E /* EmbeddedPaymentView.swift */; };
 		D8316DC22E6AF16D002A42BA /* SchemaFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8316DC12E6AF16D002A42BA /* SchemaFieldValidator.swift */; };
 		D83AD9C82EF544A600649996 /* CompoundItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83AD9C72EF544A600649996 /* CompoundItem.swift */; };
 		D84E94D52D68324600CDC04C /* WechatOpenSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */; };
@@ -622,6 +626,10 @@
 		D81983412D6F120B008008A3 /* AirwallexPayment.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AirwallexPayment.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D81983482D6F120B008008A3 /* AirwallexPaymentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirwallexPaymentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D81983EA2D6F1C70008008A3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D829FE072F0D11380056EE6E /* PaymentUIContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentUIContext.swift; sourceTree = "<group>"; };
+		D829FE102F0D11450056EE6E /* AWXPaymentElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXPaymentElement.swift; sourceTree = "<group>"; };
+		D829FE112F0D11450056EE6E /* AWXPaymentElementDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXPaymentElementDelegate.swift; sourceTree = "<group>"; };
+		D829FE122F0D11450056EE6E /* EmbeddedPaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedPaymentView.swift; sourceTree = "<group>"; };
 		D8316DC12E6AF16D002A42BA /* SchemaFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaFieldValidator.swift; sourceTree = "<group>"; };
 		D8352B4D2DA640B10025BE9E /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		D83AD9C72EF544A600649996 /* CompoundItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundItem.swift; sourceTree = "<group>"; };
@@ -1202,6 +1210,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D829FE132F0D11450056EE6E /* EmbeddedPayment */ = {
+			isa = PBXGroup;
+			children = (
+				D829FE102F0D11450056EE6E /* AWXPaymentElement.swift */,
+				D829FE112F0D11450056EE6E /* AWXPaymentElementDelegate.swift */,
+				D829FE122F0D11450056EE6E /* EmbeddedPaymentView.swift */,
+			);
+			path = EmbeddedPayment;
+			sourceTree = "<group>";
+		};
 		D88E34B72DA7E91C00183A49 /* Airwallex */ = {
 			isa = PBXGroup;
 			children = (
@@ -1604,9 +1622,11 @@
 			isa = PBXGroup;
 			children = (
 				D8D36EA62E5C5CB0005618D4 /* CollectionViewManager */,
+				D829FE132F0D11450056EE6E /* EmbeddedPayment */,
 				D8D36EE42E5C5CB0005618D4 /* PaymentSheet */,
 				D8D36EF12E5C5CB0005618D4 /* Utils */,
 				D8D36EF22E5C5CB0005618D4 /* AirwallexPaymentSheet.h */,
+				D829FE072F0D11380056EE6E /* PaymentUIContext.swift */,
 				D8D36EF32E5C5CB0005618D4 /* AWXUIContext.swift */,
 			);
 			path = Sources;
@@ -2294,6 +2314,7 @@
 				D8D36F062E5C5CB0005618D4 /* AccordionSectionController.swift in Sources */,
 				D8D36F072E5C5CB0005618D4 /* ApplePaySectionController.swift in Sources */,
 				D8D36F082E5C5CB0005618D4 /* CardPaymentConsentSectionController.swift in Sources */,
+				D829FE082F0D11380056EE6E /* PaymentUIContext.swift in Sources */,
 				D8D36F092E5C5CB0005618D4 /* NewCardPaymentSectionController.swift in Sources */,
 				D8D36F0A2E5C5CB0005618D4 /* PaymentMethodTabSectionController.swift in Sources */,
 				D8D36F0B2E5C5CB0005618D4 /* SchemaPaymentSectionController.swift in Sources */,
@@ -2309,6 +2330,9 @@
 				D8D36F152E5C5CB0005618D4 /* CardNumberTextField.swift in Sources */,
 				D8D36F162E5C5CB0005618D4 /* CardPaymentToggleCell.swift in Sources */,
 				D8D36F172E5C5CB0005618D4 /* BaseTextField.swift in Sources */,
+				D829FE142F0D11450056EE6E /* AWXPaymentElement.swift in Sources */,
+				D829FE152F0D11450056EE6E /* AWXPaymentElementDelegate.swift in Sources */,
+				D829FE162F0D11450056EE6E /* EmbeddedPaymentView.swift in Sources */,
 				D8D36F182E5C5CB0005618D4 /* ContentInsetableTextField.swift in Sources */,
 				D8D36F192E5C5CB0005618D4 /* InfoCollectorTextField.swift in Sources */,
 				D8D36F1A2E5C5CB0005618D4 /* InfoCollectorTextFieldViewModel.swift in Sources */,
