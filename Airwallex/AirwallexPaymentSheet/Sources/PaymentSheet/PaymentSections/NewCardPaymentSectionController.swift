@@ -35,12 +35,13 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     static let subType = "card"
     
     private var methodType: AWXPaymentMethodType
-    
+
     private var paymentSessionHandler: PaymentSessionHandler?
     private var session: AWXSession {
         methodProvider.session
     }
     private let methodProvider: PaymentMethodProvider
+    private let paymentUIContext: PaymentUIContext
     private let switchToConsentPaymentAction: () -> Void
     private var shouldSaveCard = false
     private var shouldReuseShippingAddress: Bool
@@ -82,12 +83,14 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     
     init(cardPaymentMethod: AWXPaymentMethodType,
          methodProvider: PaymentMethodProvider,
+         paymentUIContext: PaymentUIContext,
          layout: AWXUIContext.PaymentLayout,
          imageLoader: ImageLoader,
          switchToConsentPaymentAction: @escaping () -> Void) {
         assert(cardPaymentMethod.name == AWXCardKey, "invalid method")
         self.methodType = cardPaymentMethod
         self.methodProvider = methodProvider
+        self.paymentUIContext = paymentUIContext
         self.switchToConsentPaymentAction = switchToConsentPaymentAction
         self.shouldReuseShippingAddress = methodProvider.session.billing?.address?.isComplete ?? false
         self.layout = layout
@@ -336,13 +339,13 @@ private extension NewCardPaymentSectionController {
                 paymentSessionHandler = PaymentSessionHandler(
                     session: session,
                     viewController: context.viewController!,
-                    paymentResultDelegate: AWXUIContext.shared.delegate,
+                    paymentResultDelegate: paymentUIContext.delegate,
                     methodType: methodType,
-                    dismissAction: { completion in
-                        AWXUIContext.shared.dismissAction?(completion)
+                    dismissAction: { [paymentUIContext] completion in
+                        paymentUIContext.dismissAction?(completion)
                         // clear dismissAction block here so the user cancel detection
                         // in AWXPaymentViewController.deinit() can work as expected
-                        AWXUIContext.shared.dismissAction = nil
+                        paymentUIContext.dismissAction = nil
                     }
                 )
                 try paymentSessionHandler?.confirmCardPayment(

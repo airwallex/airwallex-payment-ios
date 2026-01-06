@@ -41,9 +41,10 @@ class CardPaymentConsentSectionController: SectionController {
     private var session: AWXSession {
         methodProvider.session
     }
-    
+
     let methodProvider: PaymentMethodProvider
-    
+    private let paymentUIContext: PaymentUIContext
+
     private let addNewCardAction: () -> Void
     
     private var paymentSessionHandler: PaymentSessionHandler?
@@ -86,12 +87,14 @@ class CardPaymentConsentSectionController: SectionController {
     
     init(methodType: AWXPaymentMethodType,
          methodProvider: PaymentMethodProvider,
+         paymentUIContext: PaymentUIContext,
          layout: AWXUIContext.PaymentLayout,
          imageLoader: ImageLoader,
          addNewCardAction: @escaping () -> Void) {
         self.methodType = methodType
         self.imageLoader = imageLoader
         self.methodProvider = methodProvider
+        self.paymentUIContext = paymentUIContext
         self.addNewCardAction = addNewCardAction
         self.consents = methodProvider.consents.filter { $0.paymentMethod != nil }
         if consents.count == 1,
@@ -484,12 +487,12 @@ private extension CardPaymentConsentSectionController {
             paymentSessionHandler = PaymentSessionHandler(
                 session: session,
                 viewController: viewController,
-                paymentResultDelegate: AWXUIContext.shared.delegate,
-                dismissAction: { completion in
-                    AWXUIContext.shared.dismissAction?(completion)
+                paymentResultDelegate: paymentUIContext.delegate,
+                dismissAction: { [paymentUIContext] completion in
+                    paymentUIContext.dismissAction?(completion)
                     // clear dismissAction block here so the user cancel detection
                     // in AWXPaymentViewController.deinit() can work as expected
-                    AWXUIContext.shared.dismissAction = nil
+                    paymentUIContext.dismissAction = nil
                 }
             )
             try paymentSessionHandler?.confirmConsentPayment(with: consent)
