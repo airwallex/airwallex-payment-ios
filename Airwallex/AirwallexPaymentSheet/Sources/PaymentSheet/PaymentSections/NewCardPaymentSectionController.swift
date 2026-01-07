@@ -338,15 +338,8 @@ private extension NewCardPaymentSectionController {
             do {
                 paymentSessionHandler = PaymentSessionHandler(
                     session: session,
-                    viewController: context.viewController!,
-                    paymentResultDelegate: paymentUIContext.delegate,
                     methodType: methodType,
-                    dismissAction: { [paymentUIContext] completion in
-                        paymentUIContext.dismissAction?(completion)
-                        // clear dismissAction block here so the user cancel detection
-                        // in AWXPaymentViewController.deinit() can work as expected
-                        paymentUIContext.dismissAction = nil
-                    }
+                    paymentUIContext: paymentUIContext
                 )
                 try paymentSessionHandler?.confirmCardPayment(
                     with: card,

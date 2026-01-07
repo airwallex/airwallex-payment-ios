@@ -51,7 +51,7 @@ public class AWXPaymentElement: NSObject {
 
     private weak var hostViewController: UIViewController?
     private let methodProvider: PaymentMethodProvider
-    private let paymentUIContext: PaymentUIContext
+    private let paymentUIContext = PaymentUIContext()
     private lazy var collectionViewManager: CollectionViewManager = {
         let listConfiguration = UICollectionViewCompositionalLayoutConfiguration()
         listConfiguration.interSectionSpacing = 16
@@ -81,33 +81,18 @@ public class AWXPaymentElement: NSObject {
     ///     Used for presenting modals like 3DS authentication, redirects, and country selection.
     ///   - session: The payment session containing transaction details.
     ///   - delegate: The delegate that receives payment result callbacks.
-    ///   - layout: The layout style for payment methods (tab or accordion). Defaults to `.tab`.
-    ///   - methodNames: Optional array of payment method names to filter. If `nil`, all available methods are shown.
     /// - Returns: A configured `AWXPaymentElement` ready to be embedded.
     /// - Throws: `AWXUIContext.LaunchError` if session validation fails or payment methods cannot be fetched.
     public static func create(
         hostViewController: UIViewController,
         session: AWXSession,
-        delegate: AWXPaymentElementDelegate,
-        filterBy methodNames: [String]? = nil
+        delegate: AWXPaymentElementDelegate
     ) async throws -> AWXPaymentElement {
         // Validate session
         do {
             try session.validate()
         } catch {
             throw AWXUIContext.LaunchError.invalidSession(underlyingError: error)
-        }
-
-        // Apply method filter if provided
-        if let methodNames {
-            guard !methodNames.isEmpty else {
-                throw AWXUIContext.LaunchError.invalidMethodFilter("filter should not be empty")
-            }
-            session.paymentMethods = methodNames
-            if let oneOffSession = session as? AWXOneOffSession,
-               !methodNames.contains(where: { $0 == AWXCardKey }) {
-                oneOffSession.hidePaymentConsents = true
-            }
         }
 
         // Update logger.session for embedded integration
@@ -147,12 +132,11 @@ public class AWXPaymentElement: NSObject {
         self.hostViewController = hostViewController
         self.methodProvider = methodProvider
         self.delegate = delegate
-        // Create paymentUIContext with self as internal delegate (set after super.init)
-        self.paymentUIContext = PaymentUIContext(delegate: nil, dismissAction: nil)
         super.init()
 
-        // Now set the internal delegate
+        // Now set the internal delegate and viewController
         self.paymentUIContext.delegate = self
+        self.paymentUIContext.viewController = hostViewController
 
         // Create CollectionViewManager
         let listConfiguration = UICollectionViewCompositionalLayoutConfiguration()

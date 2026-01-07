@@ -37,6 +37,7 @@
 		D81EAF7B2D3F8BE200B44784 /* IntegrationDemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF7A2D3F8BE200B44784 /* IntegrationDemoListViewController.swift */; };
 		D8F268C12EF2A00100E84D64 /* UIIntegrationDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F268C02EF2A00100E84D64 /* UIIntegrationDemoViewController.swift */; };
 		D8F268C32EF2A00100E84D64 /* APIIntegrationDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F268C22EF2A00100E84D64 /* APIIntegrationDemoViewController.swift */; };
+		D8F268C52EF2A00100E84D64 /* EmbeddedIntegrationDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F268C42EF2A00100E84D64 /* EmbeddedIntegrationDemoViewController.swift */; };
 		D81EAF7D2D3F92D300B44784 /* ConfigActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF7C2D3F92D300B44784 /* ConfigActionView.swift */; };
 		D81EAF812D3FAAC600B44784 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF802D3FAABA00B44784 /* TopView.swift */; };
 		D81EAFA62D41DA1E00B44784 /* GetPaymentMethodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAFA52D41DA1C00B44784 /* GetPaymentMethodsViewController.swift */; };
@@ -149,6 +150,7 @@
 		D81EAF7A2D3F8BE200B44784 /* IntegrationDemoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationDemoListViewController.swift; sourceTree = "<group>"; };
 		D8F268C02EF2A00100E84D64 /* UIIntegrationDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIIntegrationDemoViewController.swift; sourceTree = "<group>"; };
 		D8F268C22EF2A00100E84D64 /* APIIntegrationDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIIntegrationDemoViewController.swift; sourceTree = "<group>"; };
+		D8F268C42EF2A00100E84D64 /* EmbeddedIntegrationDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedIntegrationDemoViewController.swift; sourceTree = "<group>"; };
 		D81EAF7C2D3F92D300B44784 /* ConfigActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigActionView.swift; sourceTree = "<group>"; };
 		D81EAF802D3FAABA00B44784 /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
 		D81EAFA52D41DA1C00B44784 /* GetPaymentMethodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPaymentMethodsViewController.swift; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 				D81EAF7A2D3F8BE200B44784 /* IntegrationDemoListViewController.swift */,
 				D8F268C02EF2A00100E84D64 /* UIIntegrationDemoViewController.swift */,
 				D8F268C22EF2A00100E84D64 /* APIIntegrationDemoViewController.swift */,
+				D8F268C42EF2A00100E84D64 /* EmbeddedIntegrationDemoViewController.swift */,
 				D80F0E322D5DD04C00401BA6 /* DemoDataSource.swift */,
 				D81EAFA52D41DA1C00B44784 /* GetPaymentMethodsViewController.swift */,
 				D89C7AEC2D423AD60042FC3B /* GetCardConsentsViewController.swift */,
@@ -682,6 +685,7 @@
 				D81EAF7B2D3F8BE200B44784 /* IntegrationDemoListViewController.swift in Sources */,
 				D8F268C12EF2A00100E84D64 /* UIIntegrationDemoViewController.swift in Sources */,
 				D8F268C32EF2A00100E84D64 /* APIIntegrationDemoViewController.swift in Sources */,
+				D8F268C52EF2A00100E84D64 /* EmbeddedIntegrationDemoViewController.swift in Sources */,
 				182F1CE52C903747000B993D /* DirectAPIClient.swift in Sources */,
 				D89C7AED2D423AD60042FC3B /* GetCardConsentsViewController.swift in Sources */,
 				D89C7AEB2D422CA70042FC3B /* TextContentViewController.swift in Sources */,

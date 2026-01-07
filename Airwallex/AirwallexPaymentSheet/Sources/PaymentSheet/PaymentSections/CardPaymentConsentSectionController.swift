@@ -458,10 +458,6 @@ private extension CardPaymentConsentSectionController {
     
     func checkout(consent: AWXPaymentConsent) {
         context.endEditing()
-        guard let viewController = context.viewController else {
-            assert(false, "view controller not found")
-            return
-        }
         AnalyticsLogger.log(
             action: .tapPayButton,
             extraInfo: [
@@ -486,14 +482,7 @@ private extension CardPaymentConsentSectionController {
         do {
             paymentSessionHandler = PaymentSessionHandler(
                 session: session,
-                viewController: viewController,
-                paymentResultDelegate: paymentUIContext.delegate,
-                dismissAction: { [paymentUIContext] completion in
-                    paymentUIContext.dismissAction?(completion)
-                    // clear dismissAction block here so the user cancel detection
-                    // in AWXPaymentViewController.deinit() can work as expected
-                    paymentUIContext.dismissAction = nil
-                }
+                paymentUIContext: paymentUIContext
             )
             try paymentSessionHandler?.confirmConsentPayment(with: consent)
         } catch {

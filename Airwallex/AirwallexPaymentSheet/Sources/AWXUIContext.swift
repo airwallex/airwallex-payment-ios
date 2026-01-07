@@ -306,12 +306,6 @@ private extension AWXUIContext {
         // Risk event
         RiskLogger.log(.transactionInitiated)
         
-        // Create PaymentUIContext for this payment flow
-        let paymentUIContext = PaymentUIContext(
-            delegate: paymentResultDelegate,
-            dismissAction: nil // Will be set after we know the dismiss behavior
-        )
-
         switch launchStyle {
         case .push:
             guard let nav = hostingVC.navigationController else {
@@ -323,11 +317,11 @@ private extension AWXUIContext {
             }
             let paymentVC = PaymentViewController(
                 methodProvider: paymentMethodProvider,
-                paymentUIContext: paymentUIContext,
                 layout: layout
             )
-            // Set dismiss action on paymentUIContext
-            paymentUIContext.dismissAction = { [weak paymentVC, weak nav] completion in
+            // Update paymentUIContext
+            paymentVC.paymentUIContext.delegate = paymentResultDelegate
+            paymentVC.paymentUIContext.dismissAction = { [weak paymentVC, weak nav] completion in
                 guard let paymentVC, let nav else {
                     completion()
                     return
@@ -350,7 +344,6 @@ private extension AWXUIContext {
         case .present:
             let paymentVC = PaymentViewController(
                 methodProvider: paymentMethodProvider,
-                paymentUIContext: paymentUIContext,
                 layout: layout
             )
             let nav = UINavigationController(rootViewController: paymentVC)
@@ -368,8 +361,9 @@ private extension AWXUIContext {
                     nav.navigationBar.compactScrollEdgeAppearance = appearance
                 }
             }
-            // Set dismiss action on paymentUIContext
-            paymentUIContext.dismissAction = { [weak nav] completion in
+            // Update paymentUIContext
+            paymentVC.paymentUIContext.delegate = paymentResultDelegate
+            paymentVC.paymentUIContext.dismissAction = { [weak nav] completion in
                 guard let nav else {
                     completion()
                     return

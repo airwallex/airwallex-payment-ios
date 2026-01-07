@@ -41,6 +41,7 @@ import UIKit
 /// - Payment result callbacks
 /// - Error handling and validation
 /// - Custom payment flow integration
+@MainActor
 public class PaymentSessionHandler: NSObject {
     private let launchSubtype = "api"
     enum ValidationError: ErrorLoggable {
@@ -75,11 +76,9 @@ public class PaymentSessionHandler: NSObject {
     
     private(set) var actionProvider: AWXDefaultProvider?
     
-    private weak var _viewController: UIViewController?
-    
     var viewController: UIViewController {
-        assert(_viewController != nil, "The view controller that launches the payment is expected to remain present until the session ends.")
-        if let viewController = _viewController {
+        assert(paymentUIContext.viewController != nil, "The view controller that launches the payment is expected to remain present until the session ends.")
+        if let viewController = paymentUIContext.viewController {
             return viewController
         }
         let windowScene = UIApplication.shared.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene
@@ -91,8 +90,10 @@ public class PaymentSessionHandler: NSObject {
     }
 
     private(set) var methodType: AWXPaymentMethodType?
-    
-    private(set) weak var paymentResultDelegate: AWXPaymentResultDelegate?
+
+    weak var paymentResultDelegate: AWXPaymentResultDelegate? {
+        paymentUIContext.delegate
+    }
 
     /// Stores the payment method name based on which start* API was called
     private var calledMethodName: String?
@@ -101,7 +102,7 @@ public class PaymentSessionHandler: NSObject {
     var paymentMethodName: String {
         calledMethodName ?? methodType?.name ?? "unknown"
     }
-    
+
     /// whether display the default loading indicator
     /// Set this to false if you prefer to display your own indicator instead of the default one
     @objc public var showIndicator: Bool = true {
@@ -122,12 +123,15 @@ public class PaymentSessionHandler: NSObject {
                                   viewController: UIViewController,
                                   paymentResultDelegate: AWXPaymentResultDelegate?,
                                   methodType: AWXPaymentMethodType? = nil) {
+        let context = PaymentUIContext(
+            viewController: viewController,
+            delegate: paymentResultDelegate,
+            dismissAction: nil
+        )
         self.init(
             session: session,
-            viewController: viewController,
-            paymentResultDelegate: paymentResultDelegate,
             methodType: methodType,
-            dismissAction: nil
+            paymentUIContext: context
         )
     }
     
@@ -148,22 +152,22 @@ public class PaymentSessionHandler: NSObject {
     }
     
     // UI Integration support
-    @_spi(AWX) public typealias DismissActionBlock = (@escaping () -> Void) -> Void
-    var dismissAction: DismissActionBlock?
-    
+    private(set) var paymentUIContext: PaymentUIContext
+
     lazy var providerFactory: ProviderFactoryProtocol = ProviderFactory()
-    
+
+    /// Internal initializer for UI integration that uses PaymentUIContext.
+    /// - Parameters:
+    ///   - session: The payment session containing relevant transaction details.
+    ///   - methodType: The payment method type returned from the server (optional).
+    ///   - paymentUIContext: The UI context containing viewController, delegate, and dismiss action.
     @_spi(AWX) public init(session: AWXSession,
-                           viewController: UIViewController,
-                           paymentResultDelegate: AWXPaymentResultDelegate?,
                            methodType: AWXPaymentMethodType? = nil,
-                           dismissAction: DismissActionBlock? = nil) {
+                           paymentUIContext: PaymentUIContext) {
         self.session = session
-        self._viewController = viewController
         self.methodType = methodType
-        self.paymentResultDelegate = paymentResultDelegate
-        self.dismissAction = dismissAction
-        
+        self.paymentUIContext = paymentUIContext
+
         // update logger.session here for low-level API integration
         AnalyticsLogger.shared().session = session
     }
@@ -522,26 +526,21 @@ extension PaymentSessionHandler: AWXProviderDelegate {
     public func provider(_ provider: AWXDefaultProvider, didCompleteWith status: AirwallexPaymentStatus, error: (any Error)?) {
         viewController.stopLoading()
         debugLog("Provider: \(type(of: provider)), stauts: \(status), error: \(error?.localizedDescription ?? "N/A")")
-        if let dismissAction {
+        if paymentUIContext.dismissAction != nil {
             if let methodType, methodType.name == AWXApplePayKey, status == .inProgress {
                 // Remain in PaymentViewController when the Apple Pay status is .inProgress for UI integration
                 // This status typically occurs when the user forcefully dismisses the PKPaymentAuthorizationController—
                 // for example, by backgrounding the app—after successfully authorizing the payment.
                 return
             }
-            let viewController = self.viewController
-            dismissAction {
-                self.paymentResultDelegate?.paymentViewController(viewController, didCompleteWith: status, error: error)
-            }
-            self.dismissAction = nil
-        } else {
+        }
+        
+        paymentUIContext.dismiss { [self] in
             paymentResultDelegate?.paymentViewController(viewController, didCompleteWith: status, error: error)
         }
+
         // log payment result
         logPaymentComplete(status: status, error: error)
-        // clear session status
-        AnalyticsLogger.shared().session = nil
-        calledMethodName = nil
     }
     
     private func logPaymentComplete(status: AirwallexPaymentStatus, error: (any Error)?) {
@@ -561,6 +560,10 @@ extension PaymentSessionHandler: AWXProviderDelegate {
         case .inProgress:
             AnalyticsLogger.log(action: .paymentInProgress, extraInfo: extraInfo)
         }
+
+        // clear session status
+        AnalyticsLogger.shared().session = nil
+        calledMethodName = nil
     }
     
     public func hostViewController() -> UIViewController {

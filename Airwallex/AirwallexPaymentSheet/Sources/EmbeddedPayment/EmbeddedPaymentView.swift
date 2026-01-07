@@ -41,8 +41,7 @@ class EmbeddedPaymentView: UIView {
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            collectionView.widthAnchor.constraint(equalToConstant: 375)
-                .priority(.fittingSizeLevel + 50)
+            collectionView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100),
         ])
 
         // Disable scrolling since the embedded view is meant to be placed in a scroll view
