@@ -325,15 +325,8 @@ private extension SchemaPaymentSectionController {
             
             paymentSessionHandler = PaymentSessionHandler(
                 session: session,
-                viewController: context.viewController!,
-                paymentResultDelegate: paymentUIContext.delegate,
                 methodType: methodProvider.method(named: name),
-                dismissAction: { [paymentUIContext] completion in
-                    paymentUIContext.dismissAction?(completion)
-                    // clear dismissAction block here so the user cancel detection
-                    // in AWXPaymentViewController.deinit() can work as expected
-                    paymentUIContext.dismissAction = nil
-                }
+                paymentUIContext: paymentUIContext
             )
             
             Task { @MainActor in

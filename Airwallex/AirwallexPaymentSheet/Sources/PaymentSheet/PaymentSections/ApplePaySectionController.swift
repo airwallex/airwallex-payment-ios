@@ -51,20 +51,13 @@ class ApplePaySectionController: SectionController {
     func cell(for sectionItem: SectionItem, at indexPath: IndexPath) -> UICollectionViewCell {
         let cell = context.dequeueReusableCell(ApplePayCell.self, for: sectionItem, indexPath: indexPath)
         let viewModel = ApplePayViewModel { [weak self] in
-            guard let self, let viewController = self.context.viewController else { return }
+            guard let self else { return }
             AnalyticsLogger.log(action: .tapPayButton, extraInfo: [.paymentMethod: methodType.name])
             do {
                 self.paymentSessionHandler = PaymentSessionHandler(
                     session: self.session,
-                    viewController: viewController,
-                    paymentResultDelegate: self.paymentUIContext.delegate,
                     methodType: methodType,
-                    dismissAction: { [paymentUIContext] completion in
-                        paymentUIContext.dismissAction?(completion)
-                        // clear dismissAction block here so the user cancel detection
-                        // in AWXPaymentViewController.deinit() can work as expected
-                        paymentUIContext.dismissAction = nil
-                    }
+                    paymentUIContext: self.paymentUIContext
                 )
                 try self.paymentSessionHandler?.confirmApplePay(cancelPaymentOnDismiss: false)
             } catch {

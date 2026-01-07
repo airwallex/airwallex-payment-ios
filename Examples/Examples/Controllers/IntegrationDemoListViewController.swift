@@ -77,13 +77,7 @@ extension IntegrationDemoListViewController {
         view.addSubview(listView)
 
         setupTitle()
-        // setup actions
-        for action in actionViewModels {
-            let button = AWXButton(style: .secondary, title: action.title)
-            button.translatesAutoresizingMaskIntoConstraints = false
-            button.addTarget(self, action: #selector(onActionButtonTapped(_:)), for: .touchUpInside)
-            listView.bottomStack.addArrangedSubview(button)
-        }
+        reloadActionButtons()
 
         let constraints = [
             listView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -93,6 +87,24 @@ extension IntegrationDemoListViewController {
         ]
 
         NSLayoutConstraint.activate(constraints)
+    }
+
+    /// Reloads action buttons in bottomStack based on current actionViewModels.
+    /// Subclasses can call this to refresh buttons when actionViewModels changes.
+    func reloadActionButtons() {
+        // Remove existing buttons
+        for view in listView.bottomStack.arrangedSubviews {
+            listView.bottomStack.removeArrangedSubview(view)
+            view.removeFromSuperview()
+        }
+
+        // Add buttons based on current actionViewModels
+        for action in actionViewModels {
+            let button = AWXButton(style: .secondary, title: action.title)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.addTarget(self, action: #selector(onActionButtonTapped(_:)), for: .touchUpInside)
+            listView.bottomStack.addArrangedSubview(button)
+        }
     }
 
     func setupTitle() {
@@ -184,7 +196,7 @@ extension IntegrationDemoListViewController {
         var session: AWXSession
         if ExamplesKeys.preferUnifiedSession {
             if ExamplesKeys.expressCheckout {
-                session = try await createUnifiedSessionWithProvider(force3DS: force3DS)
+                session = try createUnifiedSessionWithProvider(force3DS: force3DS)
             } else {
                 session = try await createUnifiedSessionWithIntent(force3DS: force3DS)
             }
@@ -214,7 +226,7 @@ extension IntegrationDemoListViewController {
         return session
     }
     
-    func createUnifiedSessionWithProvider(force3DS: Bool = ExamplesKeys.force3DS) async throws -> AWXSession {
+    func createUnifiedSessionWithProvider(force3DS: Bool = ExamplesKeys.force3DS) throws -> AWXSession {
         // Merchant trigger reason
         let session = Session(
             paymentIntentProvider: self,

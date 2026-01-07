@@ -29,13 +29,13 @@ class PaymentViewController: AWXViewController {
 
     private(set) var layout: AWXUIContext.PaymentLayout
 
-    let paymentUIContext: PaymentUIContext
+    private(set) lazy var paymentUIContext = PaymentUIContext(
+        viewController: self
+    )
 
     init(methodProvider: PaymentMethodProvider,
-         paymentUIContext: PaymentUIContext,
          layout: AWXUIContext.PaymentLayout = .tab) {
         self.methodProvider = methodProvider
-        self.paymentUIContext = paymentUIContext
         self.layout = layout
         super.init(nibName: nil, bundle: nil)
         self.session = methodProvider.session
@@ -49,9 +49,10 @@ class PaymentViewController: AWXViewController {
         Task { @MainActor [paymentUIContext] in
             if paymentUIContext.dismissAction != nil {
                 // user cancel payment by navigation stack interactions, like screen edge pan gesture
-                paymentUIContext.dismissAction = nil
-                AnalyticsLogger.log(action: .paymentCanceled)
-                paymentUIContext.delegate?.paymentViewController(nil, didCompleteWith: .cancel, error: nil)
+                paymentUIContext.dismiss {
+                    AnalyticsLogger.log(action: .paymentCanceled)
+                    paymentUIContext.delegate?.paymentViewController(nil, didCompleteWith: .cancel, error: nil)
+                }
             }
             AnalyticsLogger.shared().session = nil
         }
@@ -142,7 +143,6 @@ class PaymentViewController: AWXViewController {
     }
     
     @objc func onCloseButtonTapped() {
-        paymentUIContext.dismissAction = nil
         dismiss(animated: true) {
             self.paymentUIContext.delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
         }
@@ -163,12 +163,7 @@ class PaymentViewController: AWXViewController {
                     guard self.methodProvider.methods.isEmpty else {
                         return
                     }
-                    if let action = self.paymentUIContext.dismissAction {
-                        action {
-                            self.paymentUIContext.delegate?.paymentViewController(self, didCompleteWith: .failure, error: error)
-                        }
-                        self.paymentUIContext.dismissAction = nil
-                    } else {
+                    self.paymentUIContext.dismiss {
                         self.paymentUIContext.delegate?.paymentViewController(self, didCompleteWith: .failure, error: error)
                     }
                 }

@@ -108,4 +108,13 @@ class DemoListView: UIView {
         
         NSLayoutConstraint.activate(constraints)
     }
+
+    func addViewToTopStack(_ view: UIView) {
+        topStack.addArrangedSubview(view)
+    }
+
+    func removeViewFromTopStack(_ view: UIView) {
+        topStack.removeArrangedSubview(view)
+        view.removeFromSuperview()
+    }
 }
