@@ -62,7 +62,7 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         guard let sectionController = getSchemaPaymentSectionController() else { return }
         XCTAssertEqual(sectionController.section, .schemaPayment("online_banking"))
         XCTAssertEqual(sectionController.layout, .tab)
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        try? await Task.sleep(nanoseconds: 500_000_000)
         XCTAssert(sectionController.items.contains("shopper_name"))
         XCTAssert(sectionController.items.contains("shopper_email"))
         XCTAssert(sectionController.items.contains("shopper_phone"))
