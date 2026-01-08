@@ -7,8 +7,8 @@
 //
 
 #if canImport(AirwallexPayment)
-@_spi(AWX) import AirwallexPayment
 import AirwallexCore
+@_spi(AWX) import AirwallexPayment
 #endif
 import Combine
 import Foundation
@@ -44,7 +44,7 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
         
         // Only fetch consents if AWXCardKey in the filtered methods
         if methods.contains(where: { $0.name.lowercased() == AWXCardKey }),
-           (session is Session || session is AWXOneOffSession || session is AWXRecurringWithIntentSession) {
+           session is Session || session is AWXOneOffSession || session is AWXRecurringWithIntentSession {
             // AWXOneOffSession and AWXRecurringWithIntentSession can be converted to Session internally to
             // work with the simplified consent flow
             let consentsResult = try await getAllConsents()
@@ -55,7 +55,7 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
             consents = [AWXPaymentConsent]()
             mitConsents = [String: AWXPaymentConsent]()
         }
-        if let old = selectedMethod, let new = methods.first(where: { $0.name == old.name}) {
+        if let old = selectedMethod, let new = methods.first(where: { $0.name == old.name }) {
             selectedMethod = new
         } else {
             selectedMethod =  methods.first { $0.name != AWXApplePayKey }
@@ -210,7 +210,7 @@ private extension PaymentSheetMethodProvider {
                 // also remove MIT consent from mitConsents dictionary
                 // we have blocked removal of MIT consent from payment UI,
                 // so this will not actually happened
-                if let element = mitConsents.first(where:{ $0.value.id == consentId }) {
+                if let element = mitConsents.first(where: { $0.value.id == consentId }) {
                     mitConsents.removeValue(forKey: element.key)
                 }
             }

@@ -6,9 +6,9 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
+import Airwallex
 import Foundation
 import UIKit
-import Airwallex
 
 @MainActor
 class PaymentStatusPoller {

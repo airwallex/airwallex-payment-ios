@@ -7,7 +7,7 @@
 //
 
 // @_exported only work when import Airwallex in Swift Code
-import Foundation
 @_exported import AirwallexCore
 @_exported import AirwallexPayment
 @_exported import AirwallexPaymentSheet
+import Foundation

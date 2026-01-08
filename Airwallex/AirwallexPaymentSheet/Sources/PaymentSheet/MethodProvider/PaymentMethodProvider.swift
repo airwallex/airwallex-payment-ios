@@ -6,8 +6,8 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 #if canImport(AirwallexCore)
 import AirwallexCore
 @_spi(AWX) import AirwallexPayment

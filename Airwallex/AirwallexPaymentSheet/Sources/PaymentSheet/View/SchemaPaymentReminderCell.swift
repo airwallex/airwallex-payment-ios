@@ -56,5 +56,4 @@ class SchemaPaymentReminderCell: UICollectionViewCell, ViewReusable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
 }

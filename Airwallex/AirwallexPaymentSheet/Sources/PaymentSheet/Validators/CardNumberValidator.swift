@@ -8,17 +8,13 @@
 
 import Foundation
 #if canImport(AirwallexPayment)
-@_spi(AWX) import AirwallexPayment
 import AirwallexCore
+@_spi(AWX) import AirwallexPayment
 #endif
 
 struct CardNumberValidator: UserInputValidator {
     
     let supportedCardSchemes: [AWXCardScheme]
-    
-    init(supportedCardSchemes: [AWXCardScheme]) {
-        self.supportedCardSchemes = supportedCardSchemes
-    }
     
     func validateUserInput(_ text: String?) throws {
         try AWXCardValidator.validate(number: text, supportedSchemes: supportedCardSchemes)

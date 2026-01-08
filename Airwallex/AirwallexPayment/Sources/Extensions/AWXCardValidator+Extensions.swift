@@ -123,7 +123,7 @@ import AirwallexCore
     
     static func possibleBrandTypes(forCardNumber number: String?) -> [AWXBrandType] {
         let results = AWXCardValidator.shared().possibleBrandTypes(forCardNumber: number ?? "")
-        return results.compactMap { AWXBrandType(rawValue: $0.uintValue)}
+        return results.compactMap { AWXBrandType(rawValue: $0.uintValue) }
     }
     
     /// Validates a card number using the Luhn algorithm

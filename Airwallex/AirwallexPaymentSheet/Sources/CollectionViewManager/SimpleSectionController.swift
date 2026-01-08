@@ -30,7 +30,7 @@ class SimpleSectionController<SectionType: Hashable & Sendable, ItemType: Hashab
         self.selectionHandler = selectionHandler
     }
     
-    //  MARK: - SectionController
+    // MARK: - SectionController
     private(set) var context: CollectionViewContext<SectionType, ItemType>!
     
     let section: SectionType

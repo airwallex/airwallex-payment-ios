@@ -10,7 +10,7 @@ import UIKit
 
 /// this protocol is designed to work with `CollectionViewManager`
 /// SectionController  define the behavior of a section in a UICollectionView
-@MainActor protocol SectionController: AnyObject  {
+@MainActor protocol SectionController: AnyObject {
     associatedtype SectionType: Hashable, Sendable
     associatedtype ItemType: Hashable, Sendable
     
@@ -46,7 +46,6 @@ import UIKit
     /// - Parameter environment: layout environment
     /// - Returns: layout of the section
     func layout(environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection
-    
     
     /// this will be called in the `supplementaryViewProvider` of `UICollectionViewDiffableDataSource`
     /// - Parameters:

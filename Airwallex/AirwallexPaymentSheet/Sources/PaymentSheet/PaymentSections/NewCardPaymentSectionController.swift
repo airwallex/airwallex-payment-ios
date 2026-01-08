@@ -6,8 +6,8 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
-import UIKit
 import AirwallexRisk
+import UIKit
 #if canImport(AirwallexPayment)
 import AirwallexCore
 @_spi(AWX) import AirwallexPayment
@@ -491,7 +491,7 @@ private extension NewCardPaymentSectionController {
             }
         )
     
-        let returnActionHandler: (String, UIResponder) -> Bool = { [weak self] itemIdentifier, responder in
+        let returnActionHandler: (String, UIResponder) -> Bool = { [weak self] itemIdentifier, _ in
             guard let self else { return false }
             return self.context.activateNextRespondableCell(
                 section: self.section,

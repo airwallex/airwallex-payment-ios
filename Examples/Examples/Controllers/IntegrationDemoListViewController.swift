@@ -6,9 +6,9 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import UIKit
 import Airwallex
 import Combine
+import UIKit
 
 class IntegrationDemoListViewController: UIViewController {
     
@@ -303,7 +303,7 @@ extension IntegrationDemoListViewController: PaymentIntentProvider {
     }
 }
 
-//  MARK:  UI Integration actions
+// MARK: UI Integration actions
 private extension IntegrationDemoListViewController {
     
     func launchDefaultPaymentsList(launchStyle: AWXUIContext.LaunchStyle) {

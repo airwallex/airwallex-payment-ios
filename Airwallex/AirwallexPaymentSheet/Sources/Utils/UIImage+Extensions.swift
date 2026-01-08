@@ -14,7 +14,7 @@ import AirwallexCore
 extension UIImage {
     
     static func image(for brand: AWXBrandType) -> UIImage? {
-        var imageName: String? = nil
+        var imageName: String?
         switch brand {
         case .visa:
             imageName = "visa"

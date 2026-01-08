@@ -6,11 +6,11 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import UIKit
 import AirwallexCore
+import UIKit
 
 class MockPaymentResultDelegate: UIViewController, AWXPaymentResultDelegate {
-    var status: AirwallexPaymentStatus? = nil
+    var status: AirwallexPaymentStatus?
     weak var viewController: UIViewController?
     var error: Error?
     var consentId: String?

@@ -47,7 +47,6 @@ final class ProviderFactory: ProviderFactoryProtocol {
         }
     }
     
-    
     func cardProvider(delegate: any AWXProviderDelegate,
                       session: AWXSession,
                       type: AWXPaymentMethodType?) -> CardProviderProtocol {

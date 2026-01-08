@@ -11,7 +11,7 @@ import Foundation
 import AirwallexCore
 #endif
 
-fileprivate let localizationComment = "session validation"
+private let localizationComment = "session validation"
 
 public extension AWXSession {
     enum ValidationError: LocalizedError, CustomNSError {
@@ -26,7 +26,7 @@ public extension AWXSession {
             AWXSDKErrorDomain
         }
         
-        public var errorUserInfo: [String : Any] {
+        public var errorUserInfo: [String: Any] {
             [ NSLocalizedDescriptionKey: errorDescription ]
         }
         

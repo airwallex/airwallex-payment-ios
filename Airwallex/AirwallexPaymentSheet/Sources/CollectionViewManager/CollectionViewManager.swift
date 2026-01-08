@@ -64,7 +64,7 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
         
         diffableDataSource = UICollectionViewDiffableDataSource<SectionType, SectionItem>(
             collectionView: collectionView,
-            cellProvider: { [weak self] collectionView, indexPath, sectionItem in
+            cellProvider: { [weak self] _, indexPath, sectionItem in
                 guard let self, let sectionType = self.sections[safe: indexPath.section],
                       let sectionController = self.sectionControllers[sectionType] else {
                     assert(false, "invalid section index")
@@ -75,9 +75,9 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
             }
         )
         
-        diffableDataSource.supplementaryViewProvider = {[weak self] (collectionView, elementKind, indexPath) in
+        diffableDataSource.supplementaryViewProvider = {[weak self] (_, elementKind, indexPath) in
             guard let self else { return nil }
-            if let boundaryItem = boundaryItems?.first(where: { $0.elementKind == elementKind}) {
+            if let boundaryItem = boundaryItems?.first(where: { $0.elementKind == elementKind }) {
                 return self.context.dequeueReusableSupplementaryView(ofKind: elementKind, viewClass: boundaryItem.reusableView, indexPath: indexPath)
             }
             guard let section = self.sections[safe: indexPath.section],
