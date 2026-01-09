@@ -128,7 +128,7 @@ public class AWXPaymentElement: NSObject {
         return element
     }
 
-    private init(
+    init(
         hostViewController: UIViewController,
         methodProvider: PaymentMethodProvider,
         delegate: AWXPaymentResultDelegate
