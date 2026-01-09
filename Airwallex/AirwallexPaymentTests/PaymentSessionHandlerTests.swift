@@ -71,13 +71,12 @@ class PaymentSessionHandlerTests: XCTestCase {
             session: mockSession,
             viewController: viewController,
             paymentResultDelegate: mockPaymentResultDelegate,
-            methodType: mockMethodType) { _ in }
+            methodType: mockMethodType)
         XCTAssertTrue(handler.paymentResultDelegate === mockPaymentResultDelegate)
         XCTAssertFalse(handler.viewController === mockPaymentResultDelegate)
         XCTAssertTrue(handler.viewController === viewController)
         XCTAssertEqual(handler.methodType, mockMethodType)
         XCTAssertEqual(handler.session, mockSession)
-        XCTAssertNotNil(handler.dismissAction)
         XCTAssertTrue(AnalyticsLogger.shared().session === mockSession)
     }
 
@@ -91,7 +90,6 @@ class PaymentSessionHandlerTests: XCTestCase {
         XCTAssertNil(handler.methodType)
         XCTAssertTrue(handler.session === self.mockSession)
         XCTAssertNil(mockPaymentResultDelegate.error)
-        XCTAssertNil(handler.dismissAction)
         XCTAssertTrue(AnalyticsLogger.shared().session === mockSession)
     }
     
@@ -107,7 +105,6 @@ class PaymentSessionHandlerTests: XCTestCase {
         XCTAssertNil(handler.methodType)
         XCTAssertTrue(handler.session === self.mockSession)
         XCTAssertNil(mockPaymentResultDelegate.error)
-        XCTAssertNil(handler.dismissAction)
         XCTAssertTrue(AnalyticsLogger.shared().session === mockSession)
     }
     
@@ -573,17 +570,15 @@ class PaymentSessionHandlerTests: XCTestCase {
             XCTAssertEqual(mockPaymentResultDelegate.status, status)
         }
         for status in allCases {
-            mockSessionHandler.dismissAction = { $0() }
             mockSessionHandler.provider(mockProvider, didCompleteWith: status, error: nil)
             XCTAssertEqual(mockPaymentResultDelegate.status, status)
         }
     }
     
     func testProviderDidCompleteWithApplePayInProgress() {
-        mockSessionHandler.dismissAction = { $0() }
         mockMethodType.name = AWXApplePayKey
         mockSessionHandler.provider(mockProvider, didCompleteWith: .inProgress, error: nil)
-        XCTAssertNil(mockPaymentResultDelegate.status)
+        XCTAssertEqual(mockPaymentResultDelegate.status, .inProgress)
     }
 
     func testProviderShouldHandleNextAction() {
