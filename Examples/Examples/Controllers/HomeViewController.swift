@@ -31,13 +31,6 @@ class HomeViewController: UIViewController {
         return view
     }()
 
-    private lazy var embeddedElementButton: UIButton = {
-        let view = AWXButton(style: .secondary, title: "Integrate with Embedded Element")
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.addTarget(self, action: #selector(embeddedElementButtonTapped), for: .touchUpInside)
-        return view
-    }()
-
     private lazy var html5DemoButton: UIButton = {
         let view = AWXButton(style: .secondary, title: "Integrate with HTML5 DEMO")
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -78,7 +71,6 @@ class HomeViewController: UIViewController {
         scrollView.addSubview(stack)
         stack.addArrangedSubview(integrateWithUIButton)
         stack.addArrangedSubview(lowLevelAPIButton)
-        stack.addArrangedSubview(embeddedElementButton)
         stack.addArrangedSubview(html5DemoButton)
         stack.addArrangedSubview(WeChatDemoButton)
         
@@ -121,10 +113,6 @@ extension HomeViewController {
 
     @objc func lowLevelAPIButtonTapped() {
         navigationController?.pushViewController(APIIntegrationDemoViewController(), animated: true)
-    }
-
-    @objc func embeddedElementButtonTapped() {
-        navigationController?.pushViewController(EmbeddedIntegrationDemoViewController(), animated: true)
     }
 
     @objc func html5DemoButtonTapped() {

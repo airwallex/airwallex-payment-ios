@@ -50,11 +50,17 @@ class UIIntegrationDemoViewController: IntegrationDemoListViewController {
                 }
             ),
             ActionViewModel(
+                title: "Launch with Embedded Element",
+                action: { [weak self] in
+                    self?.launchEmbeddedElement()
+                }
+            ),
+            ActionViewModel(
                 title: "Launch shipping address (dialog)",
                 action: { [weak self] in
                     self?.launchShippingAddressDialog()
                 }
-            )
+            ),
         ]
     }
 }
@@ -124,5 +130,10 @@ private extension UIIntegrationDemoViewController {
         controller.shipping = shippingAddress
         let nav = UINavigationController(rootViewController: controller)
         navigationController?.present(nav, animated: true)
+    }
+
+    func launchEmbeddedElement() {
+        let controller = EmbeddedIntegrationDemoViewController()
+        navigationController?.pushViewController(controller, animated: true)
     }
 }

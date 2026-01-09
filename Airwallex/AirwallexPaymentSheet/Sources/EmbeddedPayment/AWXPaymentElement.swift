@@ -142,15 +142,6 @@ public class AWXPaymentElement: NSObject {
         self.paymentUIContext.delegate = delegate
         self.paymentUIContext.viewController = hostViewController
 
-        // Create CollectionViewManager
-        let listConfiguration = UICollectionViewCompositionalLayoutConfiguration()
-        listConfiguration.interSectionSpacing = 16
-        self.collectionViewManager = CollectionViewManager(
-            viewController: hostViewController,
-            sectionProvider: self,
-            listConfiguration: listConfiguration
-        )
-
         // Configure collection view
         let collectionView = collectionViewManager.collectionView!
         collectionView.backgroundColor = .awxColor(.backgroundPrimary)
