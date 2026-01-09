@@ -108,42 +108,21 @@ private extension EmbeddedIntegrationDemoViewController {
     }
 }
 
-// MARK: - AWXPaymentElementDelegate
+// MARK: - AWXPaymentResultDelegate override
 
-extension EmbeddedIntegrationDemoViewController: AWXPaymentElementDelegate {
-
-    func paymentElement(
-        _ element: AWXPaymentElement,
+extension EmbeddedIntegrationDemoViewController {
+    
+    override func paymentViewController(
+        _ controller: UIViewController?,
         didCompleteWith status: AirwallexPaymentStatus,
         error: Error?
     ) {
-        // Show result alert
-        switch status {
-        case .success:
-            showAlert(message: "Your payment has been charged", title: "Payment successful")
-        case .inProgress:
-            print("Payment in progress")
-            showAlert(message: "Payment is being processed", title: "Payment in progress")
-        case .failure:
-            showAlert(
-                message: error?.localizedDescription ?? "There was an error while processing your payment.",
-                title: "Payment failed"
-            )
-        case .cancel:
-            showAlert(message: "Your payment has been cancelled", title: "Payment cancelled")
-        }
-
+        super.paymentViewController(controller, didCompleteWith: status, error: error)
+        
         // Exit embedded mode
         exitEmbeddedMode()
-
+        
         // Clear session
         session = nil
-    }
-
-    func paymentElement(
-        _ element: AWXPaymentElement,
-        didCompleteWithPaymentConsentId consentId: String
-    ) {
-        print("paymentElement(_:didCompleteWithPaymentConsentId:) - \(consentId)")
     }
 }

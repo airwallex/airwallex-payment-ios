@@ -145,7 +145,6 @@
 		D8269FBA2DB7701E00E179EB /* AWXRedirectActionProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E0571429C95A6A0099388A /* AWXRedirectActionProviderTests.m */; };
 		D8269FBB2DB7702400E179EB /* AWXCardProviderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1829B8C3291B3B7000D0D2CA /* AWXCardProviderTests.m */; };
 		D829FE142F0D11450056EE6E /* AWXPaymentElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = D829FE102F0D11450056EE6E /* AWXPaymentElement.swift */; };
-		D829FE152F0D11450056EE6E /* AWXPaymentElementDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D829FE112F0D11450056EE6E /* AWXPaymentElementDelegate.swift */; };
 		D829FE162F0D11450056EE6E /* EmbeddedPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D829FE122F0D11450056EE6E /* EmbeddedPaymentView.swift */; };
 		D8316DC22E6AF16D002A42BA /* SchemaFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8316DC12E6AF16D002A42BA /* SchemaFieldValidator.swift */; };
 		D83AD9C82EF544A600649996 /* CompoundItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83AD9C72EF544A600649996 /* CompoundItem.swift */; };
@@ -627,7 +626,6 @@
 		D81983482D6F120B008008A3 /* AirwallexPaymentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirwallexPaymentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D81983EA2D6F1C70008008A3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D829FE102F0D11450056EE6E /* AWXPaymentElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXPaymentElement.swift; sourceTree = "<group>"; };
-		D829FE112F0D11450056EE6E /* AWXPaymentElementDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXPaymentElementDelegate.swift; sourceTree = "<group>"; };
 		D829FE122F0D11450056EE6E /* EmbeddedPaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedPaymentView.swift; sourceTree = "<group>"; };
 		D8316DC12E6AF16D002A42BA /* SchemaFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaFieldValidator.swift; sourceTree = "<group>"; };
 		D8352B4D2DA640B10025BE9E /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -1214,7 +1212,6 @@
 			isa = PBXGroup;
 			children = (
 				D829FE102F0D11450056EE6E /* AWXPaymentElement.swift */,
-				D829FE112F0D11450056EE6E /* AWXPaymentElementDelegate.swift */,
 				D829FE122F0D11450056EE6E /* EmbeddedPaymentView.swift */,
 			);
 			path = EmbeddedPayment;
@@ -2330,7 +2327,6 @@
 				D8D36F162E5C5CB0005618D4 /* CardPaymentToggleCell.swift in Sources */,
 				D8D36F172E5C5CB0005618D4 /* BaseTextField.swift in Sources */,
 				D829FE142F0D11450056EE6E /* AWXPaymentElement.swift in Sources */,
-				D829FE152F0D11450056EE6E /* AWXPaymentElementDelegate.swift in Sources */,
 				D829FE162F0D11450056EE6E /* EmbeddedPaymentView.swift in Sources */,
 				D8D36F182E5C5CB0005618D4 /* ContentInsetableTextField.swift in Sources */,
 				D8D36F192E5C5CB0005618D4 /* InfoCollectorTextField.swift in Sources */,
