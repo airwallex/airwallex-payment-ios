@@ -6,11 +6,12 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import UIKit
-import XCTest
 import AirwallexCore
 @testable @_spi(AWX) import AirwallexPayment
+import UIKit
+import XCTest
 
+@MainActor
 class PaymentSessionHandlerTests: XCTestCase {
 
     private var mockPaymentResultDelegate: MockPaymentResultDelegate!
@@ -70,13 +71,12 @@ class PaymentSessionHandlerTests: XCTestCase {
             session: mockSession,
             viewController: viewController,
             paymentResultDelegate: mockPaymentResultDelegate,
-            methodType: mockMethodType) { _ in }
+            methodType: mockMethodType)
         XCTAssertTrue(handler.paymentResultDelegate === mockPaymentResultDelegate)
         XCTAssertFalse(handler.viewController === mockPaymentResultDelegate)
         XCTAssertTrue(handler.viewController === viewController)
         XCTAssertEqual(handler.methodType, mockMethodType)
         XCTAssertEqual(handler.session, mockSession)
-        XCTAssertNotNil(handler.dismissAction)
         XCTAssertTrue(AnalyticsLogger.shared().session === mockSession)
     }
 
@@ -90,7 +90,6 @@ class PaymentSessionHandlerTests: XCTestCase {
         XCTAssertNil(handler.methodType)
         XCTAssertTrue(handler.session === self.mockSession)
         XCTAssertNil(mockPaymentResultDelegate.error)
-        XCTAssertNil(handler.dismissAction)
         XCTAssertTrue(AnalyticsLogger.shared().session === mockSession)
     }
     
@@ -106,7 +105,6 @@ class PaymentSessionHandlerTests: XCTestCase {
         XCTAssertNil(handler.methodType)
         XCTAssertTrue(handler.session === self.mockSession)
         XCTAssertNil(mockPaymentResultDelegate.error)
-        XCTAssertNil(handler.dismissAction)
         XCTAssertTrue(AnalyticsLogger.shared().session === mockSession)
     }
     
@@ -319,7 +317,7 @@ class PaymentSessionHandlerTests: XCTestCase {
               case AWXCardProvider.ValidationError.invalidBillingInfo = error else {
             XCTFail("Expected AWXCardProvider.ValidationError.invalidBillingInfo but got \(String(describing: mockPaymentResultDelegate.error))")
             return
-        }   
+        }
     }
 
     func testStartCardPaymentWithNoStateInBillingInfo() {
@@ -572,17 +570,15 @@ class PaymentSessionHandlerTests: XCTestCase {
             XCTAssertEqual(mockPaymentResultDelegate.status, status)
         }
         for status in allCases {
-            mockSessionHandler.dismissAction = { $0() }
             mockSessionHandler.provider(mockProvider, didCompleteWith: status, error: nil)
             XCTAssertEqual(mockPaymentResultDelegate.status, status)
         }
     }
     
     func testProviderDidCompleteWithApplePayInProgress() {
-        mockSessionHandler.dismissAction = { $0() }
         mockMethodType.name = AWXApplePayKey
         mockSessionHandler.provider(mockProvider, didCompleteWith: .inProgress, error: nil)
-        XCTAssertNil(mockPaymentResultDelegate.status)
+        XCTAssertEqual(mockPaymentResultDelegate.status, .inProgress)
     }
 
     func testProviderShouldHandleNextAction() {
@@ -592,7 +588,7 @@ class PaymentSessionHandlerTests: XCTestCase {
     }
 
     func testProviderHandleNotExistingCallSDKAction() {
-        let nextAction = AWXConfirmPaymentNextAction.decode(fromJSON: ["type" : "call_sdk"]) as! AWXConfirmPaymentNextAction
+        let nextAction = AWXConfirmPaymentNextAction.decode(fromJSON: ["type": "call_sdk"]) as! AWXConfirmPaymentNextAction
         mockSessionHandler.provider(mockProvider, shouldHandle: nextAction)
         XCTAssertEqual(mockPaymentResultDelegate.status, .failure)
     }
@@ -601,7 +597,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         let mockConsent = AWXPaymentConsent()
         mockConsent.id = "mock_cst_id"
         let nextAction = AWXConfirmPaymentNextAction.decode(fromJSON: [
-            "type" : "redirect_form",
+            "type": "redirect_form",
             "method": "mock_method",
             "url": AWXThreeDSReturnURL
         ]) as! AWXConfirmPaymentNextAction
