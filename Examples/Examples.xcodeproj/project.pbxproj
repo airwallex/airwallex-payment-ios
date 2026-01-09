@@ -45,6 +45,7 @@
 		D823D8E12DDC36F400B27CA1 /* CheckoutMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D823D8DF2DDC36E500B27CA1 /* CheckoutMode.swift */; };
 		D8331FF02DB0E63300D85575 /* Keys.json in Resources */ = {isa = PBXBuildFile; fileRef = D8B38C252D9E5F2B00909ADD /* Keys.json */; };
 		D872B35A2D5DFA24007BC089 /* DemoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D872B3592D5DFA1A007BC089 /* DemoListView.swift */; };
+		D872B35C2D5DFA25007BC089 /* OrderInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D872B35B2D5DFA25007BC089 /* OrderInfoView.swift */; };
 		D89C7AEB2D422CA70042FC3B /* TextContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89C7AEA2D422CA70042FC3B /* TextContentViewController.swift */; };
 		D89C7AED2D423AD60042FC3B /* GetCardConsentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89C7AEC2D423AD60042FC3B /* GetCardConsentsViewController.swift */; };
 		D89C7AF32D424C890042FC3B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89C7AF22D424C890042FC3B /* SettingsViewController.swift */; };
@@ -156,6 +157,7 @@
 		D81EAFA52D41DA1C00B44784 /* GetPaymentMethodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPaymentMethodsViewController.swift; sourceTree = "<group>"; };
 		D823D8DF2DDC36E500B27CA1 /* CheckoutMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutMode.swift; sourceTree = "<group>"; };
 		D872B3592D5DFA1A007BC089 /* DemoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoListView.swift; sourceTree = "<group>"; };
+		D872B35B2D5DFA25007BC089 /* OrderInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderInfoView.swift; sourceTree = "<group>"; };
 		D89C7AEA2D422CA70042FC3B /* TextContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextContentViewController.swift; sourceTree = "<group>"; };
 		D89C7AEC2D423AD60042FC3B /* GetCardConsentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCardConsentsViewController.swift; sourceTree = "<group>"; };
 		D89C7AF22D424C890042FC3B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 				D81EAF6F2D3F8B8F00B44784 /* ConfigTextFieldViewModel.swift */,
 				D81EAF7C2D3F92D300B44784 /* ConfigActionView.swift */,
 				D872B3592D5DFA1A007BC089 /* DemoListView.swift */,
+				D872B35B2D5DFA25007BC089 /* OrderInfoView.swift */,
 				D81EAF802D3FAABA00B44784 /* TopView.swift */,
 				D81EAF722D3F8B8F00B44784 /* UIButton+Extension.swift */,
 			);
@@ -708,6 +711,7 @@
 				D8F84B852DDC1BDC0020C73F /* AccessibilityIdentifiers.swift in Sources */,
 				1859F1972C89A6290017FA4D /* APIClient.swift in Sources */,
 				D872B35A2D5DFA24007BC089 /* DemoListView.swift in Sources */,
+				D872B35C2D5DFA25007BC089 /* OrderInfoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

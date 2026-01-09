@@ -359,7 +359,7 @@ extension IntegrationDemoListViewController: AWXPaymentResultDelegate {
 }
 
 // MARK: - Payment Status Polling
-private extension IntegrationDemoListViewController {
+extension IntegrationDemoListViewController {
     func startPollingForPaymentIntent(_ intentId: String) {
         paymentStatusPoller?.stop()
 

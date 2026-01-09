@@ -14,51 +14,65 @@ class EmbeddedIntegrationDemoViewController: IntegrationDemoListViewController {
     // MARK: - Properties
 
     private var paymentElement: AWXPaymentElement?
-    private var isInEmbeddedMode = false
+    private lazy var keyboardHandler = KeyboardHandler()
 
     // MARK: - Abstract Property Overrides
 
     override var pageTitle: String {
-        "Integrate with Embedded Element"
+        "Shopping Cart"
     }
 
     override var actionViewModels: [ActionViewModel] {
-        if isInEmbeddedMode {
-            return [
-                ActionViewModel(
-                    title: "Cancel",
-                    action: { [weak self] in
-                        self?.exitEmbeddedMode()
-                    }
-                )
-            ]
-        } else {
-            return [
-                ActionViewModel(
-                    title: "Display embedded element",
-                    action: { [weak self] in
-                        self?.enterEmbeddedMode()
-                    }
-                )
-            ]
-        }
+        []
+    }
+
+    // MARK: - Lifecycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupShoppingCartUI()
+        loadPaymentElement()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        keyboardHandler.startObserving(listView.scrollView)
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        keyboardHandler.stopObserving()
     }
 }
 
-// MARK: - Embedded Mode Management
+// MARK: - UI Setup
 
 private extension EmbeddedIntegrationDemoViewController {
 
-    func enterEmbeddedMode() {
-        guard !isInEmbeddedMode else { return }
+    func setupShoppingCartUI() {
+        // Hide optionView and gear button
+        listView.optionView.isHidden = true
+        listView.topView.setActionButtonHidden(true)
 
+        // Add order info to top stack
+        let orderInfoView = OrderInfoView(
+            products: DemoDataSource.products,
+            shipping: DemoDataSource.shippingAddress
+        )
+        orderInfoView.translatesAutoresizingMaskIntoConstraints = false
+        listView.addViewToTopStack(orderInfoView)
+    }
+}
+
+// MARK: - Payment Element
+
+private extension EmbeddedIntegrationDemoViewController {
+
+    func loadPaymentElement() {
         Task {
             startLoading()
             do {
-                // Create payment session
                 let session = try await createPaymentSession()
-
-                // Create AWXPaymentElement
                 let element = try await AWXPaymentElement.create(
                     hostViewController: self,
                     session: session,
@@ -66,63 +80,54 @@ private extension EmbeddedIntegrationDemoViewController {
                 )
                 self.paymentElement = element
 
-                // Update mode and UI
-                isInEmbeddedMode = true
-                updateUIForEmbeddedMode()
-
+                let elementView = element.view
+                elementView.translatesAutoresizingMaskIntoConstraints = false
+                listView.addViewToBottomStack(elementView)
             } catch {
                 showAlert(message: error.localizedDescription)
             }
             stopLoading()
         }
     }
-
-    func exitEmbeddedMode() {
-        guard isInEmbeddedMode else { return }
-
-        // Update mode and UI
-        isInEmbeddedMode = false
-        updateUIForEmbeddedMode()
-
-        // Clear references
-        paymentElement = nil
-    }
-
-    func updateUIForEmbeddedMode() {
-        // Hide/show optionView
-        listView.optionView.isHidden = isInEmbeddedMode
-
-        // Hide/show settings gear
-        listView.topView.setActionButtonHidden(isInEmbeddedMode)
-
-        // Add/remove embedded element view
-        if isInEmbeddedMode, let elementView = paymentElement?.view {
-            elementView.translatesAutoresizingMaskIntoConstraints = false
-            listView.addViewToTopStack(elementView)
-        } else if let elementView = paymentElement?.view {
-            listView.removeViewFromTopStack(elementView)
-        }
-
-        // Reload action buttons based on current mode
-        reloadActionButtons()
-    }
 }
 
 // MARK: - AWXPaymentResultDelegate override
 
 extension EmbeddedIntegrationDemoViewController {
-    
+
     override func paymentViewController(
         _ controller: UIViewController?,
         didCompleteWith status: AirwallexPaymentStatus,
         error: Error?
     ) {
-        super.paymentViewController(controller, didCompleteWith: status, error: error)
-        
-        // Exit embedded mode
-        exitEmbeddedMode()
-        
-        // Clear session
-        session = nil
+        let action: () -> Void = {
+            self.navigationController?.popViewController(animated: true)
+        }
+        switch status {
+        case .success:
+            showAlert(
+                message: "Your payment has been charged",
+                title: "Payment successful",
+                action: action
+            )
+        case .inProgress:
+            print("Payment in progress, you should check payment status from time to time from backend and show result to the payer")
+            showAlert(
+                message: "Payment in progress",
+                action: action
+            )
+        case .failure:
+            showAlert(
+                message: error?.localizedDescription ?? "There was an error while processing your payment. Please try again.",
+                title: "Payment failed",
+                action: action
+            )
+        case .cancel:
+            showAlert(
+                message: "Your payment has been cancelled",
+                title: "Payment cancelled",
+                action: action
+            )
+        }
     }
 }
