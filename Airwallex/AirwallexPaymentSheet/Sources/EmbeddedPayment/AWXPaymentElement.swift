@@ -45,7 +45,11 @@ public class AWXPaymentElement: NSObject {
     public var view: UIView { embeddedView }
 
     /// The delegate that receives payment result callbacks.
-    public weak var delegate: AWXPaymentElementDelegate?
+    public weak var delegate: AWXPaymentResultDelegate? {
+        didSet {
+            paymentUIContext.delegate = delegate
+        }
+    }
 
     // MARK: - Private Properties
 
@@ -86,7 +90,7 @@ public class AWXPaymentElement: NSObject {
     public static func create(
         hostViewController: UIViewController,
         session: AWXSession,
-        delegate: AWXPaymentElementDelegate
+        delegate: AWXPaymentResultDelegate
     ) async throws -> AWXPaymentElement {
         // Validate session
         do {
@@ -127,7 +131,7 @@ public class AWXPaymentElement: NSObject {
     private init(
         hostViewController: UIViewController,
         methodProvider: PaymentMethodProvider,
-        delegate: AWXPaymentElementDelegate
+        delegate: AWXPaymentResultDelegate
     ) {
         self.hostViewController = hostViewController
         self.methodProvider = methodProvider
@@ -135,7 +139,7 @@ public class AWXPaymentElement: NSObject {
         super.init()
 
         // Now set the internal delegate and viewController
-        self.paymentUIContext.delegate = self
+        self.paymentUIContext.delegate = delegate
         self.paymentUIContext.viewController = hostViewController
 
         // Create CollectionViewManager
@@ -270,29 +274,5 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
 
     func listBoundaryItemProviders() -> [BoundarySupplementaryItemProvider]? {
         return nil
-    }
-}
-
-// MARK: - AWXPaymentResultDelegate
-
-extension AWXPaymentElement: @MainActor AWXPaymentResultDelegate {
-
-    public func paymentViewController(
-        _ controller: UIViewController?,
-        didCompleteWith status: AirwallexPaymentStatus,
-        error: (any Error)?
-    ) {
-        // Bridge to AWXPaymentElementDelegate
-        delegate?.paymentElement(self, didCompleteWith: status, error: error)
-
-        // No dismiss action for embedded element - the view stays in place
-        // Host app decides what to do (remove view, navigate away, etc.)
-    }
-
-    public func paymentViewController(
-        _ controller: UIViewController?,
-        didCompleteWithPaymentConsentId consentId: String
-    ) {
-        delegate?.paymentElement?(self, didCompleteWithPaymentConsentId: consentId)
     }
 }
