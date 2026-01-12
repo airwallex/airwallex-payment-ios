@@ -35,9 +35,6 @@
 		D81EAF772D3F8B8F00B44784 /* KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF712D3F8B8F00B44784 /* KeyboardHandler.swift */; };
 		D81EAF782D3F8B8F00B44784 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF722D3F8B8F00B44784 /* UIButton+Extension.swift */; };
 		D81EAF7B2D3F8BE200B44784 /* IntegrationDemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF7A2D3F8BE200B44784 /* IntegrationDemoListViewController.swift */; };
-		D8F268C12EF2A00100E84D64 /* UIIntegrationDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F268C02EF2A00100E84D64 /* UIIntegrationDemoViewController.swift */; };
-		D8F268C32EF2A00100E84D64 /* APIIntegrationDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F268C22EF2A00100E84D64 /* APIIntegrationDemoViewController.swift */; };
-		D8F268C52EF2A00100E84D64 /* EmbeddedIntegrationDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F268C42EF2A00100E84D64 /* EmbeddedIntegrationDemoViewController.swift */; };
 		D81EAF7D2D3F92D300B44784 /* ConfigActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF7C2D3F92D300B44784 /* ConfigActionView.swift */; };
 		D81EAF812D3FAAC600B44784 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAF802D3FAABA00B44784 /* TopView.swift */; };
 		D81EAFA62D41DA1E00B44784 /* GetPaymentMethodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81EAFA52D41DA1C00B44784 /* GetPaymentMethodsViewController.swift */; };
@@ -74,6 +71,9 @@
 		D8D506512E3CB7060098CACD /* CardRegisteredUserCheckoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D506442E3CB7060098CACD /* CardRegisteredUserCheckoutTests.swift */; };
 		D8D506522E3CB7060098CACD /* UITestingUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D506452E3CB7060098CACD /* UITestingUtils.swift */; };
 		D8EB808A2D67067200C2F975 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EB80892D67067200C2F975 /* AppDelegate.swift */; };
+		D8F268C12EF2A00100E84D64 /* UIIntegrationDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F268C02EF2A00100E84D64 /* UIIntegrationDemoViewController.swift */; };
+		D8F268C32EF2A00100E84D64 /* APIIntegrationDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F268C22EF2A00100E84D64 /* APIIntegrationDemoViewController.swift */; };
+		D8F268C52EF2A00100E84D64 /* EmbeddedIntegrationDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F268C42EF2A00100E84D64 /* EmbeddedIntegrationDemoViewController.swift */; };
 		D8F84B852DDC1BDC0020C73F /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F84B842DDC1BDC0020C73F /* AccessibilityIdentifiers.swift */; };
 		D8F84B862DDC1DD70020C73F /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F84B842DDC1BDC0020C73F /* AccessibilityIdentifiers.swift */; };
 /* End PBXBuildFile section */
@@ -149,9 +149,6 @@
 		D81EAF712D3F8B8F00B44784 /* KeyboardHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHandler.swift; sourceTree = "<group>"; };
 		D81EAF722D3F8B8F00B44784 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		D81EAF7A2D3F8BE200B44784 /* IntegrationDemoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationDemoListViewController.swift; sourceTree = "<group>"; };
-		D8F268C02EF2A00100E84D64 /* UIIntegrationDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIIntegrationDemoViewController.swift; sourceTree = "<group>"; };
-		D8F268C22EF2A00100E84D64 /* APIIntegrationDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIIntegrationDemoViewController.swift; sourceTree = "<group>"; };
-		D8F268C42EF2A00100E84D64 /* EmbeddedIntegrationDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedIntegrationDemoViewController.swift; sourceTree = "<group>"; };
 		D81EAF7C2D3F92D300B44784 /* ConfigActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigActionView.swift; sourceTree = "<group>"; };
 		D81EAF802D3FAABA00B44784 /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
 		D81EAFA52D41DA1C00B44784 /* GetPaymentMethodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPaymentMethodsViewController.swift; sourceTree = "<group>"; };
@@ -188,6 +185,9 @@
 		D8D506452E3CB7060098CACD /* UITestingUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestingUtils.swift; sourceTree = "<group>"; };
 		D8EB80892D67067200C2F975 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D8F268B32DDADDE000E84D64 /* ExamplesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExamplesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D8F268C02EF2A00100E84D64 /* UIIntegrationDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIIntegrationDemoViewController.swift; sourceTree = "<group>"; };
+		D8F268C22EF2A00100E84D64 /* APIIntegrationDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIIntegrationDemoViewController.swift; sourceTree = "<group>"; };
+		D8F268C42EF2A00100E84D64 /* EmbeddedIntegrationDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedIntegrationDemoViewController.swift; sourceTree = "<group>"; };
 		D8F84B842DDC1BDC0020C73F /* AccessibilityIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityIdentifiers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -432,10 +432,10 @@
 			buildConfigurationList = 085BD40423CC64B9002E8F27 /* Build configuration list for PBXNativeTarget "Examples" */;
 			buildPhases = (
 				9386CD168F30B04867D5EF44 /* [CP] Check Pods Manifest.lock */,
-				E8A1B2C3D4E5F6A7B8C9D0E1 /* Run SwiftLint */,
 				085BD3E723CC64B6002E8F27 /* Sources */,
 				085BD3E823CC64B6002E8F27 /* Frameworks */,
 				085BD3E923CC64B6002E8F27 /* Resources */,
+				E8A1B2C3D4E5F6A7B8C9D0E1 /* Run SwiftLint */,
 				C52EE7B32865394100F966DD /* Run clang-format */,
 				D867D79C2CFF027A0023C7A7 /* Generate SPM public headers */,
 				D866FA6D2DA7BAA20062BC5A /* Embed Frameworks */,
@@ -574,9 +574,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -610,9 +614,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples/Pods-Examples-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

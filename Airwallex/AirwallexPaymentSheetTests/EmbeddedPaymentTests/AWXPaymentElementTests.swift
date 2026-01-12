@@ -28,6 +28,68 @@ final class AWXPaymentElementTests: XCTestCase {
         super.tearDown()
     }
 
+    // MARK: - Static Create Tests
+
+    func testCreate_WithMockProvider_ReturnsElement() async throws {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let element = try await AWXPaymentElement.create(
+            hostViewController: mockViewController,
+            session: mockMethodProvider.session,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        XCTAssertNotNil(element)
+        XCTAssertNotNil(element.view)
+    }
+
+    func testCreate_WithInvalidSession_ThrowsError() async {
+        let invalidSession = AWXOneOffSession()
+        invalidSession.countryCode = "AU"
+        // No paymentIntent set - should fail validation
+
+        do {
+            _ = try await AWXPaymentElement.create(
+                hostViewController: mockViewController,
+                session: invalidSession,
+                methodProvider: mockMethodProvider,
+                delegate: mockViewController
+            )
+            XCTFail("Expected error to be thrown")
+        } catch {
+            // Expected - session validation should fail
+        }
+    }
+
+    func testCreate_WhenGetPaymentMethodTypesFails_ThrowsError() async {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+
+        // Set error to be thrown
+        mockMethodProvider.getPaymentMethodTypesError = NSError(
+            domain: "TestError",
+            code: -1,
+            userInfo: [NSLocalizedDescriptionKey: "Failed to fetch payment methods"]
+        )
+
+        do {
+            _ = try await AWXPaymentElement.create(
+                hostViewController: mockViewController,
+                session: mockMethodProvider.session,
+                methodProvider: mockMethodProvider,
+                delegate: mockViewController
+            )
+            XCTFail("Expected error to be thrown")
+        } catch {
+            // Expected - getPaymentMethodTypes should fail
+        }
+    }
+
     // MARK: - View Tests
 
     func testView_IsNotNil() async {
@@ -74,16 +136,36 @@ final class AWXPaymentElementTests: XCTestCase {
         let applePayMethod = AWXPaymentMethodType()
         applePayMethod.name = AWXApplePayKey
         mockMethodProvider.methods = [applePayMethod]
-
+        
         let element = AWXPaymentElement(
             hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController
         )
-
+        
         let sections = element.sections()
-
+        
         XCTAssertTrue(sections.contains(.applePay))
+    }
+    
+    func testSections_WithAlipay_IncludesAlipaySection() {
+        let mockAlipay = AWXPaymentMethodType()
+        mockAlipay.name = "alipayhk"
+        mockAlipay.resources = AWXResources()
+        mockAlipay.resources.hasSchema = true
+        
+        mockMethodProvider.methods = [mockAlipay]
+        mockMethodProvider.selectedMethod = mockAlipay
+        
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+        
+        let sections = element.sections()
+        
+        XCTAssertTrue(sections.contains(.schemaPayment("alipayhk")))
     }
 
     func testSections_WithMultipleMethods_ReturnsAccordionSections() {
@@ -134,5 +216,27 @@ final class AWXPaymentElementTests: XCTestCase {
 
         XCTAssertTrue(sections.contains(.cardPaymentConsent))
         XCTAssertFalse(sections.contains(.cardPaymentNew))
+    }
+
+    // MARK: - Section Controller Tests
+
+    func testSectionController_WithUnexpectedSectionType_ReturnsFallbackController() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        // Call sectionController with a section type that's not expected by AWXPaymentElement
+        // This exercises the default case in the switch statement
+        let controller = element.sectionController(for: .listTitle)
+
+        // The fallback controller should still return a valid controller
+        XCTAssertNotNil(controller)
     }
 }

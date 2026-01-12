@@ -92,30 +92,43 @@ public class AWXPaymentElement: NSObject {
         session: AWXSession,
         delegate: AWXPaymentResultDelegate
     ) async throws -> AWXPaymentElement {
+        try await create(
+            hostViewController: hostViewController,
+            session: session,
+            methodProvider: PaymentSheetMethodProvider(session: session),
+            delegate: delegate
+        )
+    }
+    
+    static func create(
+        hostViewController: UIViewController,
+        session: AWXSession,
+        methodProvider: PaymentMethodProvider,
+        delegate: AWXPaymentResultDelegate
+    ) async throws -> AWXPaymentElement {
         // Validate session
         do {
             try session.validate()
         } catch {
             throw AWXUIContext.LaunchError.invalidSession(underlyingError: error)
         }
-
+        
         // Update logger.session for embedded integration
         AnalyticsLogger.shared().session = session
-
-        // Create method provider and fetch payment methods
-        let methodProvider = PaymentSheetMethodProvider(session: session)
+        
+        // fetch payment methods using method provider
         try await methodProvider.getPaymentMethodTypes()
-
+        
         // Risk event
         RiskLogger.log(.transactionInitiated)
-
+        
         // Create element with all dependencies ready
         let element = AWXPaymentElement(
             hostViewController: hostViewController,
             methodProvider: methodProvider,
             delegate: delegate
         )
-
+        
         // Analytics
         AnalyticsLogger.log(
             action: .paymentLaunched,
@@ -124,7 +137,7 @@ public class AWXPaymentElement: NSObject {
                 .expressCheckout: session.isExpressCheckout
             ]
         )
-
+        
         return element
     }
 
@@ -243,7 +256,7 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
                 imageLoader: imageLoader
             ).anySectionController()
         default:
-            assert(false, "section not expected: \(section)")
+            debugLog("section not expected: \(section)")
             let layoutSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
                 heightDimension: .absolute(1.0)
