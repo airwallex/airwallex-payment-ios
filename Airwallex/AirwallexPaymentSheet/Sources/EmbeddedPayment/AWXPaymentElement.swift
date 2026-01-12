@@ -36,16 +36,17 @@ import AirwallexCore
 /// - A host view controller is required for presenting modals (3DS, redirects, etc.)
 /// - Keyboard handling is the host app's responsibility
 @MainActor
+@objc
 public class AWXPaymentElement: NSObject {
 
     /// The embeddable view containing the payment UI.
     ///
     /// Add this view to your view hierarchy using Auto Layout constraints.
     /// The view's height will update automatically based on its content.
-    public var view: UIView { embeddedView }
+    @objc public var view: UIView { embeddedView }
 
     /// The delegate that receives payment result callbacks.
-    public weak var delegate: AWXPaymentResultDelegate? {
+    @objc public weak var delegate: AWXPaymentResultDelegate? {
         didSet {
             paymentUIContext.delegate = delegate
         }
@@ -87,6 +88,7 @@ public class AWXPaymentElement: NSObject {
     ///   - delegate: The delegate that receives payment result callbacks.
     /// - Returns: A configured `AWXPaymentElement` ready to be embedded.
     /// - Throws: `AWXUIContext.LaunchError` if session validation fails or payment methods cannot be fetched.
+    @objc
     public static func create(
         hostViewController: UIViewController,
         session: AWXSession,
