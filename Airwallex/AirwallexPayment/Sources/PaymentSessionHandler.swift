@@ -287,7 +287,7 @@ public class PaymentSessionHandler: NSObject {
     ///   - name: The name of the payment method, as defined by the payment platform.
     ///   - additionalInfo: A dictionary containing any additional data required for processing the payment.
     func startRedirectPayment(with name: String, additionalInfo: [String: String]?) {
-        Task { @MainActor in
+        Task {
             do {
                 AnalyticsLogger.log(
                     action: .paymentLaunched,
