@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  A delegate which handles checkout results.
  */
+NS_SWIFT_UI_ACTOR
 @protocol AWXProviderDelegate<NSObject>
 
 /**
