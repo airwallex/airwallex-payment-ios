@@ -53,6 +53,7 @@ import AirwallexCore
         case paymentLaunched = "payment_launched"
         case paymentCanceled = "payment_canceled"
         case paymentSuccess = "payment_success"
+        case paymentFailed = "payment_failed"
     }
 }
 

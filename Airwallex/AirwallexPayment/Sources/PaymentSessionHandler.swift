@@ -93,6 +93,14 @@ public class PaymentSessionHandler: NSObject {
     private(set) var methodType: AWXPaymentMethodType?
     
     private(set) weak var paymentResultDelegate: AWXPaymentResultDelegate?
+
+    /// Stores the payment method name based on which start* API was called
+    private var calledMethodName: String?
+
+    /// Returns the effective payment method name, preferring calledMethodName if available
+    var paymentMethodName: String {
+        calledMethodName ?? methodType?.name ?? "unknown"
+    }
     
     /// whether display the default loading indicator
     /// Set this to false if you prefer to display your own indicator instead of the default one
@@ -284,6 +292,7 @@ public class PaymentSessionHandler: NSObject {
     ///   - additionalInfo: A dictionary containing any additional data required for processing the payment.
     func startRedirectPayment(with name: String, additionalInfo: [String: String]?) {
         Task { @MainActor in
+        calledMethodName = name
             do {
                 AnalyticsLogger.log(
                     action: .paymentLaunched,
@@ -344,6 +353,7 @@ public class PaymentSessionHandler: NSObject {
     ///     receives a cancellation callback if the user dismisses the sheet.
     ///   - If `false`, dismissing the Apple Pay sheet does not trigger a cancellation callback,
     func confirmApplePay(cancelPaymentOnDismiss: Bool) throws {
+        calledMethodName = AWXApplePayKey
         let provider = providerFactory.applePayProvider(
             delegate: self,
             session: session,
@@ -362,6 +372,7 @@ public class PaymentSessionHandler: NSObject {
     func confirmCardPayment(with card: AWXCard,
                             billing: AWXPlaceDetails?,
                             saveCard: Bool = false) throws {
+        calledMethodName = AWXCardKey
         try AWXCardProvider.validate(
             card: card,
             billing: billing,
@@ -389,6 +400,7 @@ public class PaymentSessionHandler: NSObject {
     ///   - consent: The payment consent retrieved from the server, authorizing this transaction.
     ///   If The payment method details, which may require additional input such as a CVC for validation.
     func confirmConsentPayment(with consent: AWXPaymentConsent) throws {
+        calledMethodName = AWXCardKey
         guard let unifiedSession = Session.convertFromLegacySession(session) else {
             throw ValidationError.invalidPayment(
                 underlyingError: "Invalid session (payment intent required)".asError()
@@ -414,6 +426,7 @@ public class PaymentSessionHandler: NSObject {
     /// Initiates a payment using a consent ID.
     /// - Parameter consentId: The previously generated consent identifier.
     func confirmConsentPayment(withId consentId: String, requiresCVC: Bool = false) throws {
+        calledMethodName = AWXCardKey
         guard let unifiedSession = Session.convertFromLegacySession(session) else {
             throw ValidationError.invalidPayment(
                 underlyingError: "Invalid session (payment intent required)".asError()
@@ -444,6 +457,7 @@ public class PaymentSessionHandler: NSObject {
     ///   - additionalInfo: A dictionary containing any additional data required for processing the payment.
     @MainActor
     func confirmRedirectPayment(with name: String, additionalInfo: [String: String]?) async throws {
+        calledMethodName = name
         let redirectAction = try await providerFactory.redirectProvider(
             delegate: self,
             session: session,
@@ -461,6 +475,7 @@ public class PaymentSessionHandler: NSObject {
     ///   - paymentMethod: The payment method details, pre-validated with all required information.
     @MainActor
     func confirmRedirectPayment(with paymentMethod: AWXPaymentMethod) async throws {
+        calledMethodName = paymentMethod.type
         let redirectAction = try await providerFactory.redirectProvider(
             delegate: self,
             session: session,
@@ -507,11 +522,6 @@ extension PaymentSessionHandler: AWXProviderDelegate {
     
     public func provider(_ provider: AWXDefaultProvider, didCompleteWith status: AirwallexPaymentStatus, error: (any Error)?) {
         viewController.stopLoading()
-        if status == .cancel {
-            // only log payment_canceled here
-            // payment_success and error event are logged in AWXDefaultProvider
-            AnalyticsLogger.log(action: .paymentCanceled)
-        }
         debugLog("Provider: \(type(of: provider)), stauts: \(status), error: \(error?.localizedDescription ?? "N/A")")
         if let dismissAction {
             if let methodType, methodType.name == AWXApplePayKey, status == .inProgress {
@@ -528,19 +538,31 @@ extension PaymentSessionHandler: AWXProviderDelegate {
         } else {
             paymentResultDelegate?.paymentViewController(viewController, didCompleteWith: status, error: error)
         }
-        // log success
-        if status == .success {
-            if let name = methodType?.name {
-                AnalyticsLogger.log(
-                    action: .paymentSuccess,
-                    extraInfo: [.paymentMethod: name]
-                )
-            } else {
-                AnalyticsLogger.log(action: .paymentSuccess)
-            }
-            
-        }
+        // log payment result
+        logPaymentComplete(status: status, error: error)
+        // clear session status
         AnalyticsLogger.shared().session = nil
+        calledMethodName = nil
+    }
+    
+    private func logPaymentComplete(status: AirwallexPaymentStatus, error: (any Error)?) {
+        var extraInfo: [AnalyticEvent.Fields: String] = [
+            .eventType: "payment_result",
+            .paymentMethod: paymentMethodName
+        ]
+        switch status {
+        case .success:
+            AnalyticsLogger.log(action: .paymentSuccess, extraInfo: extraInfo)
+        case .cancel:
+            AnalyticsLogger.log(action: .paymentCanceled, extraInfo: extraInfo)
+        case .failure:
+            if let message = error?.localizedDescription {
+                extraInfo[.message] = message
+            }
+            AnalyticsLogger.log(action: .paymentFailed, extraInfo: extraInfo)
+        default:
+            break
+        }
     }
     
     public func hostViewController() -> UIViewController {
