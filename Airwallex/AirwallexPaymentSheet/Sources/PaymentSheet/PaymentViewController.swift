@@ -308,7 +308,7 @@ extension PaymentViewController: CollectionViewSectionProvider {
             return controller.anySectionController()
         case .cardPaymentNew:
             let controller = NewCardPaymentSectionController(
-                cardPaymentMethod: methodProvider.selectedMethod!,
+                cardPaymentMethod: methodProvider.method(named: AWXCardKey)!,
                 methodProvider: methodProvider,
                 paymentUIContext: paymentUIContext,
                 layout: fallbackToTabLayout ? .tab : layout,
