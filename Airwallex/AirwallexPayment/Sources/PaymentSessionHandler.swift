@@ -458,7 +458,6 @@ public class PaymentSessionHandler: NSObject {
     /// - Parameters:
     ///   - name: The name of the payment method, as defined by the payment platform.
     ///   - additionalInfo: A dictionary containing any additional data required for processing the payment.
-    @MainActor
     func confirmRedirectPayment(with name: String, additionalInfo: [String: String]?) async throws {
         calledMethodName = name
         let redirectAction = try await providerFactory.redirectProvider(
@@ -476,7 +475,6 @@ public class PaymentSessionHandler: NSObject {
     /// You should collect all information from your user before calling this api
     /// - Parameters:
     ///   - paymentMethod: The payment method details, pre-validated with all required information.
-    @MainActor
     func confirmRedirectPayment(with paymentMethod: AWXPaymentMethod) async throws {
         calledMethodName = paymentMethod.type
         let redirectAction = try await providerFactory.redirectProvider(
