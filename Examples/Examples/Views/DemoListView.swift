@@ -21,7 +21,7 @@ class DemoListView: UIView {
         return view
     }()
     
-    private lazy var scrollView: UIScrollView = {
+    private(set) lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.keyboardDismissMode = .interactive
@@ -107,5 +107,23 @@ class DemoListView: UIView {
         ]
         
         NSLayoutConstraint.activate(constraints)
+    }
+
+    func addViewToTopStack(_ view: UIView) {
+        topStack.addArrangedSubview(view)
+    }
+
+    func removeViewFromTopStack(_ view: UIView) {
+        topStack.removeArrangedSubview(view)
+        view.removeFromSuperview()
+    }
+
+    func addViewToBottomStack(_ view: UIView) {
+        bottomStack.addArrangedSubview(view)
+    }
+
+    func removeViewFromBottomStack(_ view: UIView) {
+        bottomStack.removeArrangedSubview(view)
+        view.removeFromSuperview()
     }
 }

@@ -11,139 +11,36 @@ import Combine
 import UIKit
 
 class IntegrationDemoListViewController: UIViewController {
-    
-    enum IntegrationType {
-        case UI
-        case API
-    }
-    
+
     struct ActionViewModel {
         let title: String
         let action: () -> Void
     }
-    
-    private lazy var viewModelsForUIIntegration: [ActionViewModel] = [
-        ActionViewModel(
-            title: "Launch default payments list",
-            action: { [weak self] in
-                self?.launchDefaultPaymentsList(launchStyle: .push)
-            }
-        ),
-        ActionViewModel(
-            title: "Launch default payments list (dialog)",
-            action: { [weak self] in
-                self?.launchDefaultPaymentsList(launchStyle: .present)
-            }
-        ),
-        ActionViewModel(
-            title: "Launch custom payments list",
-            action: { [weak self] in
-                self?.launchCustomPaymentsList()
-            }
-        ),
-        ActionViewModel(
-            title: "Launch card payment",
-            action: { [weak self] in
-                self?.launchCardPayment(launchStyle: .push)
-            }
-        ),
-        ActionViewModel(
-            title: "Launch card payment (dialog)",
-            action: { [weak self] in
-                self?.launchCardPayment(launchStyle: .present)
-            }
-        ),
-        ActionViewModel(
-            title: "Launch shipping address (dialog)",
-            action: { [weak self] in
-                self?.launchShippingAddressDialog()
-            }
-        ),
-    ]
-    
-    private lazy var viewModelsForAPIIntegration: [ActionViewModel] = [
-        ActionViewModel(
-            title: "Pay with card",
-            action: { [weak self] in
-                self?.payWithCard()
-            }
-        ),
-        ActionViewModel(
-            title: DemoDataSource.titleForPayAndSaveCard,
-            action: { [weak self] in
-                self?.payWithCard(saveCard: true)
-            }
-        ),
-        ActionViewModel(
-            title: DemoDataSource.titleForForceCard3DS,
-            action: { [weak self] in
-                self?.payWithCard(force3DS: true)
-            }
-        ),
-        ActionViewModel(
-            title: DemoDataSource.titleForPayWithApplePay,
-            action: { [weak self] in
-                self?.payWithApplePay()
-            }
-        ),
-        ActionViewModel(
-            title: DemoDataSource.titleForPayByRedirect,
-            action: { [weak self] in
-                self?.payWithRedirect()
-            }
-        ),
-        ActionViewModel(
-            title: "Get payment methods",
-            action: { [weak self] in
-                self?.getPaymentMethods()
-            }
-        ),
-        ActionViewModel(
-            title: "Get saved card methods",
-            action: { [weak self] in
-                self?.getSavedCardMethods()
-            }
-        ),
-        ActionViewModel(
-            title: "Open HPP (Hosted Payment Page)",
-            action: { [weak self] in
-                self?.nativeHPPButtonTapped()
-            }
-        ),
-    ]
-    
-    private lazy var hppHandler: HPPDemoController = {
-        let handler = HPPDemoController()
-        handler.webView.translatesAutoresizingMaskIntoConstraints = false
-        handler.viewController = self
-        return handler
-    }()
-    
-    private lazy var listView: DemoListView = {
+
+    // MARK: - Abstract Properties (subclasses must override)
+
+    var pageTitle: String {
+        fatalError("Subclasses must override pageTitle")
+    }
+
+    var actionViewModels: [ActionViewModel] {
+        fatalError("Subclasses must override actionViewModels")
+    }
+
+    // MARK: - Properties
+
+    lazy var listView: DemoListView = {
         let view = DemoListView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.optionView.accessibilityIdentifier = AccessibilityIdentifiers.SettingsScreen.optionButtonForPaymentType
         return view
     }()
-    
-    private lazy var shippingAddress = DemoDataSource.shippingAddress
-    
-    private let integrationType: IntegrationType
 
-    private var paymentSessionHandler: PaymentSessionHandler?
-    
-    private var paymentStatusPoller: PaymentStatusPoller?
-    
-    private var session: AWXSession?
-    
-    init(_ integrationStyle: IntegrationType) {
-        self.integrationType = integrationStyle
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    lazy var shippingAddress = DemoDataSource.shippingAddress
+
+    var paymentStatusPoller: PaymentStatusPoller?
+
+    var session: AWXSession?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -151,12 +48,12 @@ class IntegrationDemoListViewController: UIViewController {
         customizeNavigationBackButton()
         setupViews()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupCheckoutMode()
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         // Stop polling when view disappears to prevent retain cycles
@@ -167,41 +64,52 @@ class IntegrationDemoListViewController: UIViewController {
     }
 
     deinit {
-        print("IntegrationDemoListViewController:- " + #function)
+        print("\(type(of: self)):- " + #function)
     }
 }
 
-private extension IntegrationDemoListViewController {
-    
+// MARK: - View Setup
+
+extension IntegrationDemoListViewController {
+
     func setupViews() {
         view.backgroundColor = .awxColor(.backgroundPrimary)
         view.addSubview(listView)
-        
+
         setupTitle()
-        // setup actions
-        for action in (integrationType == .UI ? viewModelsForUIIntegration : viewModelsForAPIIntegration) {
-            let view = AWXButton(style: .secondary, title: action.title)
-            view.translatesAutoresizingMaskIntoConstraints = false
-            view.addTarget(self, action: #selector(onActionButtonTapped(_:)), for: .touchUpInside)
-            listView.bottomStack.addArrangedSubview(view)
-        }
-        
+        reloadActionButtons()
+
         let constraints = [
             listView.topAnchor.constraint(equalTo: view.topAnchor),
             listView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             listView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             listView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ]
-        
+
         NSLayoutConstraint.activate(constraints)
     }
-    
+
+    /// Reloads action buttons in bottomStack based on current actionViewModels.
+    /// Subclasses can call this to refresh buttons when actionViewModels changes.
+    func reloadActionButtons() {
+        // Remove existing buttons
+        for view in listView.bottomStack.arrangedSubviews {
+            listView.bottomStack.removeArrangedSubview(view)
+            view.removeFromSuperview()
+        }
+
+        // Add buttons based on current actionViewModels
+        for action in actionViewModels {
+            let button = AWXButton(style: .secondary, title: action.title)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.addTarget(self, action: #selector(onActionButtonTapped(_:)), for: .touchUpInside)
+            listView.bottomStack.addArrangedSubview(button)
+        }
+    }
+
     func setupTitle() {
-        let title = integrationType == .UI ? "Integrate with Airwallex UI"
-        : "Integrate with low-level API"
-        
         let viewModel = TopViewModel(
-            title: title,
+            title: pageTitle,
             actionIcon: UIImage(named: "gear")?.withTintColor(.awxColor(.iconLink), renderingMode: .alwaysOriginal),
             actionHandler: { [weak self] in
                 self?.onSettingButtonTapped()
@@ -209,8 +117,9 @@ private extension IntegrationDemoListViewController {
         )
         listView.topView.setup(viewModel)
     }
-    
-    func setupCheckoutMode() {
+
+    /// Override in subclasses to customize checkout mode behavior
+    @objc func setupCheckoutMode() {
         let viewModel = ConfigActionViewModel(
             configName: "Payment type",
             configValue: ExamplesKeys.checkoutMode.localizedDescription,
@@ -218,39 +127,9 @@ private extension IntegrationDemoListViewController {
                 self?.handleUserTapOptionSelectView()
             }
         )
-        
         listView.optionView.setup(viewModel)
-        
-        if integrationType == .API {
-            // show save card and redirect payment method for one-off payment only
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1) {
-                for view in self.listView.bottomStack.arrangedSubviews {
-                    guard let view = view as? UIButton,
-                          let title = view.currentTitle else {
-                        continue
-                    }
-                    switch ExamplesKeys.checkoutMode {
-                    case .oneOff:
-                        view.isHidden = false
-                    case .recurring, .recurringWithIntent:
-                        view.isHidden = (
-                            title == DemoDataSource.titleForPayAndSaveCard
-                        )
-                        if title == DemoDataSource.titleForPayWithApplePay {
-                            view.isHidden = (ExamplesKeys.nextTriggerByType == .customerType)
-                        }
-                    }
-                    
-                    // 3DS in production is not controlled by api parameters or card numbers
-                    if title == DemoDataSource.titleForForceCard3DS {
-                        view.isHidden = ExamplesKeys.environment == .productionMode
-                    }
-                    view.alpha = view.isHidden ? 0 : 1
-                }
-            }
-        }
     }
-    
+
     func onSettingButtonTapped() {
         let optionsViewController = SettingsViewController()
         navigationController?.pushViewController(optionsViewController, animated: true)
@@ -263,22 +142,13 @@ private extension IntegrationDemoListViewController {
             self.setupCheckoutMode()
         }
     }
-    
+
     @objc func onActionButtonTapped(_ sender: UIButton) {
-        switch integrationType {
-        case .UI:
-            guard let title = sender.currentTitle,
-                  let viewModel = viewModelsForUIIntegration.first(where: { $0.title == title }) else {
-                return
-            }
-            viewModel.action()
-        case .API:
-            guard let title = sender.currentTitle,
-                  let viewModel = viewModelsForAPIIntegration.first(where: { $0.title == title }) else {
-                return
-            }
-            viewModel.action()
+        guard let title = sender.currentTitle,
+              let viewModel = actionViewModels.first(where: { $0.title == title }) else {
+            return
         }
+        viewModel.action()
     }
 }
 
@@ -303,261 +173,9 @@ extension IntegrationDemoListViewController: PaymentIntentProvider {
     }
 }
 
-// MARK: UI Integration actions
-private extension IntegrationDemoListViewController {
-    
-    func launchDefaultPaymentsList(launchStyle: AWXUIContext.LaunchStyle) {
-        Task {
-            startLoading()
-            do {
-                let session = try await createPaymentSession()
-                AWXUIContext.launchPayment(
-                    from: self,
-                    session: session,
-                    launchStyle: launchStyle,
-                    layout: ExamplesKeys.paymentLayout
-                )
-            } catch {
-                showAlert(message: error.localizedDescription)
-            }
-            stopLoading()
-        }
-    }
-    
-    func launchCustomPaymentsList() {
-        Task {
-            startLoading()
-            do {
-                let session = try await createPaymentSession()
-                //  custom payment methods by an array of payment method name
-                AWXUIContext.launchPayment(
-                    from: self,
-                    session: session,
-                    filterBy: [ AWXApplePayKey, AWXCardKey],
-                    layout: ExamplesKeys.paymentLayout
-                )
-            } catch {
-                showAlert(message: error.localizedDescription)
-            }
-            stopLoading()
-        }
-    }
-    
-    func launchCardPayment(launchStyle: AWXUIContext.LaunchStyle) {
-        Task {
-            startLoading()
-            do {
-                let session = try await createPaymentSession()
-                AWXUIContext.launchCardPayment(
-                    from: self,
-                    session: session,
-                    supportedBrands: AWXCardBrand.allAvailable,
-                    launchStyle: launchStyle
-                )
-            } catch {
-                showAlert(message: error.localizedDescription)
-            }
-            stopLoading()
-        }
-    }
-    
-    func launchShippingAddressDialog() {
-        let controller = AWXShippingViewController(nibName: nil, bundle: nil)
-        controller.delegate = self
-        controller.shipping = shippingAddress
-        let nav = UINavigationController(rootViewController: controller)
-        navigationController?.present(nav, animated: true)
-    }
-}
+// MARK: - Session & Requests
 
-// MARK: low level API integration actions
-private extension IntegrationDemoListViewController {
-    
-    func payWithCard(saveCard: Bool = false, force3DS: Bool = false) {
-        // replace this testCard info
-        let testCard = force3DS ? DemoDataSource.testCard3DS : DemoDataSource.testCard
-        
-        Task {
-            startLoading()
-            do {
-                let card = try await confirmCardInfo(testCard)
-                let session = try await createPaymentSession(force3DS: force3DS)
-                paymentSessionHandler = PaymentSessionHandler(session: session, viewController: self)
-                paymentSessionHandler?.startCardPayment(
-                    with: card,
-                    billing: DemoDataSource.shippingAddress,
-                    saveCard: saveCard
-                )
-            } catch {
-                showAlert(message: error.localizedDescription)
-            }
-            stopLoading()
-        }
-    }
-    
-    func payWithApplePay() {
-        Task {
-            startLoading()
-            do {
-                let session = try await createPaymentSession()
-                paymentSessionHandler = PaymentSessionHandler(session: session, viewController: self)
-                paymentSessionHandler?.startApplePay()
-            } catch {
-                showAlert(message: error.localizedDescription)
-            }
-            stopLoading()
-        }
-    }
-    
-    func payWithRedirect() {
-        Task {
-            startLoading()
-            do {
-                let session = try await createPaymentSession()
-                paymentSessionHandler = PaymentSessionHandler(session: session, viewController: self)
-                paymentSessionHandler?.startRedirectPayment(
-                    with: "alipayhk",
-                    additionalInfo: nil
-                )
-            } catch {
-                showAlert(message: error.localizedDescription)
-            }
-            stopLoading()
-        }
-    }
-    
-    func getPaymentMethods() {
-        let viewController = GetPaymentMethodsViewController()
-        navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    func getSavedCardMethods() {
-        let viewController = GetPaymentConsentsViewController()
-        navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    func update(textField: UITextField,
-                text: String?,
-                placeholder: String?,
-                fieldName: String?,
-                keyboardType: UIKeyboardType = .asciiCapableNumberPad) {
-        textField.placeholder = placeholder
-        textField.text = text
-        textField.keyboardType = keyboardType
-        textField.clearButtonMode = .whileEditing
-        
-        // left view
-        let label = UILabel()
-        label.text = fieldName
-        label.textColor = .awxColor(.textPlaceholder)
-        label.font = .awxFont(.caption3)
-        label.sizeToFit()
-        
-        textField.leftView = label
-        textField.leftViewMode = .always
-    }
-    
-    func confirmCardInfo(_ testCard: AWXCard?) async throws -> AWXCard {
-        let alertController = UIAlertController(
-            title: "Card Info",
-            message: "Environment: \(ExamplesKeys.environment.displayName.capitalized)",
-            preferredStyle: .alert
-        )
-        alertController.addTextField { textField in
-            self.update(
-                textField: textField,
-                text: testCard?.number,
-                placeholder: "1234 1234 1234",
-                fieldName: "No: "
-            )
-        }
-        alertController.addTextField { textField in
-            self.update(
-                textField: textField,
-                text: testCard?.name,
-                placeholder: "host name",
-                fieldName: "Name: ",
-                keyboardType: .default
-            )
-        }
-        alertController.addTextField { textField in
-            self.update(
-                textField: textField,
-                text: testCard?.expiryYear,
-                placeholder: "2025",
-                fieldName: "Exp year: "
-            )
-        }
-        alertController.addTextField { textField in
-            self.update(
-                textField: textField,
-                text: testCard?.expiryMonth,
-                placeholder: "12",
-                fieldName: "Exp month: "
-            )
-        }
-        alertController.addTextField { textField in
-            self.update(
-                textField: textField,
-                text: testCard?.cvc,
-                placeholder: "333",
-                fieldName: "CVC/CVV: "
-            )
-        }
-        
-        return try await withCheckedThrowingContinuation { continuation in
-            let payAction = UIAlertAction(title: "Pay", style: .cancel) { _ in
-                let card = AWXCard()
-                card.number = alertController.textFields![0].text ?? ""
-                card.name = alertController.textFields![1].text ?? ""
-                card.expiryYear = alertController.textFields![2].text ?? ""
-                card.expiryMonth = alertController.textFields![3].text ?? ""
-                card.cvc = alertController.textFields![4].text ?? ""
-                
-                if let message = card.validate() {
-                    // TODO: more validation
-                    continuation.resume(throwing: NSError.airwallexError(localizedMessage: message))
-                } else {
-                    continuation.resume(returning: card)
-                }
-            }
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .default) { _ in
-                continuation.resume(throwing: NSError.airwallexError(localizedMessage: "Payment cancelled."))
-            }
-            
-            // Add actions to the alert
-            alertController.addAction(cancelAction)
-            alertController.addAction(payAction)
-            
-            self.present(alertController, animated: true)
-        }
-    }
-    
-    @objc func nativeHPPButtonTapped() {
-        startLoading()
-        Task {
-            do {
-                let intent = try await Airwallex.apiClient.createPaymentIntent()
-                let url = try await hppHandler.getURLForHPP(
-                    intentId: intent.id,
-                    clientSecret: intent.clientSecret,
-                    currency: intent.currency,
-                    countryCode: ExamplesKeys.countryCode,
-                    returnURL: ExamplesKeys.returnUrl
-                )
-                print("URL for hpp: \(url)")
-                await UIApplication.shared.open(url)
-            } catch {
-                print(error.localizedDescription)
-            }
-            stopLoading()
-        }
-    }
-}
-
-// MARK: Session & Requests
-private extension IntegrationDemoListViewController {
+extension IntegrationDemoListViewController {
     
     func generateClientSecretForRecurringPayment() async throws -> String {
         guard let customerId = ExamplesKeys.customerId else {
@@ -578,7 +196,7 @@ private extension IntegrationDemoListViewController {
         var session: AWXSession
         if ExamplesKeys.preferUnifiedSession {
             if ExamplesKeys.expressCheckout {
-                session = try await createUnifiedSessionWithProvider(force3DS: force3DS)
+                session = try createUnifiedSessionWithProvider(force3DS: force3DS)
             } else {
                 session = try await createUnifiedSessionWithIntent(force3DS: force3DS)
             }
@@ -608,7 +226,7 @@ private extension IntegrationDemoListViewController {
         return session
     }
     
-    func createUnifiedSessionWithProvider(force3DS: Bool = ExamplesKeys.force3DS) async throws -> AWXSession {
+    func createUnifiedSessionWithProvider(force3DS: Bool = ExamplesKeys.force3DS) throws -> AWXSession {
         // Merchant trigger reason
         let session = Session(
             paymentIntentProvider: self,
@@ -741,7 +359,7 @@ extension IntegrationDemoListViewController: AWXPaymentResultDelegate {
 }
 
 // MARK: - Payment Status Polling
-private extension IntegrationDemoListViewController {
+extension IntegrationDemoListViewController {
     func startPollingForPaymentIntent(_ intentId: String) {
         paymentStatusPoller?.stop()
 

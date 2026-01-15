@@ -28,6 +28,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     }
     private var paymentSessionHandler: PaymentSessionHandler?
     private var methodProvider: PaymentMethodProvider
+    private let paymentUIContext: PaymentUIContext
     
     // data from method details API
     private var schema: AWXSchema?
@@ -44,6 +45,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     
     init(methodType: AWXPaymentMethodType,
          methodProvider: PaymentMethodProvider,
+         paymentUIContext: PaymentUIContext,
          layout: AWXUIContext.PaymentLayout,
          imageLoader: ImageLoader) {
         assert(methodType.name != AWXCardKey && methodType.name != AWXApplePayKey && methodType.hasSchema)
@@ -51,6 +53,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         self.name = methodType.name
         self.section = PaymentSectionType.schemaPayment(name)
         self.methodProvider = methodProvider
+        self.paymentUIContext = paymentUIContext
         self.layout = layout
         self.imageLoader = imageLoader
     }
@@ -322,15 +325,8 @@ private extension SchemaPaymentSectionController {
             
             paymentSessionHandler = PaymentSessionHandler(
                 session: session,
-                viewController: context.viewController!,
-                paymentResultDelegate: AWXUIContext.shared.delegate,
                 methodType: methodProvider.method(named: name),
-                dismissAction: { completion in
-                    AWXUIContext.shared.dismissAction?(completion)
-                    // clear dismissAction block here so the user cancel detection
-                    // in AWXPaymentViewController.deinit() can work as expected
-                    AWXUIContext.shared.dismissAction = nil
-                }
+                paymentUIContext: paymentUIContext
             )
             
             Task { @MainActor in

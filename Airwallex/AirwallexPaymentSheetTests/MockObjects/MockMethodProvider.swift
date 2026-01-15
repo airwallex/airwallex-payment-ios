@@ -6,11 +6,11 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import Foundation
-@testable import AirwallexPaymentSheet
-@testable @_spi(AWX) import AirwallexPayment
 import AirwallexCore
+@testable @_spi(AWX) import AirwallexPayment
+@testable import AirwallexPaymentSheet
 import Combine
+import Foundation
 
 class MockMethodProvider: PaymentMethodProvider {
     func disable(consent: AWXPaymentConsent) async throws {
@@ -40,7 +40,7 @@ class MockMethodProvider: PaymentMethodProvider {
     
     var updatePublisher = PassthroughSubject<PaymentMethodProviderUpdateType, Never>()
     
-    var selectedMethod: AWXPaymentMethodType? = nil
+    var selectedMethod: AWXPaymentMethodType?
     
     var methods: [AWXPaymentMethodType]
     
@@ -53,8 +53,13 @@ class MockMethodProvider: PaymentMethodProvider {
         self.selectedMethod = methods.first
     }
     
+    var getPaymentMethodTypesError: Error?
+
     func getPaymentMethodTypes() async throws {
-        fatalError()
+        if let error = getPaymentMethodTypesError {
+            throw error
+        }
+        // Mock implementation - methods are already set via init
     }
     
     func getPaymentMethodTypeDetails(name: String) async throws -> AWXGetPaymentMethodTypeResponse {

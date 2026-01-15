@@ -42,6 +42,7 @@
 		D823D8E12DDC36F400B27CA1 /* CheckoutMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D823D8DF2DDC36E500B27CA1 /* CheckoutMode.swift */; };
 		D8331FF02DB0E63300D85575 /* Keys.json in Resources */ = {isa = PBXBuildFile; fileRef = D8B38C252D9E5F2B00909ADD /* Keys.json */; };
 		D872B35A2D5DFA24007BC089 /* DemoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D872B3592D5DFA1A007BC089 /* DemoListView.swift */; };
+		D872B35C2D5DFA25007BC089 /* OrderInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D872B35B2D5DFA25007BC089 /* OrderInfoView.swift */; };
 		D89C7AEB2D422CA70042FC3B /* TextContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89C7AEA2D422CA70042FC3B /* TextContentViewController.swift */; };
 		D89C7AED2D423AD60042FC3B /* GetCardConsentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89C7AEC2D423AD60042FC3B /* GetCardConsentsViewController.swift */; };
 		D89C7AF32D424C890042FC3B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89C7AF22D424C890042FC3B /* SettingsViewController.swift */; };
@@ -70,6 +71,9 @@
 		D8D506512E3CB7060098CACD /* CardRegisteredUserCheckoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D506442E3CB7060098CACD /* CardRegisteredUserCheckoutTests.swift */; };
 		D8D506522E3CB7060098CACD /* UITestingUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D506452E3CB7060098CACD /* UITestingUtils.swift */; };
 		D8EB808A2D67067200C2F975 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EB80892D67067200C2F975 /* AppDelegate.swift */; };
+		D8F268C12EF2A00100E84D64 /* UIIntegrationDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F268C02EF2A00100E84D64 /* UIIntegrationDemoViewController.swift */; };
+		D8F268C32EF2A00100E84D64 /* APIIntegrationDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F268C22EF2A00100E84D64 /* APIIntegrationDemoViewController.swift */; };
+		D8F268C52EF2A00100E84D64 /* EmbeddedIntegrationDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F268C42EF2A00100E84D64 /* EmbeddedIntegrationDemoViewController.swift */; };
 		D8F84B852DDC1BDC0020C73F /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F84B842DDC1BDC0020C73F /* AccessibilityIdentifiers.swift */; };
 		D8F84B862DDC1DD70020C73F /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F84B842DDC1BDC0020C73F /* AccessibilityIdentifiers.swift */; };
 /* End PBXBuildFile section */
@@ -150,6 +154,7 @@
 		D81EAFA52D41DA1C00B44784 /* GetPaymentMethodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPaymentMethodsViewController.swift; sourceTree = "<group>"; };
 		D823D8DF2DDC36E500B27CA1 /* CheckoutMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutMode.swift; sourceTree = "<group>"; };
 		D872B3592D5DFA1A007BC089 /* DemoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoListView.swift; sourceTree = "<group>"; };
+		D872B35B2D5DFA25007BC089 /* OrderInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderInfoView.swift; sourceTree = "<group>"; };
 		D89C7AEA2D422CA70042FC3B /* TextContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextContentViewController.swift; sourceTree = "<group>"; };
 		D89C7AEC2D423AD60042FC3B /* GetCardConsentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCardConsentsViewController.swift; sourceTree = "<group>"; };
 		D89C7AF22D424C890042FC3B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -180,6 +185,9 @@
 		D8D506452E3CB7060098CACD /* UITestingUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestingUtils.swift; sourceTree = "<group>"; };
 		D8EB80892D67067200C2F975 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D8F268B32DDADDE000E84D64 /* ExamplesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExamplesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D8F268C02EF2A00100E84D64 /* UIIntegrationDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIIntegrationDemoViewController.swift; sourceTree = "<group>"; };
+		D8F268C22EF2A00100E84D64 /* APIIntegrationDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIIntegrationDemoViewController.swift; sourceTree = "<group>"; };
+		D8F268C42EF2A00100E84D64 /* EmbeddedIntegrationDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedIntegrationDemoViewController.swift; sourceTree = "<group>"; };
 		D8F84B842DDC1BDC0020C73F /* AccessibilityIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityIdentifiers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -318,6 +326,7 @@
 				D81EAF6F2D3F8B8F00B44784 /* ConfigTextFieldViewModel.swift */,
 				D81EAF7C2D3F92D300B44784 /* ConfigActionView.swift */,
 				D872B3592D5DFA1A007BC089 /* DemoListView.swift */,
+				D872B35B2D5DFA25007BC089 /* OrderInfoView.swift */,
 				D81EAF802D3FAABA00B44784 /* TopView.swift */,
 				D81EAF722D3F8B8F00B44784 /* UIButton+Extension.swift */,
 			);
@@ -332,6 +341,9 @@
 				D81EAF6B2D3F6C1F00B44784 /* WeChatDemoViewController.swift */,
 				D8AEAA8C2E44594B00683280 /* HPPDemoController.swift */,
 				D81EAF7A2D3F8BE200B44784 /* IntegrationDemoListViewController.swift */,
+				D8F268C02EF2A00100E84D64 /* UIIntegrationDemoViewController.swift */,
+				D8F268C22EF2A00100E84D64 /* APIIntegrationDemoViewController.swift */,
+				D8F268C42EF2A00100E84D64 /* EmbeddedIntegrationDemoViewController.swift */,
 				D80F0E322D5DD04C00401BA6 /* DemoDataSource.swift */,
 				D81EAFA52D41DA1C00B44784 /* GetPaymentMethodsViewController.swift */,
 				D89C7AEC2D423AD60042FC3B /* GetCardConsentsViewController.swift */,
@@ -420,10 +432,10 @@
 			buildConfigurationList = 085BD40423CC64B9002E8F27 /* Build configuration list for PBXNativeTarget "Examples" */;
 			buildPhases = (
 				9386CD168F30B04867D5EF44 /* [CP] Check Pods Manifest.lock */,
-				E8A1B2C3D4E5F6A7B8C9D0E1 /* Run SwiftLint */,
 				085BD3E723CC64B6002E8F27 /* Sources */,
 				085BD3E823CC64B6002E8F27 /* Frameworks */,
 				085BD3E923CC64B6002E8F27 /* Resources */,
+				E8A1B2C3D4E5F6A7B8C9D0E1 /* Run SwiftLint */,
 				C52EE7B32865394100F966DD /* Run clang-format */,
 				D867D79C2CFF027A0023C7A7 /* Generate SPM public headers */,
 				D866FA6D2DA7BAA20062BC5A /* Embed Frameworks */,
@@ -674,6 +686,9 @@
 				D80F0E332D5DD04C00401BA6 /* DemoDataSource.swift in Sources */,
 				D81EAF692D3F474100B44784 /* UIViewController+Extensions.swift in Sources */,
 				D81EAF7B2D3F8BE200B44784 /* IntegrationDemoListViewController.swift in Sources */,
+				D8F268C12EF2A00100E84D64 /* UIIntegrationDemoViewController.swift in Sources */,
+				D8F268C32EF2A00100E84D64 /* APIIntegrationDemoViewController.swift in Sources */,
+				D8F268C52EF2A00100E84D64 /* EmbeddedIntegrationDemoViewController.swift in Sources */,
 				182F1CE52C903747000B993D /* DirectAPIClient.swift in Sources */,
 				D89C7AED2D423AD60042FC3B /* GetCardConsentsViewController.swift in Sources */,
 				D89C7AEB2D422CA70042FC3B /* TextContentViewController.swift in Sources */,
@@ -696,6 +711,7 @@
 				D8F84B852DDC1BDC0020C73F /* AccessibilityIdentifiers.swift in Sources */,
 				1859F1972C89A6290017FA4D /* APIClient.swift in Sources */,
 				D872B35A2D5DFA24007BC089 /* DemoListView.swift in Sources */,
+				D872B35C2D5DFA25007BC089 /* OrderInfoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

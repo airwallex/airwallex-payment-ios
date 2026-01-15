@@ -24,11 +24,15 @@ enum PaymentSectionType: Hashable {
 }
 
 class PaymentViewController: AWXViewController {
-    
+
     let methodProvider: PaymentMethodProvider
-    
+
     private(set) var layout: AWXUIContext.PaymentLayout
-    
+
+    private(set) lazy var paymentUIContext = PaymentUIContext(
+        viewController: self
+    )
+
     init(methodProvider: PaymentMethodProvider,
          layout: AWXUIContext.PaymentLayout = .tab) {
         self.methodProvider = methodProvider
@@ -42,12 +46,13 @@ class PaymentViewController: AWXViewController {
     }
     
     deinit {
-        Task { @MainActor in
-            if AWXUIContext.shared.dismissAction != nil {
+        Task { @MainActor [paymentUIContext] in
+            if paymentUIContext.dismissAction != nil {
                 // user cancel payment by navigation stack interactions, like screen edge pan gesture
-                AWXUIContext.shared.dismissAction = nil
-                AnalyticsLogger.log(action: .paymentCanceled)
-                AWXUIContext.shared.delegate?.paymentViewController(nil, didCompleteWith: .cancel, error: nil)
+                paymentUIContext.dismiss {
+                    AnalyticsLogger.log(action: .paymentCanceled)
+                    paymentUIContext.delegate?.paymentViewController(nil, didCompleteWith: .cancel, error: nil)
+                }
             }
             AnalyticsLogger.shared().session = nil
         }
@@ -138,9 +143,8 @@ class PaymentViewController: AWXViewController {
     }
     
     @objc func onCloseButtonTapped() {
-        AWXUIContext.shared.dismissAction = nil
         dismiss(animated: true) {
-            AWXUIContext.shared.delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
+            self.paymentUIContext.delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
         }
     }
     
@@ -159,13 +163,8 @@ class PaymentViewController: AWXViewController {
                     guard self.methodProvider.methods.isEmpty else {
                         return
                     }
-                    if let action = AWXUIContext.shared.dismissAction {
-                        action {
-                            AWXUIContext.shared.delegate?.paymentViewController(self, didCompleteWith: .failure, error: error)
-                        }
-                        AWXUIContext.shared.dismissAction = nil
-                    } else {
-                        AWXUIContext.shared.delegate?.paymentViewController(self, didCompleteWith: .failure, error: error)
+                    self.paymentUIContext.dismiss {
+                        self.paymentUIContext.delegate?.paymentViewController(self, didCompleteWith: .failure, error: error)
                     }
                 }
             }
@@ -283,7 +282,8 @@ extension PaymentViewController: CollectionViewSectionProvider {
             let controller = ApplePaySectionController(
                 session: methodProvider.session,
                 methodType: methodProvider.applePayMethodType!,
-                methodProvider: methodProvider
+                methodProvider: methodProvider,
+                paymentUIContext: paymentUIContext
             )
             return controller.anySectionController()
         case .methodList:
@@ -296,6 +296,7 @@ extension PaymentViewController: CollectionViewSectionProvider {
             let controller = CardPaymentConsentSectionController(
                 methodType: methodProvider.method(named: AWXCardKey)!,
                 methodProvider: methodProvider,
+                paymentUIContext: paymentUIContext,
                 layout: fallbackToTabLayout ? .tab : layout,
                 imageLoader: imageLoader,
                 addNewCardAction: { [weak self] in
@@ -307,8 +308,9 @@ extension PaymentViewController: CollectionViewSectionProvider {
             return controller.anySectionController()
         case .cardPaymentNew:
             let controller = NewCardPaymentSectionController(
-                cardPaymentMethod: methodProvider.selectedMethod!,
+                cardPaymentMethod: methodProvider.method(named: AWXCardKey)!,
                 methodProvider: methodProvider,
+                paymentUIContext: paymentUIContext,
                 layout: fallbackToTabLayout ? .tab : layout,
                 imageLoader: imageLoader,
                 switchToConsentPaymentAction: { [weak self] in
@@ -322,6 +324,7 @@ extension PaymentViewController: CollectionViewSectionProvider {
             let controller = SchemaPaymentSectionController(
                 methodType: methodProvider.method(named: name)!,
                 methodProvider: methodProvider,
+                paymentUIContext: paymentUIContext,
                 layout: fallbackToTabLayout ? .tab : layout,
                 imageLoader: imageLoader
             ).anySectionController()

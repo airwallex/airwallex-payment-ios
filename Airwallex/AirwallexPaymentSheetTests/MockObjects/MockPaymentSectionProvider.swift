@@ -6,10 +6,11 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
+import AirwallexCore
+@testable @_spi(AWX) import AirwallexPayment
+@testable import AirwallexPaymentSheet
 import UIKit
 import XCTest
-@testable import AirwallexPaymentSheet
-import AirwallexCore
 
 @MainActor class MockPaymentSectionProvider {
     
@@ -19,6 +20,8 @@ import AirwallexCore
     private lazy var imageLoader = ImageLoader()
 
     var methodProvider: PaymentMethodProvider
+    
+    let paymentUIContext = PaymentUIContext()
     
     init(methodProvider: PaymentMethodProvider) {
         self.methodProvider = methodProvider
@@ -89,7 +92,8 @@ extension MockPaymentSectionProvider: CollectionViewSectionProvider {
             let controller = ApplePaySectionController(
                 session: methodProvider.session,
                 methodType: methodProvider.applePayMethodType!,
-                methodProvider: methodProvider
+                methodProvider: methodProvider,
+                paymentUIContext: paymentUIContext
             )
             return controller.anySectionController()
         case .methodList:
@@ -102,6 +106,7 @@ extension MockPaymentSectionProvider: CollectionViewSectionProvider {
             let controller = CardPaymentConsentSectionController(
                 methodType: methodProvider.method(named: AWXCardKey)!,
                 methodProvider: methodProvider,
+                paymentUIContext: paymentUIContext,
                 layout: layout,
                 imageLoader: imageLoader,
                 addNewCardAction: { [weak self] in
@@ -115,6 +120,7 @@ extension MockPaymentSectionProvider: CollectionViewSectionProvider {
             let controller = NewCardPaymentSectionController(
                 cardPaymentMethod: methodProvider.selectedMethod!,
                 methodProvider: methodProvider,
+                paymentUIContext: paymentUIContext,
                 layout: layout,
                 imageLoader: imageLoader,
                 switchToConsentPaymentAction: { [weak self] in
@@ -128,6 +134,7 @@ extension MockPaymentSectionProvider: CollectionViewSectionProvider {
             let controller = SchemaPaymentSectionController(
                 methodType: methodProvider.method(named: name)!,
                 methodProvider: methodProvider,
+                paymentUIContext: paymentUIContext,
                 layout: layout,
                 imageLoader: imageLoader
             ).anySectionController()

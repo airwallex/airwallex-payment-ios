@@ -23,14 +23,17 @@ class ApplePaySectionController: SectionController {
     private let methodType: AWXPaymentMethodType
     private var paymentSessionHandler: PaymentSessionHandler?
     private let methodProvider: PaymentMethodProvider
-    
+    private let paymentUIContext: PaymentUIContext
+
     init(session: AWXSession,
          methodType: AWXPaymentMethodType,
-         methodProvider: PaymentMethodProvider) {
+         methodProvider: PaymentMethodProvider,
+         paymentUIContext: PaymentUIContext) {
         assert(methodType.name == AWXApplePayKey)
         self.session = session
         self.methodType = methodType
         self.methodProvider = methodProvider
+        self.paymentUIContext = paymentUIContext
     }
     
     let section = PaymentSectionType.applePay
@@ -48,20 +51,13 @@ class ApplePaySectionController: SectionController {
     func cell(for sectionItem: SectionItem, at indexPath: IndexPath) -> UICollectionViewCell {
         let cell = context.dequeueReusableCell(ApplePayCell.self, for: sectionItem, indexPath: indexPath)
         let viewModel = ApplePayViewModel { [weak self] in
-            guard let self, let viewController = self.context.viewController else { return }
+            guard let self else { return }
             AnalyticsLogger.log(action: .tapPayButton, extraInfo: [.paymentMethod: methodType.name])
             do {
                 self.paymentSessionHandler = PaymentSessionHandler(
                     session: self.session,
-                    viewController: viewController,
-                    paymentResultDelegate: AWXUIContext.shared.delegate,
                     methodType: methodType,
-                    dismissAction: { completion in
-                        AWXUIContext.shared.dismissAction?(completion)
-                        // clear dismissAction block here so the user cancel detection
-                        // in AWXPaymentViewController.deinit() can work as expected
-                        AWXUIContext.shared.dismissAction = nil
-                    }
+                    paymentUIContext: self.paymentUIContext
                 )
                 try self.paymentSessionHandler?.confirmApplePay(cancelPaymentOnDismiss: false)
             } catch {

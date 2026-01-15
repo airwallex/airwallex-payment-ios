@@ -6,11 +6,11 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import Foundation
-import UIKit
 import AirwallexCore
 @testable import AirwallexPayment
 @testable import AirwallexPaymentSheet
+import Foundation
+import UIKit
 import XCTest
 
 @MainActor class AWXUIContextTests: XCTestCase {
@@ -42,7 +42,6 @@ import XCTest
     override class func tearDown() {
         super.tearDown()
         AWXAPIClientConfiguration.shared().clientSecret = nil
-        AWXUIContext.shared.dismissAction = nil
     }
     
     func testLaunchPaymentViewHierarchyAssertion() {
@@ -216,7 +215,6 @@ import XCTest
             return
         }
         
-        XCTAssert(AWXUIContext.shared.delegate === mockViewController)
         XCTAssert(AnalyticsLogger.shared().session === mockOneoffSession)
         XCTAssertTrue(mockOneoffSession.hidePaymentConsents)
         XCTAssert(mockOneoffSession.paymentMethods?.count == 1 && mockOneoffSession.paymentMethods?.first == AWXApplePayKey)
@@ -234,7 +232,6 @@ import XCTest
             return
         }
         
-        XCTAssert(AWXUIContext.shared.delegate === mockViewController)
         XCTAssert(AnalyticsLogger.shared().session === mockOneoffSession)
         XCTAssertNil(mockOneoffSession.paymentMethods)
         XCTAssertFalse(mockOneoffSession.hidePaymentConsents)
