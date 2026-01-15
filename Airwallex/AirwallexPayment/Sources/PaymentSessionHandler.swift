@@ -546,7 +546,6 @@ extension PaymentSessionHandler: AWXProviderDelegate {
     
     private func logPaymentComplete(status: AirwallexPaymentStatus, error: (any Error)?) {
         var extraInfo: [AnalyticEvent.Fields: String] = [
-            .eventType: "payment_result",
             .paymentMethod: paymentMethodName
         ]
         switch status {
@@ -559,8 +558,8 @@ extension PaymentSessionHandler: AWXProviderDelegate {
                 extraInfo[.message] = message
             }
             AnalyticsLogger.log(action: .paymentFailed, extraInfo: extraInfo)
-        default:
-            break
+        case .inProgress:
+            AnalyticsLogger.log(action: .paymentInProgress, extraInfo: extraInfo)
         }
     }
     
