@@ -292,7 +292,6 @@ public class PaymentSessionHandler: NSObject {
     ///   - additionalInfo: A dictionary containing any additional data required for processing the payment.
     func startRedirectPayment(with name: String, additionalInfo: [String: String]?) {
         Task { @MainActor in
-        calledMethodName = name
             do {
                 AnalyticsLogger.log(
                     action: .paymentLaunched,

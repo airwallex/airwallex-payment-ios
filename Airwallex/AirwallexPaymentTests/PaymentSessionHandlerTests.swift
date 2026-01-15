@@ -11,6 +11,7 @@ import AirwallexCore
 import UIKit
 import XCTest
 
+@MainActor
 class PaymentSessionHandlerTests: XCTestCase {
 
     private var mockPaymentResultDelegate: MockPaymentResultDelegate!
@@ -1086,7 +1087,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         XCTAssertEqual(handler.paymentMethodName, AWXCardKey)
     }
 
-    func testPaymentMethodNameForRedirectPayment() {
+    func testPaymentMethodNameForRedirectPayment() async {
         let handler = PaymentSessionHandler(
             session: mockSession,
             viewController: mockPaymentResultDelegate,
@@ -1103,9 +1104,16 @@ class PaymentSessionHandlerTests: XCTestCase {
         mockFactory.mockRedirectProvider = mockRedirectProvider
         handler.providerFactory = mockFactory
 
+        // confirm with name
         XCTAssertEqual(handler.paymentMethodName, "unknown")
-        handler.startRedirectPayment(with: "alipaycn", additionalInfo: nil)
+        try? await handler.confirmRedirectPayment(with: "alipaycn", additionalInfo: nil)
         XCTAssertEqual(handler.paymentMethodName, "alipaycn")
+
+        // confirm with method
+        let mockMethod = AWXPaymentMethod()
+        mockMethod.type = "alipayhk"
+        try? await handler.confirmRedirectPayment(with: "alipayhk", additionalInfo: nil)
+        XCTAssertEqual(handler.paymentMethodName, "alipayhk")
     }
 
     func testPaymentMethodNameResetAfterPaymentSuccess() async {
@@ -1186,6 +1194,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         billing.lastName = "Doe"
         billing.address = mockAddress
 
+        XCTAssertEqual(handler.paymentMethodName, "unknown")
         handler.startCardPayment(with: card, billing: billing)
         XCTAssertEqual(handler.paymentMethodName, AWXCardKey)
 
