@@ -6,11 +6,12 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import UIKit
-import XCTest
 import AirwallexCore
 @testable @_spi(AWX) import AirwallexPayment
+import UIKit
+import XCTest
 
+@MainActor
 class PaymentSessionHandlerTests: XCTestCase {
 
     private var mockPaymentResultDelegate: MockPaymentResultDelegate!
@@ -319,7 +320,7 @@ class PaymentSessionHandlerTests: XCTestCase {
               case AWXCardProvider.ValidationError.invalidBillingInfo = error else {
             XCTFail("Expected AWXCardProvider.ValidationError.invalidBillingInfo but got \(String(describing: mockPaymentResultDelegate.error))")
             return
-        }   
+        }
     }
 
     func testStartCardPaymentWithNoStateInBillingInfo() {
@@ -592,7 +593,7 @@ class PaymentSessionHandlerTests: XCTestCase {
     }
 
     func testProviderHandleNotExistingCallSDKAction() {
-        let nextAction = AWXConfirmPaymentNextAction.decode(fromJSON: ["type" : "call_sdk"]) as! AWXConfirmPaymentNextAction
+        let nextAction = AWXConfirmPaymentNextAction.decode(fromJSON: ["type": "call_sdk"]) as! AWXConfirmPaymentNextAction
         mockSessionHandler.provider(mockProvider, shouldHandle: nextAction)
         XCTAssertEqual(mockPaymentResultDelegate.status, .failure)
     }
@@ -601,7 +602,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         let mockConsent = AWXPaymentConsent()
         mockConsent.id = "mock_cst_id"
         let nextAction = AWXConfirmPaymentNextAction.decode(fromJSON: [
-            "type" : "redirect_form",
+            "type": "redirect_form",
             "method": "mock_method",
             "url": AWXThreeDSReturnURL
         ]) as! AWXConfirmPaymentNextAction
@@ -972,7 +973,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         // Setup Redirect method type
         mockMethodType.name = "wechatpay" // Example redirect payment method
         mockMethodType.displayName = "WeChat Pay"
-        
+
         // Create mock provider factory with a success-returning MockRedirectProvider
         let mockFactory = MockProviderFactory()
         let mockRedirectProvider = MockRedirectProvider(
@@ -982,25 +983,222 @@ class PaymentSessionHandlerTests: XCTestCase {
             shouldSucceed: true
         )
         mockFactory.mockRedirectProvider = mockRedirectProvider
-        
+
         // Inject mock factory into session handler
         mockSessionHandler.providerFactory = mockFactory
-        
+
         // Start Redirect payment
         mockSessionHandler.startRedirectPayment(with: "wechatpay", additionalInfo: ["key": "value"])
-        
+
         // Add sleep to wait for async status updates
         try? await Task.sleep(nanoseconds: 100_000_000)
-        
+
         // Verify success was called on the delegate
         await MainActor.run {
             XCTAssertEqual(mockPaymentResultDelegate.status, .success)
             XCTAssertNil(mockPaymentResultDelegate.error)
         }
-        
+
         // Verify the mock provider was used
         XCTAssertTrue(mockFactory.redirectProviderCalled)
         XCTAssertTrue(mockRedirectProvider.startPaymentCalled)
         XCTAssertEqual(mockRedirectProvider.lastPaymentMethodUsed, "wechatpay")
+    }
+
+    // MARK: - Tests for paymentMethodName
+
+    func testPaymentMethodNameWithMethodType() {
+        // Handler initialized WITH methodType - paymentMethodName falls back to methodType.name
+        XCTAssertEqual(mockSessionHandler.paymentMethodName, AWXCardKey)
+    }
+
+    func testPaymentMethodNameForApplePay() {
+        let handler = PaymentSessionHandler(
+            session: mockSession,
+            viewController: mockPaymentResultDelegate,
+            paymentResultDelegate: mockPaymentResultDelegate,
+            methodType: nil
+        )
+        let mockFactory = MockProviderFactory()
+        let mockApplePayProvider = MockApplePayProvider(
+            delegate: handler,
+            session: mockSession,
+            methodType: nil,
+            shouldSucceed: true
+        )
+        mockFactory.mockApplePayProvider = mockApplePayProvider
+        handler.providerFactory = mockFactory
+
+        XCTAssertEqual(handler.paymentMethodName, "unknown")
+        handler.startApplePay()
+        XCTAssertEqual(handler.paymentMethodName, AWXApplePayKey)
+    }
+
+    func testPaymentMethodNameForCardPayment() {
+        let handler = PaymentSessionHandler(
+            session: mockSession,
+            viewController: mockPaymentResultDelegate,
+            paymentResultDelegate: mockPaymentResultDelegate,
+            methodType: nil
+        )
+        let mockFactory = MockProviderFactory()
+        let mockCardProvider = MockCardProvider(
+            delegate: handler,
+            session: mockSession,
+            methodType: nil,
+            shouldSucceed: true
+        )
+        mockFactory.mockCardProvider = mockCardProvider
+        handler.providerFactory = mockFactory
+
+        let card = AWXCard(name: "John", cardNumber: "4111111111111111", expiryMonth: "12", expiryYear: "33", cvc: "123")
+        let billing = AWXPlaceDetails()
+        billing.firstName = "John"
+        billing.lastName = "Doe"
+        billing.address = mockAddress
+
+        XCTAssertEqual(handler.paymentMethodName, "unknown")
+        handler.startCardPayment(with: card, billing: billing)
+        XCTAssertEqual(handler.paymentMethodName, AWXCardKey)
+    }
+
+    func testPaymentMethodNameForConsentPayment() {
+        let handler = PaymentSessionHandler(
+            session: mockSession,
+            viewController: mockPaymentResultDelegate,
+            paymentResultDelegate: mockPaymentResultDelegate,
+            methodType: nil
+        )
+        let mockFactory = MockProviderFactory()
+        let mockCardProvider = MockCardProvider(
+            delegate: handler,
+            session: mockSession,
+            methodType: nil,
+            shouldSucceed: true
+        )
+        mockFactory.mockCardProvider = mockCardProvider
+        handler.providerFactory = mockFactory
+
+        let consent = AWXPaymentConsent()
+        consent.id = "cst_123"
+
+        XCTAssertEqual(handler.paymentMethodName, "unknown")
+        handler.startConsentPayment(with: consent)
+        XCTAssertEqual(handler.paymentMethodName, AWXCardKey)
+    }
+
+    func testPaymentMethodNameForRedirectPayment() async {
+        let handler = PaymentSessionHandler(
+            session: mockSession,
+            viewController: mockPaymentResultDelegate,
+            paymentResultDelegate: mockPaymentResultDelegate,
+            methodType: nil
+        )
+        let mockFactory = MockProviderFactory()
+        let mockRedirectProvider = MockRedirectProvider(
+            delegate: handler,
+            session: mockSession,
+            methodType: nil,
+            shouldSucceed: true
+        )
+        mockFactory.mockRedirectProvider = mockRedirectProvider
+        handler.providerFactory = mockFactory
+
+        // confirm with name
+        XCTAssertEqual(handler.paymentMethodName, "unknown")
+        try? await handler.confirmRedirectPayment(with: "alipaycn", additionalInfo: nil)
+        XCTAssertEqual(handler.paymentMethodName, "alipaycn")
+
+        // confirm with method
+        let mockMethod = AWXPaymentMethod()
+        mockMethod.type = "alipayhk"
+        try? await handler.confirmRedirectPayment(with: "alipayhk", additionalInfo: nil)
+        XCTAssertEqual(handler.paymentMethodName, "alipayhk")
+    }
+
+    func testPaymentMethodNameResetAfterPaymentSuccess() async {
+        let handler = PaymentSessionHandler(
+            session: mockSession,
+            viewController: mockPaymentResultDelegate,
+            paymentResultDelegate: mockPaymentResultDelegate,
+            methodType: nil
+        )
+        let mockFactory = MockProviderFactory()
+        let mockCardProvider = MockCardProvider(
+            delegate: handler,
+            session: mockSession,
+            methodType: nil,
+            shouldSucceed: true
+        )
+        mockFactory.mockCardProvider = mockCardProvider
+        handler.providerFactory = mockFactory
+
+        let card = AWXCard(name: "John", cardNumber: "4111111111111111", expiryMonth: "12", expiryYear: "33", cvc: "123")
+        let billing = AWXPlaceDetails()
+        billing.firstName = "John"
+        billing.lastName = "Doe"
+        billing.address = mockAddress
+
+        handler.startCardPayment(with: card, billing: billing)
+        XCTAssertEqual(handler.paymentMethodName, AWXCardKey)
+
+        try? await Task.sleep(nanoseconds: 100_000_000)
+        XCTAssertEqual(handler.paymentMethodName, "unknown")
+    }
+
+    func testPaymentMethodNameResetAfterPaymentCanceled() async {
+        let handler = PaymentSessionHandler(
+            session: mockSession,
+            viewController: mockPaymentResultDelegate,
+            paymentResultDelegate: mockPaymentResultDelegate,
+            methodType: nil
+        )
+        let mockFactory = MockProviderFactory()
+        let mockApplePayProvider = MockApplePayProvider(
+            delegate: handler,
+            session: mockSession,
+            methodType: nil,
+            shouldSucceed: false,
+            resultStatus: .cancel
+        )
+        mockFactory.mockApplePayProvider = mockApplePayProvider
+        handler.providerFactory = mockFactory
+
+        handler.startApplePay()
+        XCTAssertEqual(handler.paymentMethodName, AWXApplePayKey)
+
+        try? await Task.sleep(nanoseconds: 100_000_000)
+        XCTAssertEqual(handler.paymentMethodName, "unknown")
+    }
+
+    func testPaymentMethodNameResetAfterPaymentFailed() async {
+        let handler = PaymentSessionHandler(
+            session: mockSession,
+            viewController: mockPaymentResultDelegate,
+            paymentResultDelegate: mockPaymentResultDelegate,
+            methodType: nil
+        )
+        let mockFactory = MockProviderFactory()
+        let mockCardProvider = MockCardProvider(
+            delegate: handler,
+            session: mockSession,
+            methodType: nil,
+            shouldSucceed: false
+        )
+        mockFactory.mockCardProvider = mockCardProvider
+        handler.providerFactory = mockFactory
+
+        let card = AWXCard(name: "John", cardNumber: "4111111111111111", expiryMonth: "12", expiryYear: "33", cvc: "123")
+        let billing = AWXPlaceDetails()
+        billing.firstName = "John"
+        billing.lastName = "Doe"
+        billing.address = mockAddress
+
+        XCTAssertEqual(handler.paymentMethodName, "unknown")
+        handler.startCardPayment(with: card, billing: billing)
+        XCTAssertEqual(handler.paymentMethodName, AWXCardKey)
+
+        try? await Task.sleep(nanoseconds: 100_000_000)
+        XCTAssertEqual(handler.paymentMethodName, "unknown")
     }
 }
