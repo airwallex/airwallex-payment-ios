@@ -56,6 +56,12 @@ class UIIntegrationDemoViewController: IntegrationDemoListViewController {
                 }
             ),
             ActionViewModel(
+                title: "Launch with Card Element",
+                action: { [weak self] in
+                    self?.launchCardElement()
+                }
+            ),
+            ActionViewModel(
                 title: "Launch shipping address (dialog)",
                 action: { [weak self] in
                     self?.launchShippingAddressDialog()
@@ -134,6 +140,12 @@ private extension UIIntegrationDemoViewController {
 
     func launchEmbeddedElement() {
         let controller = EmbeddedIntegrationDemoViewController()
+        navigationController?.pushViewController(controller, animated: true)
+    }
+
+    func launchCardElement() {
+        let controller = EmbeddedIntegrationDemoViewController()
+        controller.methodName = AWXCardKey
         navigationController?.pushViewController(controller, animated: true)
     }
 }

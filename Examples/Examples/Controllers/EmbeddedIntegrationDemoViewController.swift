@@ -10,6 +10,9 @@ import Airwallex
 import UIKit
 
 class EmbeddedIntegrationDemoViewController: IntegrationDemoListViewController {
+    
+    /// Payment method name for individual payment element
+    var methodName: String?
 
     // MARK: - Properties
 
@@ -73,11 +76,18 @@ private extension EmbeddedIntegrationDemoViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                let element = try await AWXPaymentElement.create(
-                    hostViewController: self,
-                    session: session,
-                    delegate: self
-                )
+                let element = if let methodName {
+                    try await AWXPaymentElement.create(
+                        methodName: methodName,
+                        session: session,
+                        delegate: self
+                    )
+                } else {
+                    try await AWXPaymentElement.create(
+                        session: session,
+                        delegate: self
+                    )
+                }
                 self.paymentElement = element
 
                 let elementView = element.view

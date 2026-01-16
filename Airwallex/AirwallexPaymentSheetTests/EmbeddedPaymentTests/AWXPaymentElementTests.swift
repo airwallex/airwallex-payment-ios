@@ -37,9 +37,9 @@ final class AWXPaymentElementTests: XCTestCase {
         mockMethodProvider.selectedMethod = cardMethod
 
         let element = try await AWXPaymentElement.create(
-            hostViewController: mockViewController,
             session: mockMethodProvider.session,
             methodProvider: mockMethodProvider,
+            hostViewController: mockViewController,
             delegate: mockViewController
         )
 
@@ -54,9 +54,9 @@ final class AWXPaymentElementTests: XCTestCase {
 
         do {
             _ = try await AWXPaymentElement.create(
-                hostViewController: mockViewController,
                 session: invalidSession,
                 methodProvider: mockMethodProvider,
+                hostViewController: mockViewController,
                 delegate: mockViewController
             )
             XCTFail("Expected error to be thrown")
@@ -79,9 +79,9 @@ final class AWXPaymentElementTests: XCTestCase {
 
         do {
             _ = try await AWXPaymentElement.create(
-                hostViewController: mockViewController,
                 session: mockMethodProvider.session,
                 methodProvider: mockMethodProvider,
+                hostViewController: mockViewController,
                 delegate: mockViewController
             )
             XCTFail("Expected error to be thrown")

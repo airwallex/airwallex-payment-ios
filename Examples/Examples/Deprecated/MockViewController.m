@@ -77,12 +77,35 @@
         handler.showIndicator = false;
     } while (0);
 
-    [AWXPaymentElement createWithHostViewController:self
-                                            session:session
-                                           delegate:self
-                                  completionHandler:^(AWXPaymentElement *_Nullable element, NSError *_Nullable error){
-                                      // foo
-                                  }];
+    [AWXPaymentElement createWithSession:session
+                                delegate:self
+                       completionHandler:^(AWXPaymentElement *_Nullable, NSError *_Nullable){
+
+                       }];
+
+    [AWXPaymentElement createWithSession:session
+                      hostViewController:self
+                                delegate:self
+                       completionHandler:^(AWXPaymentElement *_Nullable, NSError *_Nullable){
+
+                       }];
+
+    [AWXPaymentElement createWithMethodName:AWXCardKey
+                            supportedBrands:@[]
+                                    session:session
+                         hostViewController:self
+                                   delegate:self
+                          completionHandler:^(AWXPaymentElement *_Nullable, NSError *_Nullable){
+
+                          }];
+
+    [AWXPaymentElement createWithMethodName:AWXApplePayKey
+                            supportedBrands:nil
+                                    session:session
+                                   delegate:self
+                          completionHandler:^(AWXPaymentElement *_Nullable, NSError *_Nullable){
+
+                          }];
 }
 
 // AWXPaymentResultDelegate

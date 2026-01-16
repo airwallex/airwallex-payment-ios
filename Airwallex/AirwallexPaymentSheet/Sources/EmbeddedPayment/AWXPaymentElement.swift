@@ -82,30 +82,116 @@ public class AWXPaymentElement: NSObject {
     /// and creates a fully configured payment element.
     ///
     /// - Parameters:
+    ///   - session: The payment session containing transaction details.
     ///   - hostViewController: The view controller that will host this element.
     ///     Used for presenting modals like 3DS authentication, redirects, and country selection.
-    ///   - session: The payment session containing transaction details.
     ///   - delegate: The delegate that receives payment result callbacks.
     /// - Returns: A configured `AWXPaymentElement` ready to be embedded.
     /// - Throws: `AWXUIContext.LaunchError` if session validation fails or payment methods cannot be fetched.
     @objc
     public static func create(
-        hostViewController: UIViewController,
         session: AWXSession,
+        hostViewController: UIViewController,
         delegate: AWXPaymentResultDelegate
     ) async throws -> AWXPaymentElement {
         try await create(
-            hostViewController: hostViewController,
             session: session,
             methodProvider: PaymentSheetMethodProvider(session: session),
+            hostViewController: hostViewController,
             delegate: delegate
         )
     }
-    
-    static func create(
+
+    /// Creates an embedded payment element using a single view controller as both host and delegate.
+    ///
+    /// This is a convenience method for when your view controller conforms to `AWXPaymentResultDelegate`.
+    ///
+    /// - Parameters:
+    ///   - session: The payment session containing transaction details.
+    ///   - delegate: The view controller that will host this element and receive payment result callbacks.
+    /// - Returns: A configured `AWXPaymentElement` ready to be embedded.
+    /// - Throws: `AWXUIContext.LaunchError` if session validation fails or payment methods cannot be fetched.
+    @objc
+    public static func create(
+        session: AWXSession,
+        delegate: UIViewController & AWXPaymentResultDelegate
+    ) async throws -> AWXPaymentElement {
+        try await create(
+            session: session,
+            methodProvider: PaymentSheetMethodProvider(session: session),
+            hostViewController: delegate,
+            delegate: delegate
+        )
+    }
+
+    /// Creates an embedded payment element with specific payment method
+    ///
+    /// This factory method validates the session, fetches available payment methods,
+    /// and creates a fully configured payment element.
+    ///
+    /// - Parameters:
+    ///   - name: payment method name e.g. (AWXApplePayKey, AWXCardKey)
+    ///   - supportedBrands: Card brands to support. Only used for card payments. Defaults to all available brands.
+    ///   - session: The payment session containing transaction details.
+    ///   - hostViewController: The view controller that will host this element.
+    ///     Used for presenting modals like 3DS authentication, redirects, and country selection.
+    ///   - delegate: The delegate that receives payment result callbacks.
+    /// - Returns: A configured `AWXPaymentElement` ready to be embedded.
+    /// - Throws: `AWXUIContext.LaunchError` if session validation fails or payment methods cannot be fetched.
+    @objc
+    public static func create(
+        methodName name: String,
+        supportedBrands: [AWXCardBrand]? = AWXCardBrand.allAvailable,
+        session: AWXSession,
         hostViewController: UIViewController,
+        delegate: AWXPaymentResultDelegate
+    ) async throws -> AWXPaymentElement {
+        try await create(
+            session: session,
+            methodProvider: SinglePaymentMethodProvider(
+                session: session,
+                name: name,
+                supportedCardBrands: supportedBrands
+            ),
+            hostViewController: hostViewController,
+            delegate: delegate
+        )
+    }
+
+    /// Creates an embedded payment element with a specific payment method using a single view controller as both host and delegate.
+    ///
+    /// This is a convenience method for when your view controller conforms to `AWXPaymentResultDelegate`.
+    ///
+    /// - Parameters:
+    ///   - name: Payment method name (e.g., `AWXApplePayKey`, `AWXCardKey`).
+    ///   - supportedBrands: Card brands to support. Only used for card payments. Defaults to all available brands.
+    ///   - session: The payment session containing transaction details.
+    ///   - delegate: The view controller that will host this element and receive payment result callbacks.
+    /// - Returns: A configured `AWXPaymentElement` ready to be embedded.
+    /// - Throws: `AWXUIContext.LaunchError` if session validation fails or payment methods cannot be fetched.
+    @objc
+    public static func create(
+        methodName name: String,
+        supportedBrands: [AWXCardBrand]? = AWXCardBrand.allAvailable,
+        session: AWXSession,
+        delegate: UIViewController & AWXPaymentResultDelegate
+    ) async throws -> AWXPaymentElement {
+        try await create(
+            session: session,
+            methodProvider: SinglePaymentMethodProvider(
+                session: session,
+                name: name,
+                supportedCardBrands: supportedBrands
+            ),
+            hostViewController: delegate,
+            delegate: delegate
+        )
+    }
+
+    static func create(
         session: AWXSession,
         methodProvider: PaymentMethodProvider,
+        hostViewController: UIViewController,
         delegate: AWXPaymentResultDelegate
     ) async throws -> AWXPaymentElement {
         // Validate session

@@ -20,7 +20,6 @@ disabled_rules:
   - xctfail_message
   - force_try
   - leading_whitespace
-  - trailing_comma
 
 opt_in_rules:
   - multiline_parameters
@@ -46,3 +45,6 @@ large_tuple:
 
 trailing_whitespace:
   ignores_empty_lines: true
+
+trailing_comma:
+  mandatory_comma: false
