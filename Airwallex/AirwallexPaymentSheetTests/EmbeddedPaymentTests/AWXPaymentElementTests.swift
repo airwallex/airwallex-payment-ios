@@ -7,6 +7,7 @@
 //
 
 import AirwallexCore
+@testable import AirwallexPayment
 @testable import AirwallexPaymentSheet
 import XCTest
 
@@ -15,16 +16,40 @@ final class AWXPaymentElementTests: XCTestCase {
 
     var mockViewController: MockPaymentResultDelegate!
     var mockMethodProvider: MockMethodProvider!
+    var mockAPIClient: AWXAPIClient!
+    var mockSuccessResponse: URLResponse!
+    var mockMethodTypesData: Data!
+    var mockConsentsData: Data!
 
     override func setUp() {
         super.setUp()
         mockViewController = MockPaymentResultDelegate()
         mockMethodProvider = MockMethodProvider(methods: [], consents: [])
+
+        // Setup mock API client for public API tests
+        let sessionConfiguration = URLSessionConfiguration.ephemeral
+        sessionConfiguration.protocolClasses = [MockURLProtocol.self]
+        let clientConfiguration = AWXAPIClientConfiguration()
+        clientConfiguration.sessionConfiguration = sessionConfiguration
+        mockAPIClient = AWXAPIClient(configuration: clientConfiguration)
+
+        let mockURL = URL(string: "https://api-demo.airwallex.com/api/v1/pa/config/payment_method_types")!
+        mockSuccessResponse = HTTPURLResponse(
+            url: mockURL,
+            statusCode: 200,
+            httpVersion: nil,
+            headerFields: nil
+        )
+
+        mockMethodTypesData = Bundle.dataOfFile("method_types")!
+        mockConsentsData = Bundle.dataOfFile("payment_consents")!
     }
 
     override func tearDown() {
         mockViewController = nil
         mockMethodProvider = nil
+        mockAPIClient = nil
+        MockURLProtocol.resetMockResponses()
         super.tearDown()
     }
 
@@ -110,6 +135,24 @@ final class AWXPaymentElementTests: XCTestCase {
         element.view.layoutIfNeeded()
         try? await Task.sleep(nanoseconds: 100_000_000)
         XCTAssertTrue(element.view.bounds.height > 0)
+    }
+
+    func testDelegate_Setter() {
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: SinglePaymentMethodProvider(
+                session: createValidSession(),
+                name: AWXCardKey
+            ),
+            delegate: mockViewController
+        )
+        XCTAssert(element.delegate === mockViewController)
+
+        let newDelegate = MockPaymentResultDelegate()
+        element.delegate = newDelegate
+        XCTAssert(element.delegate === newDelegate)
+        XCTAssert(element.delegate !== mockViewController)
     }
 
     // MARK: - Section Tests
@@ -238,5 +281,145 @@ final class AWXPaymentElementTests: XCTestCase {
 
         // The fallback controller should still return a valid controller
         XCTAssertNotNil(controller)
+    }
+
+    // MARK: - Public API Tests
+
+    private func createValidSession() -> Session {
+        let intent = AWXPaymentIntent()
+        intent.id = "intent_id"
+        intent.clientSecret = "client_secret"
+        intent.amount = NSDecimalNumber(value: 100)
+        intent.currency = "AUD"
+
+        return Session(
+            paymentIntent: intent,
+            countryCode: "AU"
+        )
+    }
+
+    func testPublicCreate_WithSessionAndHostViewController_ReturnsElement() async throws {
+        MockURLProtocol.mockResponseMap = [
+            AWXGetPaymentMethodTypesRequest().path(): (mockMethodTypesData, mockSuccessResponse, nil),
+            AWXGetPaymentConsentsRequest().path(): (mockConsentsData, mockSuccessResponse, nil)
+        ]
+
+        let session = createValidSession()
+
+        AWXAPIClientConfiguration.shared().sessionConfiguration = {
+            let config = URLSessionConfiguration.ephemeral
+            config.protocolClasses = [MockURLProtocol.self]
+            return config
+        }()
+
+        let element = try await AWXPaymentElement.create(
+            session: session,
+            hostViewController: mockViewController,
+            delegate: mockViewController
+        )
+
+        XCTAssertNotNil(element)
+        XCTAssertNotNil(element.view)
+        XCTAssertTrue(element.delegate === mockViewController)
+
+        AWXAPIClientConfiguration.shared().sessionConfiguration = nil
+    }
+
+    func testPublicCreate_WithSessionAndCombinedDelegate_ReturnsElement() async throws {
+        MockURLProtocol.mockResponseMap = [
+            AWXGetPaymentMethodTypesRequest().path(): (mockMethodTypesData, mockSuccessResponse, nil),
+            AWXGetPaymentConsentsRequest().path(): (mockConsentsData, mockSuccessResponse, nil)
+        ]
+
+        let session = createValidSession()
+
+        AWXAPIClientConfiguration.shared().sessionConfiguration = {
+            let config = URLSessionConfiguration.ephemeral
+            config.protocolClasses = [MockURLProtocol.self]
+            return config
+        }()
+
+        let element = try await AWXPaymentElement.create(
+            session: session,
+            delegate: mockViewController
+        )
+
+        XCTAssertNotNil(element)
+        XCTAssertNotNil(element.view)
+        XCTAssertTrue(element.delegate === mockViewController)
+
+        AWXAPIClientConfiguration.shared().sessionConfiguration = nil
+    }
+
+    func testPublicCreate_WithMethodNameCard_ReturnsElementWithoutAPICall() async throws {
+        // Card payment method doesn't require API call - SinglePaymentMethodProvider creates it locally
+        let session = createValidSession()
+
+        let element = try await AWXPaymentElement.create(
+            methodName: AWXCardKey,
+            session: session,
+            hostViewController: mockViewController,
+            delegate: mockViewController
+        )
+
+        XCTAssertNotNil(element)
+        XCTAssertNotNil(element.view)
+        XCTAssertTrue(element.delegate === mockViewController)
+
+        let sections = element.sections()
+        XCTAssertTrue(sections.contains(.cardPaymentNew))
+    }
+
+    func testPublicCreate_WithMethodNameCardAndCombinedDelegate_ReturnsElement() async throws {
+        let session = createValidSession()
+
+        let element = try await AWXPaymentElement.create(
+            methodName: AWXCardKey,
+            session: session,
+            delegate: mockViewController
+        )
+
+        XCTAssertNotNil(element)
+        XCTAssertNotNil(element.view)
+        XCTAssertTrue(element.delegate === mockViewController)
+
+        let sections = element.sections()
+        XCTAssertTrue(sections.contains(.cardPaymentNew))
+    }
+
+    func testPublicCreate_WithMethodNameCardAndSupportedBrands_ReturnsElement() async throws {
+        let session = createValidSession()
+
+        let element = try await AWXPaymentElement.create(
+            methodName: AWXCardKey,
+            supportedBrands: [.visa, .mastercard],
+            session: session,
+            hostViewController: mockViewController,
+            delegate: mockViewController
+        )
+
+        XCTAssertNotNil(element)
+        XCTAssertNotNil(element.view)
+        XCTAssertTrue(element.delegate === mockViewController)
+    }
+
+    func testPublicCreate_WithInvalidSession_ThrowsError() async {
+        let invalidSession = Session(
+            paymentIntent: AWXPaymentIntent(),
+            countryCode: "AU"
+        )
+        // paymentIntent has no clientSecret - should fail validation
+
+        do {
+            _ = try await AWXPaymentElement.create(
+                methodName: AWXCardKey,
+                session: invalidSession,
+                hostViewController: mockViewController,
+                delegate: mockViewController
+            )
+            XCTFail("Expected error to be thrown")
+        } catch {
+            XCTAssertTrue(error is AWXUIContext.LaunchError)
+        }
     }
 }
