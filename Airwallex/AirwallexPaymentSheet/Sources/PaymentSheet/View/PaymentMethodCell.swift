@@ -16,6 +16,7 @@ struct PaymentMethodCellViewModel: CellViewModelIdentifiable, CardBrandViewConfi
     let itemIdentifier: String
     let name: String
     let imageURL: URL?
+    let placeholder: UIImage?
     let isSelected: Bool
     let imageLoader: ImageLoader
     let cardBrands: [AWXBrandType]

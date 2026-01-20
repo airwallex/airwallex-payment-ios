@@ -50,6 +50,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         itemIdentifier: .accordionKey,
         name: methodType.displayName,
         imageURL: methodType.resources.logoURL,
+        placeholder: UIImage(named: "cardplaceholder", in: .paymentSheet, compatibleWith: nil),
         isSelected: true,
         imageLoader: imageLoader,
         cardBrands: []

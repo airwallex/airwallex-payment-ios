@@ -53,10 +53,16 @@ class PaymentMethodTabSectionController: SectionController {
             assert(false, "index out of bounds")
             return cell
         }
+        let placeholder: UIImage? = if methodType.name == AWXCardKey {
+            UIImage(named: "cardplaceholder", in: .paymentSheet, compatibleWith: nil)
+        } else {
+            nil
+        }
         let viewModel = PaymentMethodCellViewModel(
             itemIdentifier: methodType.name,
             name: methodType.displayName,
             imageURL: methodType.resources.logoURL,
+            placeholder: placeholder,
             isSelected: methodType.name == selectedMethod,
             imageLoader: imageLoader,
             cardBrands: []

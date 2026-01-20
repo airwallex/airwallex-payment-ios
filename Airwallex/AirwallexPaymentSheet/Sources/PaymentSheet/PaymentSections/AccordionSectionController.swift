@@ -125,10 +125,16 @@ class AccordionSectionController: SectionController {
         }
         
         viewModels = methodProvider.methodsForAccordionPosition(position).map { methodType in
-            PaymentMethodCellViewModel(
+            let placeholder: UIImage? = if methodType.name == AWXCardKey {
+                UIImage(named: "cardplaceholder", in: .paymentSheet, compatibleWith: nil)
+            } else {
+                nil
+            }
+            return PaymentMethodCellViewModel(
                 itemIdentifier: methodType.name,
                 name: methodType.displayName,
                 imageURL: methodType.resources.logoURL,
+                placeholder: placeholder,
                 isSelected: false,
                 imageLoader: imageLoader,
                 cardBrands: methodType.cardSchemes.map { $0.brandType }

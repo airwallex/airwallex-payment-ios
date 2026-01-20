@@ -119,6 +119,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 itemIdentifier: item,
                 name: methodType.displayName,
                 imageURL: methodType.resources.logoURL,
+                placeholder: nil,
                 isSelected: true,
                 imageLoader: imageLoader,
                 cardBrands: []
