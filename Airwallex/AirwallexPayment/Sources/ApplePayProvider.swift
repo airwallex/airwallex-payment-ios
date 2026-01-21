@@ -91,6 +91,15 @@ class ApplePayProvider: PaymentProvider {
         self.cancelPaymentOnDismiss = cancelPaymentOnDismiss
         
         let request = try unifiedSession.makePaymentRequestOrError()
+
+        /// PKPaymentAuthorizationController's initializer is nonnull,
+        /// so use PKPaymentAuthorizationViewController intead
+        guard PKPaymentAuthorizationViewController(paymentRequest: request) != nil else {
+            let error = "Failed to initialize Apple Pay Controller.".asError()
+            AnalyticsLogger.log(errorName: "apple_pay_sheet", errorMessage: error.rawValue)
+            delegate?.provider(self, didCompleteWith: .failure, error: error)
+            return
+        }
         let controller = paymentController.init(paymentRequest: request)
         controller.delegate = self
         

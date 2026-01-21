@@ -243,9 +243,9 @@ typedef enum {
         return;
     }
 
-    PKPaymentAuthorizationController *controller = [[PKPaymentAuthorizationController alloc] initWithPaymentRequest:request];
-
-    if (!controller) {
+    /// PKPaymentAuthorizationController's initializer is nonnull,
+    /// so use PKPaymentAuthorizationViewController intead
+    if (![[PKPaymentAuthorizationViewController alloc] initWithPaymentRequest:request]) {
         NSString *description = @"Failed to initialize Apple Pay Controller.";
         NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                              code:-1
@@ -255,7 +255,7 @@ typedef enum {
         [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
         return;
     }
-
+    PKPaymentAuthorizationController *controller = [[PKPaymentAuthorizationController alloc] initWithPaymentRequest:request];
     controller.delegate = self;
 
     [AWXRisk logWithEvent:@"show_apple_pay" screen:@"page_apple_pay"];

@@ -131,7 +131,7 @@
 
     AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
 
-    id controllerMock = OCMClassMock([PKPaymentAuthorizationController class]);
+    id controllerMock = OCMClassMock([PKPaymentAuthorizationViewController class]);
     OCMStub([controllerMock alloc]).andReturn(controllerMock);
     OCMStub([controllerMock initWithPaymentRequest:[OCMArg any]]).andReturn(nil);
 
@@ -549,7 +549,7 @@
     id controllerMock = OCMClassMock([PKPaymentAuthorizationController class]);
 
     // Call the method - in test environment it may return nil but should not crash
-    UIWindow *window = [provider presentationWindowForPaymentAuthorizationController:controllerMock];
+    UIWindow *window = [(id<PKPaymentAuthorizationControllerDelegate>)provider presentationWindowForPaymentAuthorizationController:controllerMock];
 
     // In a test environment without a key window, this will return nil
     // The important thing is that the method is properly implemented and callable
