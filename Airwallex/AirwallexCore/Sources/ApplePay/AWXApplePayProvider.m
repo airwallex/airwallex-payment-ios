@@ -86,6 +86,27 @@ typedef enum {
 
 #pragma mark - PKPaymentAuthorizationControllerDelegate
 
+- (UIWindow *)presentationWindowForPaymentAuthorizationController:(PKPaymentAuthorizationController *)controller {
+    if (@available(iOS 15.0, *)) {
+        for (UIScene *scene in UIApplication.sharedApplication.connectedScenes) {
+            if ([scene isKindOfClass:[UIWindowScene class]]) {
+                UIWindowScene *windowScene = (UIWindowScene *)scene;
+                for (UIWindow *window in windowScene.windows) {
+                    if (window.isKeyWindow) {
+                        return window;
+                    }
+                }
+            }
+        }
+    }
+    for (UIWindow *window in UIApplication.sharedApplication.windows) {
+        if (window.isKeyWindow) {
+            return window;
+        }
+    }
+    return nil;
+}
+
 - (void)paymentAuthorizationController:(PKPaymentAuthorizationController *)controller
                    didAuthorizePayment:(PKPayment *)payment
                                handler:(void (^)(PKPaymentAuthorizationResult *_Nonnull))completion {

@@ -12,6 +12,7 @@ import AirwallexCore
 import AirwallexRisk
 import Foundation
 import PassKit
+import UIKit
 
 /// `ApplePayProvider` is a Swift implementation of the Apple Pay payment provider.
 /// It handles payment method with Apple Pay, providing a more Swift-idiomatic interface
@@ -161,7 +162,18 @@ class ApplePayProvider: PaymentProvider {
 // MARK: - PKPaymentAuthorizationControllerDelegate
 
 extension ApplePayProvider: PKPaymentAuthorizationControllerDelegate {
-    
+
+    func presentationWindow(for controller: PKPaymentAuthorizationController) -> UIWindow? {
+        if #available(iOS 15.0, *) {
+            return UIApplication.shared.connectedScenes
+                .compactMap { $0 as? UIWindowScene }
+                .flatMap { $0.windows }
+                .first { $0.isKeyWindow }
+        } else {
+            return UIApplication.shared.windows.first { $0.isKeyWindow }
+        }
+    }
+
     func paymentAuthorizationController(_ controller: PKPaymentAuthorizationController,
                                         didAuthorizePayment payment: PKPayment) async -> PKPaymentAuthorizationResult {
         await confirmIntent(payment: payment)
