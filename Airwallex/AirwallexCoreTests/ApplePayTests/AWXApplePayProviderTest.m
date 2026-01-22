@@ -143,10 +143,10 @@
     XCTAssertNotNil(delegate.lastStatusError);
 
     OCMVerify(times(1), [controllerMock initWithPaymentRequest:[OCMArg any]]);
-    NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
-                                         code:-1
-                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to initialize Apple Pay Controller.", nil)}];
-    OCMVerify(times(1), [_logger logError:error withEventName:@"apple_pay_sheet"]);
+    OCMVerify(times(1), [_logger logErrorWithName:@"apple_pay_sheet"
+                                   additionalInfo:[OCMArg checkWithBlock:^BOOL(NSDictionary *info) {
+                                       return [info[@"message"] isEqualToString:@"Failed to initialize Apple Pay Controller."] && info[@"supportedNetworks"] != nil;
+                                   }]]);
 }
 
 - (void)testHandleFlowWhenPaymentControllerFailedToPresent {
@@ -169,10 +169,10 @@
     XCTAssertNotNil(delegate.lastStatusError);
 
     OCMVerify(times(1), [controllerMock initWithPaymentRequest:[OCMArg any]]);
-    NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
-                                         code:-1
-                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to present Apple Pay Controller.", nil)}];
-    OCMVerify(times(1), [_logger logError:error withEventName:@"apple_pay_sheet"]);
+    OCMVerify(times(1), [_logger logErrorWithName:@"apple_pay_sheet"
+                                   additionalInfo:[OCMArg checkWithBlock:^BOOL(NSDictionary *info) {
+                                       return [info[@"message"] isEqualToString:@"Failed to present Apple Pay Controller."] && info[@"supportedNetworks"] != nil;
+                                   }]]);
 }
 
 - (void)testHandleFlowCancelled {

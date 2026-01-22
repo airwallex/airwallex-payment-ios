@@ -250,7 +250,11 @@ typedef enum {
         NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                              code:-1
                                          userInfo:@{NSLocalizedDescriptionKey: description}];
-        [[AWXAnalyticsLogger shared] logError:error withEventName:@"apple_pay_sheet"];
+        [[AWXAnalyticsLogger shared] logErrorWithName:@"apple_pay_sheet"
+                                       additionalInfo:@{
+                                           @"message": description,
+                                           @"supportedNetworks": session.applePayOptions.supportedNetworks ?: @[]
+                                       }];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
         [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
         return;
@@ -331,10 +335,15 @@ typedef enum {
 - (void)handlePresentationFail {
     if (!_didHandlePresentationFail) {
         self.didHandlePresentationFail = YES;
+        NSString *message = @"Failed to present Apple Pay Controller.";
         NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                              code:-1
-                                         userInfo:@{NSLocalizedDescriptionKey: @"Failed to present Apple Pay Controller."}];
-        [[AWXAnalyticsLogger shared] logError:error withEventName:@"apple_pay_sheet"];
+                                         userInfo:@{NSLocalizedDescriptionKey: message}];
+        [[AWXAnalyticsLogger shared] logErrorWithName:@"apple_pay_sheet"
+                                       additionalInfo:@{
+                                           @"message": message,
+                                           @"supportedNetworks": self.session.applePayOptions.supportedNetworks ?: @[]
+                                       }];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
         [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
     }

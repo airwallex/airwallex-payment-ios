@@ -466,6 +466,7 @@ class ApplePayProviderTests: XCTestCase {
         await MainActor.run {
             XCTAssertEqual(delegate.completionStatus, .failure)
             XCTAssertNotNil(delegate.completionError)
+            XCTAssertEqual(delegate.completionError?.localizedDescription, "Failed to initialize Apple Pay Controller.")
             // The mock controller should NOT have been created since we fail before that
             // Note: If PKPaymentAuthorizationViewController succeeds (e.g., on a device with Apple Pay),
             // this test behavior may differ

@@ -96,7 +96,13 @@ class ApplePayProvider: PaymentProvider {
         /// so use PKPaymentAuthorizationViewController intead
         guard PKPaymentAuthorizationViewController(paymentRequest: request) != nil else {
             let error = "Failed to initialize Apple Pay Controller.".asError()
-            AnalyticsLogger.log(errorName: "apple_pay_sheet", errorMessage: error.rawValue)
+            AnalyticsLogger.log(
+                errorName: "apple_pay_sheet",
+                errorMessage: error.rawValue,
+                extraInfo: [
+                    .supportedNetworks: request.supportedNetworks
+                ]
+            )
             delegate?.provider(self, didCompleteWith: .failure, error: error)
             return
         }
@@ -129,7 +135,13 @@ class ApplePayProvider: PaymentProvider {
         if !didHandlePresentationFail {
             didHandlePresentationFail = true
             let error = "Failed to present Apple Pay Controller.".asError()
-            AnalyticsLogger.log(errorName: "apple_pay_sheet", errorMessage: error.rawValue)
+            AnalyticsLogger.log(
+                errorName: "apple_pay_sheet",
+                errorMessage: error.rawValue,
+                extraInfo: [
+                    .supportedNetworks: unifiedSession.applePayOptions?.supportedNetworks ?? []
+                ]
+            )
             delegate?.provider(self, didCompleteWith: .failure, error: error)
         }
     }
