@@ -1,5 +1,8 @@
 name: Deploy Docs
 on:
+  push:
+    branches:
+      - reference-doc
   workflow_dispatch:
   workflow_call:
 
