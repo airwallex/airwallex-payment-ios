@@ -1,8 +1,8 @@
 import AirwallexCore
 @testable import AirwallexPayment
+import PassKit
 import UIKit
 import XCTest
-import PassKit
 
 class ApplePayProviderTests: XCTestCase {
     
@@ -432,6 +432,87 @@ class ApplePayProviderTests: XCTestCase {
             XCTAssertEqual(delegate.completionStatus, .success)
             XCTAssertEqual(delegate.didStartRequest, delegate.didEndRequest)
             XCTAssertEqual(provider.paymentState, .complete)
+        }
+    }
+
+    // MARK: - presentationWindow Tests
+
+    func testStartPaymentFailsWhenViewControllerInitializationFails() async {
+        // Test the guard at line 97 - when PKPaymentAuthorizationViewController returns nil
+        // This happens when Apple Pay is not available on the device/simulator
+        let delegate = await MockProviderDelegate()
+
+        let methodType = AWXPaymentMethodType()
+        methodType.name = AWXApplePayKey
+
+        // Configure session with unsupported networks to trigger ViewController init failure
+        mockSession.applePayOptions?.supportedNetworks = []
+        
+        MockPKPaymentAuthorizationController.reset()
+
+        let provider = ApplePayProvider(
+            delegate: delegate,
+            session: mockSession,
+            methodType: methodType,
+            paymentController: MockPKPaymentAuthorizationController.self
+        )
+
+        try? provider.startPayment()
+
+        // Wait for async operations
+        try? await Task.sleep(nanoseconds: 500_000_000)
+
+        // Verify delegate received failure callback
+        await MainActor.run {
+            XCTAssertEqual(delegate.completionStatus, .failure)
+            XCTAssertNotNil(delegate.completionError)
+            XCTAssertEqual(delegate.completionError?.localizedDescription, "Failed to initialize Apple Pay Controller.")
+            // The mock controller should NOT have been created since we fail before that
+            // Note: If PKPaymentAuthorizationViewController succeeds (e.g., on a device with Apple Pay),
+            // this test behavior may differ
+        }
+    }
+
+    @MainActor
+    func testPresentationWindowReturnsWindow() async {
+        // Test that presentationWindow(for:) is properly implemented
+        let delegate = MockProviderDelegate()
+
+        let methodType = AWXPaymentMethodType()
+        methodType.name = AWXApplePayKey
+
+        MockPKPaymentAuthorizationController.reset()
+        MockPKPaymentAuthorizationController.shouldSucceedPresentation = true
+
+        let provider = ApplePayProvider(
+            delegate: delegate,
+            session: mockSession,
+            methodType: methodType,
+            paymentController: MockPKPaymentAuthorizationController.self
+        )
+
+        try? provider.startPayment()
+
+        // Wait for async operations
+        try? await Task.sleep(nanoseconds: 500_000_000)
+
+        guard let controller = MockPKPaymentAuthorizationController.lastInstance else {
+            XCTFail("Controller not created")
+            return
+        }
+
+        // Call the presentationWindow method - in test environment it may return nil
+        // but we're verifying the method is properly implemented and callable
+        let window = provider.presentationWindow(for: controller)
+
+        // In a test environment without a key window, this will return nil
+        // The important thing is that the method doesn't crash and conforms to the protocol
+        // If there's a key window in the test environment, it should return it
+        if let keyWindow = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
+            XCTAssertEqual(window, keyWindow)
+        } else {
+            // No key window in test environment is expected
+            XCTAssertNil(window)
         }
     }
 }

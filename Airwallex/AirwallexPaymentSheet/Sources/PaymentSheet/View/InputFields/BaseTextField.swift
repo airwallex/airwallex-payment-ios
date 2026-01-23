@@ -191,7 +191,7 @@ class BaseTextField<T: BaseTextFieldConfiguring>: UIView, ViewConfigurable, UITe
         }
     }
     
-    //  MARK: - UITextField.Event
+    // MARK: - UITextField.Event
     @objc func editingDidBegin(_ textField: UITextField) {
         updateBorderAppearance()
     }

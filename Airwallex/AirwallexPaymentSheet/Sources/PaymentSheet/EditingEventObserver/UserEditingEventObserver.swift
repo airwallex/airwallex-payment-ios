@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserEditingEventObserver: EditingEventObserver  {
+class UserEditingEventObserver: EditingEventObserver {
     
     let block: (UIControl.Event, UITextField) -> Void
     

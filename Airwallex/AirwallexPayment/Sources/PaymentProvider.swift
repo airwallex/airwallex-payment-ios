@@ -40,8 +40,8 @@ class PaymentProvider: AWXDefaultProvider {
     /// - Returns: request object
     /// - Throws: An error if the payment intent cannot be ensured
     @MainActor func createConfirmIntentRequest(method: AWXPaymentMethod?,
-                                    consent: AWXPaymentConsent?,
-                                    consentOptions: PaymentConsentOptions?) async throws -> AWXConfirmPaymentIntentRequest {
+                                               consent: AWXPaymentConsent?,
+                                               consentOptions: PaymentConsentOptions?) async throws -> AWXConfirmPaymentIntentRequest {
         defer {
             self.delegate?.providerDidEndRequest(self)
         }

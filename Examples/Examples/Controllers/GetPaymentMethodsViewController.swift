@@ -6,14 +6,14 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import UIKit
 import Airwallex
+import UIKit
 
 class GetPaymentMethodsViewController: UITableViewController {
     
     private let imageLoader = ImageLoader()
     private let sectionIdentifier = "section"
-    private lazy var dataSource: UITableViewDiffableDataSource = UITableViewDiffableDataSource<String, String>(tableView: tableView) { [weak self] tableView, indexPath, itemIdentifier in
+    private lazy var dataSource: UITableViewDiffableDataSource = UITableViewDiffableDataSource<String, String>(tableView: tableView) { [weak self] tableView, indexPath, _ in
         guard let self else { return UITableViewCell() }
         let methodType = self.items[indexPath.row]
         guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) else {
@@ -129,7 +129,7 @@ class GetPaymentMethodsViewController: UITableViewController {
                 let clientSecret = try await withCheckedThrowingContinuation { continuation in
                     storeAPIClient.generateClientSecret(
                         customerID: customerId,
-                        apiKey:  ExamplesKeys.apiKey?.nilIfEmpty,
+                        apiKey: ExamplesKeys.apiKey?.nilIfEmpty,
                         clientID: ExamplesKeys.clientId?.nilIfEmpty
                     ) { result in
                         continuation.resume(with: result)

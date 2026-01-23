@@ -6,8 +6,8 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import UIKit
 import Airwallex
+import UIKit
 
 #if canImport(WechatOpenSDKDynamic)
 import WechatOpenSDKDynamic
@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         NotificationCenter.default.post(name: PaymentResultViewController.paymentResultNotification, object: nil)
 #if canImport(WechatOpenSDKDynamic)
         if WXApi.handleOpen(url, delegate: self) {
@@ -57,20 +57,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
               components.host == String.demoAppHost else {
             return false
         }
-        guard let type = components.queryItems?.first(where: { $0.name == "type"})?.value else {
+        guard let type = components.queryItems?.first(where: { $0.name == "type" })?.value else {
             print("APP launched by URL: \(url.absoluteString)")
             return true
         }
         
         switch type {
         case "SUCCESS_URL":
-            let intentId = components.queryItems?.first(where: { $0.name == "id"})?.value ?? "Not Found"
+            let intentId = components.queryItems?.first(where: { $0.name == "id" })?.value ?? "Not Found"
             window?.rootViewController?.showAlert(message: "intentId: \(intentId)", title: "Payment Success") {
                 UIPasteboard.general.string = intentId
             }
         case "FAIL_URL":
-            let intentId = components.queryItems?.first(where: { $0.name == "id"})?.value ?? "Not Found"
-            let error = components.queryItems?.first(where: { $0.name == "error"})?.value ?? "Not Found"
+            let intentId = components.queryItems?.first(where: { $0.name == "id" })?.value ?? "Not Found"
+            let error = components.queryItems?.first(where: { $0.name == "error" })?.value ?? "Not Found"
             window?.rootViewController?.showAlert(message: "error: \(error), intentId: \(intentId)", title: "Payment Failed") {
                 UIPasteboard.general.string = intentId
             }

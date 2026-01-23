@@ -6,9 +6,9 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import UIKit
-import Combine
 import Airwallex
+import Combine
+import UIKit
 
 class SettingsViewController: UIViewController {
     
@@ -454,7 +454,7 @@ private extension SettingsViewController {
             ConfigTextFieldViewModel(
                 displayName: "Customer ID",
                 text: settings.customerId,
-                textDidChange: { [weak self] text in
+                textDidChange: { [weak self] _ in
                     self?.updateCustomerIDGeneratorActionButton()
                 },
                 textDidEndEditing: { [weak self] text in

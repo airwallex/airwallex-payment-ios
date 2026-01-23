@@ -6,22 +6,22 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import Foundation
 import Airwallex
+import Foundation
 
 struct DemoDataSource {
     
     static var testCard: AWXCard? {
         let cardNumber = [
-            AirwallexSDKMode.demoMode : [
-                CheckoutMode.oneOff : "4012000300000005",
-                CheckoutMode.recurring : "4012000300000021",
-                CheckoutMode.recurringWithIntent : "4012000300000005"
+            AirwallexSDKMode.demoMode: [
+                CheckoutMode.oneOff: "4012000300000005",
+                CheckoutMode.recurring: "4012000300000021",
+                CheckoutMode.recurringWithIntent: "4012000300000005"
             ],
             AirwallexSDKMode.stagingMode: [
-                CheckoutMode.oneOff : "4012000300001003",
-                CheckoutMode.recurring : "4035501000000008",
-                CheckoutMode.recurringWithIntent : "4012000300001003"
+                CheckoutMode.oneOff: "4012000300001003",
+                CheckoutMode.recurring: "4035501000000008",
+                CheckoutMode.recurringWithIntent: "4012000300001003"
             ]
         ]
         
@@ -40,15 +40,15 @@ struct DemoDataSource {
     static var testCard3DS: AWXCard? {
         
         let cardNumber = [
-            AirwallexSDKMode.demoMode : [
-                CheckoutMode.oneOff : "4012000300000088",
-                CheckoutMode.recurring : "5425233430109903",
-                CheckoutMode.recurringWithIntent : "4012000300000088"
+            AirwallexSDKMode.demoMode: [
+                CheckoutMode.oneOff: "4012000300000088",
+                CheckoutMode.recurring: "5425233430109903",
+                CheckoutMode.recurringWithIntent: "4012000300000088"
             ],
             AirwallexSDKMode.stagingMode: [
-                CheckoutMode.oneOff : "4012000300000088",
-                CheckoutMode.recurring : "5307837360544518",
-                CheckoutMode.recurringWithIntent : "4012000300000088"
+                CheckoutMode.oneOff: "4012000300000088",
+                CheckoutMode.recurring: "5307837360544518",
+                CheckoutMode.recurringWithIntent: "4012000300000088"
             ]
         ]
         
@@ -87,7 +87,7 @@ struct DemoDataSource {
     }
     
     static var shippingAddress: AWXPlaceDetails {
-        let shipping: [String : Any] = [
+        let shipping: [String: Any] = [
             "first_name": "Jason",
             "last_name": "Wang",
             "phone_number": "13800000000",

@@ -6,16 +6,16 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 /// adjust scrollview content inset base on keyboard frame and how much they overlap
 class KeyboardHandler {
-    private weak var scrollView: UIScrollView? = nil
+    private weak var scrollView: UIScrollView?
     private var cancellables = Set<AnyCancellable>()
     /// used to restore scrollView to it's original contentInsets when keyboard disappeared
     /// or when handler is disabled
-    private var originalContentInsets: UIEdgeInsets? = nil
+    private var originalContentInsets: UIEdgeInsets?
     
     /// bind scrollView which need to avoid overlap with keyboard
     /// usually you will want to call this in `viewWillAppear`

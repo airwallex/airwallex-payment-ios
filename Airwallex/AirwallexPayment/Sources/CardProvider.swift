@@ -65,10 +65,10 @@ class CardProvider: PaymentProvider {
             // Collect CVC if needed for PAN cards
             if let card = consent.paymentMethod?.card,
                card.numberType == "PAN" && (cvc ?? "").isEmpty {
-                cvc = try await collectCVC(for:consent)
+                cvc = try await collectCVC(for: consent)
             }
             if let methodId {
-                if let options = unifiedSession.paymentConsentOptions  {
+                if let options = unifiedSession.paymentConsentOptions {
                     // Create consent & confirm payment with existing payment method
                     let request = try await createPaymentRequestWithConsentCreation(
                         methodId: methodId,
@@ -107,7 +107,7 @@ class CardProvider: PaymentProvider {
     
     func confirmIntentWithConsent(_ consentId: String, requiresCVC: Bool = false) async {
         do {
-            var cvc: String? = nil
+            var cvc: String?
             if requiresCVC {
                 cvc = try await collectCVC()
             }

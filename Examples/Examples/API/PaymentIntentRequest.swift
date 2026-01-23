@@ -14,13 +14,13 @@ class PaymentIntentRequest: Encodable {
     let currency: String
     let merchantOrderID = UUID().uuidString
     let order: PurchaseOrder
-    let metadata: Dictionary<String, Int>
+    let metadata: [String: Int]
     let returnUrl: String?
     let customerID: String?
-    let paymentMethodOptions: Dictionary<String, Dictionary<String, String>>?
+    let paymentMethodOptions: [String: [String: String]]?
     let apiKey: String?
     let clientID: String?
-    private let referrerData: Dictionary<String, String>? = ["type": "ios_sdk_sample"]
+    private let referrerData: [String: String]? = ["type": "ios_sdk_sample"]
     
     enum CodingKeys: String, CodingKey {
         case requestID = "request_id"
@@ -37,7 +37,7 @@ class PaymentIntentRequest: Encodable {
         case referrerData = "referrer_data"
     }
     
-    init(amount: Decimal, currency: String, order: PurchaseOrder, metadata: Dictionary<String, Int>, returnUrl: String?, customerID: String?, paymentMethodOptions: Dictionary<String, Dictionary<String, String>>?, apiKey: String?, clientID: String?) {
+    init(amount: Decimal, currency: String, order: PurchaseOrder, metadata: [String: Int], returnUrl: String?, customerID: String?, paymentMethodOptions: [String: [String: String]]?, apiKey: String?, clientID: String?) {
         self.amount = amount
         self.currency = currency
         self.order = order

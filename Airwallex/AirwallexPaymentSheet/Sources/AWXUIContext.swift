@@ -65,7 +65,7 @@ import AirwallexCore
             AWXSDKErrorDomain
         }
         
-        public var errorUserInfo: [String : Any] {
+        public var errorUserInfo: [String: Any] {
             [NSLocalizedDescriptionKey: errorDescription]
         }
         
@@ -175,7 +175,7 @@ import AirwallexCore
             ]
         )
     }
-    //  MARK: - Launch by Payment Method
+    // MARK: - Launch by Payment Method
     
     /// Launches the Airwallex card payment flow.
     /// - Parameters:
@@ -352,17 +352,19 @@ private extension AWXUIContext {
                 layout: layout
             )
             let nav = UINavigationController(rootViewController: paymentVC)
-            let appearance = UINavigationBarAppearance()
-            appearance.configureWithDefaultBackground()
-            appearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial) // Apply blur
-            appearance.shadowColor = UIColor.awxColor(.borderDecorative)
-            
-            nav.navigationBar.standardAppearance = appearance
-            nav.navigationBar.scrollEdgeAppearance = appearance
-            nav.navigationBar.compactAppearance = appearance
-            nav.navigationBar.tintColor = UIColor.awxColor(.iconLink)
-            if #available(iOS 15.0, *) {
-                nav.navigationBar.compactScrollEdgeAppearance = appearance
+            if #unavailable(iOS 26) {
+                let appearance = UINavigationBarAppearance()
+                appearance.configureWithDefaultBackground()
+                appearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial) // Apply blur
+                appearance.shadowColor = UIColor.awxColor(.borderDecorative)
+                
+                nav.navigationBar.standardAppearance = appearance
+                nav.navigationBar.scrollEdgeAppearance = appearance
+                nav.navigationBar.compactAppearance = appearance
+                nav.navigationBar.tintColor = UIColor.awxColor(.iconLink)
+                if #available(iOS 15.0, *) {
+                    nav.navigationBar.compactScrollEdgeAppearance = appearance
+                }
             }
             hostingVC.present(nav, animated: true)
             AWXUIContext.shared.dismissAction = { [weak nav] completion in

@@ -6,8 +6,8 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
@@ -125,10 +125,8 @@ private extension CardInfoCollectorCell {
                 (self.cvcTextField, self.cvcTextField.viewModel?.isValid ?? true, self.cvcTextField.isFirstResponder)
             ]
             
-            for (view, isValid, _) in arr {
-                if !isValid {
-                    self.contentView.bringSubviewToFront(view)
-                }
+            for (view, isValid, _) in arr where !isValid {
+                self.contentView.bringSubviewToFront(view)
             }
             if let editingField = arr.first(where: { $0.isFirstResponder })?.view {
                 self.contentView.bringSubviewToFront(editingField)
@@ -182,4 +180,3 @@ private extension CardInfoCollectorCell {
     }
     
 }
-

@@ -6,8 +6,8 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import Foundation
 @testable @_spi(AWX) import AirwallexPayment
+import Foundation
 
 class MockURLProtocol: URLProtocol {
     static var mockResponse: (Data?, URLResponse?, Error?)?

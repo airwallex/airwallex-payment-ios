@@ -6,8 +6,8 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
-import UIKit
 import PassKit
+import UIKit
 
 struct ApplePayViewModel {
     var onPaymentButtonTapped: () -> Void

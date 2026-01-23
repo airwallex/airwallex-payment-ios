@@ -106,7 +106,7 @@ class CardBrandView: UIView, ViewConfigurable {
         timer = Timer.scheduledTimer(
             withTimeInterval: 3,
             repeats: true,
-            block: { [weak self] timer in
+            block: { [weak self] _ in
                 guard let self else { return }
                 guard let imageView = self.logoStack.arrangedSubviews.last as? UIImageView else {
                     self.invalidateTimer()

@@ -24,7 +24,7 @@ extension AWXApplePayProvider {
             AWXSDKErrorDomain
         }
         
-        var errorUserInfo: [String : Any] {
+        var errorUserInfo: [String: Any] {
             [NSLocalizedDescriptionKey: errorDescription]
         }
         
@@ -71,12 +71,10 @@ extension AWXApplePayProvider {
         }
         
         let networks = Set(AWXApplePaySupportedNetworks())
-        for network in options.supportedNetworks {
-            if !networks.contains(network) {
-                let localizedString = "Payment network %@ not supported"
-                let message = String(format: localizedString, network.rawValue)
-                throw ValidationError.invalidApplePayOptions(message)
-            }
+        for network in options.supportedNetworks where !networks.contains(network) {
+            let localizedString = "Payment network %@ not supported"
+            let message = String(format: localizedString, network.rawValue)
+            throw ValidationError.invalidApplePayOptions(message)
         }
         
         if #available(iOS 15.0, *) {
@@ -139,7 +137,7 @@ extension AWXCardProvider {
             AWXSDKErrorDomain
         }
         
-        var errorUserInfo: [String : Any] {
+        var errorUserInfo: [String: Any] {
             [NSLocalizedDescriptionKey: errorDescription]
         }
         
@@ -273,7 +271,7 @@ extension AWXCardProvider {
         try validateMethodTypeAndSession(paymentMethodType: paymentMethodType, session: session)
         guard session.transactionMode() == AWXPaymentTransactionModeOneOff else {
             throw ValidationError.invalidSession(
-                underlyingError:"transaction mode should be one-off for consent payment with consent Id".asError()
+                underlyingError: "transaction mode should be one-off for consent payment with consent Id".asError()
             )
         }
         guard !consentId.isEmpty else {
@@ -331,7 +329,7 @@ extension AWXRedirectActionProvider {
             AWXSDKErrorDomain
         }
         
-        var errorUserInfo: [String : Any] {
+        var errorUserInfo: [String: Any] {
             [NSLocalizedDescriptionKey: errorDescription]
         }
         

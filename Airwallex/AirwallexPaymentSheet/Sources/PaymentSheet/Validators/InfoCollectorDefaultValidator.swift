@@ -8,8 +8,8 @@
 
 import Foundation
 #if canImport(AirwallexPayment)
-@_spi(AWX) import AirwallexPayment
 import AirwallexCore
+@_spi(AWX) import AirwallexPayment
 #endif
 
 struct InfoCollectorDefaultValidator: UserInputValidator {

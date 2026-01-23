@@ -151,4 +151,3 @@ class CardSelectedConsentCell: CardConsentCell {
         NSLayoutConstraint.activate(constraints)
     }
 }
-

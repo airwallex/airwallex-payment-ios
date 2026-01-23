@@ -19,7 +19,7 @@ class CheckBoxCellViewModel {
         isSelected.toggle()
         selectionDidChanged?(isSelected)
     }
-    //  MARK: -
+    // MARK: -
     private var selectionDidChanged: ((Bool) -> Void)?
     
     init(isSelected: Bool,
@@ -32,7 +32,6 @@ class CheckBoxCellViewModel {
         self.selectionDidChanged = selectionDidChanged
     }
 }
-   
 
 class CheckBoxCell: UICollectionViewCell, ViewConfigurable, ViewReusable {
     
