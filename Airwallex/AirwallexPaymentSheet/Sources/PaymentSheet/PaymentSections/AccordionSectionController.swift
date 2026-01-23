@@ -6,14 +6,14 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 #if canImport(AirwallexPayment)
-@_spi(AWX) import AirwallexPayment
 import AirwallexCore
+@_spi(AWX) import AirwallexPayment
 #endif
     
-class AccordionSectionController: SectionController  {
+class AccordionSectionController: SectionController {
     typealias SectionItem = CompoundItem<PaymentSectionType, String>
     static let separatorElementKind = "acordian-folded-item-separator"
     static let backgroundElementKind = "acordian-folded-section-background"

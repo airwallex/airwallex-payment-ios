@@ -6,8 +6,8 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import Foundation
 import Airwallex
+import Foundation
 
 struct ExamplesKeys {
     static let storagePrefix = "airwallexExamples-"
@@ -245,10 +245,8 @@ struct ExamplesKeys {
     
     static func reset() {
         let dict = UserDefaults.standard.dictionaryRepresentation()
-        for key in dict.keys {
-            if key.hasPrefix(ExamplesKeys.storagePrefix) {
-                UserDefaults.standard.removeObject(forKey: key)
-            }
+        for key in dict.keys where key.hasPrefix(ExamplesKeys.storagePrefix) {
+            UserDefaults.standard.removeObject(forKey: key)
         }
         loadDefaultKeysIfNilOrEmpty()
     }
@@ -285,11 +283,11 @@ struct RawRepresentableStorage<T: RawRepresentable> {
     private var cacheKey: String {
         var key = prefix + name
         if byEnvironment {
-            key = key + "-\(Airwallex.mode().rawValue)"
+            key += "-\(Airwallex.mode().rawValue)"
         }
         return key
     }
-    
+
     var wrappedValue: T {
         get {
             guard let value = UserDefaults.standard.object(forKey: cacheKey) as? T.RawValue else {
@@ -320,11 +318,11 @@ struct OptionalStorage<T> {
     private var cacheKey: String {
         var key = prefix + name
         if byEnvironment {
-            key = key + "-\(Airwallex.mode().rawValue)"
+            key += "-\(Airwallex.mode().rawValue)"
         }
         return key
     }
-    
+
     var wrappedValue: T? {
         get {
             UserDefaults.standard.object(forKey: cacheKey) as? T
@@ -355,11 +353,11 @@ struct Storage<T> {
     private var cacheKey: String {
         var key = prefix + name
         if byEnvironment {
-            key = key + "-\(Airwallex.mode().rawValue)"
+            key += "-\(Airwallex.mode().rawValue)"
         }
         return key
     }
-    
+
     var wrappedValue: T {
         get {
             (UserDefaults.standard.object(forKey: cacheKey) as? T) ?? defaultValue

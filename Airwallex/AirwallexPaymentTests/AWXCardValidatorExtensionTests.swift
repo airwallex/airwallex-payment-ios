@@ -37,7 +37,6 @@ class AWXCardValidatorExtensionTests: XCTestCase {
     func testValidateExpiry() {
         // Valid expiry dates
         XCTAssertNoThrow(try AWXCardValidator.validate(expiryMonth: "12", expiryYear: "2030"))
-        XCTAssertNoThrow(try AWXCardValidator.validate(expiryMonth: "12", expiryYear: "2025"))
         
         // Invalid expiry month
         XCTAssertThrowsError(try AWXCardValidator.validate(expiryMonth: "13", expiryYear: "2030"))

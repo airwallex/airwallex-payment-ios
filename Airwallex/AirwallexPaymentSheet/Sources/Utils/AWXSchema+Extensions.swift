@@ -8,8 +8,8 @@
 
 import Foundation
 #if canImport(AirwallexPayment)
-@_spi(AWX) import AirwallexPayment
 import AirwallexCore
+@_spi(AWX) import AirwallexPayment
 #endif
 
 extension AWXSchema {
@@ -89,7 +89,7 @@ extension AWXField {
     }
     
     static func phonePrefix(countryCode: String?, currencyCode: String?) -> String? {
-        var prefix: String? = nil
+        var prefix: String?
         
         if let countryCode {
             do {
@@ -109,7 +109,7 @@ extension AWXField {
         if let currencyCode {
             do {
                 guard let url = Bundle.paymentSheet.url(forResource: "CurrencyCodes", withExtension: "json") else {
-                    throw ErrorMessage(rawValue:"no data for currency code")
+                    throw ErrorMessage(rawValue: "no data for currency code")
                 }
                 let data = try Data(contentsOf: url)
                 let dict = try JSONDecoder().decode([String: String].self, from: data)

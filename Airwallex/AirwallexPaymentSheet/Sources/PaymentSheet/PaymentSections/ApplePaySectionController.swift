@@ -8,8 +8,8 @@
 
 import Foundation
 #if canImport(AirwallexPayment)
-@_spi(AWX) import AirwallexPayment
 import AirwallexCore
+@_spi(AWX) import AirwallexPayment
 #endif
     
 // MARK: - Item Identifiers
@@ -48,7 +48,7 @@ class ApplePaySectionController: SectionController {
     func cell(for sectionItem: SectionItem, at indexPath: IndexPath) -> UICollectionViewCell {
         let cell = context.dequeueReusableCell(ApplePayCell.self, for: sectionItem, indexPath: indexPath)
         let viewModel = ApplePayViewModel { [weak self] in
-            guard let self , let viewController = self.context.viewController else { return }
+            guard let self, let viewController = self.context.viewController else { return }
             AnalyticsLogger.log(action: .tapPayButton, extraInfo: [.paymentMethod: methodType.name])
             do {
                 self.paymentSessionHandler = PaymentSessionHandler(

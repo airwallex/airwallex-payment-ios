@@ -6,8 +6,8 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
@@ -231,7 +231,7 @@ private extension BillingInfoCell {
     }
     
     func setupObservation() {
-        Publishers.MergeMany(stackedTextFields.map { $0.textField.textDidBeginEditingPublisher } + stackedTextFields.map { $0.textField.textDidEndEditingPublisher})
+        Publishers.MergeMany(stackedTextFields.map { $0.textField.textDidBeginEditingPublisher } + stackedTextFields.map { $0.textField.textDidEndEditingPublisher })
             .debounce(for: .milliseconds(1), scheduler: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.validateInputAndUpdateLayering()

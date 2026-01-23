@@ -8,8 +8,8 @@
 
 import UIKit
 #if canImport(AirwallexPayment)
-@_spi(AWX) import AirwallexPayment
 import AirwallexCore
+@_spi(AWX) import AirwallexPayment
 #endif
     
 // MARK: - Item Identifiers
@@ -307,7 +307,7 @@ private extension SchemaPaymentSectionController {
             paymentMethod.type = name
             
             // update bank selection
-            if let bankSelectionViewModel  {
+            if let bankSelectionViewModel {
                 paymentMethod.appendAdditionalParams([bankSelectionViewModel.fieldName: bankSelectionViewModel.bank?.name ?? ""])
             }
             

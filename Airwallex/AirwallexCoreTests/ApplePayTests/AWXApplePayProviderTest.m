@@ -17,6 +17,8 @@
 #import "PKContact+Request.h"
 #import "PKPaymentToken+Request.h"
 #import <OCMock/OCMock.h>
+#import <PassKit/PassKit.h>
+#import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
 // There's a bug where OCMockVerify will cause compiler to warn about
@@ -129,7 +131,7 @@
 
     AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
 
-    id controllerMock = OCMClassMock([PKPaymentAuthorizationController class]);
+    id controllerMock = OCMClassMock([PKPaymentAuthorizationViewController class]);
     OCMStub([controllerMock alloc]).andReturn(controllerMock);
     OCMStub([controllerMock initWithPaymentRequest:[OCMArg any]]).andReturn(nil);
 
@@ -141,10 +143,10 @@
     XCTAssertNotNil(delegate.lastStatusError);
 
     OCMVerify(times(1), [controllerMock initWithPaymentRequest:[OCMArg any]]);
-    NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
-                                         code:-1
-                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to initialize Apple Pay Controller.", nil)}];
-    OCMVerify(times(1), [_logger logError:error withEventName:@"apple_pay_sheet"]);
+    OCMVerify(times(1), [_logger logErrorWithName:@"apple_pay_sheet"
+                                   additionalInfo:[OCMArg checkWithBlock:^BOOL(NSDictionary *info) {
+                                       return [info[@"message"] isEqualToString:@"Failed to initialize Apple Pay Controller."] && info[@"supportedNetworks"] != nil;
+                                   }]]);
 }
 
 - (void)testHandleFlowWhenPaymentControllerFailedToPresent {
@@ -167,10 +169,10 @@
     XCTAssertNotNil(delegate.lastStatusError);
 
     OCMVerify(times(1), [controllerMock initWithPaymentRequest:[OCMArg any]]);
-    NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
-                                         code:-1
-                                     userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to present Apple Pay Controller.", nil)}];
-    OCMVerify(times(1), [_logger logError:error withEventName:@"apple_pay_sheet"]);
+    OCMVerify(times(1), [_logger logErrorWithName:@"apple_pay_sheet"
+                                   additionalInfo:[OCMArg checkWithBlock:^BOOL(NSDictionary *info) {
+                                       return [info[@"message"] isEqualToString:@"Failed to present Apple Pay Controller."] && info[@"supportedNetworks"] != nil;
+                                   }]]);
 }
 
 - (void)testHandleFlowCancelled {
@@ -532,6 +534,38 @@
         OCMStub([classMock canMakePaymentsUsingNetworks:[OCMArg any] capabilities:0])
             .ignoringNonObjectArgs()
             .andReturn(canMakePayment);
+    }
+}
+
+- (void)testPresentationWindowForPaymentAuthorizationControllerIsImplemented {
+    AWXOneOffSession *session = [self makeSession];
+    AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
+    AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
+
+    // Verify the provider responds to the presentationWindow delegate method
+    XCTAssertTrue([provider respondsToSelector:@selector(presentationWindowForPaymentAuthorizationController:)]);
+
+    // Create a mock controller to test the method
+    id controllerMock = OCMClassMock([PKPaymentAuthorizationController class]);
+
+    // Call the method - in test environment it may return nil but should not crash
+    UIWindow *window = [(id<PKPaymentAuthorizationControllerDelegate>)provider presentationWindowForPaymentAuthorizationController:controllerMock];
+
+    // In a test environment without a key window, this will return nil
+    // The important thing is that the method is properly implemented and callable
+    UIWindow *expectedKeyWindow = nil;
+    for (UIWindow *w in UIApplication.sharedApplication.windows) {
+        if (w.isKeyWindow) {
+            expectedKeyWindow = w;
+            break;
+        }
+    }
+
+    if (expectedKeyWindow) {
+        XCTAssertEqualObjects(window, expectedKeyWindow);
+    } else {
+        // No key window in test environment is expected
+        XCTAssertNil(window);
     }
 }
 

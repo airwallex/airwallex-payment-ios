@@ -15,8 +15,8 @@ class CustomerRequest: Encodable {
     let lastName: String?
     let email: String?
     let phoneNumber: String?
-    let additionalInfo: Dictionary<String, Any>?
-    let metadata: Dictionary<String, Int>
+    let additionalInfo: [String: Any]?
+    let metadata: [String: Int]
     let apiKey: String?
     let clientID: String?
     
@@ -33,7 +33,7 @@ class CustomerRequest: Encodable {
         case clientID = "clientId"
     }
     
-    init(firstName: String?, lastName: String?, email: String?, phoneNumber: String?, additionalInfo: Dictionary<String, Any>?, metadata: Dictionary<String, Int>, apiKey: String?, clientID: String?) {
+    init(firstName: String?, lastName: String?, email: String?, phoneNumber: String?, additionalInfo: [String: Any]?, metadata: [String: Int], apiKey: String?, clientID: String?) {
         self.firstName = firstName
         self.lastName = lastName
         self.email = email

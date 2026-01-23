@@ -60,7 +60,6 @@ class DemoListView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     func setupViews() {
         backgroundColor = .awxColor(.backgroundPrimary)
         addSubview(scrollView)

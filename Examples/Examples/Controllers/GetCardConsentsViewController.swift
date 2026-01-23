@@ -6,13 +6,13 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import UIKit
 import Airwallex
+import UIKit
 
 class GetPaymentConsentsViewController: UITableViewController {
     
     private let sectionIdentifier = "section"
-    private lazy var dataSource: UITableViewDiffableDataSource = UITableViewDiffableDataSource<String, String>(tableView: tableView) { [weak self] tableView, indexPath, itemIdentifier in
+    private lazy var dataSource: UITableViewDiffableDataSource = UITableViewDiffableDataSource<String, String>(tableView: tableView) { [weak self] tableView, indexPath, _ in
         guard let self else { return UITableViewCell() }
         let consent = self.items[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
@@ -23,7 +23,7 @@ class GetPaymentConsentsViewController: UITableViewController {
         }
         cell.textLabel?.textColor = .awxColor(.textPrimary)
         cell.textLabel?.text = "\(brand.capitalized) •••• \(card.last4 ?? "")"
-        var image: UIImage? = nil
+        var image: UIImage?
         if let cardBrand = AWXCardValidator.shared().brand(forCardName: brand) {
             image = self.image(for: cardBrand.type)
         }
@@ -32,7 +32,7 @@ class GetPaymentConsentsViewController: UITableViewController {
     }
     
     private func image(for brand: AWXBrandType) -> UIImage? {
-        var imageName: String? = nil
+        var imageName: String?
         switch brand {
         case .visa:
             imageName = "visa"

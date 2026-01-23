@@ -75,13 +75,13 @@ extension PaymentConsentOptions: Encodable {
 }
 
 extension PaymentConsentOptions: AWXJSONEncodable {
-    public func encodeToJSON() -> [AnyHashable : Any] {
+    public func encodeToJSON() -> [AnyHashable: Any] {
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase
         do {
             let data = try encoder.encode(self)
             let jsonObject = try JSONSerialization.jsonObject(with: data)
-            guard let jsonObject = jsonObject as? [AnyHashable : Any] else {
+            guard let jsonObject = jsonObject as? [AnyHashable: Any] else {
                 throw "encoded json object can not be casted to [AnyHashable : Any]".asError()
             }
             return jsonObject

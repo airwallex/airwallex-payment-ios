@@ -6,13 +6,13 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-
 #if canImport(AirwallexCore)
 import AirwallexCore
 #endif
 import AirwallexRisk
 import Foundation
 import PassKit
+import UIKit
 
 /// `ApplePayProvider` is a Swift implementation of the Apple Pay payment provider.
 /// It handles payment method with Apple Pay, providing a more Swift-idiomatic interface
@@ -91,6 +91,21 @@ class ApplePayProvider: PaymentProvider {
         self.cancelPaymentOnDismiss = cancelPaymentOnDismiss
         
         let request = try unifiedSession.makePaymentRequestOrError()
+
+        /// PKPaymentAuthorizationController's initializer is nonnull,
+        /// so use PKPaymentAuthorizationViewController intead
+        guard PKPaymentAuthorizationViewController(paymentRequest: request) != nil else {
+            let error = "Failed to initialize Apple Pay Controller.".asError()
+            AnalyticsLogger.log(
+                errorName: "apple_pay_sheet",
+                errorMessage: error.rawValue,
+                extraInfo: [
+                    .supportedNetworks: request.supportedNetworks
+                ]
+            )
+            delegate?.provider(self, didCompleteWith: .failure, error: error)
+            return
+        }
         let controller = paymentController.init(paymentRequest: request)
         controller.delegate = self
         
@@ -109,7 +124,7 @@ class ApplePayProvider: PaymentProvider {
             AnalyticsLogger.log(
                 pageView: .applePaySheet,
                 extraInfo: [
-                    .supportedNetworks : unifiedSession.applePayOptions?.supportedNetworks ?? []
+                    .supportedNetworks: unifiedSession.applePayOptions?.supportedNetworks ?? []
                 ]
             )
         }
@@ -120,7 +135,13 @@ class ApplePayProvider: PaymentProvider {
         if !didHandlePresentationFail {
             didHandlePresentationFail = true
             let error = "Failed to present Apple Pay Controller.".asError()
-            AnalyticsLogger.log(errorName: "apple_pay_sheet", errorMessage: error.rawValue)
+            AnalyticsLogger.log(
+                errorName: "apple_pay_sheet",
+                errorMessage: error.rawValue,
+                extraInfo: [
+                    .supportedNetworks: unifiedSession.applePayOptions?.supportedNetworks ?? []
+                ]
+            )
             delegate?.provider(self, didCompleteWith: .failure, error: error)
         }
     }
@@ -162,7 +183,18 @@ class ApplePayProvider: PaymentProvider {
 // MARK: - PKPaymentAuthorizationControllerDelegate
 
 extension ApplePayProvider: PKPaymentAuthorizationControllerDelegate {
-    
+
+    func presentationWindow(for controller: PKPaymentAuthorizationController) -> UIWindow? {
+        if #available(iOS 15.0, *) {
+            return UIApplication.shared.connectedScenes
+                .compactMap { $0 as? UIWindowScene }
+                .flatMap { $0.windows }
+                .first { $0.isKeyWindow }
+        } else {
+            return UIApplication.shared.windows.first { $0.isKeyWindow }
+        }
+    }
+
     func paymentAuthorizationController(_ controller: PKPaymentAuthorizationController,
                                         didAuthorizePayment payment: PKPayment) async -> PKPaymentAuthorizationResult {
         await confirmIntent(payment: payment)
@@ -201,7 +233,6 @@ extension ApplePayProvider: PKPaymentAuthorizationControllerDelegate {
                 case .failure(let error):
                     complete(with: nil, error: error)
                 }
-                break
             }
         }
     }

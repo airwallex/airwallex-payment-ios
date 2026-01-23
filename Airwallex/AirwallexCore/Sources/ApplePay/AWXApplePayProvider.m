@@ -86,6 +86,27 @@ typedef enum {
 
 #pragma mark - PKPaymentAuthorizationControllerDelegate
 
+- (UIWindow *)presentationWindowForPaymentAuthorizationController:(PKPaymentAuthorizationController *)controller {
+    if (@available(iOS 15.0, *)) {
+        for (UIScene *scene in UIApplication.sharedApplication.connectedScenes) {
+            if ([scene isKindOfClass:[UIWindowScene class]]) {
+                UIWindowScene *windowScene = (UIWindowScene *)scene;
+                for (UIWindow *window in windowScene.windows) {
+                    if (window.isKeyWindow) {
+                        return window;
+                    }
+                }
+            }
+        }
+    }
+    for (UIWindow *window in UIApplication.sharedApplication.windows) {
+        if (window.isKeyWindow) {
+            return window;
+        }
+    }
+    return nil;
+}
+
 - (void)paymentAuthorizationController:(PKPaymentAuthorizationController *)controller
                    didAuthorizePayment:(PKPayment *)payment
                                handler:(void (^)(PKPaymentAuthorizationResult *_Nonnull))completion {
@@ -222,19 +243,23 @@ typedef enum {
         return;
     }
 
-    PKPaymentAuthorizationController *controller = [[PKPaymentAuthorizationController alloc] initWithPaymentRequest:request];
-
-    if (!controller) {
+    /// PKPaymentAuthorizationController's initializer is nonnull,
+    /// so use PKPaymentAuthorizationViewController intead
+    if (![[PKPaymentAuthorizationViewController alloc] initWithPaymentRequest:request]) {
         NSString *description = @"Failed to initialize Apple Pay Controller.";
         NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                              code:-1
                                          userInfo:@{NSLocalizedDescriptionKey: description}];
-        [[AWXAnalyticsLogger shared] logError:error withEventName:@"apple_pay_sheet"];
+        [[AWXAnalyticsLogger shared] logErrorWithName:@"apple_pay_sheet"
+                                       additionalInfo:@{
+                                           @"message": description,
+                                           @"supportedNetworks": session.applePayOptions.supportedNetworks ?: @[]
+                                       }];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
         [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
         return;
     }
-
+    PKPaymentAuthorizationController *controller = [[PKPaymentAuthorizationController alloc] initWithPaymentRequest:request];
     controller.delegate = self;
 
     [AWXRisk logWithEvent:@"show_apple_pay" screen:@"page_apple_pay"];
@@ -310,10 +335,15 @@ typedef enum {
 - (void)handlePresentationFail {
     if (!_didHandlePresentationFail) {
         self.didHandlePresentationFail = YES;
+        NSString *message = @"Failed to present Apple Pay Controller.";
         NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                              code:-1
-                                         userInfo:@{NSLocalizedDescriptionKey: @"Failed to present Apple Pay Controller."}];
-        [[AWXAnalyticsLogger shared] logError:error withEventName:@"apple_pay_sheet"];
+                                         userInfo:@{NSLocalizedDescriptionKey: message}];
+        [[AWXAnalyticsLogger shared] logErrorWithName:@"apple_pay_sheet"
+                                       additionalInfo:@{
+                                           @"message": message,
+                                           @"supportedNetworks": self.session.applePayOptions.supportedNetworks ?: @[]
+                                       }];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
         [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
     }

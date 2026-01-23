@@ -6,9 +6,9 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import UIKit
-import Combine
 import Airwallex
+import Combine
+import UIKit
 
 class H5DemoViewController: UIViewController {
     
@@ -32,10 +32,10 @@ class H5DemoViewController: UIViewController {
     private lazy var paymentURLField: ConfigTextField = {
         let view = ConfigTextField()
         view.translatesAutoresizingMaskIntoConstraints = false
-        
+        var text = (DemoStoreAPIClient.baseURLForEnvironment(ExamplesKeys.environment) ?? "") + "/shopping-cart"
         let viewModel = ConfigTextFieldViewModel(
             displayName: "Payment URL",
-            text: nil,
+            text: text,
             caption: nil
         )
         view.setup(viewModel)

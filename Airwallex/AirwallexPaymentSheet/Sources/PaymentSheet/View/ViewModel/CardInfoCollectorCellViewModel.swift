@@ -8,8 +8,8 @@
 
 import UIKit
 #if canImport(AirwallexPayment)
-@_spi(AWX) import AirwallexPayment
 import AirwallexCore
+@_spi(AWX) import AirwallexPayment
 #endif
 
 class CardInfoCollectorCellViewModel: CellViewModelIdentifiable {

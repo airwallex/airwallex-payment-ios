@@ -6,8 +6,8 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import Foundation
 import AirwallexRisk
+import Foundation
 #if canImport(AirwallexCore)
 import AirwallexCore
 #endif
@@ -15,17 +15,17 @@ import AirwallexCore
 @_spi(AWX) public enum AnalyticEvent {
     
     @_spi(AWX) public enum Fields: String {
-        case subtype = "subtype"
-        case intentId = "intentId"
-        case paymentMethod = "paymentMethod"
-        case consentId = "consentId"
-        case supportedSchemes = "supportedSchemes"
-        case bankName = "bankName"
-        case message = "message"
-        case value = "value"
-        case eventType = "eventType"
-        case supportedNetworks = "supportedNetworks"
-        case expressCheckout = "expressCheckout"// boolean value
+        case subtype
+        case intentId
+        case paymentMethod
+        case consentId
+        case supportedSchemes
+        case bankName
+        case message
+        case value
+        case eventType
+        case supportedNetworks
+        case expressCheckout // boolean value
     }
     
     @_spi(AWX) public enum PageView: String {
@@ -53,6 +53,8 @@ import AirwallexCore
         case paymentLaunched = "payment_launched"
         case paymentCanceled = "payment_canceled"
         case paymentSuccess = "payment_success"
+        case paymentFailed = "payment_failed"
+        case paymentInProgress = "payment_in_progress"
     }
 }
 
@@ -66,30 +68,30 @@ extension ErrorLoggable {
 }
 
 @_spi(AWX) public extension AnalyticsLogger {
-    static func log(pageView name: AnalyticEvent.PageView, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
+    static func log(pageView name: AnalyticEvent.PageView, extraInfo: [AnalyticEvent.Fields: Any]? = nil) {
         guard !ProcessInfo.isRunningUnitTest else { return }
         let (name, additionalInfo) = processEventInfo(event: name, extraInfo: extraInfo)
         shared().logPageView(withName: name, additionalInfo: additionalInfo)
     }
     
-    static func log(action name: AnalyticEvent.Action, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
+    static func log(action name: AnalyticEvent.Action, extraInfo: [AnalyticEvent.Fields: Any]? = nil) {
         guard !ProcessInfo.isRunningUnitTest else { return }
         let (name, additionalInfo) = processEventInfo(event: name, extraInfo: extraInfo)
         shared().logAction(withName: name, additionalInfo: additionalInfo)
     }
     
-    static func log(paymentMethodView name: String, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
+    static func log(paymentMethodView name: String, extraInfo: [AnalyticEvent.Fields: Any]? = nil) {
         guard !ProcessInfo.isRunningUnitTest else { return }
         log(paymentMethodView: AnalyticEvent.PaymentMethodView(rawValue: name), extraInfo: extraInfo)
     }
     
-    static func log(paymentMethodView name: AnalyticEvent.PaymentMethodView, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
+    static func log(paymentMethodView name: AnalyticEvent.PaymentMethodView, extraInfo: [AnalyticEvent.Fields: Any]? = nil) {
         guard !ProcessInfo.isRunningUnitTest else { return }
         let (name, additionalInfo) = processEventInfo(event: name, extraInfo: extraInfo)
         shared().logPaymentMethodView(withName: name, additionalInfo: additionalInfo)
     }
     
-    static func log(error: ErrorLoggable, extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
+    static func log(error: ErrorLoggable, extraInfo: [AnalyticEvent.Fields: Any]? = nil) {
         guard !ProcessInfo.isRunningUnitTest else { return }
         let (name, additionalInfo) = processErrorInfo(error: error, extraInfo: extraInfo)
         shared().logError(withName: name, additionalInfo: additionalInfo)
@@ -98,7 +100,7 @@ extension ErrorLoggable {
     static func log(errorName: String,
                     errorType: String? = nil,
                     errorMessage: String? = nil,
-                    extraInfo: [AnalyticEvent.Fields : Any]? = nil) {
+                    extraInfo: [AnalyticEvent.Fields: Any]? = nil) {
         guard !ProcessInfo.isRunningUnitTest else { return }
         var infoDict = [String: Any]()
         if let errorType {

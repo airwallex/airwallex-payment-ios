@@ -6,11 +6,11 @@
 //  Copyright © 2024 Airwallex. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 #if canImport(AirwallexPayment)
-@_spi(AWX) import AirwallexPayment
 import AirwallexCore
+@_spi(AWX) import AirwallexPayment
 #endif
 
 enum PaymentSectionType: Hashable {
@@ -176,7 +176,6 @@ class PaymentViewController: AWXViewController {
         return collectionViewManager.collectionView
     }
 }
-
 
 extension PaymentViewController: AWXPageViewTrackable {
     var pageName: String! {
@@ -349,7 +348,7 @@ extension PaymentViewController: UIGestureRecognizerDelegate {
     
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         let location = gestureRecognizer.location(in: collectionViewManager.collectionView)
-        guard let indexPath = collectionViewManager.collectionView.indexPathForItem(at: location) else  {
+        guard let indexPath = collectionViewManager.collectionView.indexPathForItem(at: location) else {
             // not on a cell, begin gesture
             return true
         }
