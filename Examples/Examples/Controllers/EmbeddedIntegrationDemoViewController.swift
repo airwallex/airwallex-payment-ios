@@ -73,10 +73,16 @@ private extension EmbeddedIntegrationDemoViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
+                AWXTheme.shared().tintColor = .red
+                let config = AWXPaymentElement.Configuration()
+                config.colors.textPrimary = .blue
+                config.colors.borderDecorative = .black
+                config.colors.backgroundPrimary = .lightGray
                 let element = try await AWXPaymentElement.create(
                     hostViewController: self,
                     session: session,
-                    delegate: self
+                    delegate: self,
+                    configuration: config
                 )
                 self.paymentElement = element
 

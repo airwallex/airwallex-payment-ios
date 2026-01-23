@@ -92,13 +92,15 @@ public class AWXPaymentElement: NSObject {
     public static func create(
         hostViewController: UIViewController,
         session: AWXSession,
-        delegate: AWXPaymentResultDelegate
+        delegate: AWXPaymentResultDelegate,
+        configuration: Configuration = Configuration()
     ) async throws -> AWXPaymentElement {
         try await create(
             hostViewController: hostViewController,
             session: session,
             methodProvider: PaymentSheetMethodProvider(session: session),
-            delegate: delegate
+            delegate: delegate,
+            configuration: configuration
         )
     }
     
@@ -106,24 +108,28 @@ public class AWXPaymentElement: NSObject {
         hostViewController: UIViewController,
         session: AWXSession,
         methodProvider: PaymentMethodProvider,
-        delegate: AWXPaymentResultDelegate
+        delegate: AWXPaymentResultDelegate,
+        configuration: Configuration = Configuration()
     ) async throws -> AWXPaymentElement {
+        // Apply configuration colors
+        AWXColors.current = configuration.colors
+
         // Validate session
         do {
             try session.validate()
         } catch {
             throw AWXUIContext.LaunchError.invalidSession(underlyingError: error)
         }
-        
+
         // Update logger.session for embedded integration
         AnalyticsLogger.shared().session = session
-        
+
         // fetch payment methods using method provider
         try await methodProvider.getPaymentMethodTypes()
-        
+
         // Risk event
         RiskLogger.log(.transactionInitiated)
-        
+
         // Create element with all dependencies ready
         let element = AWXPaymentElement(
             hostViewController: hostViewController,

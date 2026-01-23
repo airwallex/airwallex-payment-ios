@@ -9,14 +9,22 @@
 import UIKit
 
 public extension UIColor {
-    static func awxColor(_ color: Palette.SemanticColor) -> UIColor {
-        color.color
+    static func awxColor(_ semanticColor: Palette.SemanticColor) -> UIColor {
+        // Use custom colors if set, otherwise fallback to Palette defaults
+        if let current = AWXColors.current {
+            return current.color(for: semanticColor)
+        }
+        return semanticColor.color
     }
 }
 
 public extension CGColor {
-    static func awxCGColor(_ cgColor: Palette.SemanticColor) -> CGColor {
-        cgColor.cgColor
+    static func awxCGColor(_ semanticColor: Palette.SemanticColor) -> CGColor {
+        // Use custom colors if set, otherwise fallback to Palette defaults
+        if let current = AWXColors.current {
+            return current.color(for: semanticColor).cgColor
+        }
+        return semanticColor.cgColor
     }
 }
 

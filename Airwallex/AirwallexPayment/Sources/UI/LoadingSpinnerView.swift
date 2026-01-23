@@ -80,7 +80,7 @@ class LoadingSpinnerView: UIView {
         shapeLayer.path = arcPath.cgPath
 
         shapeLayer.lineWidth = style.lineWidth
-        shapeLayer.strokeColor = Palette.SemanticColor.theme.cgColor
+        shapeLayer.strokeColor = .awxCGColor(.theme)
         shapeLayer.fillColor = nil
         shapeLayer.lineCap = .round
 
@@ -114,7 +114,7 @@ class LoadingSpinnerView: UIView {
     
     /// Add shadow for visibility on same-colored backgrounds
     private func setupShadow() {
-        layer.shadowColor = Palette.SemanticColor.backgroundPrimary.cgColor
+        layer.shadowColor = .awxCGColor(.backgroundPrimary)
         layer.shadowOffset = .zero
         layer.shadowOpacity = 0.5
         layer.shadowRadius = 8

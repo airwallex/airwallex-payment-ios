@@ -77,12 +77,12 @@
         handler.showIndicator = false;
     } while (0);
 
-    [AWXPaymentElement createWithHostViewController:self
-                                            session:session
-                                           delegate:self
-                                  completionHandler:^(AWXPaymentElement *_Nullable element, NSError *_Nullable error){
-                                      // foo
-                                  }];
+    //    [AWXPaymentElement createWithHostViewController:self
+    //                                            session:session
+    //                                           delegate:self
+    //                                  completionHandler:^(AWXPaymentElement *_Nullable element, NSError *_Nullable error){
+    //                                      // foo
+    //                                  }];
 }
 
 // AWXPaymentResultDelegate

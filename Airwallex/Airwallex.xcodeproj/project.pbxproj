@@ -377,6 +377,8 @@
 		D8FA4FC62EFA48D70010E912 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EEC2E5C5CB0005618D4 /* Palette.swift */; };
 		D8FA52882EFA64240010E912 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EED2E5C5CB0005618D4 /* UIColor+Extensions.swift */; };
 		D8FAFB812D8ACC4100147805 /* AWXProviderDelegateSpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */; };
+		D8FA528A2EFA64300010E912 /* AWXColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FA52892EFA64300010E912 /* AWXColors.swift */; };
+		D8FA528C2EFA64350010E912 /* AWXPaymentElement+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FA528B2EFA64350010E912 /* AWXPaymentElement+Configuration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -784,6 +786,8 @@
 		D8EC87D32D9E335D00D082EC /* MockPaymentResultDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPaymentResultDelegate.swift; sourceTree = "<group>"; };
 		D8EC87D42D9E335D00D082EC /* MockProviderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProviderDelegate.swift; sourceTree = "<group>"; };
 		D8EC87D72D9E335D00D082EC /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
+		D8FA52892EFA64300010E912 /* AWXColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXColors.swift; sourceTree = "<group>"; };
+		D8FA528B2EFA64350010E912 /* AWXPaymentElement+Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXPaymentElement+Configuration.swift"; sourceTree = "<group>"; };
 		EE2CC5A246D6BB2D92970009 /* Pods-AirwallexCoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirwallexCoreTests.debug.xcconfig"; path = "Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1212,6 +1216,7 @@
 			isa = PBXGroup;
 			children = (
 				D829FE102F0D11450056EE6E /* AWXPaymentElement.swift */,
+				D8FA528B2EFA64350010E912 /* AWXPaymentElement+Configuration.swift */,
 				D829FE122F0D11450056EE6E /* EmbeddedPaymentView.swift */,
 			);
 			path = EmbeddedPayment;
@@ -1404,6 +1409,7 @@
 		D8D36E6A2E5C5CAC005618D4 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				D8FA52892EFA64300010E912 /* AWXColors.swift */,
 				D8D36EED2E5C5CB0005618D4 /* UIColor+Extensions.swift */,
 				D8D36E682E5C5CAC005618D4 /* LoadingSpinnerView.swift */,
 				D8D36EEC2E5C5CB0005618D4 /* Palette.swift */,
@@ -2327,6 +2333,7 @@
 				D8D36F162E5C5CB0005618D4 /* CardPaymentToggleCell.swift in Sources */,
 				D8D36F172E5C5CB0005618D4 /* BaseTextField.swift in Sources */,
 				D829FE142F0D11450056EE6E /* AWXPaymentElement.swift in Sources */,
+				D8FA528C2EFA64350010E912 /* AWXPaymentElement+Configuration.swift in Sources */,
 				D829FE162F0D11450056EE6E /* EmbeddedPaymentView.swift in Sources */,
 				D8D36F182E5C5CB0005618D4 /* ContentInsetableTextField.swift in Sources */,
 				D8D36F192E5C5CB0005618D4 /* InfoCollectorTextField.swift in Sources */,
@@ -2385,6 +2392,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8FA528A2EFA64300010E912 /* AWXColors.swift in Sources */,
 				D8FA52882EFA64240010E912 /* UIColor+Extensions.swift in Sources */,
 				D8FA4FC62EFA48D70010E912 /* Palette.swift in Sources */,
 				D8D36E732E5C5CAC005618D4 /* Array+Extensions.swift in Sources */,
