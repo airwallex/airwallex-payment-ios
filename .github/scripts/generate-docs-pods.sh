@@ -85,3 +85,11 @@ EOF
 
 echo "Documentation generated in ./docs/html"
 echo "Redirect index.html created in ./docs/redirect/"
+
+# Commit and push to reference-doc branch
+echo "Committing and pushing documentation changes..."
+git add docs/
+git commit -m "doc: $VERSION"
+git push origin reference-doc
+
+echo "✓ Documentation committed and pushed to reference-doc branch"
