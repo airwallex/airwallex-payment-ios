@@ -32,10 +32,10 @@ class H5DemoViewController: UIViewController {
     private lazy var paymentURLField: ConfigTextField = {
         let view = ConfigTextField()
         view.translatesAutoresizingMaskIntoConstraints = false
-        
+        var text = (DemoStoreAPIClient.baseURLForEnvironment(ExamplesKeys.environment) ?? "") + "/shopping-cart"
         let viewModel = ConfigTextFieldViewModel(
             displayName: "Payment URL",
-            text: nil,
+            text: text,
             caption: nil
         )
         view.setup(viewModel)
