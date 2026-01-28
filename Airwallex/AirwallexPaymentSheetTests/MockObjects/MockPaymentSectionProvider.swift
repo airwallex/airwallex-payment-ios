@@ -143,6 +143,7 @@ extension MockPaymentSectionProvider: CollectionViewSectionProvider {
             return AccordionSectionController(
                 position: position,
                 methodProvider: methodProvider,
+                paymentUIContext: paymentUIContext,
                 imageLoader: imageLoader
             ).anySectionController()
         default:

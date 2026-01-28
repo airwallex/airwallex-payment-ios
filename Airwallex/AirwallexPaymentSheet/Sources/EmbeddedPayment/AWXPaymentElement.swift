@@ -156,6 +156,7 @@ public class AWXPaymentElement: NSObject {
         // Now set the internal delegate and viewController
         self.paymentUIContext.delegate = delegate
         self.paymentUIContext.viewController = hostViewController
+        self.paymentUIContext.isEmbedded = true
 
         // Configure collection view
         let collectionView = collectionViewManager.collectionView!
@@ -168,6 +169,9 @@ public class AWXPaymentElement: NSObject {
 
         // Trigger initial data load
         collectionViewManager.performUpdates()
+
+        // wpdebug
+        collectionViewManager.collectionView.backgroundColor = .red
     }
 }
 
@@ -255,6 +259,7 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
             return AccordionSectionController(
                 position: position,
                 methodProvider: methodProvider,
+                paymentUIContext: paymentUIContext,
                 imageLoader: imageLoader
             ).anySectionController()
         default:

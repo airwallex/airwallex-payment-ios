@@ -87,14 +87,14 @@ class ApplePaySectionController: SectionController {
             heightDimension: .fractionalHeight(1)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
+
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(48)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
-        var contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
+        var contentInsets = NSDirectionalEdgeInsets(horizontal: paymentUIContext.isEmbedded ? 0 : 16)
         if methodProvider.methods.contains(where: { $0.name != AWXApplePayKey }) {
             contentInsets.bottom = 16
             let headerSize = NSCollectionLayoutSize(

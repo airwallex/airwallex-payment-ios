@@ -96,14 +96,17 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         section.interGroupSpacing = 24
         switch layout {
         case .tab:
-            section.contentInsets = .init(horizontal: 16)
+            section.contentInsets = .init(horizontal: paymentUIContext.isEmbedded ? 0 : 16)
         case .accordion:
-            section.contentInsets = .init(top: 16, leading: 40, bottom: 32, trailing: 40)
-            
+            let sectionHorizontal: CGFloat = paymentUIContext.isEmbedded ? 24 : 40
+            section.contentInsets = .init(top: 16, leading: sectionHorizontal, bottom: 32, trailing: sectionHorizontal)
+
             // Layout for decoration - rounded corner
             context.register(RoundedCornerDecorationView.self, forDecorationViewOfKind: AccordionSectionController.backgroundElementKind)
             let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: AccordionSectionController.backgroundElementKind)
-            sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
+            sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(
+                horizontal: paymentUIContext.isEmbedded ? 0 : 16
+            )
             section.decorationItems = [sectionBackgroundDecoration]
         }
         return section

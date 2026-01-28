@@ -203,7 +203,7 @@ class CardPaymentConsentSectionController: SectionController {
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(32)
         )
-        
+
         switch mode {
         case .consentList:
             let listItem = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -215,7 +215,8 @@ class CardPaymentConsentSectionController: SectionController {
             section.interGroupSpacing = 16
             switch layout {
             case .accordion:
-                section.contentInsets = .init(top: 16, leading: 40, bottom: 24, trailing: 40)
+                let sectionHorizontal: CGFloat = paymentUIContext.isEmbedded ? 24 : 40
+                section.contentInsets = .init(top: 16, leading: sectionHorizontal, bottom: 24, trailing: sectionHorizontal)
                 // Layout for decoration - rounded corner
                 let elementKind = AccordionSectionController.backgroundElementKind
                 context.register(
@@ -223,17 +224,19 @@ class CardPaymentConsentSectionController: SectionController {
                     forDecorationViewOfKind: elementKind
                 )
                 let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: elementKind)
-                sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
+                sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(
+                    horizontal: paymentUIContext.isEmbedded ? 0 : 16
+                )
                 section.decorationItems = [sectionBackgroundDecoration]
             case .tab:
-                section.contentInsets = .init(horizontal: 16)
+                section.contentInsets = .init(horizontal: paymentUIContext.isEmbedded ? 0 : 16)
             }
             return section
         case .consentPayment:
             let items: [NSCollectionLayoutItem] = (1..<items.count).map { _ in
                 NSCollectionLayoutItem(layoutSize: itemSize)
             }
-            
+
             let innerGroup = NSCollectionLayoutGroup.vertical(
                 layoutSize: NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),
@@ -242,13 +245,13 @@ class CardPaymentConsentSectionController: SectionController {
                 subitems: items
             )
             innerGroup.interItemSpacing = .fixed(16)
-            
+
             let buttonSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
                 heightDimension: .absolute(52)
             )
             let buttonItem = NSCollectionLayoutItem(layoutSize: buttonSize)
-            
+
             let outerGroup = NSCollectionLayoutGroup.vertical(
                 layoutSize: NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),
@@ -257,11 +260,12 @@ class CardPaymentConsentSectionController: SectionController {
                 subitems: [innerGroup, buttonItem]
             )
             outerGroup.interItemSpacing = .fixed(24)
-            
+
             let section = NSCollectionLayoutSection(group: outerGroup)
             switch layout {
             case .accordion:
-                section.contentInsets = .init(top: 16, leading: 40, bottom: 32, trailing: 40)
+                let sectionHorizontal: CGFloat = paymentUIContext.isEmbedded ? 24 : 40
+                section.contentInsets = .init(top: 16, leading: sectionHorizontal, bottom: 32, trailing: sectionHorizontal)
                 // Layout for decoration - rounded corner
                 let elementKind = AccordionSectionController.backgroundElementKind
                 context.register(
@@ -269,10 +273,12 @@ class CardPaymentConsentSectionController: SectionController {
                     forDecorationViewOfKind: elementKind
                 )
                 let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: elementKind)
-                sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
+                sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(
+                    horizontal: paymentUIContext.isEmbedded ? 0 : 16
+                )
                 section.decorationItems = [sectionBackgroundDecoration]
             case .tab:
-                section.contentInsets = .init(horizontal: 16)
+                section.contentInsets = .init(horizontal: paymentUIContext.isEmbedded ? 0 : 16)
             }
             return section
         }

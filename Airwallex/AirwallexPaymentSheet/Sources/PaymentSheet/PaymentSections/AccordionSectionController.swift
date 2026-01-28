@@ -24,18 +24,21 @@ class AccordionSectionController: SectionController {
     }
     
     private var methodProvider: PaymentMethodProvider
+    private let paymentUIContext: PaymentUIContext
     private var viewModels = [PaymentMethodCellViewModel]()
     private let imageLoader: ImageLoader
     let position: Position
     private let separatorUpdatePublisher = PassthroughSubject<Void, Never>()
     private var cancellables = Set<AnyCancellable>()
-    
+
     init(position: Position,
          methodProvider: PaymentMethodProvider,
+         paymentUIContext: PaymentUIContext,
          imageLoader: ImageLoader) {
         self.position = position
         self.section = PaymentSectionType.accordion(position)
         self.methodProvider = methodProvider
+        self.paymentUIContext = paymentUIContext
         self.imageLoader = imageLoader
         updateItemsIfNecessary()
         separatorUpdatePublisher
@@ -88,14 +91,15 @@ class AccordionSectionController: SectionController {
         // Layout for item
         let layoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(60))
         let item = NSCollectionLayoutItem(layoutSize: layoutSize, supplementaryItems: [separator])
-        
+
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
+        let horizontalInset: CGFloat = paymentUIContext.isEmbedded ? 0 : 16
+        section.contentInsets = NSDirectionalEdgeInsets(horizontal: horizontalInset)
         // Layout for decoration - rounded corner
         context.register(RoundedCornerDecorationView.self, forDecorationViewOfKind: Self.backgroundElementKind)
         let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: Self.backgroundElementKind)
-        sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
+        sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(horizontal: horizontalInset)
         section.decorationItems = [sectionBackgroundDecoration]
         return section
     }

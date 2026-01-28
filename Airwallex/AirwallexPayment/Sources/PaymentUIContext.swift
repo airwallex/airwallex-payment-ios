@@ -33,6 +33,10 @@ public class PaymentUIContext {
     /// This is `nil` for embedded payment elements since they don't auto-dismiss.
     public var dismissAction: DismissActionBlock?
 
+    /// Whether this context is for an embedded payment element.
+    /// When true, section controllers should use zero horizontal insets.
+    public var isEmbedded: Bool = false
+
     /// Creates a new payment UI context.
     /// - Parameters:
     ///   - delegate: The delegate that receives payment result callbacks.
