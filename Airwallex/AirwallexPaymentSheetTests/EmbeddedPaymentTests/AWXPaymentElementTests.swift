@@ -42,6 +42,28 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertEqual(configuration.layout, .accordion)
     }
 
+    func testConfiguration_DefaultElementType_IsList() {
+        let configuration = AWXPaymentElement.Configuration()
+        XCTAssertEqual(configuration.elementType, .`default`)
+    }
+
+    func testConfiguration_CanSetCardElementType() {
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.elementType = .addCard
+        XCTAssertEqual(configuration.elementType, .addCard)
+    }
+
+    func testConfiguration_DefaultSupportedCardBrands_IsAllAvailable() {
+        let configuration = AWXPaymentElement.Configuration()
+        XCTAssertEqual(configuration.supportedCardBrands, AWXCardBrand.allAvailable)
+    }
+
+    func testConfiguration_CanSetSupportedCardBrands() {
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.supportedCardBrands = [.visa, .mastercard]
+        XCTAssertEqual(configuration.supportedCardBrands, [.visa, .mastercard])
+    }
+
     // MARK: - Static Create Tests
 
     func testCreate_WithMockProvider_ReturnsElement() async throws {
@@ -502,6 +524,115 @@ final class AWXPaymentElementTests: XCTestCase {
 
         let sections = element.sections()
 
+        XCTAssertTrue(sections.contains(.cardPaymentNew))
+    }
+
+    // MARK: - Section Tests (Card Element Type)
+
+    func testSections_CardElementType_OnlyReturnsCardPaymentNew() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.elementType = .addCard
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController,
+            configuration: configuration
+        )
+
+        let sections = element.sections()
+
+        XCTAssertEqual(sections.count, 1)
+        XCTAssertTrue(sections.contains(.cardPaymentNew))
+    }
+
+    func testSections_CardElementType_ExcludesApplePay() {
+        let applePayMethod = AWXPaymentMethodType()
+        applePayMethod.name = AWXApplePayKey
+
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+
+        mockMethodProvider.methods = [applePayMethod, cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.elementType = .addCard
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController,
+            configuration: configuration
+        )
+
+        let sections = element.sections()
+
+        XCTAssertEqual(sections.count, 1)
+        XCTAssertFalse(sections.contains(.applePay))
+        XCTAssertTrue(sections.contains(.cardPaymentNew))
+    }
+
+    func testSections_CardElementType_ExcludesMethodList() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+
+        let alipayMethod = AWXPaymentMethodType()
+        alipayMethod.name = "alipayhk"
+
+        mockMethodProvider.methods = [cardMethod, alipayMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.elementType = .addCard
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController,
+            configuration: configuration
+        )
+
+        let sections = element.sections()
+
+        XCTAssertEqual(sections.count, 1)
+        XCTAssertFalse(sections.contains(.methodList))
+        XCTAssertTrue(sections.contains(.cardPaymentNew))
+    }
+
+    func testSections_CardElementType_ExcludesConsents() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        // Add a consent
+        let consent = AWXPaymentConsent()
+        consent.id = "consent_id"
+        let paymentMethod = AWXPaymentMethod()
+        paymentMethod.type = AWXCardKey
+        consent.paymentMethod = paymentMethod
+        mockMethodProvider.consents = [consent]
+
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.elementType = .addCard
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController,
+            configuration: configuration
+        )
+
+        let sections = element.sections()
+
+        XCTAssertEqual(sections.count, 1)
+        XCTAssertFalse(sections.contains(.cardPaymentConsent))
         XCTAssertTrue(sections.contains(.cardPaymentNew))
     }
 
