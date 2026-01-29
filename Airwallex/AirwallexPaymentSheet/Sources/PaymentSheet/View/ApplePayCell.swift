@@ -23,11 +23,17 @@ class ApplePayCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         contentView.subviews.forEach { view in
             view.removeFromSuperview()
         }
-        var style: PKPaymentButtonStyle = self.traitCollection.userInterfaceStyle == .dark ? .white : .black
-        if #available(iOS 14, *) {
-            style = .automatic
+
+        let view = if #available(iOS 26, *) {
+            PKPaymentButton(type: .plain, style: .automatic, disableCardArt: true)
+        } else if #available(iOS 14, *) {
+            PKPaymentButton(paymentButtonType: .plain, paymentButtonStyle: .automatic)
+        } else {
+            PKPaymentButton(
+                paymentButtonType: .plain,
+                paymentButtonStyle: traitCollection.userInterfaceStyle == .dark ? .white : .black
+            )
         }
-        let view = PKPaymentButton(paymentButtonType: .plain, paymentButtonStyle: style)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(onPaymentButtonTapped), for: .touchUpInside)
         
