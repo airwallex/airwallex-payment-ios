@@ -59,7 +59,7 @@ public class AWXPaymentElement: NSObject {
 
     private weak var hostViewController: UIViewController?
     private let methodProvider: PaymentMethodProvider
-    private let paymentUIContext = PaymentSheetUIContext()
+    let paymentUIContext = PaymentSheetUIContext()
     private lazy var collectionViewManager: CollectionViewManager = {
         let listConfiguration = UICollectionViewCompositionalLayoutConfiguration()
         listConfiguration.interSectionSpacing = 16

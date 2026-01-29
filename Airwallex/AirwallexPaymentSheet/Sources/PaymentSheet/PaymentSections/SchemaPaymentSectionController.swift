@@ -28,7 +28,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     }
     private var paymentSessionHandler: PaymentSessionHandler?
     private var methodProvider: PaymentMethodProvider
-    private let paymentUIContext: PaymentSheetUIContext
+    let paymentUIContext: PaymentSheetUIContext
     
     // data from method details API
     private var schema: AWXSchema?
