@@ -374,6 +374,8 @@
 		D8D370A22E5EDD8F005618D4 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87D72D9E335D00D082EC /* MockURLProtocol.swift */; };
 		D8D3712B2E604F5A005618D4 /* AWXAPIClient+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D3712A2E604F5A005618D4 /* AWXAPIClient+Extension.swift */; };
 		D8D3726D2E617332005618D4 /* ProviderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D3726C2E617332005618D4 /* ProviderFactory.swift */; };
+		D8F0E6A72F29DD45007C9D48 /* PaymentSheetUIContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F0E6A62F29DD45007C9D48 /* PaymentSheetUIContext.swift */; };
+		D8F0E6A92F29DD5F007C9D48 /* AWXPaymentElement+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F0E6A82F29DD5F007C9D48 /* AWXPaymentElement+Configuration.swift */; };
 		D8FA4FC62EFA48D70010E912 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EEC2E5C5CB0005618D4 /* Palette.swift */; };
 		D8FA52882EFA64240010E912 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EED2E5C5CB0005618D4 /* UIColor+Extensions.swift */; };
 		D8FAFB812D8ACC4100147805 /* AWXProviderDelegateSpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37FB27F29DD200CFC2EF /* AWXProviderDelegateSpy.m */; };
@@ -784,6 +786,8 @@
 		D8EC87D32D9E335D00D082EC /* MockPaymentResultDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPaymentResultDelegate.swift; sourceTree = "<group>"; };
 		D8EC87D42D9E335D00D082EC /* MockProviderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProviderDelegate.swift; sourceTree = "<group>"; };
 		D8EC87D72D9E335D00D082EC /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
+		D8F0E6A62F29DD45007C9D48 /* PaymentSheetUIContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSheetUIContext.swift; sourceTree = "<group>"; };
+		D8F0E6A82F29DD5F007C9D48 /* AWXPaymentElement+Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXPaymentElement+Configuration.swift"; sourceTree = "<group>"; };
 		EE2CC5A246D6BB2D92970009 /* Pods-AirwallexCoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirwallexCoreTests.debug.xcconfig"; path = "Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1212,6 +1216,7 @@
 			isa = PBXGroup;
 			children = (
 				D829FE102F0D11450056EE6E /* AWXPaymentElement.swift */,
+				D8F0E6A82F29DD5F007C9D48 /* AWXPaymentElement+Configuration.swift */,
 				D829FE122F0D11450056EE6E /* EmbeddedPaymentView.swift */,
 			);
 			path = EmbeddedPayment;
@@ -1595,6 +1600,7 @@
 				D8D36EBF2E5C5CB0005618D4 /* Validators */,
 				D8D36EE22E5C5CB0005618D4 /* View */,
 				D8D36EE32E5C5CB0005618D4 /* PaymentViewController.swift */,
+				D8F0E6A62F29DD45007C9D48 /* PaymentSheetUIContext.swift */,
 			);
 			path = PaymentSheet;
 			sourceTree = "<group>";
@@ -2307,6 +2313,7 @@
 				D8D36F022E5C5CB0005618D4 /* MaxLengthFormatter.swift in Sources */,
 				D8D36F032E5C5CB0005618D4 /* PaymentMethodProvider.swift in Sources */,
 				D8D36F042E5C5CB0005618D4 /* PaymentSheetMethodProvider.swift in Sources */,
+				D8F0E6A72F29DD45007C9D48 /* PaymentSheetUIContext.swift in Sources */,
 				D8D36F052E5C5CB0005618D4 /* SinglePaymentMethodProvider.swift in Sources */,
 				D8D36F062E5C5CB0005618D4 /* AccordionSectionController.swift in Sources */,
 				D8D36F072E5C5CB0005618D4 /* ApplePaySectionController.swift in Sources */,
@@ -2352,6 +2359,7 @@
 				D8D36F2C2E5C5CB0005618D4 /* PaymentMethodListSeparator.swift in Sources */,
 				D8D36F2D2E5C5CB0005618D4 /* RoundedCornerDecorationView.swift in Sources */,
 				D8D36F2E2E5C5CB0005618D4 /* SchemaPaymentReminderCell.swift in Sources */,
+				D8F0E6A92F29DD5F007C9D48 /* AWXPaymentElement+Configuration.swift in Sources */,
 				D8D36F2F2E5C5CB0005618D4 /* ViewReusable.swift in Sources */,
 				D8D36F302E5C5CB0005618D4 /* WarningViewCell.swift in Sources */,
 				D8D36F312E5C5CB0005618D4 /* PaymentViewController.swift in Sources */,

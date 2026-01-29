@@ -21,13 +21,16 @@ import AirwallexCore
 ///
 /// ## Usage
 /// ```swift
+/// let configuration = AWXPaymentElement.Configuration()
+/// configuration.layout = .accordion
+///
 /// let element = try await AWXPaymentElement.create(
 ///     hostViewController: self,
 ///     session: session,
 ///     delegate: self,
-///     layout: .tab
+///     configuration: configuration
 /// )
-/// scrollView.addSubview(element.view)
+/// containerView.addSubview(element.view)
 /// ```
 ///
 /// ## Important Notes
@@ -56,7 +59,7 @@ public class AWXPaymentElement: NSObject {
 
     private weak var hostViewController: UIViewController?
     private let methodProvider: PaymentMethodProvider
-    private let paymentUIContext = PaymentUIContext()
+    private let paymentUIContext = PaymentSheetUIContext()
     private lazy var collectionViewManager: CollectionViewManager = {
         let listConfiguration = UICollectionViewCompositionalLayoutConfiguration()
         listConfiguration.interSectionSpacing = 16
@@ -72,7 +75,6 @@ public class AWXPaymentElement: NSObject {
     }()
     private var cancellable: AnyCancellable?
     private var preferConsentPayment = true
-    private lazy var imageLoader = ImageLoader()
 
     // MARK: - Initialization
 
@@ -86,19 +88,22 @@ public class AWXPaymentElement: NSObject {
     ///     Used for presenting modals like 3DS authentication, redirects, and country selection.
     ///   - session: The payment session containing transaction details.
     ///   - delegate: The delegate that receives payment result callbacks.
+    ///   - configuration: Configuration options for the payment element.
     /// - Returns: A configured `AWXPaymentElement` ready to be embedded.
     /// - Throws: `AWXUIContext.LaunchError` if session validation fails or payment methods cannot be fetched.
     @objc
     public static func create(
         hostViewController: UIViewController,
         session: AWXSession,
-        delegate: AWXPaymentResultDelegate
+        delegate: AWXPaymentResultDelegate,
+        configuration: Configuration = Configuration()
     ) async throws -> AWXPaymentElement {
         try await create(
             hostViewController: hostViewController,
             session: session,
             methodProvider: PaymentSheetMethodProvider(session: session),
-            delegate: delegate
+            delegate: delegate,
+            configuration: configuration
         )
     }
     
@@ -106,7 +111,8 @@ public class AWXPaymentElement: NSObject {
         hostViewController: UIViewController,
         session: AWXSession,
         methodProvider: PaymentMethodProvider,
-        delegate: AWXPaymentResultDelegate
+        delegate: AWXPaymentResultDelegate,
+        configuration: Configuration = Configuration()
     ) async throws -> AWXPaymentElement {
         // Validate session
         do {
@@ -114,23 +120,24 @@ public class AWXPaymentElement: NSObject {
         } catch {
             throw AWXUIContext.LaunchError.invalidSession(underlyingError: error)
         }
-        
+
         // Update logger.session for embedded integration
         AnalyticsLogger.shared().session = session
-        
+
         // fetch payment methods using method provider
         try await methodProvider.getPaymentMethodTypes()
-        
+
         // Risk event
         RiskLogger.log(.transactionInitiated)
-        
+
         // Create element with all dependencies ready
         let element = AWXPaymentElement(
             hostViewController: hostViewController,
             methodProvider: methodProvider,
-            delegate: delegate
+            delegate: delegate,
+            configuration: configuration
         )
-        
+
         // Analytics
         AnalyticsLogger.log(
             action: .paymentLaunched,
@@ -139,14 +146,15 @@ public class AWXPaymentElement: NSObject {
                 .expressCheckout: session.isExpressCheckout
             ]
         )
-        
+
         return element
     }
 
     init(
         hostViewController: UIViewController,
         methodProvider: PaymentMethodProvider,
-        delegate: AWXPaymentResultDelegate
+        delegate: AWXPaymentResultDelegate,
+        configuration: Configuration = Configuration()
     ) {
         self.hostViewController = hostViewController
         self.methodProvider = methodProvider
@@ -157,6 +165,7 @@ public class AWXPaymentElement: NSObject {
         self.paymentUIContext.delegate = delegate
         self.paymentUIContext.viewController = hostViewController
         self.paymentUIContext.isEmbedded = true
+        self.paymentUIContext.layout = configuration.layout
 
         // Configure collection view
         let collectionView = collectionViewManager.collectionView!
@@ -169,15 +178,16 @@ public class AWXPaymentElement: NSObject {
 
         // Trigger initial data load
         collectionViewManager.performUpdates()
-
-        // wpdebug
-        collectionViewManager.collectionView.backgroundColor = .red
     }
 }
 
 // MARK: - CollectionViewSectionProvider
 
 extension AWXPaymentElement: CollectionViewSectionProvider {
+
+    private var displayMethodList: Bool {
+        return paymentUIContext.layout == .tab && methodProvider.methods.count > 1 + (methodProvider.isApplePayAvailable ? 1 : 0)
+    }
 
     func sections() -> [PaymentSectionType] {
         var sections = [PaymentSectionType]()
@@ -186,30 +196,56 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
             sections.append(.applePay)
         }
 
-        if !methodProvider.methodsForAccordionPosition(.top).isEmpty {
-            sections.append(.accordion(.top))
-        }
-        
-        if let selectedMethodType = methodProvider.selectedMethod {
-            if selectedMethodType.name == AWXCardKey {
-                if preferConsentPayment && !methodProvider.consents.isEmpty {
-                    sections.append(.cardPaymentConsent)
-                } else {
-                    sections.append(.cardPaymentNew)
-                }
-            } else if selectedMethodType.hasSchema {
-                sections.append(.schemaPayment(selectedMethodType.name))
+        switch paymentUIContext.layout {
+        case .tab:
+            if displayMethodList {
+                // horizontal list
+                sections.append(.methodList)
             }
-        }
-        
-        if !methodProvider.methodsForAccordionPosition(.bottom).isEmpty {
-            sections.append(.accordion(.bottom))
+            //  display selected payment method
+            if let selectedMethodType = methodProvider.selectedMethod {
+                if selectedMethodType.name == AWXCardKey {
+                    if preferConsentPayment && !methodProvider.consents.isEmpty {
+                        sections.append(.cardPaymentConsent)
+                    } else {
+                        sections.append(.cardPaymentNew)
+                    }
+                } else if selectedMethodType.hasSchema {
+                    sections.append(.schemaPayment(selectedMethodType.name))
+                }
+            }
+        case .accordion:
+            if !methodProvider.methodsForAccordionPosition(.top).isEmpty {
+                sections.append(.accordion(.top))
+            }
+
+            if let selectedMethodType = methodProvider.selectedMethod {
+                if selectedMethodType.name == AWXCardKey {
+                    if preferConsentPayment && !methodProvider.consents.isEmpty {
+                        sections.append(.cardPaymentConsent)
+                    } else {
+                        sections.append(.cardPaymentNew)
+                    }
+                } else if selectedMethodType.hasSchema {
+                    sections.append(.schemaPayment(selectedMethodType.name))
+                }
+            }
+
+            if !methodProvider.methodsForAccordionPosition(.bottom).isEmpty {
+                sections.append(.accordion(.bottom))
+            }
         }
         return sections
     }
 
     func sectionController(for section: PaymentSectionType) -> AnySectionController<PaymentSectionType, String> {
         switch section {
+        case .methodList:
+            let controller = PaymentMethodTabSectionController(
+                methodProvider: methodProvider,
+                paymentUIContext: paymentUIContext
+            )
+            return controller.anySectionController()
         case .applePay:
             let controller = ApplePaySectionController(
                 session: methodProvider.session,
@@ -223,12 +259,10 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
                 methodType: methodProvider.method(named: AWXCardKey)!,
                 methodProvider: methodProvider,
                 paymentUIContext: paymentUIContext,
-                layout: .accordion,
-                imageLoader: imageLoader,
                 addNewCardAction: { [weak self] in
                     guard let self else { return }
                     self.preferConsentPayment = false
-                    self.collectionViewManager.performUpdates()
+                    self.collectionViewManager.performUpdates(animatingDifferences: true)
                 }
             )
             return controller.anySectionController()
@@ -237,31 +271,27 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
                 cardPaymentMethod: methodProvider.method(named: AWXCardKey)!,
                 methodProvider: methodProvider,
                 paymentUIContext: paymentUIContext,
-                layout: .accordion,
-                imageLoader: imageLoader,
                 switchToConsentPaymentAction: { [weak self] in
                     guard let self else { return }
                     self.preferConsentPayment = true
-                    self.collectionViewManager.performUpdates()
+                    self.collectionViewManager.performUpdates(animatingDifferences: true)
                 }
-            ).anySectionController()
-            return controller
+            )
+            return controller.anySectionController()
         case .schemaPayment(let name):
             let controller = SchemaPaymentSectionController(
                 methodType: methodProvider.method(named: name)!,
                 methodProvider: methodProvider,
-                paymentUIContext: paymentUIContext,
-                layout: .accordion,
-                imageLoader: imageLoader
-            ).anySectionController()
-            return controller
+                paymentUIContext: paymentUIContext
+            )
+            return controller.anySectionController()
         case .accordion(let position):
-            return AccordionSectionController(
+            let controller = AccordionSectionController(
                 position: position,
                 methodProvider: methodProvider,
-                paymentUIContext: paymentUIContext,
-                imageLoader: imageLoader
-            ).anySectionController()
+                paymentUIContext: paymentUIContext
+            )
+            return controller.anySectionController()
         default:
             debugLog("section not expected: \(section)")
             let layoutSize = NSCollectionLayoutSize(

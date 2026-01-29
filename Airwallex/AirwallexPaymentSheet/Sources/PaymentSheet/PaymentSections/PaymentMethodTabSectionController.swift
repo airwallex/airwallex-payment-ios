@@ -20,16 +20,15 @@ class PaymentMethodTabSectionController: SectionController {
     
     private var selectedMethod: String
     private let methodProvider: PaymentMethodProvider
-    
+    private let paymentUIContext: PaymentSheetUIContext
     private var methodTypes: [AWXPaymentMethodType]
-    private let imageLoader: ImageLoader
-    
+
     init(methodProvider: PaymentMethodProvider,
-         imageLoader: ImageLoader) {
+         paymentUIContext: PaymentSheetUIContext) {
         self.methodProvider = methodProvider
+        self.paymentUIContext = paymentUIContext
         self.methodTypes = methodProvider.methods.filter { $0.name != AWXApplePayKey }
         self.selectedMethod = methodProvider.selectedMethod?.name ?? ""
-        self.imageLoader = imageLoader
     }
     
     // MARK: - SectionController
@@ -58,7 +57,7 @@ class PaymentMethodTabSectionController: SectionController {
             name: methodType.displayName,
             imageURL: methodType.resources.logoURL,
             isSelected: methodType.name == selectedMethod,
-            imageLoader: imageLoader,
+            imageLoader: paymentUIContext.imageLoader,
             cardBrands: []
         )
         cell.setup(viewModel)
@@ -74,7 +73,7 @@ class PaymentMethodTabSectionController: SectionController {
         let group = NSCollectionLayoutGroup.vertical(layoutSize: layoutSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = .init(horizontal: 16).bottom(8)
+        section.contentInsets = .init(horizontal: paymentUIContext.isEmbedded ? 0 : 16).bottom(8)
         section.interGroupSpacing = 8
         return section
     }

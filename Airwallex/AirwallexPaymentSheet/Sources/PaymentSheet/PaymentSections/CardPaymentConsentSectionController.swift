@@ -43,7 +43,7 @@ class CardPaymentConsentSectionController: SectionController {
     }
 
     let methodProvider: PaymentMethodProvider
-    private let paymentUIContext: PaymentUIContext
+    private let paymentUIContext: PaymentSheetUIContext
 
     private let addNewCardAction: () -> Void
     
@@ -54,14 +54,13 @@ class CardPaymentConsentSectionController: SectionController {
     var mode: Mode {
         selectedConsent == nil ? .consentList : .consentPayment
     }
-    private let layout: AWXUIContext.PaymentLayout
     
     private lazy var viewModelForAccordionKey = PaymentMethodCellViewModel(
         itemIdentifier: .accordionKey,
         name: methodType.displayName,
         imageURL: methodType.resources.logoURL,
         isSelected: true,
-        imageLoader: imageLoader,
+        imageLoader: paymentUIContext.imageLoader,
         cardBrands: []
     )
     
@@ -83,16 +82,12 @@ class CardPaymentConsentSectionController: SectionController {
     )
     
     private let methodType: AWXPaymentMethodType
-    private let imageLoader: ImageLoader
-    
+
     init(methodType: AWXPaymentMethodType,
          methodProvider: PaymentMethodProvider,
-         paymentUIContext: PaymentUIContext,
-         layout: AWXUIContext.PaymentLayout,
-         imageLoader: ImageLoader,
+         paymentUIContext: PaymentSheetUIContext,
          addNewCardAction: @escaping () -> Void) {
         self.methodType = methodType
-        self.imageLoader = imageLoader
         self.methodProvider = methodProvider
         self.paymentUIContext = paymentUIContext
         self.addNewCardAction = addNewCardAction
@@ -101,7 +96,6 @@ class CardPaymentConsentSectionController: SectionController {
            let consent = consents.first {
             self.selectedConsent = consent
         }
-        self.layout = layout
     }
     
     // MARK: - SectionController
@@ -112,7 +106,7 @@ class CardPaymentConsentSectionController: SectionController {
     
     var items: [String] {
         var items = [String]()
-        if layout == .accordion {
+        if paymentUIContext.layout == .accordion {
             items.append(.accordionKey)
         }
     
@@ -213,7 +207,7 @@ class CardPaymentConsentSectionController: SectionController {
             )
             let section = NSCollectionLayoutSection(group: group)
             section.interGroupSpacing = 16
-            switch layout {
+            switch paymentUIContext.layout {
             case .accordion:
                 let sectionHorizontal: CGFloat = paymentUIContext.isEmbedded ? 24 : 40
                 section.contentInsets = .init(top: 16, leading: sectionHorizontal, bottom: 24, trailing: sectionHorizontal)
@@ -262,7 +256,7 @@ class CardPaymentConsentSectionController: SectionController {
             outerGroup.interItemSpacing = .fixed(24)
 
             let section = NSCollectionLayoutSection(group: outerGroup)
-            switch layout {
+            switch paymentUIContext.layout {
             case .accordion:
                 let sectionHorizontal: CGFloat = paymentUIContext.isEmbedded ? 24 : 40
                 section.contentInsets = .init(top: 16, leading: sectionHorizontal, bottom: 32, trailing: sectionHorizontal)
@@ -316,8 +310,12 @@ class CardPaymentConsentSectionController: SectionController {
         )
     
         selectedConsent = consent
-        context.performUpdates(section, forceReload: true)
-    
+        context.performUpdates(
+            section,
+            forceReload: true,
+            animatingDifferences: paymentUIContext.isEmbedded
+        )
+
         RiskLogger.log(.showConsent, screen: .consent)
     }
     
@@ -377,7 +375,11 @@ class CardPaymentConsentSectionController: SectionController {
                     guard let self else { return }
                     self.selectedConsent = nil
                     self.cvcConfigurer = nil
-                    self.context.performUpdates(section, forceReload: true, animatingDifferences: false)
+                    self.context.performUpdates(
+                        section,
+                        forceReload: true,
+                        animatingDifferences: paymentUIContext.isEmbedded
+                    )
                 }
             )
         } else {

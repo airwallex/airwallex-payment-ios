@@ -13,15 +13,13 @@ import UIKit
 import XCTest
 
 @MainActor class MockPaymentSectionProvider {
-    
+
     var layout = AWXUIContext.PaymentLayout.tab
     var preferConsentPayment = true
-    
-    private lazy var imageLoader = ImageLoader()
 
     var methodProvider: PaymentMethodProvider
-    
-    let paymentUIContext = PaymentUIContext()
+
+    let paymentUIContext = PaymentSheetUIContext()
     
     init(methodProvider: PaymentMethodProvider) {
         self.methodProvider = methodProvider
@@ -87,6 +85,9 @@ extension MockPaymentSectionProvider: CollectionViewSectionProvider {
     }
     
     func sectionController(for section: PaymentSectionType) -> AnySectionController<PaymentSectionType, String> {
+        // Update paymentUIContext.layout before creating section controllers
+        paymentUIContext.layout = layout
+
         switch section {
         case .applePay:
             let controller = ApplePaySectionController(
@@ -99,7 +100,7 @@ extension MockPaymentSectionProvider: CollectionViewSectionProvider {
         case .methodList:
             let controller = PaymentMethodTabSectionController(
                 methodProvider: methodProvider,
-                imageLoader: imageLoader
+                paymentUIContext: paymentUIContext
             )
             return controller.anySectionController()
         case .cardPaymentConsent:
@@ -107,8 +108,6 @@ extension MockPaymentSectionProvider: CollectionViewSectionProvider {
                 methodType: methodProvider.method(named: AWXCardKey)!,
                 methodProvider: methodProvider,
                 paymentUIContext: paymentUIContext,
-                layout: layout,
-                imageLoader: imageLoader,
                 addNewCardAction: { [weak self] in
                     guard let self else { return }
                     self.preferConsentPayment = false
@@ -121,8 +120,6 @@ extension MockPaymentSectionProvider: CollectionViewSectionProvider {
                 cardPaymentMethod: methodProvider.selectedMethod!,
                 methodProvider: methodProvider,
                 paymentUIContext: paymentUIContext,
-                layout: layout,
-                imageLoader: imageLoader,
                 switchToConsentPaymentAction: { [weak self] in
                     guard let self else { return }
                     self.preferConsentPayment = true
@@ -134,17 +131,14 @@ extension MockPaymentSectionProvider: CollectionViewSectionProvider {
             let controller = SchemaPaymentSectionController(
                 methodType: methodProvider.method(named: name)!,
                 methodProvider: methodProvider,
-                paymentUIContext: paymentUIContext,
-                layout: layout,
-                imageLoader: imageLoader
+                paymentUIContext: paymentUIContext
             ).anySectionController()
             return controller
         case .accordion(let position):
             return AccordionSectionController(
                 position: position,
                 methodProvider: methodProvider,
-                paymentUIContext: paymentUIContext,
-                imageLoader: imageLoader
+                paymentUIContext: paymentUIContext
             ).anySectionController()
         default:
             XCTFail("not expected")

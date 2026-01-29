@@ -24,22 +24,19 @@ class AccordionSectionController: SectionController {
     }
     
     private var methodProvider: PaymentMethodProvider
-    private let paymentUIContext: PaymentUIContext
+    private let paymentUIContext: PaymentSheetUIContext
     private var viewModels = [PaymentMethodCellViewModel]()
-    private let imageLoader: ImageLoader
     let position: Position
     private let separatorUpdatePublisher = PassthroughSubject<Void, Never>()
     private var cancellables = Set<AnyCancellable>()
 
     init(position: Position,
          methodProvider: PaymentMethodProvider,
-         paymentUIContext: PaymentUIContext,
-         imageLoader: ImageLoader) {
+         paymentUIContext: PaymentSheetUIContext) {
         self.position = position
         self.section = PaymentSectionType.accordion(position)
         self.methodProvider = methodProvider
         self.paymentUIContext = paymentUIContext
-        self.imageLoader = imageLoader
         updateItemsIfNecessary()
         separatorUpdatePublisher
             .throttle(for: .milliseconds(1), scheduler: RunLoop.main, latest: true)
@@ -134,7 +131,7 @@ class AccordionSectionController: SectionController {
                 name: methodType.displayName,
                 imageURL: methodType.resources.logoURL,
                 isSelected: false,
-                imageLoader: imageLoader,
+                imageLoader: paymentUIContext.imageLoader,
                 cardBrands: methodType.cardSchemes.map { $0.brandType }
             )
         }

@@ -16,8 +16,10 @@ import UIKit
 /// This class replaces direct access to `AWXUIContext.shared.delegate` and
 /// `AWXUIContext.shared.dismissAction` in section controllers, allowing
 /// each payment flow to have its own isolated context.
+///
+/// Subclass this in higher-level modules to add additional configuration properties.
 @_spi(AWX) @MainActor
-public class PaymentUIContext {
+open class PaymentUIContext {
 
     /// A block type for dismissing the payment UI.
     /// The block takes a completion handler that should be called after dismissal is complete.
@@ -32,10 +34,6 @@ public class PaymentUIContext {
     /// The action to dismiss the payment UI after payment completion.
     /// This is `nil` for embedded payment elements since they don't auto-dismiss.
     public var dismissAction: DismissActionBlock?
-
-    /// Whether this context is for an embedded payment element.
-    /// When true, section controllers should use zero horizontal insets.
-    public var isEmbedded: Bool = false
 
     /// Creates a new payment UI context.
     /// - Parameters:

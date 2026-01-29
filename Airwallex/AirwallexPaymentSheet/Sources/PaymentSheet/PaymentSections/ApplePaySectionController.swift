@@ -23,12 +23,12 @@ class ApplePaySectionController: SectionController {
     private let methodType: AWXPaymentMethodType
     private var paymentSessionHandler: PaymentSessionHandler?
     private let methodProvider: PaymentMethodProvider
-    private let paymentUIContext: PaymentUIContext
+    private let paymentUIContext: PaymentSheetUIContext
 
     init(session: AWXSession,
          methodType: AWXPaymentMethodType,
          methodProvider: PaymentMethodProvider,
-         paymentUIContext: PaymentUIContext) {
+         paymentUIContext: PaymentSheetUIContext) {
         assert(methodType.name == AWXApplePayKey)
         self.session = session
         self.methodType = methodType

@@ -26,19 +26,19 @@ enum PaymentSectionType: Hashable {
 class PaymentViewController: AWXViewController {
 
     let methodProvider: PaymentMethodProvider
-
+    /// The originally configured layout, before any fallback logic is applied.
     private(set) var layout: AWXUIContext.PaymentLayout
 
-    private(set) lazy var paymentUIContext = PaymentUIContext(
-        viewController: self
-    )
+    let paymentUIContext: PaymentSheetUIContext
 
     init(methodProvider: PaymentMethodProvider,
-         layout: AWXUIContext.PaymentLayout = .tab) {
+         paymentUIContext: PaymentSheetUIContext) {
         self.methodProvider = methodProvider
-        self.layout = layout
+        self.paymentUIContext = paymentUIContext
+        self.layout = paymentUIContext.layout
         super.init(nibName: nil, bundle: nil)
         self.session = methodProvider.session
+        self.paymentUIContext.viewController = self
     }
     
     required init?(coder: NSCoder) {
@@ -200,8 +200,8 @@ extension PaymentViewController: CollectionViewSectionProvider {
         return layout == .tab && methodProvider.methods.count > 1 + (methodProvider.isApplePayAvailable ? 1 : 0)
     }
     
-    private var fallbackToTabLayout: Bool {
-        methodProvider.methods.count <= 1 + (methodProvider.isApplePayAvailable ? 1 : 0)
+    private var useTabLayout: Bool {
+        layout == .tab || (methodProvider.methods.count <= 1 + (methodProvider.isApplePayAvailable ? 1 : 0))
     }
     
     func sections() -> [PaymentSectionType] {
@@ -256,6 +256,9 @@ extension PaymentViewController: CollectionViewSectionProvider {
     }
     
     func sectionController(for section: PaymentSectionType) -> AnySectionController<PaymentSectionType, String> {
+        // Update paymentUIContext.layout to effective layout before creating section controllers
+        paymentUIContext.layout = useTabLayout ? .tab : .accordion
+
         switch section {
         case .listTitle:
             let layoutSize = NSCollectionLayoutSize(
@@ -289,7 +292,7 @@ extension PaymentViewController: CollectionViewSectionProvider {
         case .methodList:
             let controller = PaymentMethodTabSectionController(
                 methodProvider: methodProvider,
-                imageLoader: imageLoader
+                paymentUIContext: paymentUIContext
             )
             return controller.anySectionController()
         case .cardPaymentConsent:
@@ -297,8 +300,6 @@ extension PaymentViewController: CollectionViewSectionProvider {
                 methodType: methodProvider.method(named: AWXCardKey)!,
                 methodProvider: methodProvider,
                 paymentUIContext: paymentUIContext,
-                layout: fallbackToTabLayout ? .tab : layout,
-                imageLoader: imageLoader,
                 addNewCardAction: { [weak self] in
                     guard let self else { return }
                     self.preferConsentPayment = false
@@ -311,31 +312,27 @@ extension PaymentViewController: CollectionViewSectionProvider {
                 cardPaymentMethod: methodProvider.method(named: AWXCardKey)!,
                 methodProvider: methodProvider,
                 paymentUIContext: paymentUIContext,
-                layout: fallbackToTabLayout ? .tab : layout,
-                imageLoader: imageLoader,
                 switchToConsentPaymentAction: { [weak self] in
                     guard let self else { return }
                     self.preferConsentPayment = true
                     self.collectionViewManager.performUpdates()
                 }
-            ).anySectionController()
-            return controller
+            )
+            return controller.anySectionController()
         case .schemaPayment(let name):
             let controller = SchemaPaymentSectionController(
                 methodType: methodProvider.method(named: name)!,
                 methodProvider: methodProvider,
-                paymentUIContext: paymentUIContext,
-                layout: fallbackToTabLayout ? .tab : layout,
-                imageLoader: imageLoader
-            ).anySectionController()
-            return controller
+                paymentUIContext: paymentUIContext
+            )
+            return controller.anySectionController()
         case .accordion(let position):
-            return AccordionSectionController(
+            let controller = AccordionSectionController(
                 position: position,
                 methodProvider: methodProvider,
-                paymentUIContext: paymentUIContext,
-                imageLoader: imageLoader
-            ).anySectionController()
+                paymentUIContext: paymentUIContext
+            )
+            return controller.anySectionController()
         }
     }
     

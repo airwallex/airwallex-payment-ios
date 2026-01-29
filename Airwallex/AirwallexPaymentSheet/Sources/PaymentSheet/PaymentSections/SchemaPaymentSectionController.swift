@@ -28,7 +28,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     }
     private var paymentSessionHandler: PaymentSessionHandler?
     private var methodProvider: PaymentMethodProvider
-    private let paymentUIContext: PaymentUIContext
+    private let paymentUIContext: PaymentSheetUIContext
     
     // data from method details API
     private var schema: AWXSchema?
@@ -38,24 +38,18 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     
     private var uiFieldViewModels = [InfoCollectorTextFieldViewModel]()
     private let name: String
-    private let imageLoader: ImageLoader
-    
-    let layout: AWXUIContext.PaymentLayout
+
     private let methodType: AWXPaymentMethodType
-    
+
     init(methodType: AWXPaymentMethodType,
          methodProvider: PaymentMethodProvider,
-         paymentUIContext: PaymentUIContext,
-         layout: AWXUIContext.PaymentLayout,
-         imageLoader: ImageLoader) {
+         paymentUIContext: PaymentSheetUIContext) {
         assert(methodType.name != AWXCardKey && methodType.name != AWXApplePayKey && methodType.hasSchema)
         self.methodType = methodType
         self.name = methodType.name
         self.section = PaymentSectionType.schemaPayment(name)
         self.methodProvider = methodProvider
         self.paymentUIContext = paymentUIContext
-        self.layout = layout
-        self.imageLoader = imageLoader
     }
     
     // MARK: - SectionController
@@ -67,7 +61,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     var items: [String] {
         var items = [String]()
     
-        if layout == .accordion {
+        if paymentUIContext.layout == .accordion {
             items.append(.accordionKey)
         }
     
@@ -94,7 +88,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         let paymentGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: paymentGroup)
         section.interGroupSpacing = 24
-        switch layout {
+        switch paymentUIContext.layout {
         case .tab:
             section.contentInsets = .init(horizontal: paymentUIContext.isEmbedded ? 0 : 16)
         case .accordion:
@@ -123,7 +117,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 name: methodType.displayName,
                 imageURL: methodType.resources.logoURL,
                 isSelected: true,
-                imageLoader: imageLoader,
+                imageLoader: paymentUIContext.imageLoader,
                 cardBrands: []
             )
             cell.setup(viewModel)
