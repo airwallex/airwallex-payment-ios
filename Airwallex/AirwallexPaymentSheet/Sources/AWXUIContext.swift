@@ -152,11 +152,6 @@ import AirwallexCore
                 return
             }
             session.paymentMethods = methodNames
-            if let session = session as? AWXOneOffSession,
-               !methodNames.contains(where: { $0 == AWXCardKey }) {
-                //  avoid requesting consents if AWXCardKey is not included in methodNames
-                session.hidePaymentConsents = true
-            }
         }
         launchPayment(
             from: hostingVC,
