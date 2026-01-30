@@ -147,7 +147,7 @@ class CardPaymentConsentSectionController: SectionController {
         case .checkoutButton:
             let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: sectionItem, indexPath: indexPath)
             let viewModel = CheckoutButtonCellViewModel(
-                shouldShowPayAsCta: session.transactionMode() == AWXPaymentTransactionModeOneOff
+                shouldShowPayAsCta: session.shouldShowPayAsCta
             ) { [weak self] in
                 guard let self, let selectedConsent else {
                     assert(false, "selected consent not found")
