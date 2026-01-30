@@ -29,6 +29,18 @@ final class AWXPaymentElementTests: XCTestCase {
         super.tearDown()
     }
 
+    // MARK: - Helpers
+
+    private func makeTestSession() -> Session {
+        let intent = AWXPaymentIntent()
+        intent.id = "test_intent_id"
+        intent.clientSecret = "test_client_secret"
+        intent.amount = NSDecimalNumber(value: 100)
+        intent.currency = "AUD"
+        intent.customerId = "test_customer_id"
+        return Session(paymentIntent: intent, countryCode: "AU")
+    }
+
     // MARK: - Configuration Tests
 
     func testConfiguration_DefaultLayout_IsTab() {
@@ -42,9 +54,9 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertEqual(configuration.layout, .accordion)
     }
 
-    func testConfiguration_DefaultElementType_IsList() {
+    func testConfiguration_DefaultElementType_IsStandard() {
         let configuration = AWXPaymentElement.Configuration()
-        XCTAssertEqual(configuration.elementType, .`default`)
+        XCTAssertEqual(configuration.elementType, .standard)
     }
 
     func testConfiguration_CanSetCardElementType() {
@@ -62,6 +74,59 @@ final class AWXPaymentElementTests: XCTestCase {
         let configuration = AWXPaymentElement.Configuration()
         configuration.supportedCardBrands = [.visa, .mastercard]
         XCTAssertEqual(configuration.supportedCardBrands, [.visa, .mastercard])
+    }
+
+    // MARK: - makeMethodProvider Tests
+
+    func testMakeMethodProvider_StandardElementType_ReturnsPaymentSheetMethodProvider() throws {
+        let session = makeTestSession()
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.elementType = .standard
+
+        let provider = try AWXPaymentElement.makeMethodProvider(session: session, configuration: configuration)
+
+        XCTAssertTrue(provider is PaymentSheetMethodProvider)
+    }
+
+    func testMakeMethodProvider_AddCardElementType_ReturnsSinglePaymentMethodProvider() throws {
+        let session = makeTestSession()
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.elementType = .addCard
+        configuration.supportedCardBrands = [.visa, .mastercard]
+
+        let provider = try AWXPaymentElement.makeMethodProvider(session: session, configuration: configuration)
+
+        XCTAssertTrue(provider is SinglePaymentMethodProvider)
+    }
+
+    func testMakeMethodProvider_AddCardWithEmptyBrands_ThrowsError() {
+        let session = makeTestSession()
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.elementType = .addCard
+        configuration.supportedCardBrands = []
+
+        XCTAssertThrowsError(try AWXPaymentElement.makeMethodProvider(session: session, configuration: configuration)) { error in
+            guard case AWXUIContext.LaunchError.invalidCardBrand(let message) = error else {
+                XCTFail("Expected invalidCardBrand error")
+                return
+            }
+            XCTAssertEqual(message, "supportedBrands should not be empty")
+        }
+    }
+
+    func testMakeMethodProvider_AddCardWithInvalidBrands_ThrowsError() {
+        let session = makeTestSession()
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.elementType = .addCard
+        configuration.supportedCardBrands = [.visa, .init(rawValue: "unknown")]
+
+        XCTAssertThrowsError(try AWXPaymentElement.makeMethodProvider(session: session, configuration: configuration)) { error in
+            guard case AWXUIContext.LaunchError.invalidCardBrand(let message) = error else {
+                XCTFail("Expected invalidCardBrand error")
+                return
+            }
+            XCTAssertEqual(message, "make sure you only include card brands defined in AWXCardBrand")
+        }
     }
 
     // MARK: - Static Create Tests
@@ -84,9 +149,12 @@ final class AWXPaymentElementTests: XCTestCase {
     }
 
     func testCreate_WithInvalidSession_ThrowsError() async {
-        let invalidSession = AWXOneOffSession()
-        invalidSession.countryCode = "AU"
-        // No paymentIntent set - should fail validation
+        // Create a Session with an invalid payment intent (missing id)
+        let invalidIntent = AWXPaymentIntent()
+        invalidIntent.amount = NSDecimalNumber(value: 100)
+        invalidIntent.currency = "AUD"
+        // id and clientSecret are empty - should fail validation
+        let invalidSession = Session(paymentIntent: invalidIntent, countryCode: "AU")
 
         do {
             _ = try await AWXPaymentElement.create(
@@ -305,7 +373,7 @@ final class AWXPaymentElementTests: XCTestCase {
 
         XCTAssertTrue(sections.contains(.cardPaymentNew))
         XCTAssertFalse(sections.contains(.applePay))
-        XCTAssertFalse(sections.contains(.methodList), "Single method should not show method list")
+        XCTAssertTrue(sections.contains(.methodList))
     }
 
     func testSections_TabLayout_WithApplePay_IncludesApplePaySection() {
@@ -412,11 +480,7 @@ final class AWXPaymentElementTests: XCTestCase {
         )
 
         let sections = element.sections()
-
-        // With ApplePay + 1 other method, methodList should not appear
-        // displayMethodList requires: methods.count > 1 + (isApplePayAvailable ? 1 : 0)
-        // Here: 2 > 1 + 1 = 2 > 2 = false
-        XCTAssertFalse(sections.contains(.methodList))
+        XCTAssertTrue(sections.contains(.methodList))
         XCTAssertTrue(sections.contains(.applePay))
         XCTAssertTrue(sections.contains(.cardPaymentNew))
     }
@@ -452,13 +516,16 @@ final class AWXPaymentElementTests: XCTestCase {
     // MARK: - Section Tests (Accordion Layout)
 
     func testSections_AccordionLayout_WithMultipleMethods_ReturnsAccordionSections() {
+        let method1 = AWXPaymentMethodType()
+        method1.name = "method1"
+
         let cardMethod = AWXPaymentMethodType()
         cardMethod.name = AWXCardKey
 
-        let aliPayMethod = AWXPaymentMethodType()
-        aliPayMethod.name = "alipaycn"
+        let method3 = AWXPaymentMethodType()
+        method3.name = "method3"
 
-        mockMethodProvider.methods = [cardMethod, aliPayMethod]
+        mockMethodProvider.methods = [method1, cardMethod, method3]
         mockMethodProvider.selectedMethod = cardMethod
 
         let configuration = AWXPaymentElement.Configuration()
@@ -472,19 +539,46 @@ final class AWXPaymentElementTests: XCTestCase {
 
         let sections = element.sections()
 
-        let hasAccordionTop = sections.contains(.accordion(.top))
-        let hasAccordionBottom = sections.contains(.accordion(.bottom))
-        XCTAssertTrue(hasAccordionTop || hasAccordionBottom, "Should have at least one accordion section")
+        // Middle method selected: should have both top and bottom
+        XCTAssertTrue(sections.contains(.accordion(.top)), "Should have top accordion when middle method selected")
+        XCTAssertTrue(sections.contains(.accordion(.bottom)), "Should have bottom accordion when middle method selected")
+
+        // First method selected: only bottom
+        mockMethodProvider.selectedMethod = method1
+        let element2 = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController,
+            configuration: configuration
+        )
+        let sections2 = element2.sections()
+        XCTAssertFalse(sections2.contains(.accordion(.top)))
+        XCTAssertTrue(sections2.contains(.accordion(.bottom)))
+
+        // Last method selected: only top
+        mockMethodProvider.selectedMethod = method3
+        let element3 = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController,
+            configuration: configuration
+        )
+        let sections3 = element3.sections()
+        XCTAssertTrue(sections3.contains(.accordion(.top)))
+        XCTAssertFalse(sections3.contains(.accordion(.bottom)))
     }
 
-    func testSections_AccordionLayout_ExcludesMethodList() {
+    func testSections_AccordionLayout_ExcludesMethodListAndIncludesApplePay() {
+        let applePayMethod = AWXPaymentMethodType()
+        applePayMethod.name = AWXApplePayKey
+
         let cardMethod = AWXPaymentMethodType()
         cardMethod.name = AWXCardKey
 
         let alipayMethod = AWXPaymentMethodType()
         alipayMethod.name = "alipayhk"
 
-        mockMethodProvider.methods = [cardMethod, alipayMethod]
+        mockMethodProvider.methods = [applePayMethod, cardMethod, alipayMethod]
         mockMethodProvider.selectedMethod = cardMethod
 
         let configuration = AWXPaymentElement.Configuration()
@@ -500,9 +594,10 @@ final class AWXPaymentElementTests: XCTestCase {
         let sections = element.sections()
 
         XCTAssertFalse(sections.contains(.methodList), "Accordion layout should not include methodList")
+        XCTAssertTrue(sections.contains(.applePay), "Accordion layout should include ApplePay when available")
     }
 
-    func testSections_AccordionLayout_IncludesCardPayment() {
+    func testSections_AccordionLayout_CardWithoutConsents_ShowsCardPaymentNew() {
         let cardMethod = AWXPaymentMethodType()
         cardMethod.name = AWXCardKey
 
@@ -521,10 +616,69 @@ final class AWXPaymentElementTests: XCTestCase {
             delegate: mockViewController,
             configuration: configuration
         )
-
         let sections = element.sections()
 
         XCTAssertTrue(sections.contains(.cardPaymentNew))
+        XCTAssertFalse(sections.contains(.cardPaymentConsent))
+    }
+
+    func testSections_AccordionLayout_CardWithConsents_ShowsCardPaymentConsent() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+
+        let alipayMethod = AWXPaymentMethodType()
+        alipayMethod.name = "alipayhk"
+
+        mockMethodProvider.methods = [cardMethod, alipayMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let consent = AWXPaymentConsent()
+        consent.id = "consent_id"
+        let paymentMethod = AWXPaymentMethod()
+        paymentMethod.type = AWXCardKey
+        consent.paymentMethod = paymentMethod
+        mockMethodProvider.consents = [consent]
+
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.layout = .accordion
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController,
+            configuration: configuration
+        )
+        let sections = element.sections()
+
+        XCTAssertTrue(sections.contains(.cardPaymentConsent))
+        XCTAssertFalse(sections.contains(.cardPaymentNew))
+    }
+
+    func testSections_AccordionLayout_SchemaMethodSelected_ShowsSchemaPayment() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+
+        let alipayMethod = AWXPaymentMethodType()
+        alipayMethod.name = "alipayhk"
+        alipayMethod.resources = AWXResources()
+        alipayMethod.resources.hasSchema = true
+
+        mockMethodProvider.methods = [cardMethod, alipayMethod]
+        mockMethodProvider.selectedMethod = alipayMethod
+
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.layout = .accordion
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController,
+            configuration: configuration
+        )
+        let sections = element.sections()
+
+        XCTAssertTrue(sections.contains(.schemaPayment("alipayhk")))
+        XCTAssertFalse(sections.contains(.cardPaymentNew))
     }
 
     // MARK: - Section Tests (Card Element Type)

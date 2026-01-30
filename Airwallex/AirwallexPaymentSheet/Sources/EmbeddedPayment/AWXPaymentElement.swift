@@ -102,25 +102,7 @@ public class AWXPaymentElement: NSObject {
         delegate: AWXPaymentResultDelegate,
         configuration: Configuration = Configuration()
     ) async throws -> AWXPaymentElement {
-        // Choose provider based on element type
-        let methodProvider: PaymentMethodProvider
-        switch configuration.elementType {
-        case .`default`:
-            methodProvider = PaymentSheetMethodProvider(session: session)
-        case .addCard:
-            // Validate card brands
-            guard !configuration.supportedCardBrands.isEmpty else {
-                throw AWXUIContext.LaunchError.invalidCardBrand("supportedBrands should not be empty")
-            }
-            guard Set(configuration.supportedCardBrands).isSubset(of: AWXCardBrand.allAvailable) else {
-                throw AWXUIContext.LaunchError.invalidCardBrand("make sure you only include card brands defined in AWXCardBrand")
-            }
-            methodProvider = SinglePaymentMethodProvider(
-                session: session,
-                name: AWXCardKey,
-                supportedCardBrands: configuration.supportedCardBrands
-            )
-        }
+        let methodProvider = try makeMethodProvider(session: session, configuration: configuration)
 
         return try await create(
             hostViewController: hostViewController,
@@ -129,6 +111,28 @@ public class AWXPaymentElement: NSObject {
             delegate: delegate,
             configuration: configuration
         )
+    }
+
+    static func makeMethodProvider(
+        session: AWXSession,
+        configuration: Configuration
+    ) throws -> PaymentMethodProvider {
+        switch configuration.elementType {
+        case .standard:
+            return PaymentSheetMethodProvider(session: session)
+        case .addCard:
+            guard !configuration.supportedCardBrands.isEmpty else {
+                throw AWXUIContext.LaunchError.invalidCardBrand("supportedBrands should not be empty")
+            }
+            guard Set(configuration.supportedCardBrands).isSubset(of: AWXCardBrand.allAvailable) else {
+                throw AWXUIContext.LaunchError.invalidCardBrand("make sure you only include card brands defined in AWXCardBrand")
+            }
+            return SinglePaymentMethodProvider(
+                session: session,
+                name: AWXCardKey,
+                supportedCardBrands: configuration.supportedCardBrands
+            )
+        }
     }
     
     static func create(
@@ -163,25 +167,14 @@ public class AWXPaymentElement: NSObject {
         )
 
         // Analytics
-        switch configuration.elementType {
-        case .`default`:
-            AnalyticsLogger.log(
-                action: .paymentLaunched,
-                extraInfo: [
-                    .subtype: element.subtypeDropin,
-                    .expressCheckout: session.isExpressCheckout
-                ]
-            )
-        case .addCard:
-            AnalyticsLogger.log(
-                action: .paymentLaunched,
-                extraInfo: [
-                    .subtype: element.subtypeElement,
-                    .paymentMethod: AWXCardKey,
-                    .expressCheckout: session.isExpressCheckout
-                ]
-            )
+        var extraInfo: [AnalyticEvent.Fields: Any] = [
+            .subtype: element.subtypeDropin,
+            .expressCheckout: session.isExpressCheckout
+        ]
+        if configuration.elementType == .addCard {
+            extraInfo[.paymentMethod] = AWXCardKey
         }
+        AnalyticsLogger.log(action: .paymentLaunched, extraInfo: extraInfo)
 
         return element
     }
@@ -223,7 +216,7 @@ public class AWXPaymentElement: NSObject {
 extension AWXPaymentElement: CollectionViewSectionProvider {
 
     private var displayMethodList: Bool {
-        return paymentUIContext.layout == .tab && methodProvider.methods.count > 1 + (methodProvider.isApplePayAvailable ? 1 : 0)
+        return paymentUIContext.layout == .tab && methodProvider.methods.count > (methodProvider.isApplePayAvailable ? 1 : 0)
     }
 
     func sections() -> [PaymentSectionType] {

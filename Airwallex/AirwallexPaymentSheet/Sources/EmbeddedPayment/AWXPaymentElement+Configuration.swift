@@ -16,7 +16,7 @@ extension AWXPaymentElement {
     @objc(AWXPaymentElementType)
     public enum ElementType: Int {
         /// Display a list of available payment methods (default)
-        case `default`
+        case standard
         /// Display card payment element only (for adding new cards)
         case addCard
     }
@@ -28,13 +28,13 @@ extension AWXPaymentElement {
     public class Configuration: NSObject {
         /// The type of element to display.
         ///
-        /// - `.default`: Displays a list of available payment methods (default)
+        /// - `.standard`: Displays a list of available payment methods (default)
         /// - `.addCard`: Displays only card payment for adding new cards
-        @objc public var elementType: ElementType = .default
+        @objc public var elementType: ElementType = .standard
 
         /// The layout style for payment sections.
         ///
-        /// Only applies when `elementType` is `.default`.
+        /// Only applies when `elementType` is `.standard`.
         /// - `.tab`: Displays payment methods in a horizontal tab bar (default)
         /// - `.accordion`: Displays payment methods in an expandable accordion layout
         @objc public var layout: AWXUIContext.PaymentLayout = .tab
