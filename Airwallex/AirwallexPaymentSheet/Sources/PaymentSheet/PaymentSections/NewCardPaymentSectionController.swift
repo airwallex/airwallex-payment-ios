@@ -164,7 +164,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         case .checkoutButton:
             let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: sectionItem, indexPath: indexPath)
             let viewModel = CheckoutButtonCellViewModel(
-                shouldShowPayAsCta: !(session is AWXRecurringSession),
+                shouldShowPayAsCta: session.transactionMode() == AWXPaymentTransactionModeOneOff,
                 checkoutAction: checkout
             )
             cell.setup(viewModel)
