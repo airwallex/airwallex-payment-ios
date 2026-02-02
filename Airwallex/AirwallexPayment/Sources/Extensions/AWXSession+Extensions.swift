@@ -140,4 +140,13 @@ public extension AWXSession {
     var isExpressCheckout: Bool {
         (self as? Session)?.paymentIntentProvider != nil
     }
+
+    var shouldShowPayAsCta: Bool {
+        if let session = self as? Session {
+            session.amount().doubleValue > 0
+        } else {
+            // legacy sessions
+            !(self is AWXRecurringSession)
+        }
+    }
 }
