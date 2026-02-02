@@ -6,10 +6,10 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
+import AirwallexCore
+@testable import AirwallexPaymentSheet
 import UIKit
 import XCTest
-@testable import AirwallexPaymentSheet
-import AirwallexCore
 
 class CardPaymentConsentSectionControllerTests: BasePaymentSectionControllerTests {
     
@@ -43,7 +43,7 @@ class CardPaymentConsentSectionControllerTests: BasePaymentSectionControllerTest
             XCTFail()
             return
         }
-        XCTAssertEqual(mockManager.sections, [.cardPaymentConsent])
+        XCTAssertEqual(mockManager.sections, [.methodList, .cardPaymentConsent])
         XCTAssertEqual(sectionController.section, PaymentSectionType.cardPaymentConsent)
         XCTAssert(sectionController.items.contains(.selectedConsent))
         XCTAssertEqual(sectionController.mode, CardPaymentConsentSectionController.Mode.consentPayment)
@@ -57,7 +57,7 @@ class CardPaymentConsentSectionControllerTests: BasePaymentSectionControllerTest
             XCTFail()
             return
         }
-        XCTAssertEqual(mockManager.sections, [.cardPaymentConsent])
+        XCTAssertEqual(mockManager.sections, [.methodList, .cardPaymentConsent])
         XCTAssertEqual(sectionController.section, PaymentSectionType.cardPaymentConsent)
         XCTAssert(sectionController.items.contains(firstConsentId))
         XCTAssert(sectionController.items.contains(mockMethodProvider.consents.last?.id ?? ""))
@@ -118,7 +118,7 @@ class CardPaymentConsentSectionControllerTests: BasePaymentSectionControllerTest
         XCTAssertTrue(mockSectionProvider.actionCalled)
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
-        XCTAssertEqual(mockManager.sections, [PaymentSectionType.cardPaymentNew])
+        XCTAssertEqual(mockManager.sections, [.methodList, .cardPaymentNew])
         XCTAssertFalse(mockSectionProvider.preferConsentPayment)
     }
     
@@ -152,7 +152,6 @@ class CardPaymentConsentSectionControllerTests: BasePaymentSectionControllerTest
                   XCTFail()
                   return
               }
-        
         
         guard let consentID = mockMethodProvider.consents.first?.id,
               let cell = sectionController.context.cellForItem(sectionController.sectionItem(consentID)) as? CardConsentCell else {

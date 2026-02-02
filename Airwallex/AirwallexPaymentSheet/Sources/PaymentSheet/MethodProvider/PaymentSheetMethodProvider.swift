@@ -65,9 +65,9 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
             selectedMethod = new
         } else {
             if isApplePaySelectable {
-                selectedMethod = methods.first { $0.name != AWXApplePayKey }
-            } else {
                 selectedMethod = methods.first
+            } else {
+                selectedMethod = methods.first { $0.name != AWXApplePayKey }
             }
         }
         updatePublisher.send(.listUpdated)

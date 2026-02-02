@@ -568,7 +568,7 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertFalse(sections3.contains(.accordion(.bottom)))
     }
 
-    func testSections_AccordionLayout_ExcludesMethodListAndIncludesApplePay() {
+    func testSections_AccordionLayout_ExcludesMethodList() {
         let applePayMethod = AWXPaymentMethodType()
         applePayMethod.name = AWXApplePayKey
 
@@ -594,7 +594,39 @@ final class AWXPaymentElementTests: XCTestCase {
         let sections = element.sections()
 
         XCTAssertFalse(sections.contains(.methodList), "Accordion layout should not include methodList")
-        XCTAssertTrue(sections.contains(.applePay), "Accordion layout should include ApplePay when available")
+        // When card is selected, Apple Pay appears in accordion sections, not as separate .applePay section
+        XCTAssertFalse(sections.contains(.applePay))
+        XCTAssertTrue(sections.contains(.accordion(.top)))
+    }
+
+    func testSections_AccordionLayout_ApplePaySelected_ShowsApplePaySection() {
+        let applePayMethod = AWXPaymentMethodType()
+        applePayMethod.name = AWXApplePayKey
+
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+
+        let alipayMethod = AWXPaymentMethodType()
+        alipayMethod.name = "alipayhk"
+
+        mockMethodProvider.methods = [applePayMethod, cardMethod, alipayMethod]
+        mockMethodProvider.selectedMethod = applePayMethod
+
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.layout = .accordion
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController,
+            configuration: configuration
+        )
+
+        let sections = element.sections()
+
+        XCTAssertTrue(sections.contains(.applePay), "Accordion layout should include ApplePay section when ApplePay is selected")
+        XCTAssertFalse(sections.contains(.accordion(.top)), "No methods above Apple Pay when it's first and selected")
+        XCTAssertTrue(sections.contains(.accordion(.bottom)), "Methods below Apple Pay should be in bottom accordion")
     }
 
     func testSections_AccordionLayout_CardWithoutConsents_ShowsCardPaymentNew() {
