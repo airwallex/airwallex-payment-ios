@@ -44,9 +44,5 @@ extension AWXPaymentElement {
         /// Only applies when `elementType` is `.addCard`.
         /// Defaults to all available card brands.
         @objc public var supportedCardBrands: [AWXCardBrand] = AWXCardBrand.allAvailable
-
-        @objc public override init() {
-            super.init()
-        }
     }
 }

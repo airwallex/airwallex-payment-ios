@@ -42,8 +42,7 @@ import AirwallexCore
 @objc
 public class AWXPaymentElement: NSObject {
 
-    private let subtypeDropin = "embedded_dropin"
-    private let subtypeElement = "embedded_component"
+    private let subtype = "embedded_element"
 
     /// The embeddable view containing the payment UI.
     ///
@@ -168,7 +167,7 @@ public class AWXPaymentElement: NSObject {
 
         // Analytics
         var extraInfo: [AnalyticEvent.Fields: Any] = [
-            .subtype: element.subtypeDropin,
+            .subtype: element.subtype,
             .expressCheckout: session.isExpressCheckout
         ]
         if configuration.elementType == .addCard {

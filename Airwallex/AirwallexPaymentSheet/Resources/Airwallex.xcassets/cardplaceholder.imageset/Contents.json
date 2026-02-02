@@ -1,15 +1,16 @@
 {
   "images" : [
     {
-      "filename" : "cardplaceholder.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "cardplaceholder@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "cardplaceholder@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
