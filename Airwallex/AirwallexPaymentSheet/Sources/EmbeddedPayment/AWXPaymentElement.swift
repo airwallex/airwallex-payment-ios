@@ -59,14 +59,13 @@ public class AWXPaymentElement: NSObject {
 
     // MARK: - Private Properties
 
-    private weak var hostViewController: UIViewController?
     private let methodProvider: PaymentMethodProvider
     let paymentUIContext = PaymentSheetUIContext()
     private lazy var collectionViewManager: CollectionViewManager = {
         let listConfiguration = UICollectionViewCompositionalLayoutConfiguration()
         listConfiguration.interSectionSpacing = 16
         let manager = CollectionViewManager(
-            viewController: hostViewController!,
+            viewController: self.paymentUIContext.viewController!,
             sectionProvider: self,
             listConfiguration: listConfiguration
         )
@@ -188,7 +187,6 @@ public class AWXPaymentElement: NSObject {
         delegate: AWXPaymentResultDelegate,
         configuration: Configuration = Configuration()
     ) {
-        self.hostViewController = hostViewController
         self.methodProvider = methodProvider
         self.delegate = delegate
         self.configuration = configuration
