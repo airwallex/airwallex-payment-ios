@@ -261,7 +261,7 @@ class CardPaymentConsentSectionController: SectionController {
             switch paymentUIContext.layout {
             case .accordion:
                 let sectionHorizontal: CGFloat = paymentUIContext.isEmbedded ? 24 : 40
-                section.contentInsets = .init(top: 16, leading: sectionHorizontal, bottom: 32, trailing: sectionHorizontal)
+                section.contentInsets = .init(top: 16, leading: sectionHorizontal, bottom: 24, trailing: sectionHorizontal)
                 // Layout for decoration - rounded corner
                 let elementKind = AccordionSectionController.backgroundElementKind
                 context.register(

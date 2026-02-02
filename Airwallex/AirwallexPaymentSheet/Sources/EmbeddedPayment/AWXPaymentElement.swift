@@ -118,7 +118,10 @@ public class AWXPaymentElement: NSObject {
     ) throws -> PaymentMethodProvider {
         switch configuration.elementType {
         case .standard:
-            return PaymentSheetMethodProvider(session: session)
+            return PaymentSheetMethodProvider(
+                session: session,
+                isApplePaySelectable: configuration.layout == .accordion
+            )
         case .addCard:
             guard !configuration.supportedCardBrands.isEmpty else {
                 throw AWXUIContext.LaunchError.invalidCardBrand("supportedBrands should not be empty")
@@ -173,6 +176,7 @@ public class AWXPaymentElement: NSObject {
         if configuration.elementType == .addCard {
             extraInfo[.paymentMethod] = AWXCardKey
         }
+
         AnalyticsLogger.log(action: .paymentLaunched, extraInfo: extraInfo)
 
         return element
@@ -227,12 +231,12 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
             return sections
         }
 
-        if methodProvider.isApplePayAvailable {
-            sections.append(.applePay)
-        }
-
+        // For Standard element type
         switch paymentUIContext.layout {
         case .tab:
+            if methodProvider.isApplePayAvailable {
+                sections.append(.applePay)
+            }
             if displayMethodList {
                 // horizontal list
                 sections.append(.methodList)
@@ -250,12 +254,14 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
                 }
             }
         case .accordion:
-            if !methodProvider.methodsForAccordionPosition(.top).isEmpty {
+            if !methodProvider.methodsForAccordionPosition(.top, excludeApplePay: false).isEmpty {
                 sections.append(.accordion(.top))
             }
 
             if let selectedMethodType = methodProvider.selectedMethod {
-                if selectedMethodType.name == AWXCardKey {
+                if selectedMethodType.name == AWXApplePayKey {
+                    sections.append(.applePay)
+                } else if selectedMethodType.name == AWXCardKey {
                     if preferConsentPayment && !methodProvider.consents.isEmpty {
                         sections.append(.cardPaymentConsent)
                     } else {
@@ -266,7 +272,7 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
                 }
             }
 
-            if !methodProvider.methodsForAccordionPosition(.bottom).isEmpty {
+            if !methodProvider.methodsForAccordionPosition(.bottom, excludeApplePay: false).isEmpty {
                 sections.append(.accordion(.bottom))
             }
         }

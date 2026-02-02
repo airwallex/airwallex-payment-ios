@@ -68,11 +68,9 @@ class AccordionPaymentMethodCell: UICollectionViewCell, ViewConfigurable, ViewRe
         if viewModel.isSelected {
             icon.image = UIImage(systemName: "largecircle.fill.circle")?
                 .withTintColor(.awxColor(.borderInteractive), renderingMode: .alwaysOriginal)
-            label.textColor = .awxColor(.textLink)
         } else {
             icon.image = UIImage(systemName: "circle")?
                 .withTintColor(.awxColor(.borderDecorative), renderingMode: .alwaysOriginal)
-            label.textColor = .awxColor(.textPrimary)
         }
     }
     
