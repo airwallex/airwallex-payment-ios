@@ -126,7 +126,7 @@ class ApplePaySectionController: SectionController {
                 heightDimension: .estimated(48)
             )
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-            let section = NSCollectionLayoutSection(group: group)
+            let layoutSection = NSCollectionLayoutSection(group: group)
             var contentInsets = NSDirectionalEdgeInsets(horizontal: paymentUIContext.isEmbedded ? 0 : 16)
             if methodProvider.methods.contains(where: { $0.name != AWXApplePayKey }) {
                 contentInsets.bottom = 16
@@ -139,10 +139,10 @@ class ApplePaySectionController: SectionController {
                     elementKind: UICollectionView.elementKindSectionFooter,
                     alignment: .bottom
                 )
-                section.boundarySupplementaryItems = [header]
+                layoutSection.boundarySupplementaryItems = [header]
             }
-            section.contentInsets = contentInsets
-            return section
+            layoutSection.contentInsets = contentInsets
+            return layoutSection
         case .accordion:
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44))
             let accordionKeyItem = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -155,9 +155,9 @@ class ApplePaySectionController: SectionController {
                 subitems: [accordionKeyItem, remiderItem, buttonItem]
             )
             paymentGroup.interItemSpacing = .fixed(24)
-            let section = NSCollectionLayoutSection(group: paymentGroup)
+            let layoutSection = NSCollectionLayoutSection(group: paymentGroup)
             let sectionHorizontal: CGFloat = paymentUIContext.isEmbedded ? 24 : 40
-            section.contentInsets = .init(top: 16, leading: sectionHorizontal, bottom: 24, trailing: sectionHorizontal)
+            layoutSection.contentInsets = .init(top: 16, leading: sectionHorizontal, bottom: 24, trailing: sectionHorizontal)
 
             // Layout for decoration - rounded corner
             context.register(RoundedCornerDecorationView.self, forDecorationViewOfKind: AccordionSectionController.backgroundElementKind)
@@ -165,8 +165,8 @@ class ApplePaySectionController: SectionController {
             sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(
                 horizontal: paymentUIContext.isEmbedded ? 0 : 16
             )
-            section.decorationItems = [sectionBackgroundDecoration]
-            return section
+            layoutSection.decorationItems = [sectionBackgroundDecoration]
+            return layoutSection
         }
     }
     

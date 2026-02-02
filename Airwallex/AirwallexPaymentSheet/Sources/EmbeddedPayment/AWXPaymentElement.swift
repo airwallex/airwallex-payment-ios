@@ -220,61 +220,70 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
         return paymentUIContext.layout == .tab && methodProvider.methods.count > (methodProvider.isApplePayAvailable ? 1 : 0)
     }
 
-    func sections() -> [PaymentSectionType] {
+    private func sectionsForTabLayout() -> [PaymentSectionType] {
         var sections = [PaymentSectionType]()
+        if methodProvider.isApplePayAvailable {
+            sections.append(.applePay)
+        }
+        if displayMethodList {
+            // horizontal list
+            sections.append(.methodList)
+        }
+        //  display selected payment method
+        if let selectedMethodType = methodProvider.selectedMethod {
+            if selectedMethodType.name == AWXCardKey {
+                if preferConsentPayment && !methodProvider.consents.isEmpty {
+                    sections.append(.cardPaymentConsent)
+                } else {
+                    sections.append(.cardPaymentNew)
+                }
+            } else if selectedMethodType.hasSchema {
+                sections.append(.schemaPayment(selectedMethodType.name))
+            }
+        }
+        return sections
+    }
+    
+    private func sectionsForAccordionLayout() -> [PaymentSectionType] {
+        var sections = [PaymentSectionType]()
+        if !methodProvider.methodsForAccordionPosition(.top, excludeApplePay: false).isEmpty {
+            sections.append(.accordion(.top))
+        }
+        
+        if let selectedMethodType = methodProvider.selectedMethod {
+            if selectedMethodType.name == AWXApplePayKey {
+                sections.append(.applePay)
+            } else if selectedMethodType.name == AWXCardKey {
+                if preferConsentPayment && !methodProvider.consents.isEmpty {
+                    sections.append(.cardPaymentConsent)
+                } else {
+                    sections.append(.cardPaymentNew)
+                }
+            } else if selectedMethodType.hasSchema {
+                sections.append(.schemaPayment(selectedMethodType.name))
+            }
+        }
+        
+        if !methodProvider.methodsForAccordionPosition(.bottom, excludeApplePay: false).isEmpty {
+            sections.append(.accordion(.bottom))
+        }
+        return sections
+    }
+    
+    func sections() -> [PaymentSectionType] {
 
         // For card element type, only show new card payment (no consents, no method list)
         if configuration.elementType == .addCard {
-            sections.append(.cardPaymentNew)
-            return sections
+            return [.cardPaymentNew]
         }
 
         // For Standard element type
         switch paymentUIContext.layout {
         case .tab:
-            if methodProvider.isApplePayAvailable {
-                sections.append(.applePay)
-            }
-            if displayMethodList {
-                // horizontal list
-                sections.append(.methodList)
-            }
-            //  display selected payment method
-            if let selectedMethodType = methodProvider.selectedMethod {
-                if selectedMethodType.name == AWXCardKey {
-                    if preferConsentPayment && !methodProvider.consents.isEmpty {
-                        sections.append(.cardPaymentConsent)
-                    } else {
-                        sections.append(.cardPaymentNew)
-                    }
-                } else if selectedMethodType.hasSchema {
-                    sections.append(.schemaPayment(selectedMethodType.name))
-                }
-            }
+            return sectionsForTabLayout()
         case .accordion:
-            if !methodProvider.methodsForAccordionPosition(.top, excludeApplePay: false).isEmpty {
-                sections.append(.accordion(.top))
-            }
-
-            if let selectedMethodType = methodProvider.selectedMethod {
-                if selectedMethodType.name == AWXApplePayKey {
-                    sections.append(.applePay)
-                } else if selectedMethodType.name == AWXCardKey {
-                    if preferConsentPayment && !methodProvider.consents.isEmpty {
-                        sections.append(.cardPaymentConsent)
-                    } else {
-                        sections.append(.cardPaymentNew)
-                    }
-                } else if selectedMethodType.hasSchema {
-                    sections.append(.schemaPayment(selectedMethodType.name))
-                }
-            }
-
-            if !methodProvider.methodsForAccordionPosition(.bottom, excludeApplePay: false).isEmpty {
-                sections.append(.accordion(.bottom))
-            }
+            return sectionsForAccordionLayout()
         }
-        return sections
     }
 
     func sectionController(for section: PaymentSectionType) -> AnySectionController<PaymentSectionType, String> {
