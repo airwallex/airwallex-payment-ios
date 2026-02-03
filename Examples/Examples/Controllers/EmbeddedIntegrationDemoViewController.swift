@@ -73,10 +73,13 @@ private extension EmbeddedIntegrationDemoViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
+                let configuration = AWXPaymentElement.Configuration()
+                configuration.layout = ExamplesKeys.paymentLayout
                 let element = try await AWXPaymentElement.create(
                     hostViewController: self,
                     session: session,
-                    delegate: self
+                    delegate: self,
+                    configuration: configuration
                 )
                 self.paymentElement = element
 

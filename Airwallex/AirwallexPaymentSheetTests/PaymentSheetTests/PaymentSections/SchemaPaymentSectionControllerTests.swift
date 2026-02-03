@@ -6,11 +6,11 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
+import AirwallexCore
+@testable @_spi(AWX) import AirwallexPayment
+@testable import AirwallexPaymentSheet
 import UIKit
 import XCTest
-@testable import AirwallexPaymentSheet
-@testable @_spi(AWX) import AirwallexPayment
-import AirwallexCore
 
 class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
 
@@ -61,7 +61,7 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         mockViewController.view.layoutIfNeeded()
         guard let sectionController = getSchemaPaymentSectionController() else { return }
         XCTAssertEqual(sectionController.section, .schemaPayment("online_banking"))
-        XCTAssertEqual(sectionController.layout, .tab)
+        XCTAssertEqual(sectionController.paymentUIContext.layout, .tab)
         try? await Task.sleep(nanoseconds: 500_000_000)
         XCTAssert(sectionController.items.contains("shopper_name"))
         XCTAssert(sectionController.items.contains("shopper_email"))
@@ -76,7 +76,7 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         mockViewController.view.layoutIfNeeded()
         guard let sectionController = getSchemaPaymentSectionController() else { return }
         XCTAssertEqual(sectionController.section, .schemaPayment("online_banking"))
-        XCTAssertEqual(sectionController.layout, .accordion)
+        XCTAssertEqual(sectionController.paymentUIContext.layout, .accordion)
         try? await Task.sleep(nanoseconds: 100_000)
         XCTAssert(sectionController.items.contains(.accordionKey))
         mockViewController.view.layoutIfNeeded()

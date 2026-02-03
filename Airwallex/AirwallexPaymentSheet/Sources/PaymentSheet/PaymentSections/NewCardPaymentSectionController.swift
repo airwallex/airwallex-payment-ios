@@ -41,7 +41,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         methodProvider.session
     }
     private let methodProvider: PaymentMethodProvider
-    private let paymentUIContext: PaymentUIContext
+    private let paymentUIContext: PaymentSheetUIContext
     private let switchToConsentPaymentAction: () -> Void
     private var shouldSaveCard = false
     private var shouldReuseShippingAddress: Bool
@@ -51,7 +51,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         name: methodType.displayName,
         imageURL: methodType.resources.logoURL,
         isSelected: true,
-        imageLoader: imageLoader,
+        imageLoader: paymentUIContext.imageLoader,
         cardBrands: []
     )
     
@@ -77,15 +77,10 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     private(set) var viewModelForPhoneNumber: InfoCollectorCellViewModel<String>?
     private(set) var viewModelForCountryCode: CountrySelectionCellViewModel?
     private(set) var viewModelForBillingAddress: BillingInfoCellViewModel?
-    
-    private let layout: AWXUIContext.PaymentLayout
-    private let imageLoader: ImageLoader
-    
+
     init(cardPaymentMethod: AWXPaymentMethodType,
          methodProvider: PaymentMethodProvider,
-         paymentUIContext: PaymentUIContext,
-         layout: AWXUIContext.PaymentLayout,
-         imageLoader: ImageLoader,
+         paymentUIContext: PaymentSheetUIContext,
          switchToConsentPaymentAction: @escaping () -> Void) {
         assert(cardPaymentMethod.name == AWXCardKey, "invalid method")
         self.methodType = cardPaymentMethod
@@ -93,8 +88,6 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         self.paymentUIContext = paymentUIContext
         self.switchToConsentPaymentAction = switchToConsentPaymentAction
         self.shouldReuseShippingAddress = methodProvider.session.billing?.address?.isComplete ?? false
-        self.layout = layout
-        self.imageLoader = imageLoader
         super.init()
         createViewModelForRequiredFields()
         if let session = session as? Session {
@@ -111,7 +104,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     
     var items: [String] {
         var items = [String]()
-        if layout == .accordion {
+        if paymentUIContext.layout == .accordion {
             items.append(.accordionKey)
         }
     
@@ -250,12 +243,13 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 16
-        switch layout {
+        switch paymentUIContext.layout {
         case .tab:
-            section.contentInsets = .init(horizontal: 16)
+            section.contentInsets = .init(horizontal: paymentUIContext.isEmbedded ? 0 : 16)
         case .accordion:
-            section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 40, bottom: 32, trailing: 40)
-            
+            let sectionHorizontal: CGFloat = paymentUIContext.isEmbedded ? 24 : 40
+            section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: sectionHorizontal, bottom: 32, trailing: sectionHorizontal)
+
             // Layout for decoration - rounded corner
             let elementKind = AccordionSectionController.backgroundElementKind
             context.register(
@@ -263,7 +257,9 @@ class NewCardPaymentSectionController: NSObject, SectionController {
                 forDecorationViewOfKind: elementKind
             )
             let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: elementKind)
-            sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
+            sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(
+                horizontal: paymentUIContext.isEmbedded ? 0 : 16
+            )
             section.decorationItems = [sectionBackgroundDecoration]
         }
         return section

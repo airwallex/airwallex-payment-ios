@@ -24,19 +24,19 @@ class AccordionSectionController: SectionController {
     }
     
     private var methodProvider: PaymentMethodProvider
+    private let paymentUIContext: PaymentSheetUIContext
     private var viewModels = [PaymentMethodCellViewModel]()
-    private let imageLoader: ImageLoader
     let position: Position
     private let separatorUpdatePublisher = PassthroughSubject<Void, Never>()
     private var cancellables = Set<AnyCancellable>()
-    
+
     init(position: Position,
          methodProvider: PaymentMethodProvider,
-         imageLoader: ImageLoader) {
+         paymentUIContext: PaymentSheetUIContext) {
         self.position = position
         self.section = PaymentSectionType.accordion(position)
         self.methodProvider = methodProvider
-        self.imageLoader = imageLoader
+        self.paymentUIContext = paymentUIContext
         updateItemsIfNecessary()
         separatorUpdatePublisher
             .throttle(for: .milliseconds(1), scheduler: RunLoop.main, latest: true)
@@ -88,14 +88,15 @@ class AccordionSectionController: SectionController {
         // Layout for item
         let layoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(60))
         let item = NSCollectionLayoutItem(layoutSize: layoutSize, supplementaryItems: [separator])
-        
+
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
+        let horizontalInset: CGFloat = paymentUIContext.isEmbedded ? 0 : 16
+        section.contentInsets = NSDirectionalEdgeInsets(horizontal: horizontalInset)
         // Layout for decoration - rounded corner
         context.register(RoundedCornerDecorationView.self, forDecorationViewOfKind: Self.backgroundElementKind)
         let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: Self.backgroundElementKind)
-        sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
+        sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(horizontal: horizontalInset)
         section.decorationItems = [sectionBackgroundDecoration]
         return section
     }
@@ -130,7 +131,7 @@ class AccordionSectionController: SectionController {
                 name: methodType.displayName,
                 imageURL: methodType.resources.logoURL,
                 isSelected: false,
-                imageLoader: imageLoader,
+                imageLoader: paymentUIContext.imageLoader,
                 cardBrands: methodType.cardSchemes.map { $0.brandType }
             )
         }

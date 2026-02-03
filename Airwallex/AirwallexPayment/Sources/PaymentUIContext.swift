@@ -16,8 +16,10 @@ import UIKit
 /// This class replaces direct access to `AWXUIContext.shared.delegate` and
 /// `AWXUIContext.shared.dismissAction` in section controllers, allowing
 /// each payment flow to have its own isolated context.
+///
+/// Subclass this in higher-level modules to add additional configuration properties.
 @_spi(AWX) @MainActor
-public class PaymentUIContext {
+open class PaymentUIContext {
 
     /// A block type for dismissing the payment UI.
     /// The block takes a completion handler that should be called after dismissal is complete.

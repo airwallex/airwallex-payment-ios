@@ -42,7 +42,7 @@ import AirwallexCore
         case accordion
         /// Display payment methods in a tabbed layout.
         case tab
-        
+
         public var displayName: String {
             switch self {
             case .accordion:
@@ -315,13 +315,13 @@ private extension AWXUIContext {
                 )
                 return
             }
+            let paymentUIContext = PaymentSheetUIContext(delegate: paymentResultDelegate)
+            paymentUIContext.layout = layout
             let paymentVC = PaymentViewController(
                 methodProvider: paymentMethodProvider,
-                layout: layout
+                paymentUIContext: paymentUIContext
             )
-            // Update paymentUIContext
-            paymentVC.paymentUIContext.delegate = paymentResultDelegate
-            paymentVC.paymentUIContext.dismissAction = { [weak paymentVC, weak nav] completion in
+            paymentUIContext.dismissAction = { [weak paymentVC, weak nav] completion in
                 guard let paymentVC, let nav else {
                     completion()
                     return
@@ -342,9 +342,11 @@ private extension AWXUIContext {
             }
             nav.pushViewController(paymentVC, animated: true)
         case .present:
+            let paymentUIContext = PaymentSheetUIContext(delegate: paymentResultDelegate)
+            paymentUIContext.layout = layout
             let paymentVC = PaymentViewController(
                 methodProvider: paymentMethodProvider,
-                layout: layout
+                paymentUIContext: paymentUIContext
             )
             let nav = UINavigationController(rootViewController: paymentVC)
             if #unavailable(iOS 26) {
@@ -352,7 +354,7 @@ private extension AWXUIContext {
                 appearance.configureWithDefaultBackground()
                 appearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial) // Apply blur
                 appearance.shadowColor = UIColor.awxColor(.borderDecorative)
-                
+
                 nav.navigationBar.standardAppearance = appearance
                 nav.navigationBar.scrollEdgeAppearance = appearance
                 nav.navigationBar.compactAppearance = appearance
@@ -361,9 +363,7 @@ private extension AWXUIContext {
                     nav.navigationBar.compactScrollEdgeAppearance = appearance
                 }
             }
-            // Update paymentUIContext
-            paymentVC.paymentUIContext.delegate = paymentResultDelegate
-            paymentVC.paymentUIContext.dismissAction = { [weak nav] completion in
+            paymentUIContext.dismissAction = { [weak nav] completion in
                 guard let nav else {
                     completion()
                     return
