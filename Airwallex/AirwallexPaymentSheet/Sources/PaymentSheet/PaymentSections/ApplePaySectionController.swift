@@ -39,13 +39,16 @@ class ApplePaySectionController: SectionController {
     }
     
     let section = PaymentSectionType.applePay
-    
+
+    private var enableAccordionLayout: Bool {
+        paymentUIContext.isEmbedded && paymentUIContext.layout == .accordion
+    }
+
     var items: [String] {
-        switch paymentUIContext.layout {
-        case .tab:
-            [.applePayButton]
-        case .accordion:
+        if enableAccordionLayout {
             [.accordionKey, .applePayReminder, .applePayButton]
+        } else {
+            [.applePayButton]
         }
     }
     
@@ -112,38 +115,8 @@ class ApplePaySectionController: SectionController {
     }
     
     func layout(environment: any NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-
-        switch paymentUIContext.layout {
-        case .tab:
-            let itemSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .fractionalHeight(1)
-            )
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-            let groupSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .estimated(48)
-            )
-            let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-            let layoutSection = NSCollectionLayoutSection(group: group)
-            var contentInsets = NSDirectionalEdgeInsets(horizontal: paymentUIContext.isEmbedded ? 0 : 16)
-            if methodProvider.methods.contains(where: { $0.name != AWXApplePayKey }) {
-                contentInsets.bottom = 16
-                let headerSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .estimated(22)
-                )
-                let header = NSCollectionLayoutBoundarySupplementaryItem(
-                    layoutSize: headerSize,
-                    elementKind: UICollectionView.elementKindSectionFooter,
-                    alignment: .bottom
-                )
-                layoutSection.boundarySupplementaryItems = [header]
-            }
-            layoutSection.contentInsets = contentInsets
-            return layoutSection
-        case .accordion:
+        if enableAccordionLayout {
+            // apply accordion layout only for embedded element
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44))
             let accordionKeyItem = NSCollectionLayoutItem(layoutSize: itemSize)
             let remiderItem = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -166,6 +139,35 @@ class ApplePaySectionController: SectionController {
                 horizontal: paymentUIContext.isEmbedded ? 0 : 16
             )
             layoutSection.decorationItems = [sectionBackgroundDecoration]
+            return layoutSection
+        } else {
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalHeight(1)
+            )
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            
+            let groupSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .estimated(48)
+            )
+            let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+            let layoutSection = NSCollectionLayoutSection(group: group)
+            var contentInsets = NSDirectionalEdgeInsets(horizontal: paymentUIContext.isEmbedded ? 0 : 16)
+            if methodProvider.methods.contains(where: { $0.name != AWXApplePayKey }) {
+                contentInsets.bottom = 16
+                let headerSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .estimated(22)
+                )
+                let header = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: headerSize,
+                    elementKind: UICollectionView.elementKindSectionFooter,
+                    alignment: .bottom
+                )
+                layoutSection.boundarySupplementaryItems = [header]
+            }
+            layoutSection.contentInsets = contentInsets
             return layoutSection
         }
     }
