@@ -79,7 +79,7 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         } else {
             logo.image = viewModel.placeholder
         }
-        label.text = viewModel.name
+        label.text = viewModel.displayName
         label.font = viewModel.isSelected ? .awxFont(.caption2, weight: .bold) : .awxFont(.caption2)
         label.textColor = viewModel.isSelected ? .awxColor(.textLink) : .awxColor(.textPrimary)
         roundedBG.layer.borderColor = viewModel.isSelected ? .awxCGColor(.borderInteractive) : .awxCGColor(.borderDecorative)

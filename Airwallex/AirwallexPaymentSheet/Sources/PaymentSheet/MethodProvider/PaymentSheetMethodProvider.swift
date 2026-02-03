@@ -38,7 +38,7 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
 
     init(session: AWXSession,
          apiClient: AWXAPIClient = AWXAPIClient.init(configuration: .shared()),
-         isApplePaySelectable: Bool = true) {
+         isApplePaySelectable: Bool = false) {
         self.session = session
         self.apiClient = apiClient
         self.isApplePaySelectable = isApplePaySelectable
