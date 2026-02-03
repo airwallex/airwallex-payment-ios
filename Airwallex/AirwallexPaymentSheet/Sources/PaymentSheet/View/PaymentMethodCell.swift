@@ -13,8 +13,11 @@ import AirwallexCore
 #endif
 
 struct PaymentMethodCellViewModel: CellViewModelIdentifiable, CardBrandViewConfiguring {
-    let itemIdentifier: String
+    var itemIdentifier: String {
+        return name
+    }
     let name: String
+    let displayName: String
     let imageURL: URL?
     var placeholder: UIImage? {
         switch name {

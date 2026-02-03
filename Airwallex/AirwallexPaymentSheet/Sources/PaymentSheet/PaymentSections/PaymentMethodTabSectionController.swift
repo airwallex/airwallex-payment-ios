@@ -53,8 +53,8 @@ class PaymentMethodTabSectionController: SectionController {
             return cell
         }
         let viewModel = PaymentMethodCellViewModel(
-            itemIdentifier: methodType.name,
-            name: methodType.displayName,
+            name: methodType.name,
+            displayName: methodType.displayName,
             imageURL: methodType.resources.logoURL,
             isSelected: methodType.name == selectedMethod,
             imageLoader: paymentUIContext.imageLoader,

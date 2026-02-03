@@ -113,8 +113,8 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         case .accordionKey:
             let cell = context.dequeueReusableCell(AccordionSelectedMethodCell.self, for: sectionItem, indexPath: indexPath)
             let viewModel = PaymentMethodCellViewModel(
-                itemIdentifier: item,
-                name: methodType.displayName,
+                name: methodType.name,
+                displayName: methodType.displayName,
                 imageURL: methodType.resources.logoURL,
                 isSelected: true,
                 imageLoader: paymentUIContext.imageLoader,

@@ -130,8 +130,8 @@ class AccordionSectionController: SectionController {
             excludeApplePay: !paymentUIContext.isEmbedded
         ).map { methodType in
             PaymentMethodCellViewModel(
-                itemIdentifier: methodType.name,
-                name: methodType.displayName,
+                name: methodType.name,
+                displayName: methodType.displayName,
                 imageURL: methodType.resources.logoURL,
                 isSelected: false,
                 imageLoader: paymentUIContext.imageLoader,
