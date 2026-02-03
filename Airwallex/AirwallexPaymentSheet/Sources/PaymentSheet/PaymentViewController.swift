@@ -197,7 +197,7 @@ extension PaymentViewController: CollectionViewSectionProvider {
     }
     
     private var displayMethodList: Bool {
-        return layout == .tab && methodProvider.methods.count > 1 + (methodProvider.isApplePayAvailable ? 1 : 0)
+        layout == .tab && methodProvider.methods.count > (methodProvider.isApplePayAvailable ? 1 : 0)
     }
     
     private var useTabLayout: Bool {

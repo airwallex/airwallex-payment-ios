@@ -42,6 +42,8 @@ import AirwallexCore
 @objc
 public class AWXPaymentElement: NSObject {
 
+    private let subtype = "embedded_element"
+
     /// The embeddable view containing the payment UI.
     ///
     /// Add this view to your view hierarchy using Auto Layout constraints.
@@ -75,6 +77,7 @@ public class AWXPaymentElement: NSObject {
     }()
     private var cancellable: AnyCancellable?
     private var preferConsentPayment = true
+    private let configuration: Configuration
 
     // MARK: - Initialization
 
@@ -98,13 +101,37 @@ public class AWXPaymentElement: NSObject {
         delegate: AWXPaymentResultDelegate,
         configuration: Configuration = Configuration()
     ) async throws -> AWXPaymentElement {
-        try await create(
+        let methodProvider = try makeMethodProvider(session: session, configuration: configuration)
+
+        return try await create(
             hostViewController: hostViewController,
             session: session,
-            methodProvider: PaymentSheetMethodProvider(session: session),
+            methodProvider: methodProvider,
             delegate: delegate,
             configuration: configuration
         )
+    }
+
+    static func makeMethodProvider(
+        session: AWXSession,
+        configuration: Configuration
+    ) throws -> PaymentMethodProvider {
+        switch configuration.elementType {
+        case .standard:
+            return PaymentSheetMethodProvider(session: session)
+        case .addCard:
+            guard !configuration.supportedCardBrands.isEmpty else {
+                throw AWXUIContext.LaunchError.invalidCardBrand("supportedBrands should not be empty")
+            }
+            guard Set(configuration.supportedCardBrands).isSubset(of: AWXCardBrand.allAvailable) else {
+                throw AWXUIContext.LaunchError.invalidCardBrand("make sure you only include card brands defined in AWXCardBrand")
+            }
+            return SinglePaymentMethodProvider(
+                session: session,
+                name: AWXCardKey,
+                supportedCardBrands: configuration.supportedCardBrands
+            )
+        }
     }
     
     static func create(
@@ -139,13 +166,14 @@ public class AWXPaymentElement: NSObject {
         )
 
         // Analytics
-        AnalyticsLogger.log(
-            action: .paymentLaunched,
-            extraInfo: [
-                .subtype: "embedded",
-                .expressCheckout: session.isExpressCheckout
-            ]
-        )
+        var extraInfo: [AnalyticEvent.Fields: Any] = [
+            .subtype: element.subtype,
+            .expressCheckout: session.isExpressCheckout
+        ]
+        if configuration.elementType == .addCard {
+            extraInfo[.paymentMethod] = AWXCardKey
+        }
+        AnalyticsLogger.log(action: .paymentLaunched, extraInfo: extraInfo)
 
         return element
     }
@@ -159,6 +187,7 @@ public class AWXPaymentElement: NSObject {
         self.hostViewController = hostViewController
         self.methodProvider = methodProvider
         self.delegate = delegate
+        self.configuration = configuration
         super.init()
 
         // Now set the internal delegate and viewController
@@ -186,11 +215,17 @@ public class AWXPaymentElement: NSObject {
 extension AWXPaymentElement: CollectionViewSectionProvider {
 
     private var displayMethodList: Bool {
-        return paymentUIContext.layout == .tab && methodProvider.methods.count > 1 + (methodProvider.isApplePayAvailable ? 1 : 0)
+        return paymentUIContext.layout == .tab && methodProvider.methods.count > (methodProvider.isApplePayAvailable ? 1 : 0)
     }
 
     func sections() -> [PaymentSectionType] {
         var sections = [PaymentSectionType]()
+
+        // For card element type, only show new card payment (no consents, no method list)
+        if configuration.elementType == .addCard {
+            sections.append(.cardPaymentNew)
+            return sections
+        }
 
         if methodProvider.isApplePayAvailable {
             sections.append(.applePay)
