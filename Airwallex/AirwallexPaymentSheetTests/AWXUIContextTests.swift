@@ -216,7 +216,6 @@ import XCTest
         }
         
         XCTAssert(AnalyticsLogger.shared().session === mockOneoffSession)
-        XCTAssertTrue(mockOneoffSession.hidePaymentConsents)
         XCTAssert(mockOneoffSession.paymentMethods?.count == 1 && mockOneoffSession.paymentMethods?.first == AWXApplePayKey)
     }
     

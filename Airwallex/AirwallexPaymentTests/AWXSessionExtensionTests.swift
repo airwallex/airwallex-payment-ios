@@ -6,10 +6,10 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
+import AirwallexCore
+@testable import AirwallexPayment
 import UIKit
 import XCTest
-@testable import AirwallexPayment
-import AirwallexCore
 
 class AWXSessionExtensionTests: XCTestCase {
     
@@ -368,5 +368,99 @@ class AWXSessionExtensionTests: XCTestCase {
         legacySession.countryCode = "AU"
 
         XCTAssertFalse(legacySession.isExpressCheckout)
+    }
+
+    // MARK: - shouldShowPayAsCta Tests
+
+    func testShouldShowPayAsCta_SessionWithPositiveAmount() {
+        mockPaymentIntent.amount = NSDecimalNumber(value: 100)
+        let session = Session(
+            paymentIntent: mockPaymentIntent,
+            countryCode: "AU",
+            returnURL: AWXThreeDSReturnURL
+        )
+
+        XCTAssertTrue(session.shouldShowPayAsCta)
+    }
+
+    func testShouldShowPayAsCta_SessionWithZeroAmount() {
+        mockPaymentIntent.amount = NSDecimalNumber(value: 0)
+        let session = Session(
+            paymentIntent: mockPaymentIntent,
+            countryCode: "AU",
+            returnURL: AWXThreeDSReturnURL
+        )
+
+        XCTAssertFalse(session.shouldShowPayAsCta)
+    }
+
+    func testShouldShowPayAsCta_SessionWithProviderPositiveAmount() {
+        let provider = MockPaymentIntentProvider(
+            customerId: mockCustomerId,
+            currency: "AUD",
+            amount: NSDecimalNumber(value: 100)
+        )
+
+        let session = Session(
+            paymentIntentProvider: provider,
+            countryCode: "AU",
+            returnURL: AWXThreeDSReturnURL
+        )
+
+        XCTAssertTrue(session.shouldShowPayAsCta)
+    }
+
+    func testShouldShowPayAsCta_SessionWithProviderZeroAmount() {
+        let provider = MockPaymentIntentProvider(
+            customerId: mockCustomerId,
+            currency: "AUD",
+            amount: NSDecimalNumber(value: 0)
+        )
+
+        let session = Session(
+            paymentIntentProvider: provider,
+            countryCode: "AU",
+            returnURL: AWXThreeDSReturnURL
+        )
+
+        XCTAssertFalse(session.shouldShowPayAsCta)
+    }
+
+    func testShouldShowPayAsCta_SessionRecurringWithPositiveAmount() {
+        mockPaymentIntent.amount = NSDecimalNumber(value: 100)
+        let session = Session(
+            paymentIntent: mockPaymentIntent,
+            countryCode: "AU",
+            paymentConsentOptions: .init(nextTriggeredBy: .customerType),
+            returnURL: AWXThreeDSReturnURL
+        )
+
+        XCTAssertTrue(session.shouldShowPayAsCta)
+    }
+
+    func testShouldShowPayAsCta_OneOffSession() {
+        let session = AWXOneOffSession()
+        session.paymentIntent = mockPaymentIntent
+        session.countryCode = "AU"
+
+        XCTAssertTrue(session.shouldShowPayAsCta)
+    }
+
+    func testShouldShowPayAsCta_RecurringSession() {
+        let session = AWXRecurringSession()
+        session.countryCode = "AU"
+        session.setCurrency("AUD")
+        session.setAmount(NSDecimalNumber(value: 100))
+        session.setCustomerId(mockCustomerId)
+
+        XCTAssertFalse(session.shouldShowPayAsCta)
+    }
+
+    func testShouldShowPayAsCta_RecurringWithIntentSession() {
+        let session = AWXRecurringWithIntentSession()
+        session.paymentIntent = mockPaymentIntent
+        session.countryCode = "AU"
+
+        XCTAssertTrue(session.shouldShowPayAsCta)
     }
 }
