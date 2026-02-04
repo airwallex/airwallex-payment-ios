@@ -583,6 +583,7 @@ final class AWXPaymentElementTests: XCTestCase {
 
         let configuration = AWXPaymentElement.Configuration()
         configuration.layout = .accordion
+        configuration.prioritizeApplePay = false  // Apple Pay integrated in accordion
 
         let element = AWXPaymentElement(
             hostViewController: mockViewController,
@@ -614,6 +615,7 @@ final class AWXPaymentElementTests: XCTestCase {
 
         let configuration = AWXPaymentElement.Configuration()
         configuration.layout = .accordion
+        configuration.prioritizeApplePay = false  // Apple Pay integrated in accordion
 
         let element = AWXPaymentElement(
             hostViewController: mockViewController,

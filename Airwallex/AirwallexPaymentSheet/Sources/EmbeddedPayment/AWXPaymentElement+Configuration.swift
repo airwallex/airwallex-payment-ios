@@ -45,5 +45,13 @@ extension AWXPaymentElement {
         /// Only applies when `elementType` is `.addCard`.
         /// Defaults to all available card brands.
         public var supportedCardBrands: [AWXCardBrand] = AWXCardBrand.allAvailable
+
+        /// Whether to prioritize Apple Pay by showing it prominently at the top.
+        ///
+        /// When `true` (default), Apple Pay is displayed as a separate button at the top.
+        /// When `false`, Apple Pay is integrated with other payment methods:
+        /// - In tab layout: shown in the horizontal method tab
+        /// - In accordion layout: shown as an accordion key
+        public var prioritizeApplePay: Bool = true
     }
 }

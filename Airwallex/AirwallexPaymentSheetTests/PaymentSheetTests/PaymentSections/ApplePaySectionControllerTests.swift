@@ -63,6 +63,7 @@ import XCTest
     func testAccordionLayout_Items() {
         mockSectionProvider.layout = .accordion
         mockSectionProvider.paymentUIContext.isEmbedded = true
+        mockSectionProvider.paymentUIContext.prioritizeApplePay = false  // Apple Pay integrated in accordion
         mockMethodProvider.selectedMethod = mockMethodProvider.methods.first
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
@@ -78,6 +79,7 @@ import XCTest
     func testAccordionLayout_Cells() {
         mockSectionProvider.layout = .accordion
         mockSectionProvider.paymentUIContext.isEmbedded = true
+        mockSectionProvider.paymentUIContext.prioritizeApplePay = false  // Apple Pay integrated in accordion
         mockMethodProvider.selectedMethod = mockMethodProvider.methods.first
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()

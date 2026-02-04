@@ -119,7 +119,7 @@ public class AWXPaymentElement: NSObject {
         case .standard:
             return PaymentSheetMethodProvider(
                 session: session,
-                isApplePaySelectable: configuration.layout == .accordion
+                isApplePaySelectable: !configuration.prioritizeApplePay
             )
         case .addCard:
             guard !configuration.supportedCardBrands.isEmpty else {
@@ -197,6 +197,7 @@ public class AWXPaymentElement: NSObject {
         self.paymentUIContext.viewController = hostViewController
         self.paymentUIContext.isEmbedded = true
         self.paymentUIContext.layout = configuration.layout
+        self.paymentUIContext.prioritizeApplePay = configuration.prioritizeApplePay
 
         // Configure collection view
         let collectionView = collectionViewManager.collectionView!
@@ -225,7 +226,7 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
             // hide method tab when only apple pay or add card available
             switch methodName {
             case AWXApplePayKey:
-                return false
+                return !paymentUIContext.prioritizeApplePay
             case AWXCardKey:
                 return !methodProvider.consents.isEmpty
             default:
@@ -239,7 +240,7 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
 
     private func sectionsForTabLayout() -> [PaymentSectionType] {
         var sections = [PaymentSectionType]()
-        if methodProvider.isApplePayAvailable {
+        if paymentUIContext.prioritizeApplePay && methodProvider.isApplePayAvailable {
             sections.append(.applePay)
         }
         if displayMethodList {
@@ -248,7 +249,10 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
         }
         //  display selected payment method
         if let selectedMethodType = methodProvider.selectedMethod {
-            if selectedMethodType.name == AWXCardKey {
+            if selectedMethodType.name == AWXApplePayKey && !paymentUIContext.prioritizeApplePay {
+                // Apple Pay selected from tab list (only when not prioritized)
+                sections.append(.applePay)
+            } else if selectedMethodType.name == AWXCardKey {
                 if preferConsentPayment && !methodProvider.consents.isEmpty {
                     sections.append(.cardPaymentConsent)
                 } else {
@@ -263,12 +267,21 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
     
     private func sectionsForAccordionLayout() -> [PaymentSectionType] {
         var sections = [PaymentSectionType]()
-        if !methodProvider.methodsForAccordionPosition(.top, excludeApplePay: false).isEmpty {
+
+        // When Apple Pay is prioritized, show it at top before accordion sections
+        if paymentUIContext.prioritizeApplePay && methodProvider.isApplePayAvailable {
+            sections.append(.applePay)
+        }
+
+        // Exclude Apple Pay from accordion list when prioritized
+        let excludeApplePay = paymentUIContext.prioritizeApplePay
+        if !methodProvider.methodsForAccordionPosition(.top, excludeApplePay: excludeApplePay).isEmpty {
             sections.append(.accordion(.top))
         }
-        
+
         if let selectedMethodType = methodProvider.selectedMethod {
-            if selectedMethodType.name == AWXApplePayKey {
+            if selectedMethodType.name == AWXApplePayKey && !paymentUIContext.prioritizeApplePay {
+                // Apple Pay selected from accordion (only when not prioritized)
                 sections.append(.applePay)
             } else if selectedMethodType.name == AWXCardKey {
                 if preferConsentPayment && !methodProvider.consents.isEmpty {
@@ -280,8 +293,8 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
                 sections.append(.schemaPayment(selectedMethodType.name))
             }
         }
-        
-        if !methodProvider.methodsForAccordionPosition(.bottom, excludeApplePay: false).isEmpty {
+
+        if !methodProvider.methodsForAccordionPosition(.bottom, excludeApplePay: excludeApplePay).isEmpty {
             sections.append(.accordion(.bottom))
         }
         return sections

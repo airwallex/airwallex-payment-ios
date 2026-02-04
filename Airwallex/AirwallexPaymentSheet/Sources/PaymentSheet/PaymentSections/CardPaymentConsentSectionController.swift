@@ -244,7 +244,7 @@ class CardPaymentConsentSectionController: SectionController {
 
             let buttonSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(52)
+                heightDimension: .estimated(52)
             )
             let buttonItem = NSCollectionLayoutItem(layoutSize: buttonSize)
 

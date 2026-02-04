@@ -42,7 +42,7 @@ class CheckoutButtonCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
             button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             button.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            button.heightAnchor.constraint(equalToConstant: 40).priority(.required - 1),
+            button.heightAnchor.constraint(equalToConstant: 52).priority(.required - 1),
         ]
         NSLayoutConstraint.activate(constraints)
     }

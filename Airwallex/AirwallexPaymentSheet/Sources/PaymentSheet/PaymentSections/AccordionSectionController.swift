@@ -127,7 +127,7 @@ class AccordionSectionController: SectionController {
         
         viewModels = methodProvider.methodsForAccordionPosition(
             position,
-            excludeApplePay: !paymentUIContext.isEmbedded
+            excludeApplePay: paymentUIContext.prioritizeApplePay
         ).map { methodType in
             PaymentMethodCellViewModel(
                 name: methodType.name,
@@ -173,16 +173,12 @@ extension PaymentMethodProvider {
               let index = methods.firstIndex(where: { $0.name == selectedMethod.name }) else {
             switch position {
             case .top:
-                return methods
+                return methods.filter { !excludeApplePay || $0.name != AWXApplePayKey }
             case .bottom:
                 return []
             }
         }
         let methodSlice = (position == .top) ? methods[..<index] : methods[(index+1)...]
-        if excludeApplePay {
-            return Array(methodSlice.filter { $0.name != AWXApplePayKey })
-        } else {
-            return Array(methodSlice)
-        }
+        return Array(methodSlice.filter { !excludeApplePay || $0.name != AWXApplePayKey })
     }
 }
