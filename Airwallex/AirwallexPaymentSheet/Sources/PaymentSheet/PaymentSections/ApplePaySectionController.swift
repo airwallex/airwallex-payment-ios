@@ -15,7 +15,7 @@ import AirwallexCore
 // MARK: - Item Identifiers
 private extension String {
     static let accordionKey = "accordionKey"
-    static let applePayReminder = "redirectReminder"
+    static let applePayReminder = "applePayReminder"
     static let applePayButton = "applePayButton"
 }
     
@@ -26,9 +26,9 @@ class ApplePaySectionController: SectionController {
     enum LayoutType {
         /// Standalone Apple Pay button at top (prioritized)
         case prioritized
-        /// Selected from tab list - header + reminder + button, no decoration
+        /// Selected from tab list - reminder + button, no decoration
         case tab
-        /// Selected in accordion - header + reminder + button, with decoration
+        /// Selected in accordion - accordion key + reminder + button, with decoration
         case accordion
     }
 

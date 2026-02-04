@@ -173,6 +173,6 @@ import XCTest
 // MARK: - Item Identifiers (mirroring ApplePaySectionController)
 private extension String {
     static let accordionKey = "accordionKey"
-    static let applePayReminder = "redirectReminder"
+    static let applePayReminder = "applePayReminder"
     static let applePayButton = "applePayButton"
 }

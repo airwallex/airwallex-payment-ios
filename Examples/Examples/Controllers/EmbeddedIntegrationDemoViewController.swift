@@ -73,11 +73,9 @@ private extension EmbeddedIntegrationDemoViewController {
             startLoading()
             do {
                 let session = try await createPaymentSession()
-                session.paymentMethods = [AWXApplePayKey]
                 let configuration = AWXPaymentElement.Configuration()
                 configuration.layout = ExamplesKeys.paymentLayout
                 configuration.prioritizeApplePay = false
-                configuration.elementType = .addCard
                 let element = try await AWXPaymentElement.create(
                     hostViewController: self,
                     session: session,
