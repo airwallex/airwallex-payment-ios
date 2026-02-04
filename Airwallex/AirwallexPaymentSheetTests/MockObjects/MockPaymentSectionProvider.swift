@@ -61,7 +61,9 @@ extension MockPaymentSectionProvider: CollectionViewSectionProvider {
                 }
             }
         case .accordion:
-            if !paymentUIContext.isEmbedded && methodProvider.isApplePayAvailable {
+            if !paymentUIContext.isEmbedded &&
+                methodProvider.isApplePayAvailable &&
+                methodProvider.selectedMethod?.name != AWXApplePayKey {
                 // Add applepay for payment sheet
                 sections.append(.applePay)
             }

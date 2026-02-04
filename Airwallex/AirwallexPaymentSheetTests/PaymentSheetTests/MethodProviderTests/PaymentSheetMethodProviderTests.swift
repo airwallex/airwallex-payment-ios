@@ -338,4 +338,14 @@ import XCTest
         XCTAssertEqual(testProvider.methods.first?.name, AWXApplePayKey)
         XCTAssertEqual(testProvider.selectedMethod?.name, AWXApplePayKey)
     }
+
+    func testIsApplePaySelectable_DefaultValue_IsFalse() {
+        // The default value of isApplePaySelectable should be false
+        let testProvider = PaymentSheetMethodProvider(
+            session: mockOneOffSession,
+            apiClient: mockAPIClient
+        )
+
+        XCTAssertFalse(testProvider.isApplePaySelectable)
+    }
 }

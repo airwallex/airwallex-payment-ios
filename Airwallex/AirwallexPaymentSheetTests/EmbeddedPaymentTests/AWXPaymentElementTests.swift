@@ -373,7 +373,7 @@ final class AWXPaymentElementTests: XCTestCase {
 
         XCTAssertTrue(sections.contains(.cardPaymentNew))
         XCTAssertFalse(sections.contains(.applePay))
-        XCTAssertTrue(sections.contains(.methodList))
+        XCTAssertFalse(sections.contains(.methodList))
     }
 
     func testSections_TabLayout_WithApplePay_IncludesApplePaySection() {
@@ -820,6 +820,136 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertEqual(sections.count, 1)
         XCTAssertFalse(sections.contains(.cardPaymentConsent))
         XCTAssertTrue(sections.contains(.cardPaymentNew))
+    }
+
+    // MARK: - displayMethodList Tests
+
+    func testDisplayMethodList_SingleApplePay_HidesMethodList() {
+        let applePayMethod = AWXPaymentMethodType()
+        applePayMethod.name = AWXApplePayKey
+        mockMethodProvider.methods = [applePayMethod]
+        mockMethodProvider.selectedMethod = applePayMethod
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        let sections = element.sections()
+
+        XCTAssertFalse(sections.contains(.methodList), "Single Apple Pay should hide method list")
+    }
+
+    func testDisplayMethodList_SingleCardWithoutConsents_HidesMethodList() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+        mockMethodProvider.consents = []
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        let sections = element.sections()
+
+        XCTAssertFalse(sections.contains(.methodList), "Single card without consents should hide method list")
+    }
+
+    func testDisplayMethodList_SingleCardWithConsents_ShowsMethodList() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let consent = AWXPaymentConsent()
+        consent.id = "consent_id"
+        let paymentMethod = AWXPaymentMethod()
+        paymentMethod.type = AWXCardKey
+        consent.paymentMethod = paymentMethod
+        mockMethodProvider.consents = [consent]
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        let sections = element.sections()
+
+        XCTAssertTrue(sections.contains(.methodList), "Single card with consents should show method list")
+    }
+
+    func testDisplayMethodList_SingleOtherMethod_ShowsMethodList() {
+        let alipayMethod = AWXPaymentMethodType()
+        alipayMethod.name = "alipayhk"
+        alipayMethod.resources = AWXResources()
+        alipayMethod.resources.hasSchema = true
+        mockMethodProvider.methods = [alipayMethod]
+        mockMethodProvider.selectedMethod = alipayMethod
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        let sections = element.sections()
+
+        XCTAssertTrue(sections.contains(.methodList), "Single non-card/non-applepay method should show method list")
+    }
+
+    func testDisplayMethodList_MultipleMethods_ShowsMethodList() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+
+        let alipayMethod = AWXPaymentMethodType()
+        alipayMethod.name = "alipayhk"
+        alipayMethod.resources = AWXResources()
+        alipayMethod.resources.hasSchema = true
+
+        mockMethodProvider.methods = [cardMethod, alipayMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        let sections = element.sections()
+
+        XCTAssertTrue(sections.contains(.methodList), "Multiple methods should show method list")
+    }
+
+    func testDisplayMethodList_AccordionLayout_NeverShowsMethodList() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+
+        let alipayMethod = AWXPaymentMethodType()
+        alipayMethod.name = "alipayhk"
+        alipayMethod.resources = AWXResources()
+        alipayMethod.resources.hasSchema = true
+
+        mockMethodProvider.methods = [cardMethod, alipayMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.layout = .accordion
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController,
+            configuration: configuration
+        )
+
+        let sections = element.sections()
+
+        XCTAssertFalse(sections.contains(.methodList), "Accordion layout should never show method list")
     }
 
     // MARK: - Section Controller Tests

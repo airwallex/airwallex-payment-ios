@@ -95,6 +95,58 @@ import XCTest
         ]
         XCTAssertEqual(expectedItems, snapshot.itemIdentifiers)
     }
+
+    // MARK: - Tests for enableAccordionLayout behavior
+
+    func testAccordionLayout_WhenNotEmbedded_UsesTabLayout() {
+        // Accordion layout should only apply when BOTH isEmbedded == true AND layout == .accordion
+        // When layout is .accordion but isEmbedded is false, it should use tab layout (just button)
+        mockSectionProvider.layout = .accordion
+        mockSectionProvider.paymentUIContext.isEmbedded = false
+        mockMethodProvider.selectedMethod = mockMethodProvider.methods.first
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let controller = mockManager.sectionControllers[PaymentSectionType.applePay] else {
+            XCTFail("apple pay section controller not initialized")
+            return
+        }
+
+        // Should use tab layout items (just the button) when not embedded
+        XCTAssertEqual(controller.items, [.applePayButton])
+    }
+
+    func testTabLayout_WhenEmbedded_UsesTabLayout() {
+        // When layout is .tab, it should use tab layout regardless of isEmbedded
+        mockSectionProvider.layout = .tab
+        mockSectionProvider.paymentUIContext.isEmbedded = true
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let controller = mockManager.sectionControllers[PaymentSectionType.applePay] else {
+            XCTFail("apple pay section controller not initialized")
+            return
+        }
+
+        // Should use tab layout items (just the button)
+        XCTAssertEqual(controller.items, [.applePayButton])
+    }
+
+    func testTabLayout_WhenNotEmbedded_UsesTabLayout() {
+        // Default behavior: tab layout + not embedded should use tab layout
+        mockSectionProvider.layout = .tab
+        mockSectionProvider.paymentUIContext.isEmbedded = false
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let controller = mockManager.sectionControllers[PaymentSectionType.applePay] else {
+            XCTFail("apple pay section controller not initialized")
+            return
+        }
+
+        // Should use tab layout items (just the button)
+        XCTAssertEqual(controller.items, [.applePayButton])
+    }
 }
 
 // MARK: - Item Identifiers (mirroring ApplePaySectionController)

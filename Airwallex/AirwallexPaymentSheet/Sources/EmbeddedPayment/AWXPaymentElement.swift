@@ -217,7 +217,24 @@ public class AWXPaymentElement: NSObject {
 extension AWXPaymentElement: CollectionViewSectionProvider {
 
     private var displayMethodList: Bool {
-        return paymentUIContext.layout == .tab && methodProvider.methods.count > (methodProvider.isApplePayAvailable ? 1 : 0)
+        guard paymentUIContext.layout == .tab, methodProvider.methods.count > 0 else { return false }
+
+        if methodProvider.methods.count == 1 {
+            // Single payment method available
+            let methodName = methodProvider.selectedMethod?.name ?? ""
+            // hide method tab when only apple pay or add card available
+            switch methodName {
+            case AWXApplePayKey:
+                return false
+            case AWXCardKey:
+                return !methodProvider.consents.isEmpty
+            default:
+                return true
+            }
+        } else {
+            // Display payment method tab when multiple payment methods are available
+            return true
+        }
     }
 
     private func sectionsForTabLayout() -> [PaymentSectionType] {

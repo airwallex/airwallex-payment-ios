@@ -25,24 +25,25 @@ extension AWXPaymentElement {
     ///
     /// Use this class to customize the appearance and behavior of the payment element.
     @objc(AWXPaymentElementConfiguration)
+    @objcMembers
     public class Configuration: NSObject {
         /// The type of element to display.
         ///
         /// - `.standard`: Displays a list of available payment methods (default)
         /// - `.addCard`: Displays only card payment for adding new cards
-        @objc public var elementType: ElementType = .standard
+        public var elementType: ElementType = .standard
 
         /// The layout style for payment sections.
         ///
         /// Only applies when `elementType` is `.standard`.
         /// - `.tab`: Displays payment methods in a horizontal tab bar (default)
         /// - `.accordion`: Displays payment methods in an expandable accordion layout
-        @objc public var layout: AWXUIContext.PaymentLayout = .tab
+        public var layout: AWXUIContext.PaymentLayout = .tab
 
         /// Supported card brands for card payment.
         ///
         /// Only applies when `elementType` is `.addCard`.
         /// Defaults to all available card brands.
-        @objc public var supportedCardBrands: [AWXCardBrand] = AWXCardBrand.allAvailable
+        public var supportedCardBrands: [AWXCardBrand] = AWXCardBrand.allAvailable
     }
 }
