@@ -149,6 +149,25 @@ import XCTest
         // Should use tab layout items (just the button)
         XCTAssertEqual(controller.items, [.applePayButton])
     }
+
+    func testTabLayout_WhenPrioritizeApplePayFalse_ShowsReminderAndButton() {
+        // When prioritizeApplePay is false and layout is tab,
+        // Apple Pay is selected from the tab list and should show reminder + button
+        mockSectionProvider.layout = .tab
+        mockSectionProvider.paymentUIContext.isEmbedded = true
+        mockSectionProvider.paymentUIContext.prioritizeApplePay = false
+        mockMethodProvider.selectedMethod = mockMethodProvider.methods.first
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let controller = mockManager.sectionControllers[PaymentSectionType.applePay] else {
+            XCTFail("apple pay section controller not initialized")
+            return
+        }
+
+        // Tab layout type should show reminder + button (no accordion key)
+        XCTAssertEqual(controller.items, [.applePayReminder, .applePayButton])
+    }
 }
 
 // MARK: - Item Identifiers (mirroring ApplePaySectionController)
