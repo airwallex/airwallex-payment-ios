@@ -6,9 +6,10 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import Foundation
+import UIKit
 #if canImport(AirwallexPayment)
 import AirwallexCore
+@_spi(AWX) import AirwallexPayment
 #endif
 
 extension AWXPaymentElement {
@@ -19,6 +20,16 @@ extension AWXPaymentElement {
         case standard
         /// Display card payment element only (for adding new cards)
         case addCard
+    }
+
+    /// Appearance configuration for customizing the visual style.
+    @objc(AWXPaymentElementAppearance)
+    @objcMembers
+    public class Appearance: NSObject {
+        /// The primary brand color used throughout the payment element.
+        ///
+        /// Defaults to the SDK's built-in theme color.
+        public var colorBrand: UIColor = .awxColor(.theme)
     }
 
     /// Configuration options for the embedded payment element.
@@ -53,5 +64,8 @@ extension AWXPaymentElement {
         /// - In tab layout: shown in the horizontal method tab
         /// - In accordion layout: shown as an accordion key
         public var showsApplePayAsPrimaryButton: Bool = true
+
+        /// Appearance configuration for customizing the visual style.
+        public var appearance: Appearance = Appearance()
     }
 }
