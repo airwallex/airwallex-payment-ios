@@ -185,18 +185,32 @@ extension PaymentViewController: AWXPageViewTrackable {
 extension PaymentViewController: CollectionViewSectionProvider {
     
     private var listTitle: String {
-        guard methodProvider.methods.count == 1,
+        let defaultTitle = NSLocalizedString("Payment Methods", bundle: .paymentSheet, comment: "title for payment sheet")
+        if methodProvider is SinglePaymentMethodProvider {
+            // Single-method: use the selected method name instead of the generic list title.
+            return methodProvider.selectedMethod?.displayName ?? defaultTitle
+        }
+        // Payment sheet:
+        if methodProvider.methods.count == 1,
               let selectedMethod = methodProvider.selectedMethod,
               selectedMethod.name == AWXCardKey,
-              methodProvider.consents.isEmpty else {
-            return NSLocalizedString("Payment Methods", bundle: .paymentSheet, comment: "title for payment sheet")
+              methodProvider.consents.isEmpty {
+            // Use the display name only when Add New Card is the only option available.
+            return selectedMethod.displayName
         }
-        // Use the display name only when Add New Card is the only option available.
-        return selectedMethod.displayName
+        return defaultTitle
     }
 
     private var displayMethodTab: Bool {
-        guard useTabLayout, methodProvider.methods.count > 0 else { return false }
+        guard !(methodProvider is SinglePaymentMethodProvider) else {
+            // Never display method tab for SinglePaymentMethodProvider
+            return false
+        }
+
+        // Payment sheet:
+        guard useTabLayout, methodProvider.methods.count > 0 else {
+            return false
+        }
 
         if methodProvider.methods.count == 1 {
             // Single payment method available

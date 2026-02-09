@@ -217,9 +217,18 @@ public class AWXPaymentElement: NSObject {
 
 extension AWXPaymentElement: CollectionViewSectionProvider {
 
-    private var displayMethodList: Bool {
-        guard paymentUIContext.layout == .tab, methodProvider.methods.count > 0 else { return false }
+    private var displayMethodTab: Bool {
+        // Not needed for `addCard` element
+        if configuration.elementType == .addCard {
+            return false
+        }
 
+        // Not needed for accordion layout
+        if configuration.layout == .accordion {
+            return false
+        }
+
+        // `standard` element: tab layout with a single payment method.
         if methodProvider.methods.count == 1 {
             // Single payment method available
             let methodName = methodProvider.selectedMethod?.name ?? ""
@@ -232,6 +241,9 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
             default:
                 return true
             }
+        } else if methodProvider.methods.count == 0 {
+            // never expected, should have thrown an error during creation
+            return false
         } else {
             // Display payment method tab when multiple payment methods are available
             return true
@@ -243,7 +255,7 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
         if paymentUIContext.prioritizeApplePay && methodProvider.isApplePayAvailable {
             sections.append(.applePay)
         }
-        if displayMethodList {
+        if displayMethodTab {
             // horizontal list
             sections.append(.methodList)
         }
@@ -308,7 +320,7 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
         }
 
         // For Standard element type
-        switch paymentUIContext.layout {
+        switch configuration.layout {
         case .tab:
             return sectionsForTabLayout()
         case .accordion:
