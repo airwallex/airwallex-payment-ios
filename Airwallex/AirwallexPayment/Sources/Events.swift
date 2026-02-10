@@ -26,6 +26,9 @@ import AirwallexCore
         case eventType
         case supportedNetworks
         case expressCheckout // boolean value
+        case launchType// dropin, component, embedded_element, api
+        case layout// tab, accordion, none
+        case transactionMode// oneoff, recurring
     }
     
     @_spi(AWX) public enum PageView: String {
@@ -137,6 +140,20 @@ extension ErrorLoggable {
             }
         }
         return (error.eventName, dict)
+    }
+
+    static func bindSession(session: AWXSession, extraInfo: [AnalyticEvent.Fields: Any]? = nil) {
+        var processedInfo: [String: Any] = [
+            AnalyticEvent.Fields.layout.rawValue: "none",
+            AnalyticEvent.Fields.expressCheckout.rawValue: session.isExpressCheckout,
+            AnalyticEvent.Fields.transactionMode.rawValue: session.transactionMode()
+        ]
+        if let extraInfo {
+            for (k, v) in extraInfo {
+                processedInfo[k.rawValue] = v
+            }
+        }
+        AnalyticsLogger.shared().bindSession(session, additionalInfo: processedInfo)
     }
 }
 

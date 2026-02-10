@@ -30,7 +30,7 @@ import AirwallexCore
 @MainActor
 @objc public class AWXUIContext: NSObject {
     private static let subtypeDropin = "dropin"
-    private static let subtypeElement = "component"
+    private static let subtypeComponent = "component"
     @objc public enum LaunchStyle: Int {
         case push
         case present
@@ -147,6 +147,16 @@ import AirwallexCore
             }
             session.paymentMethods = methodNames
         }
+
+        // bind session level info
+        AnalyticsLogger.bindSession(
+            session: session,
+            extraInfo: [
+                .launchType: Self.subtypeDropin,
+                .layout: layout.displayName
+            ]
+        )
+
         launchPayment(
             from: hostingVC,
             session: session,
@@ -156,13 +166,7 @@ import AirwallexCore
             layout: layout
         )
         
-        AnalyticsLogger.log(
-            action: .paymentLaunched,
-            extraInfo: [
-                .subtype: Self.subtypeDropin,
-                .expressCheckout: session.isExpressCheckout
-            ]
-        )
+        AnalyticsLogger.log(action: .paymentLaunched)
     }
     // MARK: - Launch by Payment Method
     
@@ -245,6 +249,15 @@ import AirwallexCore
             name: name,
             supportedCardBrands: supportedBrands
         )
+
+        // bind session level info
+        AnalyticsLogger.bindSession(
+            session: session,
+            extraInfo: [
+                .launchType: Self.subtypeComponent,
+            ]
+        )
+
         launchPayment(
             from: hostingVC,
             session: session,
@@ -255,9 +268,7 @@ import AirwallexCore
         AnalyticsLogger.log(
             action: .paymentLaunched,
             extraInfo: [
-                .subtype: Self.subtypeElement,
-                .paymentMethod: name,
-                .expressCheckout: session.isExpressCheckout
+                .paymentMethod: name
             ]
         )
     }
@@ -294,10 +305,7 @@ private extension AWXUIContext {
                 return
             }
         }
-        
-        // update logger.session for UI integration
-        AnalyticsLogger.shared().session = session
-        
+
         // Risk event
         RiskLogger.log(.transactionInitiated)
         

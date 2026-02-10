@@ -54,7 +54,6 @@ class PaymentViewController: AWXViewController {
                     paymentUIContext.delegate?.paymentViewController(nil, didCompleteWith: .cancel, error: nil)
                 }
             }
-            AnalyticsLogger.shared().session = nil
         }
     }
     

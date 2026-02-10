@@ -40,7 +40,7 @@
     OCMStub([mockBundle mainBundle]).andReturn(mockBundle);
 
     [AWXAnalyticsLogger shared];
-    NSDictionary *dict = @{@"accountId": @"5a1d6022-2fbb-4a5e-a428-d3ae8a26a123", @"merchantAppVersion": @"test_app", @"merchantAppName": @"test_app"};
+    NSDictionary *dict = @{@"accountId": @"5a1d6022-2fbb-4a5e-a428-d3ae8a26a123", @"merchantAppVersion": @"test_app", @"merchantAppName": @"test_app", @"integrationType": @"ios"};
     OCMVerify(times(1), [_tracker setExtraCommonData:dict]);
 }
 

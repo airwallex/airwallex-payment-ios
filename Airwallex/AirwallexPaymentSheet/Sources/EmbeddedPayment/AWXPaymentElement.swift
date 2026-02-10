@@ -150,9 +150,6 @@ public class AWXPaymentElement: NSObject {
             throw AWXUIContext.LaunchError.invalidSession(underlyingError: error)
         }
 
-        // Update logger.session for embedded integration
-        AnalyticsLogger.shared().session = session
-
         // fetch payment methods using method provider
         try await methodProvider.getPaymentMethodTypes()
 
@@ -168,16 +165,23 @@ public class AWXPaymentElement: NSObject {
         )
 
         // Analytics
-        var extraInfo: [AnalyticEvent.Fields: Any] = [
-            .subtype: element.subtype,
-            .expressCheckout: session.isExpressCheckout
-        ]
         if configuration.elementType == .addCard {
-            extraInfo[.paymentMethod] = AWXCardKey
+            AnalyticsLogger.bindSession(session: session)
+            AnalyticsLogger.log(
+                action: .paymentLaunched,
+                extraInfo: [
+                    .paymentMethod: AWXCardKey
+                ]
+            )
+        } else {
+            AnalyticsLogger.bindSession(
+                session: session,
+                extraInfo: [
+                    .layout: configuration.layout.displayName
+                ]
+            )
+            AnalyticsLogger.log(action: .paymentLaunched)
         }
-
-        AnalyticsLogger.log(action: .paymentLaunched, extraInfo: extraInfo)
-
         return element
     }
 

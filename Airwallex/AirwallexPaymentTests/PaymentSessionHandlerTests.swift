@@ -77,7 +77,6 @@ class PaymentSessionHandlerTests: XCTestCase {
         XCTAssertTrue(handler.viewController === viewController)
         XCTAssertEqual(handler.methodType, mockMethodType)
         XCTAssertEqual(handler.session, mockSession)
-        XCTAssertTrue(AnalyticsLogger.shared().session === mockSession)
     }
 
     func testConvenienceInit() {
@@ -90,7 +89,6 @@ class PaymentSessionHandlerTests: XCTestCase {
         XCTAssertNil(handler.methodType)
         XCTAssertTrue(handler.session === self.mockSession)
         XCTAssertNil(mockPaymentResultDelegate.error)
-        XCTAssertTrue(AnalyticsLogger.shared().session === mockSession)
     }
     
     func testConvenienceInit2() {
@@ -105,7 +103,6 @@ class PaymentSessionHandlerTests: XCTestCase {
         XCTAssertNil(handler.methodType)
         XCTAssertTrue(handler.session === self.mockSession)
         XCTAssertNil(mockPaymentResultDelegate.error)
-        XCTAssertTrue(AnalyticsLogger.shared().session === mockSession)
     }
     
     // test start apple pay check if it throws as expected
