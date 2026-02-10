@@ -142,7 +142,10 @@ extension ErrorLoggable {
         return (error.eventName, dict)
     }
 
-    static func bindSession(session: AWXSession, extraInfo: [AnalyticEvent.Fields: Any]? = nil) {
+    static func buildSessionLevelInfo(
+        session: AWXSession,
+        extraInfo: [AnalyticEvent.Fields: Any]?
+    ) -> [String: Any] {
         var processedInfo: [String: Any] = [
             AnalyticEvent.Fields.layout.rawValue: "none",
             AnalyticEvent.Fields.expressCheckout.rawValue: session.isExpressCheckout,
@@ -153,6 +156,11 @@ extension ErrorLoggable {
                 processedInfo[k.rawValue] = v
             }
         }
+        return processedInfo
+    }
+
+    static func bindSession(session: AWXSession, extraInfo: [AnalyticEvent.Fields: Any]? = nil) {
+        let processedInfo = buildSessionLevelInfo(session: session, extraInfo: extraInfo)
         AnalyticsLogger.shared().bindSession(session, additionalInfo: processedInfo)
     }
 }
