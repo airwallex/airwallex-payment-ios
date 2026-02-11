@@ -78,13 +78,13 @@ final class AWXPaymentElementTests: XCTestCase {
 
     func testConfiguration_DefaultPrioritizeApplePay_IsTrue() {
         let configuration = AWXPaymentElement.Configuration()
-        XCTAssertTrue(configuration.prioritizeApplePay)
+        XCTAssertTrue(configuration.showsApplePayAsPrimaryButton)
     }
 
     func testConfiguration_CanSetPrioritizeApplePayToFalse() {
         let configuration = AWXPaymentElement.Configuration()
-        configuration.prioritizeApplePay = false
-        XCTAssertFalse(configuration.prioritizeApplePay)
+        configuration.showsApplePayAsPrimaryButton = false
+        XCTAssertFalse(configuration.showsApplePayAsPrimaryButton)
     }
 
     // MARK: - makeMethodProvider Tests
@@ -534,7 +534,7 @@ final class AWXPaymentElementTests: XCTestCase {
         mockMethodProvider.methods = [applePayMethod, cardMethod]
         mockMethodProvider.selectedMethod = cardMethod
 
-        // Default configuration has prioritizeApplePay = true
+        // Default configuration has showsApplePayAsPrimaryButton = true
         let configuration = AWXPaymentElement.Configuration()
         configuration.layout = .tab
 
@@ -567,7 +567,7 @@ final class AWXPaymentElementTests: XCTestCase {
 
         let configuration = AWXPaymentElement.Configuration()
         configuration.layout = .tab
-        configuration.prioritizeApplePay = false
+        configuration.showsApplePayAsPrimaryButton = false
 
         let element = AWXPaymentElement(
             hostViewController: mockViewController,
@@ -655,7 +655,7 @@ final class AWXPaymentElementTests: XCTestCase {
 
         let configuration = AWXPaymentElement.Configuration()
         configuration.layout = .accordion
-        configuration.prioritizeApplePay = false  // Apple Pay integrated in accordion
+        configuration.showsApplePayAsPrimaryButton = false  // Apple Pay integrated in accordion
 
         let element = AWXPaymentElement(
             hostViewController: mockViewController,
@@ -687,7 +687,7 @@ final class AWXPaymentElementTests: XCTestCase {
 
         let configuration = AWXPaymentElement.Configuration()
         configuration.layout = .accordion
-        configuration.prioritizeApplePay = false  // Apple Pay integrated in accordion
+        configuration.showsApplePayAsPrimaryButton = false  // Apple Pay integrated in accordion
 
         let element = AWXPaymentElement(
             hostViewController: mockViewController,
@@ -722,7 +722,7 @@ final class AWXPaymentElementTests: XCTestCase {
         mockMethodProvider.methods = [applePayMethod, wechatMethod, cardMethod, alipayMethod]
         mockMethodProvider.selectedMethod = cardMethod
 
-        // Default configuration has prioritizeApplePay = true
+        // Default configuration has showsApplePayAsPrimaryButton = true
         let configuration = AWXPaymentElement.Configuration()
         configuration.layout = .accordion
 
@@ -964,7 +964,7 @@ final class AWXPaymentElementTests: XCTestCase {
 
         let configuration = AWXPaymentElement.Configuration()
         configuration.layout = .tab
-        configuration.prioritizeApplePay = false
+        configuration.showsApplePayAsPrimaryButton = false
 
         let element = AWXPaymentElement(
             hostViewController: mockViewController,
@@ -975,7 +975,7 @@ final class AWXPaymentElementTests: XCTestCase {
 
         let sections = element.sections()
 
-        XCTAssertTrue(sections.contains(.methodList), "Single Apple Pay with prioritizeApplePay=false should show method list")
+        XCTAssertTrue(sections.contains(.methodList), "Single Apple Pay with showsApplePayAsPrimaryButton=false should show method list")
     }
 
     func testDisplayMethodList_SingleCardWithoutConsents_HidesMethodList() {

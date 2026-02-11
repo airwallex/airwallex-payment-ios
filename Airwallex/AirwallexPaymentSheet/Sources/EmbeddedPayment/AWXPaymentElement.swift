@@ -119,7 +119,7 @@ public class AWXPaymentElement: NSObject {
         case .standard:
             return PaymentSheetMethodProvider(
                 session: session,
-                isApplePaySelectable: !configuration.prioritizeApplePay
+                isApplePaySelectable: !configuration.showsApplePayAsPrimaryButton
             )
         case .addCard:
             guard !configuration.supportedCardBrands.isEmpty else {
@@ -197,7 +197,7 @@ public class AWXPaymentElement: NSObject {
         self.paymentUIContext.viewController = hostViewController
         self.paymentUIContext.isEmbedded = true
         self.paymentUIContext.layout = configuration.layout
-        self.paymentUIContext.prioritizeApplePay = configuration.prioritizeApplePay
+        self.paymentUIContext.prioritizeApplePay = configuration.showsApplePayAsPrimaryButton
 
         // Configure collection view
         let collectionView = collectionViewManager.collectionView!

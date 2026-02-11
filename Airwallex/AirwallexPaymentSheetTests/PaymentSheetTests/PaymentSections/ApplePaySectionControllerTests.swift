@@ -151,7 +151,7 @@ import XCTest
     }
 
     func testTabLayout_WhenPrioritizeApplePayFalse_ShowsReminderAndButton() {
-        // When prioritizeApplePay is false and layout is tab,
+        // When showsApplePayAsPrimaryButton is false and layout is tab,
         // Apple Pay is selected from the tab list and should show reminder + button
         mockSectionProvider.layout = .tab
         mockSectionProvider.paymentUIContext.isEmbedded = true
