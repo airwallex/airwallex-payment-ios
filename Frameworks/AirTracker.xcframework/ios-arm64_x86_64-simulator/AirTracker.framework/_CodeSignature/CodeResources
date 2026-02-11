@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/AirTracker-Swift.h</key>
 		<data>
-		lcWZo7qoePJXkLFBEfR8FMGOZAk=
+		ybY6nttT3w3TgBUx1x/gtYPxC3Q=
 		</data>
 		<key>Headers/AirTracker.h</key>
 		<data>
@@ -14,47 +14,47 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		UoLJ3zbOkgTt68MGGVDpKc9Ea2I=
+		zJttNeSzzNUAoaz+DbH1iFv6m7M=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		oaab2GVO1go7J8MUuKy/p3CbGzE=
+		iVQO744aWoeYIjWkwPnm0oDCqVo=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		QXBK0vWJXtkvm5KUSqwULNthURs=
+		lnooTT7Zy7JIL9OX9QvfETRf9ls=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		Tj/UWn1hPuUUyZR8OfE24VcO2RE=
+		Lpdy0VGxIVA9hmsNPQl25SiGWkM=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		QXBK0vWJXtkvm5KUSqwULNthURs=
+		lnooTT7Zy7JIL9OX9QvfETRf9ls=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		6W+Mb790VN3kXUfweb3deGPak7w=
+		fn70FvwWwVN85rhCBESSEfYqqQI=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		oaab2GVO1go7J8MUuKy/p3CbGzE=
+		iVQO744aWoeYIjWkwPnm0oDCqVo=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		jCR/w9how/mYS1pnoob4lzD43KY=
+		/u5ADtdHadQeAZiLzirlg+ntBVQ=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		Hb6Jpx7Xaq6nP4IevoLSWwXKEfc=
+		TOpF8+x8mZzoFL/8btHX8MO0okw=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		jCR/w9how/mYS1pnoob4lzD43KY=
+		/u5ADtdHadQeAZiLzirlg+ntBVQ=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		0MDuXBzbDyqiidXUI2Js/Hn+MGY=
+		1A398rTKLWoQFPDB/CV3GuWPZHs=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -71,11 +71,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			lcWZo7qoePJXkLFBEfR8FMGOZAk=
+			ybY6nttT3w3TgBUx1x/gtYPxC3Q=
 			</data>
 			<key>hash2</key>
 			<data>
-			Em3G93Hx7HDyTKpo9Py87GbP8XerM4LgVYGSqINVdzE=
+			pu0HTnDU6pP6L7CNiUuIiSyrnFJfnuekeRox7iVRGHs=
 			</data>
 		</dict>
 		<key>Headers/AirTracker.h</key>
@@ -93,110 +93,110 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			oaab2GVO1go7J8MUuKy/p3CbGzE=
+			iVQO744aWoeYIjWkwPnm0oDCqVo=
 			</data>
 			<key>hash2</key>
 			<data>
-			aMw6xrc2R0rsDDCJrYnR1DTL4jnYdOLKzGBrUUuWEIM=
+			14IXC/PwQ2NJS2+RJqZIFo2gMZ/3NMJjvnQVzgRnehQ=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			QXBK0vWJXtkvm5KUSqwULNthURs=
+			lnooTT7Zy7JIL9OX9QvfETRf9ls=
 			</data>
 			<key>hash2</key>
 			<data>
-			18DY2aTuhR+/hTKEk3RQLXJpEKzu+C6K9LEOXsxWjdU=
+			uYbb4lVuIZeE3rwtmntM00gWkT+fGH3R87rWlFK0/dk=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Tj/UWn1hPuUUyZR8OfE24VcO2RE=
+			Lpdy0VGxIVA9hmsNPQl25SiGWkM=
 			</data>
 			<key>hash2</key>
 			<data>
-			Yp+79orc/St8AJBKrF4p8zdvCs0JpFScuOKErqnY32w=
+			GC7wCzR2TOvstVs8kmR0TpC4zw4goywwCDO0/i7UNqk=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			QXBK0vWJXtkvm5KUSqwULNthURs=
+			lnooTT7Zy7JIL9OX9QvfETRf9ls=
 			</data>
 			<key>hash2</key>
 			<data>
-			18DY2aTuhR+/hTKEk3RQLXJpEKzu+C6K9LEOXsxWjdU=
+			uYbb4lVuIZeE3rwtmntM00gWkT+fGH3R87rWlFK0/dk=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			6W+Mb790VN3kXUfweb3deGPak7w=
+			fn70FvwWwVN85rhCBESSEfYqqQI=
 			</data>
 			<key>hash2</key>
 			<data>
-			cUmvRu/f0osVrLeZZfJmH7M4GyDssu3Kei/FF9pYwEc=
+			OsT0vrfcbtAoJ3GQ4rG8dGu6bLD8eye3r8cizF+J2nU=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			oaab2GVO1go7J8MUuKy/p3CbGzE=
+			iVQO744aWoeYIjWkwPnm0oDCqVo=
 			</data>
 			<key>hash2</key>
 			<data>
-			aMw6xrc2R0rsDDCJrYnR1DTL4jnYdOLKzGBrUUuWEIM=
+			14IXC/PwQ2NJS2+RJqZIFo2gMZ/3NMJjvnQVzgRnehQ=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			jCR/w9how/mYS1pnoob4lzD43KY=
+			/u5ADtdHadQeAZiLzirlg+ntBVQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			izskfQXxk5eI83EtaEW9Oc4txU5KqF9t+KL3QZds9YM=
+			Y6pUAH4cqvc14+DqPTdahVtdkzbE5J28wUO4HW5/IQA=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Hb6Jpx7Xaq6nP4IevoLSWwXKEfc=
+			TOpF8+x8mZzoFL/8btHX8MO0okw=
 			</data>
 			<key>hash2</key>
 			<data>
-			eapRv5Jv3CImEJs+mBBXSZwzlD6rk974CP+orisO+jY=
+			yUSPnOL1pcAU04iboLV4ymDze0pn7mtzy/Ns5qvsNcA=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			jCR/w9how/mYS1pnoob4lzD43KY=
+			/u5ADtdHadQeAZiLzirlg+ntBVQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			izskfQXxk5eI83EtaEW9Oc4txU5KqF9t+KL3QZds9YM=
+			Y6pUAH4cqvc14+DqPTdahVtdkzbE5J28wUO4HW5/IQA=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			0MDuXBzbDyqiidXUI2Js/Hn+MGY=
+			1A398rTKLWoQFPDB/CV3GuWPZHs=
 			</data>
 			<key>hash2</key>
 			<data>
-			JmZnf6K5ay/rmAnCKjG2Id13wQFMY9Amc9poUeEgrmQ=
+			NY4Xw1OdhsvI1v2jQXCfsLMGIbV7V1mjoYdkJafyiGs=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
