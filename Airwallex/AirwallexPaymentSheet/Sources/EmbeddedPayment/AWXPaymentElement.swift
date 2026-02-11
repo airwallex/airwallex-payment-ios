@@ -42,7 +42,7 @@ import AirwallexCore
 @objc
 public class AWXPaymentElement: NSObject {
 
-    private let subtype = "embedded_element"
+    private static let launchType = "embedded_element"
 
     /// The embeddable view containing the payment UI.
     ///
@@ -165,23 +165,17 @@ public class AWXPaymentElement: NSObject {
         )
 
         // Analytics
-        if configuration.elementType == .addCard {
-            AnalyticsLogger.bindSession(session: session)
-            AnalyticsLogger.log(
-                action: .paymentLaunched,
-                extraInfo: [
-                    .paymentMethod: AWXCardKey
-                ]
-            )
+        let extraInfo: [AnalyticEvent.Fields: Any] = if configuration.elementType == .addCard {
+            [.launchType: launchType,
+             .prioritizeApplePay: configuration.prioritizeApplePay,
+             .paymentMethod: AWXCardKey]
         } else {
-            AnalyticsLogger.bindSession(
-                session: session,
-                extraInfo: [
-                    .layout: configuration.layout.displayName
-                ]
-            )
-            AnalyticsLogger.log(action: .paymentLaunched)
+            [.launchType: launchType,
+             .prioritizeApplePay: configuration.prioritizeApplePay,
+             .layout: configuration.layout.displayName]
         }
+        AnalyticsLogger.bindSession(session: session, extraInfo: extraInfo)
+        AnalyticsLogger.log(action: .paymentLaunched)
         return element
     }
 

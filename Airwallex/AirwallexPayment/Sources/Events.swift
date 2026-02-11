@@ -26,9 +26,10 @@ import AirwallexCore
         case eventType
         case supportedNetworks
         case expressCheckout // boolean value
-        case launchType// dropin, component, embedded_element, api
-        case layout// tab, accordion, none
-        case transactionMode// oneoff, recurring
+        case launchType // dropin, component, embedded_element, api
+        case layout // tab, accordion, none
+        case transactionMode // oneoff, recurring
+        case prioritizeApplePay // boolean value
     }
     
     @_spi(AWX) public enum PageView: String {
@@ -146,20 +147,23 @@ extension ErrorLoggable {
         session: AWXSession,
         extraInfo: [AnalyticEvent.Fields: Any]?
     ) -> [String: Any] {
-        var processedInfo: [String: Any] = [
-            AnalyticEvent.Fields.layout.rawValue: "none",
-            AnalyticEvent.Fields.expressCheckout.rawValue: session.isExpressCheckout,
-            AnalyticEvent.Fields.transactionMode.rawValue: session.transactionMode()
+        var dictionary: [AnalyticEvent.Fields: Any] = [
+            .layout: "none",
+            .expressCheckout: session.isExpressCheckout,
+            .transactionMode: session.transactionMode()
         ]
         if let extraInfo {
-            for (k, v) in extraInfo {
-                processedInfo[k.rawValue] = v
-            }
+            dictionary.merge(extraInfo, uniquingKeysWith: { _, new in new })
         }
-        return processedInfo
+        return dictionary.reduce(into: [String: Any]()) { partialResult, keyValuePair in
+            partialResult[keyValuePair.key.rawValue] = keyValuePair.value
+        }
     }
 
-    static func bindSession(session: AWXSession, extraInfo: [AnalyticEvent.Fields: Any]? = nil) {
+    static func bindSession(
+        session: AWXSession,
+        extraInfo: [AnalyticEvent.Fields: Any]? = nil
+    ) {
         let processedInfo = buildSessionLevelInfo(session: session, extraInfo: extraInfo)
         AnalyticsLogger.shared().bindSession(session, additionalInfo: processedInfo)
     }

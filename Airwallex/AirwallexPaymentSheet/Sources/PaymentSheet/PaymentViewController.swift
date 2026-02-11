@@ -177,7 +177,7 @@ class PaymentViewController: AWXViewController {
 
 extension PaymentViewController: AWXPageViewTrackable {
     var pageName: String! {
-        "payment_method_list"
+        AnalyticEvent.PageView.paymentMethodList.rawValue
     }
 }
 
