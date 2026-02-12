@@ -19,15 +19,14 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
     /// Type alias for the compound item type
     typealias SectionItem = CompoundItem<Section, Item>
 
-    /// Internal access for loading indicators. Do not manipulate collection view directly for data/layout operations.
-    private(set) weak var collectionView: UICollectionView!
+    private weak var collectionView: UICollectionView!
     private weak var layout: UICollectionViewCompositionalLayout!
     private var dataSource: UICollectionViewDiffableDataSource<Section, SectionItem>
     private var _performUpdates: (Bool, Bool) -> Void
     private var _performUpdatesForSection: (Section, Bool, Bool, Bool) -> Void
 
-    /// Tracks loading views per section
-    private var sectionLoadingViews = [Section: LoadingSpinnerView]()
+    /// Loading indicator for payment processing
+    private var loadingView: LoadingSpinnerView?
 
     init(collectionView: UICollectionView,
          layout: UICollectionViewCompositionalLayout,
@@ -183,9 +182,9 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
 
     // MARK: - Section Loading
 
-    /// Shows a loading indicator centered on the specified section's visible area
+    /// Shows a loading indicator centered on the specified section
     func startLoading(for section: Section) {
-        guard sectionLoadingViews[section] == nil else { return }
+        guard loadingView == nil else { return }
 
         let snapshot = dataSource.snapshot()
         guard let sectionIndex = snapshot.sectionIdentifiers.firstIndex(of: section) else { return }
@@ -204,37 +203,21 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
 
         guard !sectionFrame.isNull else { return }
 
-        // Intersect with visible bounds
-        let visibleFrame = sectionFrame.intersection(collectionView.bounds)
-        guard !visibleFrame.isNull else { return }
-
         // Create and position loading indicator
         let spinner = LoadingSpinnerView(size: .medium)
-        spinner.center = CGPoint(x: visibleFrame.midX, y: visibleFrame.midY)
+        spinner.center = CGPoint(x: sectionFrame.midX, y: sectionFrame.midY)
         collectionView.addSubview(spinner)
         spinner.startAnimating()
 
-        sectionLoadingViews[section] = spinner
+        loadingView = spinner
         collectionView.isUserInteractionEnabled = false
     }
 
-    /// Hides the loading indicator for the specified section
-    func stopLoading(for section: Section) {
-        guard let spinner = sectionLoadingViews.removeValue(forKey: section) else { return }
-        spinner.stopAnimating()
-        spinner.removeFromSuperview()
-
-        // Re-enable interaction only if no other sections are loading
-        if sectionLoadingViews.isEmpty {
-            collectionView.isUserInteractionEnabled = true
-        }
-    }
-
+    /// Hides the loading indicator
     func stopLoading() {
-        for (_, view) in sectionLoadingViews {
-            view.stopAnimating()
-            view.removeFromSuperview()
-        }
+        loadingView?.stopAnimating()
+        loadingView?.removeFromSuperview()
+        loadingView = nil
         collectionView.isUserInteractionEnabled = true
     }
 

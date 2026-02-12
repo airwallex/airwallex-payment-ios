@@ -52,7 +52,7 @@ class ApplePaySectionController: SectionController {
     let section = PaymentSectionType.applePay
 
     private var layoutType: LayoutType {
-        if paymentUIContext.prioritizeApplePay {
+        if paymentUIContext.showsApplePayAsPrimaryButton {
             return .prioritized
         }
         switch paymentUIContext.layout {

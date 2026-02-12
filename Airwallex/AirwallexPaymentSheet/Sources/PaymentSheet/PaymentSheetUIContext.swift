@@ -26,8 +26,8 @@ class PaymentSheetUIContext: PaymentUIContext {
     /// When true, section controllers should use zero horizontal insets.
     var isEmbedded: Bool = false
 
-    /// Whether Apple Pay is prioritized (shown at top).
-    var prioritizeApplePay: Bool = true
+    /// Whether Apple Pay pinned at top.
+    var showsApplePayAsPrimaryButton: Bool = true
 
     /// Whether to show the loading indicator during payment processing (embedded only).
     var showsPaymentProcessingIndicator: Bool = true

@@ -168,7 +168,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 // block user from checkout when paymentmethod type is loading
                 context.startLoading(for: section)
                 defer {
-                    context.stopLoading(for: section)
+                    context.stopLoading()
                 }
                 //  request method details from server
                 let response = try await methodProvider.getPaymentMethodTypeDetails(name: name)
@@ -348,7 +348,8 @@ private extension SchemaPaymentSectionController {
                 context.startLoading(for: section)
             }
         }
-        Task {
+        Task { [weak self] in
+            guard let self else { return }
             do {
                 try await paymentSessionHandler?.confirmRedirectPayment(with: paymentMethod)
                 debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
@@ -357,7 +358,7 @@ private extension SchemaPaymentSectionController {
             }
         }
     }
-    
+
     func handleBankSelection() {
         context.endEditing()
         guard let bankList = bankList else { return }

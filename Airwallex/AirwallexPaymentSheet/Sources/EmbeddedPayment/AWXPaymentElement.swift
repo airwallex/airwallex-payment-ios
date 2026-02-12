@@ -182,7 +182,7 @@ public class AWXPaymentElement: NSObject {
         // Configure payment UI context
         self.paymentUIContext.isEmbedded = true
         self.paymentUIContext.layout = configuration.layout
-        self.paymentUIContext.prioritizeApplePay = configuration.showsApplePayAsPrimaryButton
+        self.paymentUIContext.showsApplePayAsPrimaryButton = configuration.showsApplePayAsPrimaryButton
         self.paymentUIContext.showsPaymentProcessingIndicator = configuration.showsPaymentProcessingIndicator
         self.paymentUIContext.paymentElement = self
         // AWXPaymentElement implements AWXPaymentResultDelegate to bridge to AWXPaymentElementDelegate
@@ -224,7 +224,7 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
             // hide method tab when only apple pay or add card available
             switch methodName {
             case AWXApplePayKey:
-                return !paymentUIContext.prioritizeApplePay
+                return !paymentUIContext.showsApplePayAsPrimaryButton
             case AWXCardKey:
                 return !methodProvider.consents.isEmpty
             default:
@@ -241,7 +241,7 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
 
     private func sectionsForTabLayout() -> [PaymentSectionType] {
         var sections = [PaymentSectionType]()
-        if paymentUIContext.prioritizeApplePay && methodProvider.isApplePayAvailable {
+        if paymentUIContext.showsApplePayAsPrimaryButton && methodProvider.isApplePayAvailable {
             sections.append(.applePay)
         }
         if displayMethodTab {
@@ -250,7 +250,7 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
         }
         //  display selected payment method
         if let selectedMethodType = methodProvider.selectedMethod {
-            if selectedMethodType.name == AWXApplePayKey && !paymentUIContext.prioritizeApplePay {
+            if selectedMethodType.name == AWXApplePayKey && !paymentUIContext.showsApplePayAsPrimaryButton {
                 // Apple Pay selected from tab list (only when not prioritized)
                 sections.append(.applePay)
             } else if selectedMethodType.name == AWXCardKey {
@@ -270,18 +270,18 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
         var sections = [PaymentSectionType]()
 
         // When Apple Pay is prioritized, show it at top before accordion sections
-        if paymentUIContext.prioritizeApplePay && methodProvider.isApplePayAvailable {
+        if paymentUIContext.showsApplePayAsPrimaryButton && methodProvider.isApplePayAvailable {
             sections.append(.applePay)
         }
 
         // Exclude Apple Pay from accordion list when prioritized
-        let excludeApplePay = paymentUIContext.prioritizeApplePay
+        let excludeApplePay = paymentUIContext.showsApplePayAsPrimaryButton
         if !methodProvider.methodsForAccordionPosition(.top, excludeApplePay: excludeApplePay).isEmpty {
             sections.append(.accordion(.top))
         }
 
         if let selectedMethodType = methodProvider.selectedMethod {
-            if selectedMethodType.name == AWXApplePayKey && !paymentUIContext.prioritizeApplePay {
+            if selectedMethodType.name == AWXApplePayKey && !paymentUIContext.showsApplePayAsPrimaryButton {
                 // Apple Pay selected from accordion (only when not prioritized)
                 sections.append(.applePay)
             } else if selectedMethodType.name == AWXCardKey {

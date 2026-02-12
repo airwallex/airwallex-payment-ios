@@ -63,7 +63,7 @@ import XCTest
     func testAccordionLayout_Items() {
         mockSectionProvider.layout = .accordion
         mockSectionProvider.paymentUIContext.isEmbedded = true
-        mockSectionProvider.paymentUIContext.prioritizeApplePay = false  // Apple Pay integrated in accordion
+        mockSectionProvider.paymentUIContext.showsApplePayAsPrimaryButton = false  // Apple Pay integrated in accordion
         mockMethodProvider.selectedMethod = mockMethodProvider.methods.first
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
@@ -79,7 +79,7 @@ import XCTest
     func testAccordionLayout_Cells() {
         mockSectionProvider.layout = .accordion
         mockSectionProvider.paymentUIContext.isEmbedded = true
-        mockSectionProvider.paymentUIContext.prioritizeApplePay = false  // Apple Pay integrated in accordion
+        mockSectionProvider.paymentUIContext.showsApplePayAsPrimaryButton = false  // Apple Pay integrated in accordion
         mockMethodProvider.selectedMethod = mockMethodProvider.methods.first
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
@@ -150,12 +150,12 @@ import XCTest
         XCTAssertEqual(controller.items, [.applePayButton])
     }
 
-    func testTabLayout_WhenPrioritizeApplePayFalse_ShowsReminderAndButton() {
+    func testTabLayout_WhenShowsApplePayAsPrimaryButtonFalse_ShowsReminderAndButton() {
         // When showsApplePayAsPrimaryButton is false and layout is tab,
         // Apple Pay is selected from the tab list and should show reminder + button
         mockSectionProvider.layout = .tab
         mockSectionProvider.paymentUIContext.isEmbedded = true
-        mockSectionProvider.paymentUIContext.prioritizeApplePay = false
+        mockSectionProvider.paymentUIContext.showsApplePayAsPrimaryButton = false
         mockMethodProvider.selectedMethod = mockMethodProvider.methods.first
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()

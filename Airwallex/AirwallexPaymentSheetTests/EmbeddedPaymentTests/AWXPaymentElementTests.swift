@@ -76,12 +76,12 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertEqual(configuration.supportedCardBrands, [.visa, .mastercard])
     }
 
-    func testConfiguration_DefaultPrioritizeApplePay_IsTrue() {
+    func testConfiguration_DefaultShowsApplePayAsPrimaryButton_IsTrue() {
         let configuration = AWXPaymentElement.Configuration()
         XCTAssertTrue(configuration.showsApplePayAsPrimaryButton)
     }
 
-    func testConfiguration_CanSetPrioritizeApplePayToFalse() {
+    func testConfiguration_CanSetShowsApplePayAsPrimaryButtonToFalse() {
         let configuration = AWXPaymentElement.Configuration()
         configuration.showsApplePayAsPrimaryButton = false
         XCTAssertFalse(configuration.showsApplePayAsPrimaryButton)
@@ -565,7 +565,7 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertTrue(sections.contains(.applePay))
     }
 
-    func testSections_TabLayout_PrioritizeApplePay_ShowsApplePayAtTop() {
+    func testSections_TabLayout_ShowsApplePayAsPrimaryButton_ShowsApplePayAtTop() {
         let applePayMethod = AWXPaymentMethodType()
         applePayMethod.name = AWXApplePayKey
 
@@ -595,7 +595,7 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertTrue(sections.contains(.methodList), "Should contain method list")
     }
 
-    func testSections_TabLayout_PrioritizeApplePayFalse_IncludesApplePayInMethodListWhenSelected() {
+    func testSections_TabLayout_ShowsApplePayAsPrimaryButtonFalse_IncludesApplePayInMethodListWhenSelected() {
         let applePayMethod = AWXPaymentMethodType()
         applePayMethod.name = AWXApplePayKey
 
@@ -744,7 +744,7 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertTrue(sections.contains(.accordion(.bottom)), "Methods below Apple Pay should be in bottom accordion")
     }
 
-    func testSections_AccordionLayout_PrioritizeApplePay_ShowsApplePayAtTopBeforeAccordion() {
+    func testSections_AccordionLayout_ShowsApplePayAsPrimaryButton_ShowsApplePayAtTopBeforeAccordion() {
         let applePayMethod = AWXPaymentMethodType()
         applePayMethod.name = AWXApplePayKey
 
@@ -996,7 +996,7 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertFalse(sections.contains(.methodList), "Single Apple Pay should hide method list")
     }
 
-    func testDisplayMethodList_SingleApplePayWithPrioritizeApplePayFalse_ShowsMethodList() {
+    func testDisplayMethodList_SingleApplePayWithShowsApplePayAsPrimaryButtonFalse_ShowsMethodList() {
         let applePayMethod = AWXPaymentMethodType()
         applePayMethod.name = AWXApplePayKey
         mockMethodProvider.methods = [applePayMethod]

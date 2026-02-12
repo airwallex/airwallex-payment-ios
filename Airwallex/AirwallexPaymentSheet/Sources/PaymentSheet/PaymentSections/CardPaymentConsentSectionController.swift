@@ -416,18 +416,17 @@ private extension CardPaymentConsentSectionController {
         )
         let deleteAction = UIAlertAction(
             title: NSLocalizedString("Remove", bundle: .paymentSheet, comment: "consent section - alert confirm button to remove a consent"),
-            style: .destructive) { [weak self] _ in
+            style: .destructive) { [self] _ in
                 Task {
-                    guard let self else { return }
-                    self.context.startLoading(for: self.section)
+                    context.startLoading(for: section)
                     do {
-                        try await self.methodProvider.disable(consent: consent)
+                        try await methodProvider.disable(consent: consent)
                         debugLog("remove consent successfully. ID: \(consent.id)")
                     } catch {
                         UIViewController.topMost?.showAlert(message: error.localizedDescription)
                         debugLog("removing consent failed. ID: \(consent.id)")
                     }
-                    self.context.stopLoading(for: self.section)
+                    context.stopLoading()
                 }
         }
         alert.addAction(deleteAction)
@@ -489,9 +488,6 @@ private extension CardPaymentConsentSectionController {
         }
 
         // Confirm payment phase
-        if mode == .consentPayment {
-            RiskLogger.log(.clickPaymentButton, screen: .consent)
-        }
         confirmConsentPayment(consent: consent)
     }
 
@@ -508,6 +504,8 @@ private extension CardPaymentConsentSectionController {
     }
 
     func confirmConsentPayment(consent: AWXPaymentConsent) {
+        RiskLogger.log(.clickPaymentButton, screen: .consent)
+
         paymentSessionHandler = PaymentSessionHandler(
             session: session,
             paymentUIContext: paymentUIContext
