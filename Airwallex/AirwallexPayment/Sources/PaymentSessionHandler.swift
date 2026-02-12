@@ -77,16 +77,18 @@ public class PaymentSessionHandler: NSObject {
     private(set) var actionProvider: AWXDefaultProvider?
     
     var viewController: UIViewController {
-        assert(paymentUIContext.viewController != nil, "The view controller that launches the payment is expected to remain present until the session ends.")
         if let viewController = paymentUIContext.viewController {
             return viewController
         }
+        // Find topmost view controller from key window
         let windowScene = UIApplication.shared.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene
+        let keyWindow: UIWindow?
         if #available(iOS 15.0, *) {
-            return windowScene?.keyWindow?.rootViewController ?? UIViewController()
+            keyWindow = windowScene?.keyWindow
         } else {
-            return windowScene?.windows.first?.rootViewController ?? UIViewController()
+            keyWindow = windowScene?.windows.first(where: { $0.isKeyWindow })
         }
+        return UIViewController.topMostViewController(from: keyWindow?.rootViewController) ?? UIViewController()
     }
 
     private(set) var methodType: AWXPaymentMethodType?
@@ -113,14 +115,14 @@ public class PaymentSessionHandler: NSObject {
         }
     }
     
-    /// Initializes a `PaymentSessionHandler` with a payment session and the view controller from which the payment is initiated.
+    /// Initializes a `PaymentSessionHandler` with a payment session and an optional view controller from which the payment is initiated.
     /// - Parameters:
     ///   - session: The payment session containing relevant transaction details.
-    ///   - viewController: The view controller that initiates the payment process.
+    ///   - viewController: The view controller that initiates the payment process. If `nil`, the topmost visible view controller will be used automatically.
     ///   - paymentResultDelegate: delegate which conforms to `AWXPaymentResultDelegate` for handling payment results
     ///   - methodType: The payment method type returned from the server (optional).
     @objc public convenience init(session: AWXSession,
-                                  viewController: UIViewController,
+                                  viewController: UIViewController? = nil,
                                   paymentResultDelegate: AWXPaymentResultDelegate?,
                                   methodType: AWXPaymentMethodType? = nil) {
         let context = PaymentUIContext(
