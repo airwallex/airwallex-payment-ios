@@ -417,9 +417,9 @@ private extension CardPaymentConsentSectionController {
         let deleteAction = UIAlertAction(
             title: NSLocalizedString("Remove", bundle: .paymentSheet, comment: "consent section - alert confirm button to remove a consent"),
             style: .destructive) { [weak self] _ in
-                guard let self else { return }
-                UIViewController.topMost?.startLoading()
                 Task {
+                    guard let self else { return }
+                    self.context.startLoading(for: self.section)
                     do {
                         try await self.methodProvider.disable(consent: consent)
                         debugLog("remove consent successfully. ID: \(consent.id)")
@@ -427,7 +427,7 @@ private extension CardPaymentConsentSectionController {
                         UIViewController.topMost?.showAlert(message: error.localizedDescription)
                         debugLog("removing consent failed. ID: \(consent.id)")
                     }
-                    UIViewController.topMost?.stopLoading()
+                    self.context.stopLoading(for: self.section)
                 }
         }
         alert.addAction(deleteAction)

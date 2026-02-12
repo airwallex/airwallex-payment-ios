@@ -7,9 +7,13 @@
 //
 
 import UIKit
+#if canImport(AirwallexPayment)
+@_spi(AWX) import AirwallexPayment
+#endif
 
 /// Context that bridges section controllers with the collection view and its data source.
 /// All item operations use SectionItem to ensure global uniqueness.
+@MainActor
 class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Sendable> {
 
     /// Type alias for the compound item type
@@ -21,6 +25,9 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
     private var dataSource: UICollectionViewDiffableDataSource<Section, SectionItem>
     private var _performUpdates: (Bool, Bool) -> Void
     private var _performUpdatesForSection: (Section, Bool, Bool, Bool) -> Void
+
+    /// Tracks loading views per section
+    private var sectionLoadingViews = [Section: LoadingSpinnerView]()
 
     init(collectionView: UICollectionView,
          layout: UICollectionViewCompositionalLayout,
@@ -173,7 +180,56 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         }
         return false
     }
-    
+
+    // MARK: - Section Loading
+
+    /// Shows a loading indicator centered on the specified section's visible area
+    func startLoading(for section: Section) {
+        guard sectionLoadingViews[section] == nil else { return }
+
+        let snapshot = dataSource.snapshot()
+        guard let sectionIndex = snapshot.sectionIdentifiers.firstIndex(of: section) else { return }
+
+        // Calculate section frame from layout attributes
+        let itemCount = snapshot.numberOfItems(inSection: section)
+        guard itemCount > 0 else { return }
+
+        var sectionFrame = CGRect.null
+        for itemIndex in 0..<itemCount {
+            let indexPath = IndexPath(item: itemIndex, section: sectionIndex)
+            if let attributes = layout.layoutAttributesForItem(at: indexPath) {
+                sectionFrame = sectionFrame.union(attributes.frame)
+            }
+        }
+
+        guard !sectionFrame.isNull else { return }
+
+        // Intersect with visible bounds
+        let visibleFrame = sectionFrame.intersection(collectionView.bounds)
+        guard !visibleFrame.isNull else { return }
+
+        // Create and position loading indicator
+        let spinner = LoadingSpinnerView(size: .medium)
+        spinner.center = CGPoint(x: visibleFrame.midX, y: visibleFrame.midY)
+        collectionView.addSubview(spinner)
+        spinner.startAnimating()
+
+        sectionLoadingViews[section] = spinner
+        collectionView.isUserInteractionEnabled = false
+    }
+
+    /// Hides the loading indicator for the specified section
+    func stopLoading(for section: Section) {
+        guard let spinner = sectionLoadingViews.removeValue(forKey: section) else { return }
+        spinner.stopAnimating()
+        spinner.removeFromSuperview()
+
+        // Re-enable interaction only if no other sections are loading
+        if sectionLoadingViews.isEmpty {
+            collectionView.isUserInteractionEnabled = true
+        }
+    }
+
     // MARK: - register reusable views
     
     private lazy var registeredCells = Set<String>()

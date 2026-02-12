@@ -12,7 +12,7 @@ import UIKit
 import AirwallexCore
 #endif
 
-class LoadingSpinnerView: UIView {
+@_spi(AWX) public class LoadingSpinnerView: UIView {
     enum Style {
         case small
         case medium
@@ -62,7 +62,7 @@ class LoadingSpinnerView: UIView {
         commonInit()
     }
     
-    override var intrinsicContentSize: CGSize {
+    public override var intrinsicContentSize: CGSize {
         .init(width: style.width, height: style.height)
     }
 
@@ -90,7 +90,7 @@ class LoadingSpinnerView: UIView {
         setupShadow()
     }
     
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         if shapeLayer.frame != bounds {
             shapeLayer.frame = bounds
@@ -105,7 +105,7 @@ class LoadingSpinnerView: UIView {
         }
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             setupShadow()
