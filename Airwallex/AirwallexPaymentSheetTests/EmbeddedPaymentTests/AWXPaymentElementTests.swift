@@ -93,19 +93,19 @@ final class AWXPaymentElementTests: XCTestCase {
         let darkTraitCollection = UITraitCollection(userInterfaceStyle: .dark)
         // Compare resolved colors since dynamic colors are not equal by reference
         XCTAssertEqual(
-            configuration.appearance.colorBrand.resolvedColor(with: lightTraitCollection),
+            configuration.appearance.tintColor.resolvedColor(with: lightTraitCollection),
             UIColor.awxColor(.theme).resolvedColor(with: lightTraitCollection)
         )
         XCTAssertEqual(
-            configuration.appearance.colorBrand.resolvedColor(with: darkTraitCollection),
+            configuration.appearance.tintColor.resolvedColor(with: darkTraitCollection),
             UIColor.awxColor(.theme).resolvedColor(with: darkTraitCollection)
         )
     }
 
     func testConfiguration_CanSetCustomColorBrand() {
         let configuration = AWXPaymentElement.Configuration()
-        configuration.appearance.colorBrand = .systemRed
-        XCTAssertEqual(configuration.appearance.colorBrand, .systemRed)
+        configuration.appearance.tintColor = .systemRed
+        XCTAssertEqual(configuration.appearance.tintColor, .systemRed)
     }
 
     func testCreate_AppliesAppearanceColorBrand() {
@@ -116,7 +116,7 @@ final class AWXPaymentElementTests: XCTestCase {
 
         let configuration = AWXPaymentElement.Configuration()
         let customColor = UIColor.systemPurple
-        configuration.appearance.colorBrand = customColor
+        configuration.appearance.tintColor = customColor
 
         _ = AWXPaymentElement(
             hostViewController: mockViewController,

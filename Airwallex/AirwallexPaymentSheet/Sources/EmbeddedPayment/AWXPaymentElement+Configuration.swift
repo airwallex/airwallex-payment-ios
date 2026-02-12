@@ -29,7 +29,7 @@ extension AWXPaymentElement {
         /// The primary brand color used throughout the payment element.
         ///
         /// Defaults to the SDK's built-in theme color.
-        public var colorBrand: UIColor = .awxColor(.theme)
+        public var tintColor: UIColor = .awxColor(.theme)
     }
 
     /// Configuration options for the embedded payment element.

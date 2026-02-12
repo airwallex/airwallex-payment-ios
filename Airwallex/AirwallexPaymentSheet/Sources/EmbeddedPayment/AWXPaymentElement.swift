@@ -193,7 +193,7 @@ public class AWXPaymentElement: NSObject {
         super.init()
 
         // Apply theme color from appearance configuration
-        AWXTheme.shared().tintColor = configuration.appearance.colorBrand
+        AWXTheme.shared().tintColor = configuration.appearance.tintColor
 
         // Now set the internal delegate and viewController
         self.paymentUIContext.delegate = delegate
