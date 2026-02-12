@@ -167,11 +167,11 @@ public class AWXPaymentElement: NSObject {
         // Analytics
         let extraInfo: [AnalyticEvent.Fields: Any] = if configuration.elementType == .addCard {
             [.launchType: launchType,
-             .prioritizeApplePay: configuration.prioritizeApplePay,
+             .showsApplePayAsPrimaryButton: configuration.showsApplePayAsPrimaryButton,
              .paymentMethod: AWXCardKey]
         } else {
             [.launchType: launchType,
-             .prioritizeApplePay: configuration.prioritizeApplePay,
+             .showsApplePayAsPrimaryButton: configuration.showsApplePayAsPrimaryButton,
              .layout: configuration.layout.displayName]
         }
         AnalyticsLogger.bindSession(session: session, extraInfo: extraInfo)

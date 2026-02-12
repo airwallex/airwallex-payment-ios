@@ -29,7 +29,7 @@ import AirwallexCore
         case launchType // dropin, component, embedded_element, api
         case layout // tab, accordion, none
         case transactionMode // oneoff, recurring
-        case prioritizeApplePay // boolean value
+        case showsApplePayAsPrimaryButton // boolean value
     }
     
     @_spi(AWX) public enum PageView: String {
