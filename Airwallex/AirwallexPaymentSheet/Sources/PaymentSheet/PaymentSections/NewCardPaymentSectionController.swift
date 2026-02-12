@@ -343,7 +343,7 @@ private extension NewCardPaymentSectionController {
                     saveCard: shouldSaveCard
                 )
             } catch {
-                context.viewController?.showAlert(message: error.localizedDescription)
+                UIViewController.topMost?.showAlert(message: error.localizedDescription)
             }
         } catch {
             viewModelForCardInfo.updateValidStatusForCheckout()
@@ -358,7 +358,7 @@ private extension NewCardPaymentSectionController {
                 viewModel?.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
             }
             let message = error.localizedDescription
-            context.viewController?.showAlert(message: message)
+            UIViewController.topMost?.showAlert(message: message)
             
             AnalyticsLogger.log(
                 action: .cardPaymentValidation,
@@ -407,7 +407,7 @@ private extension NewCardPaymentSectionController {
         controller.delegate = self
         controller.country = viewModelForBillingAddress?.selectedCountry ?? viewModelForCountryCode?.country
         let nav = UINavigationController(rootViewController: controller)
-        context.viewController?.present(nav, animated: true)
+        UIViewController.topMost?.present(nav, animated: true)
     }
     
     func toggleReuseShippingAddress() {

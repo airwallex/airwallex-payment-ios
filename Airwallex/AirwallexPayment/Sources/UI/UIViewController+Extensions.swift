@@ -20,18 +20,33 @@ import UIKit
     var isLoading: Bool {
         view.isLoading
     }
+}
 
-    static func topMostViewController(from root: UIViewController?) -> UIViewController? {
-        if let presented = root?.presentedViewController {
-            return topMostViewController(from: presented)
+@_spi(AWX) public extension UIViewController {
+    static var topMost: UIViewController? {
+        let windowScene = UIApplication.shared.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene
+        let keyWindow: UIWindow?
+        if #available(iOS 15.0, *) {
+            keyWindow = windowScene?.keyWindow
+        } else {
+            keyWindow = windowScene?.windows.first(where: { $0.isKeyWindow })
         }
-        if let nav = root as? UINavigationController {
-            return topMostViewController(from: nav.visibleViewController)
+        let rootVC = keyWindow?.rootViewController
+
+        return UIViewController.topMost(from: rootVC)
+    }
+
+    static func topMost(from rootVC: UIViewController?) -> UIViewController? {
+        if let presented = rootVC?.presentedViewController {
+            return topMost(from: presented)
         }
-        if let tab = root as? UITabBarController {
-            return topMostViewController(from: tab.selectedViewController)
+        if let nav = rootVC as? UINavigationController {
+            return topMost(from: nav.visibleViewController)
         }
-        return root
+        if let tab = rootVC as? UITabBarController {
+            return topMost(from: tab.selectedViewController)
+        }
+        return rootVC
     }
 }
 

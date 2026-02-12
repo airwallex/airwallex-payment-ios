@@ -14,21 +14,19 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
 
     /// Type alias for the compound item type
     typealias SectionItem = CompoundItem<Section, Item>
-    
-    private(set) weak var viewController: UIViewController?
-    private weak var collectionView: UICollectionView!
+
+    /// Internal access for loading indicators. Do not manipulate collection view directly for data/layout operations.
+    private(set) weak var collectionView: UICollectionView!
     private weak var layout: UICollectionViewCompositionalLayout!
     private var dataSource: UICollectionViewDiffableDataSource<Section, SectionItem>
     private var _performUpdates: (Bool, Bool) -> Void
     private var _performUpdatesForSection: (Section, Bool, Bool, Bool) -> Void
-    
-    init(viewController: UIViewController,
-         collectionView: UICollectionView,
+
+    init(collectionView: UICollectionView,
          layout: UICollectionViewCompositionalLayout,
          dataSource: UICollectionViewDiffableDataSource<Section, SectionItem>,
          performSectionUpdates: @escaping (Section, Bool, Bool, Bool) -> Void,
          performUpdates: @escaping (Bool, Bool) -> Void) {
-        self.viewController = viewController
         self.collectionView = collectionView
         self.layout = layout
         self.dataSource = dataSource

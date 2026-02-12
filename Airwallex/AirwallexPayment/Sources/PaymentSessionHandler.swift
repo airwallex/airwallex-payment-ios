@@ -80,15 +80,7 @@ public class PaymentSessionHandler: NSObject {
         if let viewController = paymentUIContext.viewController {
             return viewController
         }
-        // Find topmost view controller from key window
-        let windowScene = UIApplication.shared.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene
-        let keyWindow: UIWindow?
-        if #available(iOS 15.0, *) {
-            keyWindow = windowScene?.keyWindow
-        } else {
-            keyWindow = windowScene?.windows.first(where: { $0.isKeyWindow })
-        }
-        return UIViewController.topMostViewController(from: keyWindow?.rootViewController) ?? UIViewController()
+        return UIViewController.topMost ?? UIViewController()
     }
 
     private(set) var methodType: AWXPaymentMethodType?

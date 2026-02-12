@@ -25,7 +25,6 @@ import AirwallexCore
 /// configuration.layout = .accordion
 ///
 /// let element = try await AWXPaymentElement.create(
-///     hostViewController: self,
 ///     session: session,
 ///     delegate: self,
 ///     configuration: configuration
@@ -36,7 +35,6 @@ import AirwallexCore
 /// ## Important Notes
 /// - The embedded view requires Auto Layout constraints for proper sizing
 /// - The view's height updates automatically based on content
-/// - A host view controller is required for presenting modals (3DS, redirects, etc.)
 /// - Keyboard handling is the host app's responsibility
 @MainActor
 @objc
@@ -65,7 +63,6 @@ public class AWXPaymentElement: NSObject {
         let listConfiguration = UICollectionViewCompositionalLayoutConfiguration()
         listConfiguration.interSectionSpacing = 16
         let manager = CollectionViewManager(
-            viewController: self.paymentUIContext.viewController!,
             sectionProvider: self,
             listConfiguration: listConfiguration
         )
@@ -86,8 +83,6 @@ public class AWXPaymentElement: NSObject {
     /// and creates a fully configured payment element.
     ///
     /// - Parameters:
-    ///   - hostViewController: The view controller that will host this element.
-    ///     Used for presenting modals like 3DS authentication, redirects, and country selection.
     ///   - session: The payment session containing transaction details.
     ///   - delegate: The delegate that receives payment result callbacks.
     ///   - configuration: Configuration options for the payment element.
@@ -95,7 +90,6 @@ public class AWXPaymentElement: NSObject {
     /// - Throws: `AWXUIContext.LaunchError` if session validation fails or payment methods cannot be fetched.
     @objc
     public static func create(
-        hostViewController: UIViewController,
         session: AWXSession,
         delegate: AWXPaymentResultDelegate,
         configuration: Configuration = Configuration()
@@ -103,7 +97,6 @@ public class AWXPaymentElement: NSObject {
         let methodProvider = try makeMethodProvider(session: session, configuration: configuration)
 
         return try await create(
-            hostViewController: hostViewController,
             session: session,
             methodProvider: methodProvider,
             delegate: delegate,
@@ -137,7 +130,6 @@ public class AWXPaymentElement: NSObject {
     }
     
     static func create(
-        hostViewController: UIViewController,
         session: AWXSession,
         methodProvider: PaymentMethodProvider,
         delegate: AWXPaymentResultDelegate,
@@ -152,7 +144,7 @@ public class AWXPaymentElement: NSObject {
 
         // Risk event
         RiskLogger.log(.transactionInitiated)
-        
+
         // Analytics
         let extraInfo: [AnalyticEvent.Fields: Any] = if configuration.elementType == .addCard {
             [.launchType: launchType,
@@ -170,7 +162,6 @@ public class AWXPaymentElement: NSObject {
 
         // Create element with all dependencies ready
         let element = AWXPaymentElement(
-            hostViewController: hostViewController,
             methodProvider: methodProvider,
             delegate: delegate,
             configuration: configuration
@@ -180,7 +171,6 @@ public class AWXPaymentElement: NSObject {
     }
 
     init(
-        hostViewController: UIViewController,
         methodProvider: PaymentMethodProvider,
         delegate: AWXPaymentResultDelegate,
         configuration: Configuration = Configuration()
@@ -193,9 +183,8 @@ public class AWXPaymentElement: NSObject {
         // Apply theme color from appearance configuration
         AWXTheme.shared().tintColor = configuration.appearance.tintColor
 
-        // Now set the internal delegate and viewController
+        // Now set the internal delegate
         self.paymentUIContext.delegate = delegate
-        self.paymentUIContext.viewController = hostViewController
         self.paymentUIContext.isEmbedded = true
         self.paymentUIContext.layout = configuration.layout
         self.paymentUIContext.prioritizeApplePay = configuration.showsApplePayAsPrimaryButton

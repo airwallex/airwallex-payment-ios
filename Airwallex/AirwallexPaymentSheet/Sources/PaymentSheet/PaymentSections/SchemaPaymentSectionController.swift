@@ -166,9 +166,9 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         task = Task {
             do {
                 // block user from checkout when paymentmethod type is loading
-                context.viewController?.startLoading()
+                UIViewController.topMost?.startLoading()
                 defer {
-                    context.viewController?.stopLoading()
+                    UIViewController.topMost?.stopLoading()
                 }
                 //  request method details from server
                 let response = try await methodProvider.getPaymentMethodTypeDetails(name: name)
@@ -268,7 +268,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 schema = nil
                 bankList = nil
                 task = nil
-                context.viewController?.showAlert(message: error.localizedDescription)
+                UIViewController.topMost?.showAlert(message: error.localizedDescription)
                 debugLog("Failed to get schema for selected method. Error: \(error.localizedDescription)")
             }
         }
@@ -333,15 +333,15 @@ private extension SchemaPaymentSectionController {
                     try await paymentSessionHandler?.confirmRedirectPayment(with: paymentMethod)
                     debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
                 } catch {
-                    context.viewController?.showAlert(message: error.localizedDescription)
+                    UIViewController.topMost?.showAlert(message: error.localizedDescription)
                     for viewModel in uiFieldViewModels {
                         viewModel.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
                     }
                 }
             }
-            
+
         } catch {
-            context.viewController?.showAlert(message: error.localizedDescription)
+            UIViewController.topMost?.showAlert(message: error.localizedDescription)
             for viewModel in uiFieldViewModels {
                 viewModel.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
             }
@@ -366,7 +366,7 @@ private extension SchemaPaymentSectionController {
         controller.formMapping = formMapping
         controller.modalPresentationStyle = .overFullScreen
         controller.modalTransitionStyle = .crossDissolve
-        context.viewController?.present(controller, animated: false)
+        UIViewController.topMost?.present(controller, animated: false)
     }
 }
     

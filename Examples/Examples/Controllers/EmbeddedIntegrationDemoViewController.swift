@@ -77,7 +77,6 @@ private extension EmbeddedIntegrationDemoViewController {
                 configuration.layout = ExamplesKeys.paymentLayout
                 configuration.showsApplePayAsPrimaryButton = false
                 let element = try await AWXPaymentElement.create(
-                    hostViewController: self,
                     session: session,
                     delegate: self,
                     configuration: configuration

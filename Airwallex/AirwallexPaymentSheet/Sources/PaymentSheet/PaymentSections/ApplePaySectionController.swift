@@ -112,7 +112,7 @@ class ApplePaySectionController: SectionController {
                     )
                     try self.paymentSessionHandler?.confirmApplePay(cancelPaymentOnDismiss: false)
                 } catch {
-                    self.context.viewController?.showAlert(message: error.localizedDescription)
+                    UIViewController.topMost?.showAlert(message: error.localizedDescription)
                 }
             }
             cell.setup(viewModel)

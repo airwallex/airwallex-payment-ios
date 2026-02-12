@@ -78,13 +78,11 @@
     } while (0);
 
     AWXPaymentElementConfiguration *config = [[AWXPaymentElementConfiguration alloc] init];
-    [AWXPaymentElement createWithHostViewController:self
-                                            session:session
-                                           delegate:self
-                                      configuration:config
-                                  completionHandler:^(AWXPaymentElement *_Nullable element, NSError *_Nullable error){
-                                      // foo
-                                  }];
+    [AWXPaymentElement createWithSession:session
+                                delegate:self
+                           configuration:config
+                       completionHandler:^(AWXPaymentElement *_Nullable element, NSError *_Nullable error){
+                       }];
 }
 
 // AWXPaymentResultDelegate

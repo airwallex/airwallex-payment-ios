@@ -297,9 +297,8 @@ class CardPaymentConsentSectionController: SectionController {
     
         // item is consent ID
         let consentId = item
-        guard let consent = consents.first(where: { $0.id == consentId }),
-              context.viewController != nil else {
-            assert(false, "view controller not found")
+        guard let consent = consents.first(where: { $0.id == consentId }) else {
+            assert(false, "consent not found")
             return
         }
         AnalyticsLogger.log(
@@ -419,16 +418,16 @@ private extension CardPaymentConsentSectionController {
             title: NSLocalizedString("Remove", bundle: .paymentSheet, comment: "consent section - alert confirm button to remove a consent"),
             style: .destructive) { [weak self] _ in
                 guard let self else { return }
-                self.context.viewController?.startLoading()
+                UIViewController.topMost?.startLoading()
                 Task {
                     do {
                         try await self.methodProvider.disable(consent: consent)
                         debugLog("remove consent successfully. ID: \(consent.id)")
                     } catch {
-                        self.context.viewController?.showAlert(message: error.localizedDescription)
+                        UIViewController.topMost?.showAlert(message: error.localizedDescription)
                         debugLog("removing consent failed. ID: \(consent.id)")
                     }
-                    self.context.viewController?.stopLoading()
+                    UIViewController.topMost?.stopLoading()
                 }
         }
         alert.addAction(deleteAction)
@@ -437,7 +436,7 @@ private extension CardPaymentConsentSectionController {
             style: .cancel
         )
         alert.addAction(cancelAction)
-        context.viewController?.present(alert, animated: true)
+        UIViewController.topMost?.present(alert, animated: true)
     }
     
     func showAlertForDeleteMITConsent(_ consent: AWXPaymentConsent) {
@@ -460,12 +459,12 @@ private extension CardPaymentConsentSectionController {
                 style: .cancel
             )
             alert.addAction(cancelAction)
-            context.viewController?.present(alert, animated: true)
+            UIViewController.topMost?.present(alert, animated: true)
         } catch {
             AnalyticsLogger.log(errorName: "JWT decoding error", errorMessage: error.localizedDescription)
         }
     }
-    
+
     func checkout(consent: AWXPaymentConsent) {
         context.endEditing()
         AnalyticsLogger.log(
@@ -482,7 +481,7 @@ private extension CardPaymentConsentSectionController {
                 try cvcConfigurer.validate()
                 consent.paymentMethod?.card?.cvc = cvcConfigurer.text
             } catch {
-                context.viewController?.showAlert(message: error.localizedDescription)
+                UIViewController.topMost?.showAlert(message: error.localizedDescription)
                 return
             }
         }
@@ -496,7 +495,7 @@ private extension CardPaymentConsentSectionController {
             )
             try paymentSessionHandler?.confirmConsentPayment(with: consent)
         } catch {
-            context.viewController?.showAlert(message: error.localizedDescription)
+            UIViewController.topMost?.showAlert(message: error.localizedDescription)
         }
     }
 }

@@ -36,12 +36,11 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
     
     private let displayHandler = SectionDisplayHandler<SectionType, ItemType>()
     
-    init(viewController: UIViewController,
-         sectionProvider: SectionProvider,
+    init(sectionProvider: SectionProvider,
          listConfiguration: UICollectionViewCompositionalLayoutConfiguration? = nil) {
         self.sectionDataSource = sectionProvider
         super.init()
-        
+
         let listConfiguration = listConfiguration ?? UICollectionViewCompositionalLayoutConfiguration()
         let boundaryItems = sectionProvider.listBoundaryItemProviders()
         if let boundaryLayoutItems = boundaryItems?.map({ $0.layout }) {
@@ -61,7 +60,7 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
         )
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
-        
+
         diffableDataSource = UICollectionViewDiffableDataSource<SectionType, SectionItem>(
             collectionView: collectionView,
             cellProvider: { [weak self] _, indexPath, sectionItem in
@@ -74,7 +73,7 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
                 return sectionController.cell(for: sectionItem, at: indexPath)
             }
         )
-        
+
         diffableDataSource.supplementaryViewProvider = {[weak self] (_, elementKind, indexPath) in
             guard let self else { return nil }
             if let boundaryItem = boundaryItems?.first(where: { $0.elementKind == elementKind }) {
@@ -85,12 +84,11 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
                 assert(false, "UI not consistance with data source")
                 return nil
             }
-            
+
             return sectionController.supplementaryView(for: elementKind, at: indexPath)
         }
-        
+
         context = CollectionViewContext(
-            viewController: viewController,
             collectionView: collectionView,
             layout: layout,
             dataSource: diffableDataSource,
@@ -101,7 +99,7 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
                 self?.performUpdates(forceReload: $0, animatingDifferences: $1)
             }
         )
-        
+
         for item in boundaryItems ?? [] {
             context.register(item.reusableView, forSupplementaryViewOfKind: item.elementKind)
         }
