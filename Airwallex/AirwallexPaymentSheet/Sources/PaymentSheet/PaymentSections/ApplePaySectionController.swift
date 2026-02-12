@@ -116,40 +116,25 @@ class ApplePaySectionController: SectionController {
     func checkout() {
         AnalyticsLogger.log(action: .tapPayButton, extraInfo: [.paymentMethod: methodType.name])
 
-        if self.paymentUIContext.isEmbedded {
-            self.paymentUIContext.currentPaymentMethod = AWXApplePayKey
-            if let element = self.paymentUIContext.paymentElement {
+        paymentSessionHandler = PaymentSessionHandler(
+            session: session,
+            methodType: methodType,
+            paymentUIContext: paymentUIContext
+        )
+        if paymentUIContext.isEmbedded {
+            paymentUIContext.currentPaymentMethod = AWXApplePayKey
+            if let element = paymentUIContext.paymentElement {
                 element.delegate?.paymentElement?(element, didStartPaymentFor: AWXApplePayKey)
             }
-            do {
-                self.paymentSessionHandler = PaymentSessionHandler(
-                    session: self.session,
-                    methodType: methodType,
-                    paymentUIContext: self.paymentUIContext
-                )
-                // Control PaymentSessionHandler loading based on config
-                self.paymentSessionHandler?.showIndicator = false
-                if self.paymentUIContext.showsPaymentProcessingIndicator {
-                    self.context.startLoading(for: self.section)
-                }
-                try self.paymentSessionHandler?.confirmApplePay(cancelPaymentOnDismiss: false)
-            } catch {
-                if self.paymentUIContext.showsPaymentProcessingIndicator {
-                    context.stopLoading(for: section)
-                }
-                UIViewController.topMost?.showAlert(message: error.localizedDescription)
+            paymentSessionHandler?.showIndicator = false
+            if paymentUIContext.showsPaymentProcessingIndicator {
+                context.startLoading(for: section)
             }
-        } else {
-            do {
-                self.paymentSessionHandler = PaymentSessionHandler(
-                    session: self.session,
-                    methodType: methodType,
-                    paymentUIContext: self.paymentUIContext
-                )
-                try self.paymentSessionHandler?.confirmApplePay(cancelPaymentOnDismiss: false)
-            } catch {
-                UIViewController.topMost?.showAlert(message: error.localizedDescription)
-            }
+        }
+        do {
+            try paymentSessionHandler?.confirmApplePay(cancelPaymentOnDismiss: paymentUIContext.isEmbedded)
+        } catch {
+            paymentSessionHandler?.handleFailure(error)
         }
     }
 

@@ -136,8 +136,7 @@ extension EmbeddedIntegrationDemoViewController: AWXPaymentElementDelegate {
         case .cancel:
             showAlert(
                 message: "Your payment has been cancelled",
-                title: "Payment cancelled",
-                action: action
+                title: "Payment cancelled"
             )
         }
     }

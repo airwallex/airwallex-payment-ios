@@ -290,89 +290,70 @@ private extension SchemaPaymentSectionController {
             updateItemsIfNecessary()
             return
         }
-        
+
+        // Validation phase
         do {
             // validate bank selection
             try bankSelectionViewModel?.validate()
-            
             // validate uiFields
             for viewModel in uiFieldViewModels {
-                do {
-                    try viewModel.validate()
-                } catch {
-                    context.scroll(to: sectionItem(viewModel.fieldName), position: .bottom, animated: true)
-                    throw error
-                }
+                try viewModel.validate()
             }
-            
-            let paymentMethod = AWXPaymentMethod()
-            paymentMethod.type = name
-            
-            // update bank selection
-            if let bankSelectionViewModel {
-                paymentMethod.appendAdditionalParams([bankSelectionViewModel.fieldName: bankSelectionViewModel.bank?.name ?? ""])
-            }
-            
-            //  update from UI fields
-            let inputContents = uiFieldViewModels.reduce(into: [String: String]()) { partialResult, viewModel in
-                partialResult[viewModel.fieldName] = viewModel.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-            }
-            paymentMethod.appendAdditionalParams(inputContents)
-            
-            // update hidden fields
-            paymentMethod.appendAdditionalParams(schema.parametersForHiddenFields(countryCode: session.countryCode))
-
-            if paymentUIContext.isEmbedded {
-                paymentUIContext.currentPaymentMethod = name
-                if let element = paymentUIContext.paymentElement {
-                    element.delegate?.paymentElement?(element, didStartPaymentFor: name)
-                }
-                paymentSessionHandler = PaymentSessionHandler(
-                    session: session,
-                    methodType: methodProvider.method(named: name),
-                    paymentUIContext: paymentUIContext
-                )
-                paymentSessionHandler?.showIndicator = false
-                if paymentUIContext.showsPaymentProcessingIndicator {
-                    context.startLoading(for: section)
-                }
-                Task { @MainActor in
-                    do {
-                        try await paymentSessionHandler?.confirmRedirectPayment(with: paymentMethod)
-                        debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
-                    } catch {
-                        if paymentUIContext.showsPaymentProcessingIndicator {
-                            context.stopLoading(for: section)
-                        }
-                        UIViewController.topMost?.showAlert(message: error.localizedDescription)
-                        for viewModel in uiFieldViewModels {
-                            viewModel.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
-                        }
-                    }
-                }
-            } else {
-                paymentSessionHandler = PaymentSessionHandler(
-                    session: session,
-                    methodType: methodProvider.method(named: name),
-                    paymentUIContext: paymentUIContext
-                )
-                Task { @MainActor in
-                    do {
-                        try await paymentSessionHandler?.confirmRedirectPayment(with: paymentMethod)
-                        debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
-                    } catch {
-                        UIViewController.topMost?.showAlert(message: error.localizedDescription)
-                        for viewModel in uiFieldViewModels {
-                            viewModel.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
-                        }
-                    }
-                }
-            }
-
         } catch {
-            UIViewController.topMost?.showAlert(message: error.localizedDescription)
             for viewModel in uiFieldViewModels {
                 viewModel.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
+            }
+            return
+        }
+
+        // Confirm payment phase
+        let paymentMethod = buildPaymentMethod(schema: schema)
+        confirmRedirectPayment(paymentMethod: paymentMethod)
+    }
+
+    func buildPaymentMethod(schema: AWXSchema) -> AWXPaymentMethod {
+        let paymentMethod = AWXPaymentMethod()
+        paymentMethod.type = name
+
+        // update bank selection
+        if let bankSelectionViewModel {
+            paymentMethod.appendAdditionalParams([bankSelectionViewModel.fieldName: bankSelectionViewModel.bank?.name ?? ""])
+        }
+
+        // update from UI fields
+        let inputContents = uiFieldViewModels.reduce(into: [String: String]()) { partialResult, viewModel in
+            partialResult[viewModel.fieldName] = viewModel.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        paymentMethod.appendAdditionalParams(inputContents)
+
+        // update hidden fields
+        paymentMethod.appendAdditionalParams(schema.parametersForHiddenFields(countryCode: session.countryCode))
+
+        return paymentMethod
+    }
+
+    func confirmRedirectPayment(paymentMethod: AWXPaymentMethod) {
+        paymentSessionHandler = PaymentSessionHandler(
+            session: session,
+            methodType: methodProvider.method(named: name),
+            paymentUIContext: paymentUIContext
+        )
+        if paymentUIContext.isEmbedded {
+            paymentUIContext.currentPaymentMethod = name
+            if let element = paymentUIContext.paymentElement {
+                element.delegate?.paymentElement?(element, didStartPaymentFor: name)
+            }
+            paymentSessionHandler?.showIndicator = false
+            if paymentUIContext.showsPaymentProcessingIndicator {
+                context.startLoading(for: section)
+            }
+        }
+        Task {
+            do {
+                try await paymentSessionHandler?.confirmRedirectPayment(with: paymentMethod)
+                debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
+            } catch {
+                paymentSessionHandler?.handleFailure(error)
             }
         }
     }

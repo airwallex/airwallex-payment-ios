@@ -475,53 +475,57 @@ private extension CardPaymentConsentSectionController {
                 .consentId: consent.id
             ]
         )
+
+        // Validation phase
         if let cvcConfigurer {
             cvcConfigurer.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
             do {
                 try cvcConfigurer.validate()
                 consent.paymentMethod?.card?.cvc = cvcConfigurer.text
             } catch {
-                UIViewController.topMost?.showAlert(message: error.localizedDescription)
+                handleValidationFailure(error)
                 return
             }
         }
+
+        // Confirm payment phase
         if mode == .consentPayment {
             RiskLogger.log(.clickPaymentButton, screen: .consent)
         }
+        confirmConsentPayment(consent: consent)
+    }
 
-        // Notify delegate and set current payment method for embedded element
+    func handleValidationFailure(_ error: Error) {
+        let message = error.localizedDescription
+        AnalyticsLogger.log(
+            action: .cardPaymentValidation,
+            extraInfo: [
+                .message: message,
+                .subtype: Self.subType
+            ]
+        )
+        debugLog("Payment failed. Intent ID: \(session.paymentIntentId() ?? ""). Reason: \(message)")
+    }
+
+    func confirmConsentPayment(consent: AWXPaymentConsent) {
+        paymentSessionHandler = PaymentSessionHandler(
+            session: session,
+            paymentUIContext: paymentUIContext
+        )
         if paymentUIContext.isEmbedded {
             paymentUIContext.currentPaymentMethod = AWXCardKey
             if let element = paymentUIContext.paymentElement {
                 element.delegate?.paymentElement?(element, didStartPaymentFor: AWXCardKey)
             }
-            do {
-                paymentSessionHandler = PaymentSessionHandler(
-                    session: session,
-                    paymentUIContext: paymentUIContext
-                )
-                // Control PaymentSessionHandler loading based on config
-                paymentSessionHandler?.showIndicator = false
-                if paymentUIContext.showsPaymentProcessingIndicator {
-                    context.startLoading(for: section)
-                }
-                try paymentSessionHandler?.confirmConsentPayment(with: consent)
-            } catch {
-                if paymentUIContext.showsPaymentProcessingIndicator {
-                    context.stopLoading(for: section)
-                }
-                UIViewController.topMost?.showAlert(message: error.localizedDescription)
+            paymentSessionHandler?.showIndicator = false
+            if paymentUIContext.showsPaymentProcessingIndicator {
+                context.startLoading(for: section)
             }
-        } else {
-            do {
-                paymentSessionHandler = PaymentSessionHandler(
-                    session: session,
-                    paymentUIContext: paymentUIContext
-                )
-                try paymentSessionHandler?.confirmConsentPayment(with: consent)
-            } catch {
-                UIViewController.topMost?.showAlert(message: error.localizedDescription)
-            }
+        }
+        do {
+            try paymentSessionHandler?.confirmConsentPayment(with: consent)
+        } catch {
+            paymentSessionHandler?.handleFailure(error)
         }
     }
 }

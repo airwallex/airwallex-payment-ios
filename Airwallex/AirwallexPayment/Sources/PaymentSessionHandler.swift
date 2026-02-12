@@ -173,7 +173,7 @@ public class PaymentSessionHandler: NSObject {
             logPaymentLaunched(AWXApplePayKey)
             try confirmApplePay(cancelPaymentOnDismiss: true)
         } catch {
-            handleFailure(paymentResultDelegate, error)
+            handleFailure(error)
         }
     }
     
@@ -190,7 +190,7 @@ public class PaymentSessionHandler: NSObject {
             logPaymentLaunched(AWXCardKey)
             try confirmCardPayment(with: card, billing: billing, saveCard: saveCard)
         } catch {
-            handleFailure(paymentResultDelegate, error)
+            handleFailure(error)
         }
     }
     
@@ -211,7 +211,7 @@ public class PaymentSessionHandler: NSObject {
             logPaymentLaunched(AWXCardKey, extraInfo: [.consentId: consent.id])
             try confirmConsentPayment(with: consent)
         } catch {
-            handleFailure(paymentResultDelegate, error)
+            handleFailure(error)
         }
     }
     
@@ -232,7 +232,7 @@ public class PaymentSessionHandler: NSObject {
             logPaymentLaunched(AWXCardKey, extraInfo: [.consentId: consentId])
             try confirmConsentPayment(withId: consentId, requiresCVC: requiresCVC)
         } catch {
-            handleFailure(paymentResultDelegate, error)
+            handleFailure(error)
         }
     }
     
@@ -261,7 +261,7 @@ public class PaymentSessionHandler: NSObject {
                 logPaymentLaunched(name)
                 try await confirmRedirectPayment(with: name, additionalInfo: additionalInfo)
             } catch {
-                handleFailure(paymentResultDelegate, error)
+                handleFailure(error)
             }
         }
     }
@@ -441,8 +441,7 @@ public class PaymentSessionHandler: NSObject {
         redirectAction.confirmPaymentIntent(with: paymentMethod, paymentConsent: nil, flow: .app)
     }
     
-    private func handleFailure(_ paymentResultDelegate: AWXPaymentResultDelegate?,
-                               _ error: Error) {
+    func handleFailure(_ error: Error) {
         let error = ValidationError.invalidPayment(underlyingError: error)
         debugLog("\(error)")
         paymentResultDelegate?.paymentViewController(nil, didCompleteWith: .failure, error: error)
