@@ -93,7 +93,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
             section.contentInsets = .init(horizontal: paymentUIContext.isEmbedded ? 0 : 16)
         case .accordion:
             let sectionHorizontal: CGFloat = paymentUIContext.isEmbedded ? 24 : 40
-            section.contentInsets = .init(top: 16, leading: sectionHorizontal, bottom: 32, trailing: sectionHorizontal)
+            section.contentInsets = .init(top: 16, leading: sectionHorizontal, bottom: 24, trailing: sectionHorizontal)
 
             // Layout for decoration - rounded corner
             context.register(RoundedCornerDecorationView.self, forDecorationViewOfKind: AccordionSectionController.backgroundElementKind)
@@ -113,8 +113,8 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         case .accordionKey:
             let cell = context.dequeueReusableCell(AccordionSelectedMethodCell.self, for: sectionItem, indexPath: indexPath)
             let viewModel = PaymentMethodCellViewModel(
-                itemIdentifier: item,
-                name: methodType.displayName,
+                name: methodType.name,
+                displayName: methodType.displayName,
                 imageURL: methodType.resources.logoURL,
                 isSelected: true,
                 imageLoader: paymentUIContext.imageLoader,
@@ -131,7 +131,9 @@ class SchemaPaymentSectionController: NSObject, SectionController {
             cell.setup(viewModel)
             return cell
         case .redirectReminder:
-            return context.dequeueReusableCell(SchemaPaymentReminderCell.self, for: sectionItem, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(PaymentReminderCell.self, for: sectionItem, indexPath: indexPath)
+            cell.setup(.schema)
+            return cell
         case .bankName:
             let cell = context.dequeueReusableCell(BankSelectionCell.self, for: sectionItem, indexPath: indexPath)
             assert(bankSelectionViewModel != nil)

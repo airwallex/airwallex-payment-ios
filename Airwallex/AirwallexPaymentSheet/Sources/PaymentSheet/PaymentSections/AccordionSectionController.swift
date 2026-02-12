@@ -125,10 +125,13 @@ class AccordionSectionController: SectionController {
             return
         }
         
-        viewModels = methodProvider.methodsForAccordionPosition(position).map { methodType in
+        viewModels = methodProvider.methodsForAccordionPosition(
+            position,
+            excludeApplePay: paymentUIContext.prioritizeApplePay
+        ).map { methodType in
             PaymentMethodCellViewModel(
-                itemIdentifier: methodType.name,
-                name: methodType.displayName,
+                name: methodType.name,
+                displayName: methodType.displayName,
                 imageURL: methodType.resources.logoURL,
                 isSelected: false,
                 imageLoader: paymentUIContext.imageLoader,
@@ -160,19 +163,22 @@ class AccordionSectionController: SectionController {
         }
     }
 }
-    
+
 extension PaymentMethodProvider {
-    func methodsForAccordionPosition(_ position: AccordionSectionController.Position) -> [AWXPaymentMethodType] {
+    func methodsForAccordionPosition(
+        _ position: AccordionSectionController.Position,
+        excludeApplePay: Bool = true
+    ) -> [AWXPaymentMethodType] {
         guard let selectedMethod,
               let index = methods.firstIndex(where: { $0.name == selectedMethod.name }) else {
             switch position {
             case .top:
-                return methods
+                return methods.filter { !excludeApplePay || $0.name != AWXApplePayKey }
             case .bottom:
                 return []
             }
         }
         let methodSlice = (position == .top) ? methods[..<index] : methods[(index+1)...]
-        return Array(methodSlice.filter { $0.name != AWXApplePayKey })
+        return Array(methodSlice.filter { !excludeApplePay || $0.name != AWXApplePayKey })
     }
 }

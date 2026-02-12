@@ -26,6 +26,9 @@ class PaymentSheetUIContext: PaymentUIContext {
     /// When true, section controllers should use zero horizontal insets.
     var isEmbedded: Bool = false
 
+    /// Whether Apple Pay is prioritized (shown at top).
+    var prioritizeApplePay: Bool = true
+
     /// Shared image loader for payment method icons.
     private(set) lazy var imageLoader = ImageLoader()
 }

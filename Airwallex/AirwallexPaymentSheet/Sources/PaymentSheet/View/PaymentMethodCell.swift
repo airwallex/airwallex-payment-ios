@@ -13,8 +13,11 @@ import AirwallexCore
 #endif
 
 struct PaymentMethodCellViewModel: CellViewModelIdentifiable, CardBrandViewConfiguring {
-    let itemIdentifier: String
+    var itemIdentifier: String {
+        return name
+    }
     let name: String
+    let displayName: String
     let imageURL: URL?
     var placeholder: UIImage? {
         switch name {
@@ -76,7 +79,7 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         } else {
             logo.image = viewModel.placeholder
         }
-        label.text = viewModel.name
+        label.text = viewModel.displayName
         label.font = viewModel.isSelected ? .awxFont(.caption2, weight: .bold) : .awxFont(.caption2)
         label.textColor = viewModel.isSelected ? .awxColor(.textLink) : .awxColor(.textPrimary)
         roundedBG.layer.borderColor = viewModel.isSelected ? .awxCGColor(.borderInteractive) : .awxCGColor(.borderDecorative)

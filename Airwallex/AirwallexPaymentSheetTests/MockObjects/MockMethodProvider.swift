@@ -45,7 +45,9 @@ class MockMethodProvider: PaymentMethodProvider {
     var methods: [AWXPaymentMethodType]
     
     var consents: [AWXPaymentConsent]
-    
+
+    var isApplePaySelectable: Bool = false
+
     var mockSchemaDetails: AWXGetPaymentMethodTypeResponse?
     init(methods: [AWXPaymentMethodType], consents: [AWXPaymentConsent]) {
         self.methods = methods

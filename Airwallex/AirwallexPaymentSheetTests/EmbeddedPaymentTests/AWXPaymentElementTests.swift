@@ -76,6 +76,17 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertEqual(configuration.supportedCardBrands, [.visa, .mastercard])
     }
 
+    func testConfiguration_DefaultPrioritizeApplePay_IsTrue() {
+        let configuration = AWXPaymentElement.Configuration()
+        XCTAssertTrue(configuration.showsApplePayAsPrimaryButton)
+    }
+
+    func testConfiguration_CanSetPrioritizeApplePayToFalse() {
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.showsApplePayAsPrimaryButton = false
+        XCTAssertFalse(configuration.showsApplePayAsPrimaryButton)
+    }
+
     // MARK: - makeMethodProvider Tests
 
     func testMakeMethodProvider_StandardElementType_ReturnsPaymentSheetMethodProvider() throws {
@@ -373,7 +384,7 @@ final class AWXPaymentElementTests: XCTestCase {
 
         XCTAssertTrue(sections.contains(.cardPaymentNew))
         XCTAssertFalse(sections.contains(.applePay))
-        XCTAssertTrue(sections.contains(.methodList))
+        XCTAssertFalse(sections.contains(.methodList))
     }
 
     func testSections_TabLayout_WithApplePay_IncludesApplePaySection() {
@@ -513,6 +524,67 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertTrue(sections.contains(.applePay))
     }
 
+    func testSections_TabLayout_PrioritizeApplePay_ShowsApplePayAtTop() {
+        let applePayMethod = AWXPaymentMethodType()
+        applePayMethod.name = AWXApplePayKey
+
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+
+        mockMethodProvider.methods = [applePayMethod, cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        // Default configuration has showsApplePayAsPrimaryButton = true
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.layout = .tab
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController,
+            configuration: configuration
+        )
+
+        let sections = element.sections()
+
+        // Apple Pay should be at the top (first section)
+        XCTAssertTrue(sections.contains(.applePay), "Should contain Apple Pay section")
+        XCTAssertEqual(sections.first, .applePay, "Apple Pay should be first section when prioritized")
+        // Apple Pay should NOT be included in method list
+        XCTAssertTrue(sections.contains(.methodList), "Should contain method list")
+    }
+
+    func testSections_TabLayout_PrioritizeApplePayFalse_IncludesApplePayInMethodListWhenSelected() {
+        let applePayMethod = AWXPaymentMethodType()
+        applePayMethod.name = AWXApplePayKey
+
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+
+        mockMethodProvider.methods = [applePayMethod, cardMethod]
+        mockMethodProvider.selectedMethod = applePayMethod
+        mockMethodProvider.isApplePaySelectable = true
+
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.layout = .tab
+        configuration.showsApplePayAsPrimaryButton = false
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController,
+            configuration: configuration
+        )
+
+        let sections = element.sections()
+
+        // Apple Pay should not be at the top when not prioritized
+        XCTAssertNotEqual(sections.first, .applePay, "Apple Pay should not be first when not prioritized")
+        // Apple Pay section should appear because it's selected from the tab list
+        XCTAssertTrue(sections.contains(.applePay), "Should contain Apple Pay section when selected")
+        XCTAssertTrue(sections.contains(.methodList), "Should contain method list with Apple Pay in it")
+    }
+
     // MARK: - Section Tests (Accordion Layout)
 
     func testSections_AccordionLayout_WithMultipleMethods_ReturnsAccordionSections() {
@@ -568,7 +640,7 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertFalse(sections3.contains(.accordion(.bottom)))
     }
 
-    func testSections_AccordionLayout_ExcludesMethodListAndIncludesApplePay() {
+    func testSections_AccordionLayout_ExcludesMethodList() {
         let applePayMethod = AWXPaymentMethodType()
         applePayMethod.name = AWXApplePayKey
 
@@ -583,6 +655,7 @@ final class AWXPaymentElementTests: XCTestCase {
 
         let configuration = AWXPaymentElement.Configuration()
         configuration.layout = .accordion
+        configuration.showsApplePayAsPrimaryButton = false  // Apple Pay integrated in accordion
 
         let element = AWXPaymentElement(
             hostViewController: mockViewController,
@@ -594,7 +667,80 @@ final class AWXPaymentElementTests: XCTestCase {
         let sections = element.sections()
 
         XCTAssertFalse(sections.contains(.methodList), "Accordion layout should not include methodList")
-        XCTAssertTrue(sections.contains(.applePay), "Accordion layout should include ApplePay when available")
+        // When card is selected, Apple Pay appears in accordion sections, not as separate .applePay section
+        XCTAssertFalse(sections.contains(.applePay))
+        XCTAssertTrue(sections.contains(.accordion(.top)))
+    }
+
+    func testSections_AccordionLayout_ApplePaySelected_ShowsApplePaySection() {
+        let applePayMethod = AWXPaymentMethodType()
+        applePayMethod.name = AWXApplePayKey
+
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+
+        let alipayMethod = AWXPaymentMethodType()
+        alipayMethod.name = "alipayhk"
+
+        mockMethodProvider.methods = [applePayMethod, cardMethod, alipayMethod]
+        mockMethodProvider.selectedMethod = applePayMethod
+
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.layout = .accordion
+        configuration.showsApplePayAsPrimaryButton = false  // Apple Pay integrated in accordion
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController,
+            configuration: configuration
+        )
+
+        let sections = element.sections()
+
+        XCTAssertTrue(sections.contains(.applePay), "Accordion layout should include ApplePay section when ApplePay is selected")
+        XCTAssertFalse(sections.contains(.accordion(.top)), "No methods above Apple Pay when it's first and selected")
+        XCTAssertTrue(sections.contains(.accordion(.bottom)), "Methods below Apple Pay should be in bottom accordion")
+    }
+
+    func testSections_AccordionLayout_PrioritizeApplePay_ShowsApplePayAtTopBeforeAccordion() {
+        let applePayMethod = AWXPaymentMethodType()
+        applePayMethod.name = AWXApplePayKey
+
+        let wechatMethod = AWXPaymentMethodType()
+        wechatMethod.name = "wechatpay"
+
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+
+        let alipayMethod = AWXPaymentMethodType()
+        alipayMethod.name = "alipayhk"
+
+        // Order: [ApplePay, WeChat, Card, Alipay] with Card selected
+        // When Apple Pay is prioritized and excluded from accordion,
+        // top accordion should contain [WeChat] and bottom accordion should contain [Alipay]
+        mockMethodProvider.methods = [applePayMethod, wechatMethod, cardMethod, alipayMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        // Default configuration has showsApplePayAsPrimaryButton = true
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.layout = .accordion
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController,
+            configuration: configuration
+        )
+
+        let sections = element.sections()
+
+        // Apple Pay should be at the top (first section) before accordion sections
+        XCTAssertTrue(sections.contains(.applePay), "Should contain Apple Pay section")
+        XCTAssertEqual(sections.first, .applePay, "Apple Pay should be first section when prioritized in accordion layout")
+        // Apple Pay should be excluded from accordion sections, but WeChat should be in .top
+        XCTAssertTrue(sections.contains(.accordion(.top)), "Should have accordion top section with methods above Card (excluding Apple Pay)")
+        XCTAssertTrue(sections.contains(.accordion(.bottom)), "Should have accordion bottom section with methods below Card")
     }
 
     func testSections_AccordionLayout_CardWithoutConsents_ShowsCardPaymentNew() {
@@ -788,6 +934,159 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertEqual(sections.count, 1)
         XCTAssertFalse(sections.contains(.cardPaymentConsent))
         XCTAssertTrue(sections.contains(.cardPaymentNew))
+    }
+
+    // MARK: - displayMethodList Tests
+
+    func testDisplayMethodList_SingleApplePay_HidesMethodList() {
+        let applePayMethod = AWXPaymentMethodType()
+        applePayMethod.name = AWXApplePayKey
+        mockMethodProvider.methods = [applePayMethod]
+        mockMethodProvider.selectedMethod = applePayMethod
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        let sections = element.sections()
+
+        XCTAssertFalse(sections.contains(.methodList), "Single Apple Pay should hide method list")
+    }
+
+    func testDisplayMethodList_SingleApplePayWithPrioritizeApplePayFalse_ShowsMethodList() {
+        let applePayMethod = AWXPaymentMethodType()
+        applePayMethod.name = AWXApplePayKey
+        mockMethodProvider.methods = [applePayMethod]
+        mockMethodProvider.selectedMethod = applePayMethod
+        mockMethodProvider.isApplePaySelectable = true
+
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.layout = .tab
+        configuration.showsApplePayAsPrimaryButton = false
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController,
+            configuration: configuration
+        )
+
+        let sections = element.sections()
+
+        XCTAssertTrue(sections.contains(.methodList), "Single Apple Pay with showsApplePayAsPrimaryButton=false should show method list")
+    }
+
+    func testDisplayMethodList_SingleCardWithoutConsents_HidesMethodList() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+        mockMethodProvider.consents = []
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        let sections = element.sections()
+
+        XCTAssertFalse(sections.contains(.methodList), "Single card without consents should hide method list")
+    }
+
+    func testDisplayMethodList_SingleCardWithConsents_ShowsMethodList() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let consent = AWXPaymentConsent()
+        consent.id = "consent_id"
+        let paymentMethod = AWXPaymentMethod()
+        paymentMethod.type = AWXCardKey
+        consent.paymentMethod = paymentMethod
+        mockMethodProvider.consents = [consent]
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        let sections = element.sections()
+
+        XCTAssertTrue(sections.contains(.methodList), "Single card with consents should show method list")
+    }
+
+    func testDisplayMethodList_SingleOtherMethod_ShowsMethodList() {
+        let alipayMethod = AWXPaymentMethodType()
+        alipayMethod.name = "alipayhk"
+        alipayMethod.resources = AWXResources()
+        alipayMethod.resources.hasSchema = true
+        mockMethodProvider.methods = [alipayMethod]
+        mockMethodProvider.selectedMethod = alipayMethod
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        let sections = element.sections()
+
+        XCTAssertTrue(sections.contains(.methodList), "Single non-card/non-applepay method should show method list")
+    }
+
+    func testDisplayMethodList_MultipleMethods_ShowsMethodList() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+
+        let alipayMethod = AWXPaymentMethodType()
+        alipayMethod.name = "alipayhk"
+        alipayMethod.resources = AWXResources()
+        alipayMethod.resources.hasSchema = true
+
+        mockMethodProvider.methods = [cardMethod, alipayMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        let sections = element.sections()
+
+        XCTAssertTrue(sections.contains(.methodList), "Multiple methods should show method list")
+    }
+
+    func testDisplayMethodList_AccordionLayout_NeverShowsMethodList() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+
+        let alipayMethod = AWXPaymentMethodType()
+        alipayMethod.name = "alipayhk"
+        alipayMethod.resources = AWXResources()
+        alipayMethod.resources.hasSchema = true
+
+        mockMethodProvider.methods = [cardMethod, alipayMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.layout = .accordion
+
+        let element = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController,
+            configuration: configuration
+        )
+
+        let sections = element.sections()
+
+        XCTAssertFalse(sections.contains(.methodList), "Accordion layout should never show method list")
     }
 
     // MARK: - Section Controller Tests

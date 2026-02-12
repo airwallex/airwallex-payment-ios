@@ -84,7 +84,7 @@ class WebViewController: UIViewController {
         webViewDidCloseHandled = true
         // when dismissed or popped by user
         // force status sync (to dismiss GPay mask in original webView)
-        webView.evaluateJavaScript("window.close()") { object, error in
+        webView.evaluateJavaScript("window.close()") { _, error in
             if let error {
                 print(error)
             }

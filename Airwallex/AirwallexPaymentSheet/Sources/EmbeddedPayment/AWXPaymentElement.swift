@@ -59,14 +59,13 @@ public class AWXPaymentElement: NSObject {
 
     // MARK: - Private Properties
 
-    private weak var hostViewController: UIViewController?
     private let methodProvider: PaymentMethodProvider
     let paymentUIContext = PaymentSheetUIContext()
     private lazy var collectionViewManager: CollectionViewManager = {
         let listConfiguration = UICollectionViewCompositionalLayoutConfiguration()
         listConfiguration.interSectionSpacing = 16
         let manager = CollectionViewManager(
-            viewController: hostViewController!,
+            viewController: self.paymentUIContext.viewController!,
             sectionProvider: self,
             listConfiguration: listConfiguration
         )
@@ -118,7 +117,10 @@ public class AWXPaymentElement: NSObject {
     ) throws -> PaymentMethodProvider {
         switch configuration.elementType {
         case .standard:
-            return PaymentSheetMethodProvider(session: session)
+            return PaymentSheetMethodProvider(
+                session: session,
+                isApplePaySelectable: !configuration.showsApplePayAsPrimaryButton
+            )
         case .addCard:
             guard !configuration.supportedCardBrands.isEmpty else {
                 throw AWXUIContext.LaunchError.invalidCardBrand("supportedBrands should not be empty")
@@ -173,6 +175,7 @@ public class AWXPaymentElement: NSObject {
         if configuration.elementType == .addCard {
             extraInfo[.paymentMethod] = AWXCardKey
         }
+
         AnalyticsLogger.log(action: .paymentLaunched, extraInfo: extraInfo)
 
         return element
@@ -184,7 +187,6 @@ public class AWXPaymentElement: NSObject {
         delegate: AWXPaymentResultDelegate,
         configuration: Configuration = Configuration()
     ) {
-        self.hostViewController = hostViewController
         self.methodProvider = methodProvider
         self.delegate = delegate
         self.configuration = configuration
@@ -195,6 +197,7 @@ public class AWXPaymentElement: NSObject {
         self.paymentUIContext.viewController = hostViewController
         self.paymentUIContext.isEmbedded = true
         self.paymentUIContext.layout = configuration.layout
+        self.paymentUIContext.prioritizeApplePay = configuration.showsApplePayAsPrimaryButton
 
         // Configure collection view
         let collectionView = collectionViewManager.collectionView!
@@ -214,63 +217,115 @@ public class AWXPaymentElement: NSObject {
 
 extension AWXPaymentElement: CollectionViewSectionProvider {
 
-    private var displayMethodList: Bool {
-        return paymentUIContext.layout == .tab && methodProvider.methods.count > (methodProvider.isApplePayAvailable ? 1 : 0)
+    private var displayMethodTab: Bool {
+        // Not needed for `addCard` element
+        if configuration.elementType == .addCard {
+            return false
+        }
+
+        // Not needed for accordion layout
+        if configuration.layout == .accordion {
+            return false
+        }
+
+        // `standard` element: tab layout with a single payment method.
+        if methodProvider.methods.count == 1 {
+            // Single payment method available
+            let methodName = methodProvider.selectedMethod?.name ?? ""
+            // hide method tab when only apple pay or add card available
+            switch methodName {
+            case AWXApplePayKey:
+                return !paymentUIContext.prioritizeApplePay
+            case AWXCardKey:
+                return !methodProvider.consents.isEmpty
+            default:
+                return true
+            }
+        } else if methodProvider.methods.count == 0 {
+            // never expected, should have thrown an error during creation
+            return false
+        } else {
+            // Display payment method tab when multiple payment methods are available
+            return true
+        }
     }
 
-    func sections() -> [PaymentSectionType] {
+    private func sectionsForTabLayout() -> [PaymentSectionType] {
         var sections = [PaymentSectionType]()
-
-        // For card element type, only show new card payment (no consents, no method list)
-        if configuration.elementType == .addCard {
-            sections.append(.cardPaymentNew)
-            return sections
-        }
-
-        if methodProvider.isApplePayAvailable {
+        if paymentUIContext.prioritizeApplePay && methodProvider.isApplePayAvailable {
             sections.append(.applePay)
         }
-
-        switch paymentUIContext.layout {
-        case .tab:
-            if displayMethodList {
-                // horizontal list
-                sections.append(.methodList)
-            }
-            //  display selected payment method
-            if let selectedMethodType = methodProvider.selectedMethod {
-                if selectedMethodType.name == AWXCardKey {
-                    if preferConsentPayment && !methodProvider.consents.isEmpty {
-                        sections.append(.cardPaymentConsent)
-                    } else {
-                        sections.append(.cardPaymentNew)
-                    }
-                } else if selectedMethodType.hasSchema {
-                    sections.append(.schemaPayment(selectedMethodType.name))
+        if displayMethodTab {
+            // horizontal list
+            sections.append(.methodList)
+        }
+        //  display selected payment method
+        if let selectedMethodType = methodProvider.selectedMethod {
+            if selectedMethodType.name == AWXApplePayKey && !paymentUIContext.prioritizeApplePay {
+                // Apple Pay selected from tab list (only when not prioritized)
+                sections.append(.applePay)
+            } else if selectedMethodType.name == AWXCardKey {
+                if preferConsentPayment && !methodProvider.consents.isEmpty {
+                    sections.append(.cardPaymentConsent)
+                } else {
+                    sections.append(.cardPaymentNew)
                 }
-            }
-        case .accordion:
-            if !methodProvider.methodsForAccordionPosition(.top).isEmpty {
-                sections.append(.accordion(.top))
-            }
-
-            if let selectedMethodType = methodProvider.selectedMethod {
-                if selectedMethodType.name == AWXCardKey {
-                    if preferConsentPayment && !methodProvider.consents.isEmpty {
-                        sections.append(.cardPaymentConsent)
-                    } else {
-                        sections.append(.cardPaymentNew)
-                    }
-                } else if selectedMethodType.hasSchema {
-                    sections.append(.schemaPayment(selectedMethodType.name))
-                }
-            }
-
-            if !methodProvider.methodsForAccordionPosition(.bottom).isEmpty {
-                sections.append(.accordion(.bottom))
+            } else if selectedMethodType.hasSchema {
+                sections.append(.schemaPayment(selectedMethodType.name))
             }
         }
         return sections
+    }
+    
+    private func sectionsForAccordionLayout() -> [PaymentSectionType] {
+        var sections = [PaymentSectionType]()
+
+        // When Apple Pay is prioritized, show it at top before accordion sections
+        if paymentUIContext.prioritizeApplePay && methodProvider.isApplePayAvailable {
+            sections.append(.applePay)
+        }
+
+        // Exclude Apple Pay from accordion list when prioritized
+        let excludeApplePay = paymentUIContext.prioritizeApplePay
+        if !methodProvider.methodsForAccordionPosition(.top, excludeApplePay: excludeApplePay).isEmpty {
+            sections.append(.accordion(.top))
+        }
+
+        if let selectedMethodType = methodProvider.selectedMethod {
+            if selectedMethodType.name == AWXApplePayKey && !paymentUIContext.prioritizeApplePay {
+                // Apple Pay selected from accordion (only when not prioritized)
+                sections.append(.applePay)
+            } else if selectedMethodType.name == AWXCardKey {
+                if preferConsentPayment && !methodProvider.consents.isEmpty {
+                    sections.append(.cardPaymentConsent)
+                } else {
+                    sections.append(.cardPaymentNew)
+                }
+            } else if selectedMethodType.hasSchema {
+                sections.append(.schemaPayment(selectedMethodType.name))
+            }
+        }
+
+        if !methodProvider.methodsForAccordionPosition(.bottom, excludeApplePay: excludeApplePay).isEmpty {
+            sections.append(.accordion(.bottom))
+        }
+        return sections
+    }
+    
+    func sections() -> [PaymentSectionType] {
+
+        // For card element type, only show new card payment (no consents, no method list)
+        if configuration.elementType == .addCard {
+            return [.cardPaymentNew]
+        }
+
+        // For Standard element type
+        switch configuration.layout {
+        case .tab:
+            return sectionsForTabLayout()
+        case .accordion:
+            return sectionsForAccordionLayout()
+        }
     }
 
     func sectionController(for section: PaymentSectionType) -> AnySectionController<PaymentSectionType, String> {

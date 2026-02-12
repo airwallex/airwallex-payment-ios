@@ -186,18 +186,48 @@ extension PaymentViewController: CollectionViewSectionProvider {
     
     private var listTitle: String {
         let defaultTitle = NSLocalizedString("Payment Methods", bundle: .paymentSheet, comment: "title for payment sheet")
-        guard methodProvider.methods.count == 1 else {
-            return defaultTitle
-        }
-        if methodProvider.isApplePayAvailable {
-            return methodProvider.applePayMethodType?.displayName ?? defaultTitle
-        } else {
+        if methodProvider is SinglePaymentMethodProvider {
+            // Single-method: use the selected method name instead of the generic list title.
             return methodProvider.selectedMethod?.displayName ?? defaultTitle
         }
+        // Payment sheet:
+        if methodProvider.methods.count == 1,
+              let selectedMethod = methodProvider.selectedMethod,
+              selectedMethod.name == AWXCardKey,
+              methodProvider.consents.isEmpty {
+            // Use the display name only when Add New Card is the only option available.
+            return selectedMethod.displayName
+        }
+        return defaultTitle
     }
-    
-    private var displayMethodList: Bool {
-        layout == .tab && methodProvider.methods.count > (methodProvider.isApplePayAvailable ? 1 : 0)
+
+    private var displayMethodTab: Bool {
+        guard !(methodProvider is SinglePaymentMethodProvider) else {
+            // Never display method tab for SinglePaymentMethodProvider
+            return false
+        }
+
+        // Payment sheet:
+        guard useTabLayout, methodProvider.methods.count > 0 else {
+            return false
+        }
+
+        if methodProvider.methods.count == 1 {
+            // Single payment method available
+            let methodName = methodProvider.selectedMethod?.name ?? ""
+            // hide method tab when only apple pay or add card available
+            switch methodName {
+            case AWXApplePayKey:
+                return false
+            case AWXCardKey:
+                return !methodProvider.consents.isEmpty
+            default:
+                return true
+            }
+        } else {
+            // Display payment method tab when multiple payment methods are available
+            return true
+        }
     }
     
     private var useTabLayout: Bool {
@@ -213,9 +243,8 @@ extension PaymentViewController: CollectionViewSectionProvider {
             sections.append(.applePay)
         }
         
-        switch layout {
-        case .tab:
-            if displayMethodList {
+        if useTabLayout {
+            if displayMethodTab {
                 // horizontal list
                 sections.append(.methodList)
             }
@@ -231,7 +260,7 @@ extension PaymentViewController: CollectionViewSectionProvider {
                     sections.append(.schemaPayment(selectedMethodType.name))
                 }
             }
-        case .accordion:
+        } else {
             if !methodProvider.methodsForAccordionPosition(.top).isEmpty {
                 sections.append(.accordion(.top))
             }

@@ -6,12 +6,12 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import UIKit
-import XCTest
+import AirwallexCore
 @testable import AirwallexPayment
 @testable import AirwallexPaymentSheet
-import AirwallexCore
 import Combine
+import UIKit
+import XCTest
 
 @MainActor class PaymentSheetMethodProviderTests: XCTestCase {
 
@@ -126,7 +126,7 @@ import Combine
         XCTAssertNil(provider.consents.first(where: { $0.paymentMethod?.type != AWXCardKey }))
         // assert no duplicate consent
         XCTAssertEqual(
-            provider.consents.reduce(into: Set<String>(), { $0.insert($1.paymentMethod?.card?.fingerprint ?? "foo")}).count,
+            provider.consents.reduce(into: Set<String>(), { $0.insert($1.paymentMethod?.card?.fingerprint ?? "foo") }).count,
             provider.consents.count)
         
         // assert CIT prioritize MIT
@@ -159,7 +159,6 @@ import Combine
             count - 1
         )
     }
-    
     
     func testMethodFilterOnSession() async {
         mockOneOffSession.paymentMethods = ["alipaycn", "alipayhk", "card"]
@@ -265,7 +264,7 @@ import Combine
         } catch {
             XCTFail()
         }
-        
+
         XCTAssertEqual(provider.selectedMethod?.name, provider.methods.first { $0.name != AWXApplePayKey }?.name)
         guard updates.count == 2 else {
             XCTFail("incorrect udpate count")
@@ -287,5 +286,66 @@ import Combine
             XCTFail()
             return
         }
+    }
+
+    func testIsApplePaySelectable_WhenFalse_SelectsFirstNonApplePayMethod() async {
+        mockOneOffSession.hidePaymentConsents = true
+        mockOneOffSession.applePayOptions = AWXApplePayOptions(merchantIdentifier: "123")
+
+        mockOneOffSession.paymentMethods = [AWXApplePayKey, AWXCardKey]
+
+        let testProvider = PaymentSheetMethodProvider(
+            session: mockOneOffSession,
+            apiClient: mockAPIClient,
+            isApplePaySelectable: false
+        )
+        MockURLProtocol.mockResponseMap = [
+            AWXGetPaymentMethodTypesRequest().path(): (mockMethodTypesData, mockSuccessResponse, nil)
+        ]
+
+        do {
+            try await testProvider.getPaymentMethodTypes()
+        } catch {
+            XCTFail()
+        }
+
+        // When isApplePaySelectable is false (tab layout), select the first method not apple pay
+        XCTAssertEqual(testProvider.selectedMethod?.name, AWXCardKey)
+    }
+
+    func testIsApplePaySelectable_WhenTrue_SkipsApplePayForDefaultSelection() async {
+        mockOneOffSession.hidePaymentConsents = true
+        mockOneOffSession.applePayOptions = AWXApplePayOptions(merchantIdentifier: "123")
+        mockOneOffSession.paymentMethods = [AWXApplePayKey, AWXCardKey]
+
+        let testProvider = PaymentSheetMethodProvider(
+            session: mockOneOffSession,
+            apiClient: mockAPIClient,
+            isApplePaySelectable: true
+        )
+        MockURLProtocol.mockResponseMap = [
+            AWXGetPaymentMethodTypesRequest().path(): (mockMethodTypesData, mockSuccessResponse, nil)
+        ]
+
+        do {
+            try await testProvider.getPaymentMethodTypes()
+        } catch {
+            XCTFail()
+        }
+
+        // When isApplePaySelectable is true (accordion layout), Apple Pay is in the list
+        // select apple pay
+        XCTAssertEqual(testProvider.methods.first?.name, AWXApplePayKey)
+        XCTAssertEqual(testProvider.selectedMethod?.name, AWXApplePayKey)
+    }
+
+    func testIsApplePaySelectable_DefaultValue_IsFalse() {
+        // The default value of isApplePaySelectable should be false
+        let testProvider = PaymentSheetMethodProvider(
+            session: mockOneOffSession,
+            apiClient: mockAPIClient
+        )
+
+        XCTAssertFalse(testProvider.isApplePaySelectable)
     }
 }

@@ -27,8 +27,19 @@ class PaymentMethodTabSectionController: SectionController {
          paymentUIContext: PaymentSheetUIContext) {
         self.methodProvider = methodProvider
         self.paymentUIContext = paymentUIContext
-        self.methodTypes = methodProvider.methods.filter { $0.name != AWXApplePayKey }
+        self.methodTypes = Self.filteredMethods(from: methodProvider, prioritizeApplePay: paymentUIContext.prioritizeApplePay)
         self.selectedMethod = methodProvider.selectedMethod?.name ?? ""
+    }
+
+    /// Returns payment methods, filtering out Apple Pay when it's prioritized (shown at top)
+    private static func filteredMethods(
+        from provider: PaymentMethodProvider,
+        prioritizeApplePay: Bool
+    ) -> [AWXPaymentMethodType] {
+        if prioritizeApplePay {
+            return provider.methods.filter { $0.name != AWXApplePayKey }
+        }
+        return provider.methods
     }
     
     // MARK: - SectionController
@@ -37,9 +48,7 @@ class PaymentMethodTabSectionController: SectionController {
     let section = PaymentSectionType.methodList
     
     var items: [String] {
-        methodTypes
-            .filter { $0.name != AWXApplePayKey }
-            .map { $0.name }
+        methodTypes.map { $0.name }
     }
     
     func bind(context: CollectionViewContext<PaymentSectionType, String>) {
@@ -53,8 +62,8 @@ class PaymentMethodTabSectionController: SectionController {
             return cell
         }
         let viewModel = PaymentMethodCellViewModel(
-            itemIdentifier: methodType.name,
-            name: methodType.displayName,
+            name: methodType.name,
+            displayName: methodType.displayName,
             imageURL: methodType.resources.logoURL,
             isSelected: methodType.name == selectedMethod,
             imageLoader: paymentUIContext.imageLoader,
@@ -99,7 +108,7 @@ class PaymentMethodTabSectionController: SectionController {
     }
     
     func updateItemsIfNecessary() {
-        methodTypes = methodProvider.methods.filter { $0.name != AWXApplePayKey }
+        methodTypes = Self.filteredMethods(from: methodProvider, prioritizeApplePay: paymentUIContext.prioritizeApplePay)
         selectedMethod = methodProvider.selectedMethod?.name ?? ""
     }
 }

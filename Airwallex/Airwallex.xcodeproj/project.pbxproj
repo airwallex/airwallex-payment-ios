@@ -247,6 +247,7 @@
 		D85042DA2DA7A46D0074BA7F /* AWXWidgets.h in Sources */ = {isa = PBXBuildFile; fileRef = 5775CEEA26E5DF4E00C6AFE3 /* AWXWidgets.h */; };
 		D85042DC2DA7A46D0074BA7F /* AWXFloatingCvcTextField.h in Sources */ = {isa = PBXBuildFile; fileRef = 1820C96E2C85A1C0006B18C4 /* AWXFloatingCvcTextField.h */; };
 		D85042DD2DA7A46D0074BA7F /* NSObject+Logging.h in Sources */ = {isa = PBXBuildFile; fileRef = C844DC7B2C3CE37F0099614C /* NSObject+Logging.h */; };
+		D87DC6C02F304E0C007CE434 /* PaymentReminderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87DC6BF2F304E0C007CE434 /* PaymentReminderCell.swift */; };
 		D87FFFD62E70304F0008784D /* TermsOfUse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87FFFD52E70304F0008784D /* TermsOfUse.swift */; };
 		D880456A2DA7B281008308C7 /* MockProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87D42D9E335D00D082EC /* MockProviderDelegate.swift */; };
 		D880456B2DA7B281008308C7 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC87D12D9E335D00D082EC /* Bundle+Extensions.swift */; };
@@ -345,7 +346,6 @@
 		D8D36F2B2E5C5CB0005618D4 /* PaymentMethodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EDC2E5C5CB0005618D4 /* PaymentMethodCell.swift */; };
 		D8D36F2C2E5C5CB0005618D4 /* PaymentMethodListSeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EDD2E5C5CB0005618D4 /* PaymentMethodListSeparator.swift */; };
 		D8D36F2D2E5C5CB0005618D4 /* RoundedCornerDecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EDE2E5C5CB0005618D4 /* RoundedCornerDecorationView.swift */; };
-		D8D36F2E2E5C5CB0005618D4 /* SchemaPaymentReminderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EDF2E5C5CB0005618D4 /* SchemaPaymentReminderCell.swift */; };
 		D8D36F2F2E5C5CB0005618D4 /* ViewReusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EE02E5C5CB0005618D4 /* ViewReusable.swift */; };
 		D8D36F302E5C5CB0005618D4 /* WarningViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EE12E5C5CB0005618D4 /* WarningViewCell.swift */; };
 		D8D36F312E5C5CB0005618D4 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EE32E5C5CB0005618D4 /* PaymentViewController.swift */; };
@@ -644,6 +644,7 @@
 		D85041F62DA79D380074BA7F /* AWXWeChatPayActionProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AWXWeChatPayActionProvider.h; sourceTree = "<group>"; };
 		D85041F72DA79D380074BA7F /* AWXWeChatPayActionProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWXWeChatPayActionProvider.m; sourceTree = "<group>"; };
 		D85041FA2DA79D490074BA7F /* AirwallexWeChatPay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirwallexWeChatPay.h; sourceTree = "<group>"; };
+		D87DC6BF2F304E0C007CE434 /* PaymentReminderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentReminderCell.swift; sourceTree = "<group>"; };
 		D87FFFD52E70304F0008784D /* TermsOfUse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUse.swift; sourceTree = "<group>"; };
 		D88E34B82DA7E93100183A49 /* Airwallex_Export.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Airwallex_Export.swift; sourceTree = "<group>"; };
 		D895DD7D2EBC42B600E29F08 /* PaymentIntentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentIntentProvider.swift; sourceTree = "<group>"; };
@@ -760,7 +761,6 @@
 		D8D36EDC2E5C5CB0005618D4 /* PaymentMethodCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodCell.swift; sourceTree = "<group>"; };
 		D8D36EDD2E5C5CB0005618D4 /* PaymentMethodListSeparator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodListSeparator.swift; sourceTree = "<group>"; };
 		D8D36EDE2E5C5CB0005618D4 /* RoundedCornerDecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornerDecorationView.swift; sourceTree = "<group>"; };
-		D8D36EDF2E5C5CB0005618D4 /* SchemaPaymentReminderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaPaymentReminderCell.swift; sourceTree = "<group>"; };
 		D8D36EE02E5C5CB0005618D4 /* ViewReusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewReusable.swift; sourceTree = "<group>"; };
 		D8D36EE12E5C5CB0005618D4 /* WarningViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningViewCell.swift; sourceTree = "<group>"; };
 		D8D36EE32E5C5CB0005618D4 /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
@@ -1577,13 +1577,13 @@
 				D8D36ED62E5C5CB0005618D4 /* CellSeparator.swift */,
 				D8D36ED72E5C5CB0005618D4 /* CheckBoxCell.swift */,
 				D8D36ED82E5C5CB0005618D4 /* CheckoutButtonCell.swift */,
+				D87DC6BF2F304E0C007CE434 /* PaymentReminderCell.swift */,
 				D8D36ED92E5C5CB0005618D4 /* CountrySelectionCell.swift */,
 				D8D36EDA2E5C5CB0005618D4 /* InfoCollectorCell.swift */,
 				D8D36EDB2E5C5CB0005618D4 /* OptionSelectionView.swift */,
 				D8D36EDC2E5C5CB0005618D4 /* PaymentMethodCell.swift */,
 				D8D36EDD2E5C5CB0005618D4 /* PaymentMethodListSeparator.swift */,
 				D8D36EDE2E5C5CB0005618D4 /* RoundedCornerDecorationView.swift */,
-				D8D36EDF2E5C5CB0005618D4 /* SchemaPaymentReminderCell.swift */,
 				D8D36EE02E5C5CB0005618D4 /* ViewReusable.swift */,
 				D8D36EE12E5C5CB0005618D4 /* WarningViewCell.swift */,
 			);
@@ -2331,6 +2331,7 @@
 				D8D36F132E5C5CB0005618D4 /* CardConsentCell.swift in Sources */,
 				D8D36F142E5C5CB0005618D4 /* CardInfoCollectorCell.swift in Sources */,
 				D8D36F152E5C5CB0005618D4 /* CardNumberTextField.swift in Sources */,
+				D87DC6C02F304E0C007CE434 /* PaymentReminderCell.swift in Sources */,
 				D8D36F162E5C5CB0005618D4 /* CardPaymentToggleCell.swift in Sources */,
 				D8D36F172E5C5CB0005618D4 /* BaseTextField.swift in Sources */,
 				D829FE142F0D11450056EE6E /* AWXPaymentElement.swift in Sources */,
@@ -2358,7 +2359,6 @@
 				D8D36F2B2E5C5CB0005618D4 /* PaymentMethodCell.swift in Sources */,
 				D8D36F2C2E5C5CB0005618D4 /* PaymentMethodListSeparator.swift in Sources */,
 				D8D36F2D2E5C5CB0005618D4 /* RoundedCornerDecorationView.swift in Sources */,
-				D8D36F2E2E5C5CB0005618D4 /* SchemaPaymentReminderCell.swift in Sources */,
 				D8F0E6A92F29DD5F007C9D48 /* AWXPaymentElement+Configuration.swift in Sources */,
 				D8D36F2F2E5C5CB0005618D4 /* ViewReusable.swift in Sources */,
 				D8D36F302E5C5CB0005618D4 /* WarningViewCell.swift in Sources */,

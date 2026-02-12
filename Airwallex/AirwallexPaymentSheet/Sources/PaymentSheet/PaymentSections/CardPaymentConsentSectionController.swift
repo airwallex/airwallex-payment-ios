@@ -56,8 +56,8 @@ class CardPaymentConsentSectionController: SectionController {
     }
     
     private lazy var viewModelForAccordionKey = PaymentMethodCellViewModel(
-        itemIdentifier: .accordionKey,
-        name: methodType.displayName,
+        name: methodType.name,
+        displayName: methodType.displayName,
         imageURL: methodType.resources.logoURL,
         isSelected: true,
         imageLoader: paymentUIContext.imageLoader,
@@ -244,7 +244,7 @@ class CardPaymentConsentSectionController: SectionController {
 
             let buttonSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(52)
+                heightDimension: .estimated(52)
             )
             let buttonItem = NSCollectionLayoutItem(layoutSize: buttonSize)
 
@@ -261,7 +261,7 @@ class CardPaymentConsentSectionController: SectionController {
             switch paymentUIContext.layout {
             case .accordion:
                 let sectionHorizontal: CGFloat = paymentUIContext.isEmbedded ? 24 : 40
-                section.contentInsets = .init(top: 16, leading: sectionHorizontal, bottom: 32, trailing: sectionHorizontal)
+                section.contentInsets = .init(top: 16, leading: sectionHorizontal, bottom: 24, trailing: sectionHorizontal)
                 // Layout for decoration - rounded corner
                 let elementKind = AccordionSectionController.backgroundElementKind
                 context.register(

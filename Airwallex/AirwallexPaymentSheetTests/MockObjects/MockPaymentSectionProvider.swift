@@ -32,18 +32,18 @@ import XCTest
 extension MockPaymentSectionProvider: CollectionViewSectionProvider {
     
     private var displayMethodList: Bool {
-        return layout == .tab && methodProvider.methods.count > 1 + (methodProvider.isApplePayAvailable ? 1 : 0)
+        return layout == .tab && methodProvider.methods.count > (methodProvider.isApplePayAvailable ? 1 : 0)
     }
     
     func sections() -> [PaymentSectionType] {
         var sections = [PaymentSectionType]()
-        
-        if methodProvider.isApplePayAvailable {
-            sections.append(.applePay)
-        }
-        
         switch layout {
         case .tab:
+
+            if methodProvider.isApplePayAvailable {
+                sections.append(.applePay)
+            }
+            
             if displayMethodList {
                 // horizontal list
                 sections.append(.methodList)
@@ -61,12 +61,22 @@ extension MockPaymentSectionProvider: CollectionViewSectionProvider {
                 }
             }
         case .accordion:
+            if !paymentUIContext.isEmbedded &&
+                methodProvider.isApplePayAvailable &&
+                methodProvider.selectedMethod?.name != AWXApplePayKey {
+                // Add applepay for payment sheet
+                sections.append(.applePay)
+            }
+
             if !methodProvider.methodsForAccordionPosition(.top).isEmpty {
                 sections.append(.accordion(.top))
             }
             
             if let selectedMethodType = methodProvider.selectedMethod {
-                if selectedMethodType.name == AWXCardKey {
+                if selectedMethodType.name == AWXApplePayKey {
+                    // Add applepay for embedded element
+                    sections.append(.applePay)
+                } else if selectedMethodType.name == AWXCardKey {
                     if preferConsentPayment && !methodProvider.consents.isEmpty {
                         sections.append(.cardPaymentConsent)
                     } else {

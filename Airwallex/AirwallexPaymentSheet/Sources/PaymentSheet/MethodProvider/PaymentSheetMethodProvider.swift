@@ -20,6 +20,9 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
     var selectedMethod: AWXPaymentMethodType? {
         didSet {
             if let selectedMethod {
+                if !isApplePaySelectable {
+                    assert(selectedMethod.name != AWXApplePayKey)
+                }
                 updatePublisher.send(.methodSelected(selectedMethod))
             }
         }
@@ -28,14 +31,17 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
     var methods = [AWXPaymentMethodType]()
     var consents = [AWXPaymentConsent]()
     let apiClient: AWXAPIClient
-    
+    let isApplePaySelectable: Bool
+
     /// fingerprint -> MIT consent object
     private var mitConsents = [String: AWXPaymentConsent]()
-    
+
     init(session: AWXSession,
-         apiClient: AWXAPIClient = AWXAPIClient.init(configuration: .shared())) {
+         apiClient: AWXAPIClient = AWXAPIClient.init(configuration: .shared()),
+         isApplePaySelectable: Bool = false) {
         self.session = session
         self.apiClient = apiClient
+        self.isApplePaySelectable = isApplePaySelectable
     }
     
     func getPaymentMethodTypes() async throws {
@@ -58,7 +64,11 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
         if let old = selectedMethod, let new = methods.first(where: { $0.name == old.name }) {
             selectedMethod = new
         } else {
-            selectedMethod =  methods.first { $0.name != AWXApplePayKey }
+            if isApplePaySelectable {
+                selectedMethod = methods.first
+            } else {
+                selectedMethod = methods.first { $0.name != AWXApplePayKey }
+            }
         }
         updatePublisher.send(.listUpdated)
         guard !self.methods.isEmpty else {
