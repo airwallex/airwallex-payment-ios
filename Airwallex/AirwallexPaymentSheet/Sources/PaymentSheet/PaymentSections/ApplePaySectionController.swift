@@ -103,17 +103,7 @@ class ApplePaySectionController: SectionController {
             let cell = context.dequeueReusableCell(ApplePayCell.self, for: sectionItem, indexPath: indexPath)
             let viewModel = ApplePayViewModel { [weak self] in
                 guard let self else { return }
-                AnalyticsLogger.log(action: .tapPayButton, extraInfo: [.paymentMethod: methodType.name])
-                do {
-                    self.paymentSessionHandler = PaymentSessionHandler(
-                        session: self.session,
-                        methodType: methodType,
-                        paymentUIContext: self.paymentUIContext
-                    )
-                    try self.paymentSessionHandler?.confirmApplePay(cancelPaymentOnDismiss: false)
-                } catch {
-                    UIViewController.topMost?.showAlert(message: error.localizedDescription)
-                }
+                checkout()
             }
             cell.setup(viewModel)
             return cell
@@ -122,7 +112,47 @@ class ApplePaySectionController: SectionController {
             return UICollectionViewCell()
         }
     }
-    
+
+    func checkout() {
+        AnalyticsLogger.log(action: .tapPayButton, extraInfo: [.paymentMethod: methodType.name])
+
+        if self.paymentUIContext.isEmbedded {
+            self.paymentUIContext.currentPaymentMethod = AWXApplePayKey
+            if let element = self.paymentUIContext.paymentElement {
+                element.delegate?.paymentElement?(element, didStartPaymentFor: AWXApplePayKey)
+            }
+            do {
+                self.paymentSessionHandler = PaymentSessionHandler(
+                    session: self.session,
+                    methodType: methodType,
+                    paymentUIContext: self.paymentUIContext
+                )
+                // Control PaymentSessionHandler loading based on config
+                self.paymentSessionHandler?.showIndicator = false
+                if self.paymentUIContext.showsPaymentProcessingIndicator {
+                    self.context.startLoading(for: self.section)
+                }
+                try self.paymentSessionHandler?.confirmApplePay(cancelPaymentOnDismiss: false)
+            } catch {
+                if self.paymentUIContext.showsPaymentProcessingIndicator {
+                    context.stopLoading(for: section)
+                }
+                UIViewController.topMost?.showAlert(message: error.localizedDescription)
+            }
+        } else {
+            do {
+                self.paymentSessionHandler = PaymentSessionHandler(
+                    session: self.session,
+                    methodType: methodType,
+                    paymentUIContext: self.paymentUIContext
+                )
+                try self.paymentSessionHandler?.confirmApplePay(cancelPaymentOnDismiss: false)
+            } catch {
+                UIViewController.topMost?.showAlert(message: error.localizedDescription)
+            }
+        }
+    }
+
     func collectionView(didSelectItem sectionItem: SectionItem, at indexPath: IndexPath) {
         context.endEditing()
     }

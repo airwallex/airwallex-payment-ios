@@ -94,13 +94,21 @@ private extension EmbeddedIntegrationDemoViewController {
     }
 }
 
-// MARK: - AWXPaymentResultDelegate override
+// MARK: - AWXPaymentElementDelegate
 
-extension EmbeddedIntegrationDemoViewController {
+extension EmbeddedIntegrationDemoViewController: AWXPaymentElementDelegate {
 
-    override func paymentViewController(
-        _ controller: UIViewController?,
-        didCompleteWith status: AirwallexPaymentStatus,
+    func paymentElement(
+        _ element: AWXPaymentElement,
+        didStartPaymentFor paymentMethod: String
+    ) {
+        print("Payment started for method: \(paymentMethod)")
+    }
+
+    func paymentElement(
+        _ element: AWXPaymentElement,
+        didCompleteFor paymentMethod: String,
+        with status: AirwallexPaymentStatus,
         error: Error?
     ) {
         let action: () -> Void = {
@@ -114,7 +122,7 @@ extension EmbeddedIntegrationDemoViewController {
                 action: action
             )
         case .inProgress:
-            print("Payment in progress, you should check payment status from time to time from backend and show result to the payer")
+            print("Payment in progress for \(paymentMethod), you should check payment status from time to time from backend and show result to the payer")
             showAlert(
                 message: "Payment in progress",
                 action: action
@@ -132,5 +140,13 @@ extension EmbeddedIntegrationDemoViewController {
                 action: action
             )
         }
+    }
+
+    func paymentElement(
+        _ element: AWXPaymentElement,
+        didCompleteFor paymentMethod: String,
+        withPaymentConsentId paymentConsentId: String
+    ) {
+        print("Payment consent created for \(paymentMethod) with ID: \(paymentConsentId)")
     }
 }

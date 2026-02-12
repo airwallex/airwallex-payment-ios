@@ -29,6 +29,15 @@ class PaymentSheetUIContext: PaymentUIContext {
     /// Whether Apple Pay is prioritized (shown at top).
     var prioritizeApplePay: Bool = true
 
+    /// Whether to show the loading indicator during payment processing (embedded only).
+    var showsPaymentProcessingIndicator: Bool = true
+
+    /// The current payment method name being processed (for delegate callbacks).
+    var currentPaymentMethod: String?
+
+    /// Weak reference to the payment element for delegate callbacks (embedded only).
+    weak var paymentElement: AWXPaymentElement?
+
     /// Shared image loader for payment method icons.
     private(set) lazy var imageLoader = ImageLoader()
 }

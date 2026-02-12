@@ -13,7 +13,7 @@ import AirwallexCore
 #endif
 
 @_spi(AWX) public class LoadingSpinnerView: UIView {
-    enum Style {
+    public enum Style {
         case small
         case medium
         case large
@@ -56,7 +56,7 @@ import AirwallexCore
     private let animationKey = "rotation"
     private let shapeLayer = CAShapeLayer()
 
-    init(size: Style) {
+    public init(size: Style) {
         self.style = size
         super.init(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         commonInit()
@@ -120,7 +120,7 @@ import AirwallexCore
         layer.shadowRadius = 8
     }
 
-    func startAnimating() {
+    public func startAnimating() {
         guard shapeLayer.animation(forKey: animationKey) == nil else {
             return
         }
@@ -133,7 +133,7 @@ import AirwallexCore
         isHidden = false
     }
 
-    func stopAnimating() {
+    public func stopAnimating() {
         self.isHidden = true
         self.shapeLayer.removeAnimation(forKey: self.animationKey)
     }

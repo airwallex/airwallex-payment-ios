@@ -321,21 +321,50 @@ private extension SchemaPaymentSectionController {
             
             // update hidden fields
             paymentMethod.appendAdditionalParams(schema.parametersForHiddenFields(countryCode: session.countryCode))
-            
-            paymentSessionHandler = PaymentSessionHandler(
-                session: session,
-                methodType: methodProvider.method(named: name),
-                paymentUIContext: paymentUIContext
-            )
-            
-            Task { @MainActor in
-                do {
-                    try await paymentSessionHandler?.confirmRedirectPayment(with: paymentMethod)
-                    debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
-                } catch {
-                    UIViewController.topMost?.showAlert(message: error.localizedDescription)
-                    for viewModel in uiFieldViewModels {
-                        viewModel.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
+
+            if paymentUIContext.isEmbedded {
+                paymentUIContext.currentPaymentMethod = name
+                if let element = paymentUIContext.paymentElement {
+                    element.delegate?.paymentElement?(element, didStartPaymentFor: name)
+                }
+                paymentSessionHandler = PaymentSessionHandler(
+                    session: session,
+                    methodType: methodProvider.method(named: name),
+                    paymentUIContext: paymentUIContext
+                )
+                paymentSessionHandler?.showIndicator = false
+                if paymentUIContext.showsPaymentProcessingIndicator {
+                    context.startLoading(for: section)
+                }
+                Task { @MainActor in
+                    do {
+                        try await paymentSessionHandler?.confirmRedirectPayment(with: paymentMethod)
+                        debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
+                    } catch {
+                        if paymentUIContext.showsPaymentProcessingIndicator {
+                            context.stopLoading(for: section)
+                        }
+                        UIViewController.topMost?.showAlert(message: error.localizedDescription)
+                        for viewModel in uiFieldViewModels {
+                            viewModel.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
+                        }
+                    }
+                }
+            } else {
+                paymentSessionHandler = PaymentSessionHandler(
+                    session: session,
+                    methodType: methodProvider.method(named: name),
+                    paymentUIContext: paymentUIContext
+                )
+                Task { @MainActor in
+                    do {
+                        try await paymentSessionHandler?.confirmRedirectPayment(with: paymentMethod)
+                        debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
+                    } catch {
+                        UIViewController.topMost?.showAlert(message: error.localizedDescription)
+                        for viewModel in uiFieldViewModels {
+                            viewModel.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
+                        }
                     }
                 }
             }

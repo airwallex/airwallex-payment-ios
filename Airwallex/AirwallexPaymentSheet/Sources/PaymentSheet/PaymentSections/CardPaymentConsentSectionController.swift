@@ -488,14 +488,40 @@ private extension CardPaymentConsentSectionController {
         if mode == .consentPayment {
             RiskLogger.log(.clickPaymentButton, screen: .consent)
         }
-        do {
-            paymentSessionHandler = PaymentSessionHandler(
-                session: session,
-                paymentUIContext: paymentUIContext
-            )
-            try paymentSessionHandler?.confirmConsentPayment(with: consent)
-        } catch {
-            UIViewController.topMost?.showAlert(message: error.localizedDescription)
+
+        // Notify delegate and set current payment method for embedded element
+        if paymentUIContext.isEmbedded {
+            paymentUIContext.currentPaymentMethod = AWXCardKey
+            if let element = paymentUIContext.paymentElement {
+                element.delegate?.paymentElement?(element, didStartPaymentFor: AWXCardKey)
+            }
+            do {
+                paymentSessionHandler = PaymentSessionHandler(
+                    session: session,
+                    paymentUIContext: paymentUIContext
+                )
+                // Control PaymentSessionHandler loading based on config
+                paymentSessionHandler?.showIndicator = false
+                if paymentUIContext.showsPaymentProcessingIndicator {
+                    context.startLoading(for: section)
+                }
+                try paymentSessionHandler?.confirmConsentPayment(with: consent)
+            } catch {
+                if paymentUIContext.showsPaymentProcessingIndicator {
+                    context.stopLoading(for: section)
+                }
+                UIViewController.topMost?.showAlert(message: error.localizedDescription)
+            }
+        } else {
+            do {
+                paymentSessionHandler = PaymentSessionHandler(
+                    session: session,
+                    paymentUIContext: paymentUIContext
+                )
+                try paymentSessionHandler?.confirmConsentPayment(with: consent)
+            } catch {
+                UIViewController.topMost?.showAlert(message: error.localizedDescription)
+            }
         }
     }
 }

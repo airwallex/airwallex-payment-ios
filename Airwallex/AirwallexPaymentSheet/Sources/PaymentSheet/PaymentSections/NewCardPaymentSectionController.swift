@@ -330,20 +330,48 @@ private extension NewCardPaymentSectionController {
             
             RiskLogger.log(.clickPaymentButton, screen: .createCard)
             debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
-            
-            do {
-                paymentSessionHandler = PaymentSessionHandler(
-                    session: session,
-                    methodType: methodType,
-                    paymentUIContext: paymentUIContext
-                )
-                try paymentSessionHandler?.confirmCardPayment(
-                    with: card,
-                    billing: billingInfo,
-                    saveCard: shouldSaveCard
-                )
-            } catch {
-                UIViewController.topMost?.showAlert(message: error.localizedDescription)
+
+            if paymentUIContext.isEmbedded {
+                paymentUIContext.currentPaymentMethod = AWXCardKey
+                if let element = paymentUIContext.paymentElement {
+                    element.delegate?.paymentElement?(element, didStartPaymentFor: AWXCardKey)
+                }
+                do {
+                    paymentSessionHandler = PaymentSessionHandler(
+                        session: session,
+                        methodType: methodType,
+                        paymentUIContext: paymentUIContext
+                    )
+                    paymentSessionHandler?.showIndicator = false
+                    if paymentUIContext.showsPaymentProcessingIndicator {
+                        context.startLoading(for: section)
+                    }
+                    try paymentSessionHandler?.confirmCardPayment(
+                        with: card,
+                        billing: billingInfo,
+                        saveCard: shouldSaveCard
+                    )
+                } catch {
+                    if paymentUIContext.showsPaymentProcessingIndicator {
+                        context.stopLoading(for: section)
+                    }
+                    UIViewController.topMost?.showAlert(message: error.localizedDescription)
+                }
+            } else {
+                do {
+                    paymentSessionHandler = PaymentSessionHandler(
+                        session: session,
+                        methodType: methodType,
+                        paymentUIContext: paymentUIContext
+                    )
+                    try paymentSessionHandler?.confirmCardPayment(
+                        with: card,
+                        billing: billingInfo,
+                        saveCard: shouldSaveCard
+                    )
+                } catch {
+                    UIViewController.topMost?.showAlert(message: error.localizedDescription)
+                }
             }
         } catch {
             viewModelForCardInfo.updateValidStatusForCheckout()

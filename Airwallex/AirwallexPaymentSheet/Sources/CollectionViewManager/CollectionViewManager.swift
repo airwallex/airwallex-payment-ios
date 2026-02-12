@@ -31,7 +31,7 @@ class CollectionViewManager<SectionType: Hashable & Sendable, ItemType: Hashable
     
     /// The diffable data source uses SectionItem to ensure global uniqueness of item identifiers
     private(set) var diffableDataSource: UICollectionViewDiffableDataSource<SectionType, SectionItem>!
-    private var context: CollectionViewContext<SectionType, ItemType>!
+    private(set) var context: CollectionViewContext<SectionType, ItemType>!
     private(set) var collectionView: UICollectionView!
     
     private let displayHandler = SectionDisplayHandler<SectionType, ItemType>()

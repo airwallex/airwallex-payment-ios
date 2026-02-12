@@ -230,6 +230,13 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         }
     }
 
+    func stopLoading() {
+        for (_, view) in sectionLoadingViews {
+            view.stopAnimating()
+            view.removeFromSuperview()
+        }
+    }
+
     // MARK: - register reusable views
     
     private lazy var registeredCells = Set<String>()

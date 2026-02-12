@@ -48,12 +48,8 @@ public class AWXPaymentElement: NSObject {
     /// The view's height will update automatically based on its content.
     @objc public var view: UIView { embeddedView }
 
-    /// The delegate that receives payment result callbacks.
-    @objc public weak var delegate: AWXPaymentResultDelegate? {
-        didSet {
-            paymentUIContext.delegate = delegate
-        }
-    }
+    /// The delegate that receives payment lifecycle callbacks.
+    @objc public weak var delegate: AWXPaymentElementDelegate?
 
     // MARK: - Private Properties
 
@@ -84,14 +80,14 @@ public class AWXPaymentElement: NSObject {
     ///
     /// - Parameters:
     ///   - session: The payment session containing transaction details.
-    ///   - delegate: The delegate that receives payment result callbacks.
+    ///   - delegate: The delegate that receives payment lifecycle callbacks.
     ///   - configuration: Configuration options for the payment element.
     /// - Returns: A configured `AWXPaymentElement` ready to be embedded.
     /// - Throws: `AWXUIContext.LaunchError` if session validation fails or payment methods cannot be fetched.
     @objc
     public static func create(
         session: AWXSession,
-        delegate: AWXPaymentResultDelegate,
+        delegate: AWXPaymentElementDelegate,
         configuration: Configuration = Configuration()
     ) async throws -> AWXPaymentElement {
         let methodProvider = try makeMethodProvider(session: session, configuration: configuration)
@@ -132,7 +128,7 @@ public class AWXPaymentElement: NSObject {
     static func create(
         session: AWXSession,
         methodProvider: PaymentMethodProvider,
-        delegate: AWXPaymentResultDelegate,
+        delegate: AWXPaymentElementDelegate,
         configuration: Configuration = Configuration()
     ) async throws -> AWXPaymentElement {
         // Validate session
@@ -172,7 +168,7 @@ public class AWXPaymentElement: NSObject {
 
     init(
         methodProvider: PaymentMethodProvider,
-        delegate: AWXPaymentResultDelegate,
+        delegate: AWXPaymentElementDelegate,
         configuration: Configuration = Configuration()
     ) {
         self.methodProvider = methodProvider
@@ -183,11 +179,14 @@ public class AWXPaymentElement: NSObject {
         // Apply theme color from appearance configuration
         AWXTheme.shared().tintColor = configuration.appearance.tintColor
 
-        // Now set the internal delegate
-        self.paymentUIContext.delegate = delegate
+        // Configure payment UI context
         self.paymentUIContext.isEmbedded = true
         self.paymentUIContext.layout = configuration.layout
         self.paymentUIContext.prioritizeApplePay = configuration.showsApplePayAsPrimaryButton
+        self.paymentUIContext.showsPaymentProcessingIndicator = configuration.showsPaymentProcessingIndicator
+        self.paymentUIContext.paymentElement = self
+        // AWXPaymentElement implements AWXPaymentResultDelegate to bridge to AWXPaymentElementDelegate
+        self.paymentUIContext.delegate = self
 
         // Configure collection view
         let collectionView = collectionViewManager.collectionView!
@@ -395,5 +394,27 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
 
     func listBoundaryItemProviders() -> [BoundarySupplementaryItemProvider]? {
         return nil
+    }
+}
+
+// MARK: - AWXPaymentResultDelegate
+
+extension AWXPaymentElement: AWXPaymentResultDelegate {
+    public func paymentViewController(
+        _ controller: UIViewController?,
+        didCompleteWith status: AirwallexPaymentStatus,
+        error: Error?
+    ) {
+        let methodName = paymentUIContext.currentPaymentMethod ?? "unknown"
+        collectionViewManager.context.stopLoading()
+        delegate?.paymentElement(self, didCompleteFor: methodName, with: status, error: error)
+    }
+
+    public func paymentViewController(
+        _ controller: UIViewController?,
+        didCompleteWithPaymentConsentId paymentConsentId: String
+    ) {
+        let methodName = paymentUIContext.currentPaymentMethod ?? "unknown"
+        delegate?.paymentElement?(self, didCompleteFor: methodName, withPaymentConsentId: paymentConsentId)
     }
 }
