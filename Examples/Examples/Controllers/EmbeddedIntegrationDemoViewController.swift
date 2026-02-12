@@ -16,6 +16,13 @@ class EmbeddedIntegrationDemoViewController: IntegrationDemoListViewController {
     private var paymentElement: AWXPaymentElement?
     private lazy var keyboardHandler = KeyboardHandler()
 
+    private lazy var loadingIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
+
     // MARK: - Abstract Property Overrides
 
     override var pageTitle: String {
@@ -61,6 +68,13 @@ private extension EmbeddedIntegrationDemoViewController {
         )
         orderInfoView.translatesAutoresizingMaskIntoConstraints = false
         listView.addViewToTopStack(orderInfoView)
+
+        //  Custom loading indicator
+        view.addSubview(loadingIndicator)
+        NSLayoutConstraint.activate([
+            loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
     }
 }
 
@@ -70,12 +84,13 @@ private extension EmbeddedIntegrationDemoViewController {
 
     func loadPaymentElement() {
         Task {
-            startLoading()
+            loadingIndicator.startAnimating()
             do {
                 let session = try await createPaymentSession()
                 let configuration = AWXPaymentElement.Configuration()
                 configuration.layout = ExamplesKeys.paymentLayout
                 configuration.showsApplePayAsPrimaryButton = false
+                configuration.showsPaymentProcessingIndicator = false
                 let element = try await AWXPaymentElement.create(
                     session: session,
                     delegate: self,
@@ -89,7 +104,7 @@ private extension EmbeddedIntegrationDemoViewController {
             } catch {
                 showAlert(message: error.localizedDescription)
             }
-            stopLoading()
+            loadingIndicator.stopAnimating()
         }
     }
 }
@@ -103,6 +118,8 @@ extension EmbeddedIntegrationDemoViewController: AWXPaymentElementDelegate {
         didStartPaymentFor paymentMethod: String
     ) {
         print("Payment started for method: \(paymentMethod)")
+        loadingIndicator.startAnimating()
+        view.isUserInteractionEnabled = false
     }
 
     func paymentElement(
@@ -139,6 +156,8 @@ extension EmbeddedIntegrationDemoViewController: AWXPaymentElementDelegate {
                 title: "Payment cancelled"
             )
         }
+        loadingIndicator.stopAnimating()
+        view.isUserInteractionEnabled = true
     }
 
     func paymentElement(

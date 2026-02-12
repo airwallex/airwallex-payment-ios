@@ -235,6 +235,7 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
             view.stopAnimating()
             view.removeFromSuperview()
         }
+        collectionView.isUserInteractionEnabled = true
     }
 
     // MARK: - register reusable views
