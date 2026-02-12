@@ -87,6 +87,47 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertFalse(configuration.showsApplePayAsPrimaryButton)
     }
 
+    func testConfiguration_DefaultAppearance_HasDefaultColorBrand() {
+        let configuration = AWXPaymentElement.Configuration()
+        let lightTraitCollection = UITraitCollection(userInterfaceStyle: .light)
+        let darkTraitCollection = UITraitCollection(userInterfaceStyle: .dark)
+        // Compare resolved colors since dynamic colors are not equal by reference
+        XCTAssertEqual(
+            configuration.appearance.tintColor.resolvedColor(with: lightTraitCollection),
+            UIColor.awxColor(.theme).resolvedColor(with: lightTraitCollection)
+        )
+        XCTAssertEqual(
+            configuration.appearance.tintColor.resolvedColor(with: darkTraitCollection),
+            UIColor.awxColor(.theme).resolvedColor(with: darkTraitCollection)
+        )
+    }
+
+    func testConfiguration_CanSetCustomColorBrand() {
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.appearance.tintColor = .systemRed
+        XCTAssertEqual(configuration.appearance.tintColor, .systemRed)
+    }
+
+    func testCreate_AppliesAppearanceColorBrand() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let configuration = AWXPaymentElement.Configuration()
+        let customColor = UIColor.systemPurple
+        configuration.appearance.tintColor = customColor
+
+        _ = AWXPaymentElement(
+            hostViewController: mockViewController,
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController,
+            configuration: configuration
+        )
+
+        XCTAssertEqual(AWXTheme.shared().tintColor, customColor)
+    }
+
     // MARK: - makeMethodProvider Tests
 
     func testMakeMethodProvider_StandardElementType_ReturnsPaymentSheetMethodProvider() throws {
