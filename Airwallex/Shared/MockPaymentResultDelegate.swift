@@ -7,7 +7,9 @@
 //
 
 import AirwallexCore
+#if canImport(AirwallexPaymentSheet)
 import AirwallexPaymentSheet
+#endif
 import UIKit
 
 class MockPaymentResultDelegate: UIViewController, AWXPaymentResultDelegate {
@@ -44,6 +46,7 @@ class MockPaymentResultDelegate: UIViewController, AWXPaymentResultDelegate {
     }
 }
 
+#if canImport(AirwallexPaymentSheet)
 extension MockPaymentResultDelegate: AWXPaymentElementDelegate {
     func paymentElement(
         _ element: AWXPaymentElement,
@@ -65,3 +68,4 @@ extension MockPaymentResultDelegate: AWXPaymentElementDelegate {
         self.consentId = paymentConsentId
     }
 }
+#endif
