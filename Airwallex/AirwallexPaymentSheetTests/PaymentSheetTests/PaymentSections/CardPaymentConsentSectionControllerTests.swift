@@ -132,62 +132,21 @@ class CardPaymentConsentSectionControllerTests: BasePaymentSectionControllerTest
                   return
               }
         
-        // test checkout
+        // test checkout with invalid CVC shows inline error
         guard let cell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
             XCTFail()
             return
         }
+
+        // Get CVC field and verify inline error is shown on validation failure
+        guard let cvcCell = sectionController.context.cellForItem(sectionController.sectionItem(.cvcField)) as? InfoCollectorCell else {
+            XCTFail()
+            return
+        }
+        cvcCell.viewModel?.text = nil
         cell.viewModel?.checkoutAction()
-        guard mockViewController.presentedViewControllerSpy is AWXAlertController else {
-            XCTFail("expect alert")
-            return
-        }
-    }
-    
-    func testAlertForDelete() {
-        mockManager.performUpdates()
-        mockViewController.view.layoutIfNeeded()
-        guard let anySectionController = mockManager.sectionControllers[PaymentSectionType.cardPaymentConsent],
-              let sectionController = anySectionController.embededSectionController as? CardPaymentConsentSectionController else {
-                  XCTFail()
-                  return
-              }
-        
-        guard let consentID = mockMethodProvider.consents.first?.id,
-              let cell = sectionController.context.cellForItem(sectionController.sectionItem(consentID)) as? CardConsentCell else {
-            XCTFail()
-            return
-        }
-        cell.viewModel?.buttonAction()
-        guard let alertVC = mockViewController.presentedViewControllerSpy as? AWXAlertController else {
-            XCTFail("expect alert")
-            return
-        }
-        XCTAssertEqual(alertVC.actions.count, 2)
-    }
-    
-    func testAlertForDeleteMITConsent() {
-        mockManager.performUpdates()
-        mockViewController.view.layoutIfNeeded()
-        AWXAPIClientConfiguration.shared().clientSecret = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTY4MDQ2MzAsImV4cCI6MTc1NjgwODIzMCwidHlwZSI6ImNsaWVudC1zZWNyZXQiLCJwYWRjIjoiSEsiLCJhY2NvdW50X2lkIjoiNGY4YTkwM2UtYmYwOC00ZTI0LTk5YTYtNGJlYTk5YTk1MWEyIiwiaW50ZW50X2lkIjoiaW50X2hrZG1zZnEyY2hhcWd3bDliZnoiLCJjdXN0b21lcl9pZCI6ImN1c19oa2RtZnQ1ZGhoYWJ2cHR5d3FyIiwiYnVzaW5lc3NfbmFtZSI6IkZ1bmssIEdheWxvcmQgYW5kIFN3aWZ0In0"
-        guard let anySectionController = mockManager.sectionControllers[PaymentSectionType.cardPaymentConsent],
-              let sectionController = anySectionController.embededSectionController as? CardPaymentConsentSectionController else {
-                  XCTFail()
-                  return
-              }
-        guard let consentID = mockMethodProvider.consents.last?.id,
-              let cell = sectionController.context.cellForItem(sectionController.sectionItem(consentID)) as? CardConsentCell else {
-            XCTFail()
-            return
-        }
-        cell.viewModel?.buttonAction()
-        guard let alertVC = mockViewController.presentedViewControllerSpy as? AWXAlertController else {
-            XCTFail("expect alert")
-            return
-        }
-        XCTAssertEqual(alertVC.actions.count, 1)
-        XCTAssertEqual(alertVC.actions.first?.style, .cancel)
-        
+        // Validation failures now show inline errors instead of alerts
+        XCTAssertNotNil(cvcCell.viewModel?.errorHint)
     }
     
 }

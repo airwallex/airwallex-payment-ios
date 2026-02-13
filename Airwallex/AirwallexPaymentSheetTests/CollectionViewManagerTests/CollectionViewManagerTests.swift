@@ -6,10 +6,10 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import UIKit
-import XCTest
 @testable import AirwallexPayment
 @testable import AirwallexPaymentSheet
+import UIKit
+import XCTest
 
 @MainActor class CollectionViewManagerTests: XCTestCase {
 
@@ -22,7 +22,6 @@ import XCTest
         mockViewController = UIViewController()
         mockProvider = MockABSectionProvider()
         mockManager = CollectionViewManager(
-            viewController: mockViewController,
             sectionProvider: mockProvider
         )
         let collectionView = mockManager.collectionView

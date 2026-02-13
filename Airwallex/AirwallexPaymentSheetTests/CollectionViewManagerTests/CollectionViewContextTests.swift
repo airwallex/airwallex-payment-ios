@@ -6,9 +6,9 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import XCTest
 @testable import AirwallexPayment
 @testable import AirwallexPaymentSheet
+import XCTest
 
 @MainActor class CollectionViewContextTests: XCTestCase {
 
@@ -21,7 +21,6 @@ import XCTest
         mockViewController = UIViewController()
         mockProvider = MockABSectionProvider()
         mockManager = CollectionViewManager(
-            viewController: mockViewController,
             sectionProvider: mockProvider
         )
         let collectionView = mockManager.collectionView
@@ -31,21 +30,16 @@ import XCTest
     }
     
     func testContextBinding() {
-        func testSectionControllerContextBinding() {
-            mockProvider.status = .A
-            // Start from status A
-            let sectionController = mockProvider.sectionControllerA
-            XCTAssertNil(sectionController.context)
-            // Perform updates to bind context
-            mockManager.performUpdates()
-            mockManager.collectionView.layoutIfNeeded()
-    
-            // Check context is bound after update
-            XCTAssertNotNil(sectionController.context)
-    
-            // Check viewController on context is mockViewController and not nil
-            XCTAssertEqual(sectionController.context.viewController, mockViewController)
-        }
+        mockProvider.status = .A
+        // Start from status A
+        let sectionController = mockProvider.sectionControllerA
+        XCTAssertNil(sectionController.context)
+        // Perform updates to bind context
+        mockManager.performUpdates()
+        mockManager.collectionView.layoutIfNeeded()
+
+        // Check context is bound after update
+        XCTAssertNotNil(sectionController.context)
     }
     
     func testCurrentSnapshot() {

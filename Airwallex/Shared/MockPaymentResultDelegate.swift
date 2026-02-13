@@ -7,6 +7,7 @@
 //
 
 import AirwallexCore
+import AirwallexPaymentSheet
 import UIKit
 
 class MockPaymentResultDelegate: UIViewController, AWXPaymentResultDelegate {
@@ -15,13 +16,14 @@ class MockPaymentResultDelegate: UIViewController, AWXPaymentResultDelegate {
     var error: Error?
     var consentId: String?
     var presentedViewControllerSpy: UIViewController?
- 
+    var paymentMethod: String?
+
     func paymentViewController(_ controller: UIViewController?, didCompleteWith status: AirwallexPaymentStatus, error: (any Error)?) {
         self.status = status
         self.viewController = controller
         self.error = error
     }
-    
+
     func paymentViewController(_ controller: UIViewController?, didCompleteWithPaymentConsentId paymentConsentId: String) {
         self.viewController = controller
         self.consentId = paymentConsentId
@@ -39,5 +41,27 @@ class MockPaymentResultDelegate: UIViewController, AWXPaymentResultDelegate {
     override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
         presentedViewControllerSpy = nil
         completion?()
+    }
+}
+
+extension MockPaymentResultDelegate: AWXPaymentElementDelegate {
+    func paymentElement(
+        _ element: AWXPaymentElement,
+        didCompleteFor paymentMethod: String,
+        with status: AirwallexPaymentStatus,
+        error: Error?
+    ) {
+        self.paymentMethod = paymentMethod
+        self.status = status
+        self.error = error
+    }
+
+    func paymentElement(
+        _ element: AWXPaymentElement,
+        didCompleteFor paymentMethod: String,
+        withPaymentConsentId paymentConsentId: String
+    ) {
+        self.paymentMethod = paymentMethod
+        self.consentId = paymentConsentId
     }
 }

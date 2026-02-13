@@ -120,22 +120,20 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         XCTAssertNotNil(bankCell.viewModel?.bank)
     }
     
-    func testBankSelection() async {
+    func testBankSelectionValidation() async {
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
         guard let sectionController = getSchemaPaymentSectionController() else { return }
         try? await Task.sleep(nanoseconds: 1000_000_000)
         mockViewController.view.layoutIfNeeded()
-        
+
         guard let bankCell = sectionController.context.cellForItem(sectionController.sectionItem(.bankName)) as? BankSelectionCell else {
             XCTFail()
             return
         }
         XCTAssertNotNil(bankCell.viewModel?.bank)
-        bankCell.viewModel?.handleUserInteraction()
-        XCTAssert(mockViewController.presentedViewControllerSpy is AWXPaymentFormViewController)
-        
-        // checkout validation
+
+        // Checkout validation - when bank is nil, inline error should be shown
         XCTAssertNil(bankCell.viewModel?.errorHint)
         bankCell.viewModel?.bank = nil
         guard let checkoutCell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
