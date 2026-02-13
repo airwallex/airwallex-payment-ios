@@ -1153,4 +1153,116 @@ final class AWXPaymentElementTests: XCTestCase {
         // The fallback controller should still return a valid controller
         XCTAssertNotNil(controller)
     }
+
+    // MARK: - AWXPaymentResultDelegate Bridging Tests
+
+    func testPaymentViewController_didCompleteWithStatus_bridgesToDelegate() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let element = AWXPaymentElement(
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        // Simulate setting current payment method in context
+        element.paymentUIContext.currentPaymentMethod = "card"
+
+        // Call the delegate method through the element
+        element.paymentViewController(nil, didCompleteWith: .success, error: nil)
+
+        // Verify bridging to AWXPaymentElementDelegate
+        XCTAssertEqual(mockViewController.status, .success)
+        XCTAssertEqual(mockViewController.paymentMethod, "card")
+        XCTAssertNil(mockViewController.error)
+    }
+
+    func testPaymentViewController_didCompleteWithStatusAndError_bridgesToDelegate() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let element = AWXPaymentElement(
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        // Simulate setting current payment method in context
+        element.paymentUIContext.currentPaymentMethod = "card"
+
+        let testError = NSError(domain: "TestError", code: 100, userInfo: nil)
+        element.paymentViewController(nil, didCompleteWith: .failure, error: testError)
+
+        // Verify bridging to AWXPaymentElementDelegate
+        XCTAssertEqual(mockViewController.status, .failure)
+        XCTAssertEqual(mockViewController.paymentMethod, "card")
+        XCTAssertNotNil(mockViewController.error)
+        XCTAssertEqual((mockViewController.error as? NSError)?.code, 100)
+    }
+
+    func testPaymentViewController_didCompleteWithStatus_usesUnknownWhenNoCurrentPaymentMethod() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let element = AWXPaymentElement(
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        // Do not set current payment method
+        element.paymentUIContext.currentPaymentMethod = nil
+
+        element.paymentViewController(nil, didCompleteWith: .cancel, error: nil)
+
+        // Verify "unknown" is used when no payment method is set
+        XCTAssertEqual(mockViewController.status, .cancel)
+        XCTAssertEqual(mockViewController.paymentMethod, "unknown")
+    }
+
+    func testPaymentViewController_didCompleteWithConsentId_bridgesToDelegate() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let element = AWXPaymentElement(
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        // Simulate setting current payment method in context
+        element.paymentUIContext.currentPaymentMethod = "card"
+
+        element.paymentViewController(nil, didCompleteWithPaymentConsentId: "test_consent_123")
+
+        // Verify bridging to AWXPaymentElementDelegate
+        XCTAssertEqual(mockViewController.consentId, "test_consent_123")
+        XCTAssertEqual(mockViewController.paymentMethod, "card")
+    }
+
+    func testPaymentViewController_didCompleteWithConsentId_usesUnknownWhenNoCurrentPaymentMethod() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let element = AWXPaymentElement(
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        // Do not set current payment method
+        element.paymentUIContext.currentPaymentMethod = nil
+
+        element.paymentViewController(nil, didCompleteWithPaymentConsentId: "consent_456")
+
+        // Verify "unknown" is used when no payment method is set
+        XCTAssertEqual(mockViewController.consentId, "consent_456")
+        XCTAssertEqual(mockViewController.paymentMethod, "unknown")
+    }
 }
