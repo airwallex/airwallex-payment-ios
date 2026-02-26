@@ -150,20 +150,9 @@ public class AWXPaymentElement: NSObject {
             throw AWXUIContext.LaunchError.invalidSession(underlyingError: error)
         }
 
-        // fetch payment methods using method provider
-        try await methodProvider.getPaymentMethodTypes()
-
         // Risk event
         RiskLogger.log(.transactionInitiated)
-
-        // Create element with all dependencies ready
-        let element = AWXPaymentElement(
-            hostViewController: hostViewController,
-            methodProvider: methodProvider,
-            delegate: delegate,
-            configuration: configuration
-        )
-
+        
         // Analytics
         let extraInfo: [AnalyticEvent.Fields: Any] = if configuration.elementType == .addCard {
             [.launchType: launchType,
@@ -176,6 +165,18 @@ public class AWXPaymentElement: NSObject {
         }
         AnalyticsLogger.bindSession(session: session, extraInfo: extraInfo)
         AnalyticsLogger.log(action: .paymentLaunched)
+
+        // fetch payment methods using method provider
+        try await methodProvider.getPaymentMethodTypes()
+
+        // Create element with all dependencies ready
+        let element = AWXPaymentElement(
+            hostViewController: hostViewController,
+            methodProvider: methodProvider,
+            delegate: delegate,
+            configuration: configuration
+        )
+
         return element
     }
 

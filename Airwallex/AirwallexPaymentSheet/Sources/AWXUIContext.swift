@@ -157,6 +157,8 @@ import AirwallexCore
             ]
         )
 
+        AnalyticsLogger.log(action: .paymentLaunched)
+
         launchPayment(
             from: hostingVC,
             session: session,
@@ -165,8 +167,6 @@ import AirwallexCore
             launchStyle: launchStyle,
             layout: layout
         )
-        
-        AnalyticsLogger.log(action: .paymentLaunched)
     }
     // MARK: - Launch by Payment Method
     
@@ -258,18 +258,19 @@ import AirwallexCore
             ]
         )
 
+        AnalyticsLogger.log(
+            action: .paymentLaunched,
+            extraInfo: [
+                .paymentMethod: name
+            ]
+        )
+
         launchPayment(
             from: hostingVC,
             session: session,
             paymentMethodProvider: methodProvider,
             paymentResultDelegate: paymentResultDelegate,
             launchStyle: launchStyle
-        )
-        AnalyticsLogger.log(
-            action: .paymentLaunched,
-            extraInfo: [
-                .paymentMethod: name
-            ]
         )
     }
 }
