@@ -62,7 +62,7 @@ import XCTest
 
     func testAccordionLayout_Items() {
         mockSectionProvider.layout = .accordion
-        mockSectionProvider.paymentUIContext.isEmbedded = true
+        mockSectionProvider.simulateEmbeddedMode()
         mockSectionProvider.paymentUIContext.showsApplePayAsPrimaryButton = false  // Apple Pay integrated in accordion
         mockMethodProvider.selectedMethod = mockMethodProvider.methods.first
         mockManager.performUpdates()
@@ -78,7 +78,7 @@ import XCTest
 
     func testAccordionLayout_Cells() {
         mockSectionProvider.layout = .accordion
-        mockSectionProvider.paymentUIContext.isEmbedded = true
+        mockSectionProvider.simulateEmbeddedMode()
         mockSectionProvider.paymentUIContext.showsApplePayAsPrimaryButton = false  // Apple Pay integrated in accordion
         mockMethodProvider.selectedMethod = mockMethodProvider.methods.first
         mockManager.performUpdates()
@@ -104,7 +104,6 @@ import XCTest
         // Accordion layout should only apply when BOTH isEmbedded == true AND layout == .accordion
         // When layout is .accordion but isEmbedded is false, it should use tab layout (just button)
         mockSectionProvider.layout = .accordion
-        mockSectionProvider.paymentUIContext.isEmbedded = false
         mockMethodProvider.selectedMethod = mockMethodProvider.methods.first
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
@@ -121,7 +120,7 @@ import XCTest
     func testTabLayout_WhenEmbedded_UsesTabLayout() {
         // When layout is .tab, it should use tab layout regardless of isEmbedded
         mockSectionProvider.layout = .tab
-        mockSectionProvider.paymentUIContext.isEmbedded = true
+        mockSectionProvider.simulateEmbeddedMode()
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
 
@@ -137,7 +136,6 @@ import XCTest
     func testTabLayout_WhenNotEmbedded_UsesTabLayout() {
         // Default behavior: tab layout + not embedded should use tab layout
         mockSectionProvider.layout = .tab
-        mockSectionProvider.paymentUIContext.isEmbedded = false
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
 
@@ -154,7 +152,7 @@ import XCTest
         // When showsApplePayAsPrimaryButton is false and layout is tab,
         // Apple Pay is selected from the tab list and should show reminder + button
         mockSectionProvider.layout = .tab
-        mockSectionProvider.paymentUIContext.isEmbedded = true
+        mockSectionProvider.simulateEmbeddedMode()
         mockSectionProvider.paymentUIContext.showsApplePayAsPrimaryButton = false
         mockMethodProvider.selectedMethod = mockMethodProvider.methods.first
         mockManager.performUpdates()
@@ -191,7 +189,7 @@ import XCTest
 
     func testCheckout_Embedded_CallsConfirmApplePayWithCancelOnDismissTrue() {
         let mockFactory = mockSectionProvider.configureMockHandlerFactory()
-        mockSectionProvider.paymentUIContext.isEmbedded = true
+        mockSectionProvider.simulateEmbeddedMode()
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
 
@@ -209,7 +207,7 @@ import XCTest
 
     func testCheckout_Embedded_SetsShowIndicatorFalse() {
         let mockFactory = mockSectionProvider.configureMockHandlerFactory()
-        mockSectionProvider.paymentUIContext.isEmbedded = true
+        mockSectionProvider.simulateEmbeddedMode()
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
 
@@ -226,7 +224,6 @@ import XCTest
 
     func testCheckout_NonEmbedded_KeepsShowIndicatorTrue() {
         let mockFactory = mockSectionProvider.configureMockHandlerFactory()
-        mockSectionProvider.paymentUIContext.isEmbedded = false
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
 

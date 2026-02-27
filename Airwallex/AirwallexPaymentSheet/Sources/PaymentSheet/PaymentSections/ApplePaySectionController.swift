@@ -19,7 +19,7 @@ private extension String {
     static let applePayButton = "applePayButton"
 }
     
-class ApplePaySectionController: SectionController {
+class ApplePaySectionController: PaymentSectionController {
     typealias SectionItem = CompoundItem<PaymentSectionType, String>
 
     /// Layout type for Apple Pay section.
@@ -36,7 +36,7 @@ class ApplePaySectionController: SectionController {
     private let methodType: AWXPaymentMethodType
     private var paymentSessionHandler: PaymentSessionHandlerProtocol?
     private let methodProvider: PaymentMethodProvider
-    private let paymentUIContext: PaymentSheetUIContext
+    let paymentUIContext: PaymentSheetUIContext
 
     init(session: AWXSession,
          methodType: AWXPaymentMethodType,
@@ -121,15 +121,7 @@ class ApplePaySectionController: SectionController {
             methodType: methodType,
             paymentUIContext: paymentUIContext
         )
-        if paymentUIContext.isEmbedded {
-            paymentUIContext.currentPaymentMethod = AWXApplePayKey
-            paymentSessionHandler?.showIndicator = false
-            if let element = paymentUIContext.paymentElement,
-               !element.notifyProcessingStateChanged(for: AWXApplePayKey, isProcessing: true) {
-                // Delegate didn't handle it, use default loading indicator
-                context.startLoading(for: section)
-            }
-        }
+        prepareForEmbeddedCheckout(paymentMethod: AWXApplePayKey, handler: paymentSessionHandler)
         paymentSessionHandler?.confirmApplePay(cancelPaymentOnDismiss: paymentUIContext.isEmbedded)
     }
 

@@ -26,7 +26,7 @@ private extension String {
     static let selectedConsent = "selectedConsent"
 }
     
-class CardPaymentConsentSectionController: SectionController {
+class CardPaymentConsentSectionController: PaymentSectionController {
     typealias SectionItem = CompoundItem<PaymentSectionType, String>
     static let subType = "consent"
     
@@ -43,7 +43,7 @@ class CardPaymentConsentSectionController: SectionController {
     }
 
     let methodProvider: PaymentMethodProvider
-    private let paymentUIContext: PaymentSheetUIContext
+    let paymentUIContext: PaymentSheetUIContext
 
     private let addNewCardAction: () -> Void
     
@@ -511,15 +511,7 @@ private extension CardPaymentConsentSectionController {
             methodType: nil,
             paymentUIContext: paymentUIContext
         )
-        if paymentUIContext.isEmbedded {
-            paymentUIContext.currentPaymentMethod = AWXCardKey
-            paymentSessionHandler?.showIndicator = false
-            if let element = paymentUIContext.paymentElement,
-               !element.notifyProcessingStateChanged(for: AWXCardKey, isProcessing: true) {
-                // Delegate didn't handle it, use default loading indicator
-                context.startLoading(for: section)
-            }
-        }
+        prepareForEmbeddedCheckout(paymentMethod: AWXCardKey, handler: paymentSessionHandler)
         paymentSessionHandler?.confirmConsentPayment(with: consent)
     }
 }

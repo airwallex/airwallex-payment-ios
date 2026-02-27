@@ -196,7 +196,7 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
 
     func testCheckout_Embedded_SetsShowIndicatorFalse() async {
         let mockFactory = mockSectionProvider.configureMockHandlerFactory()
-        mockSectionProvider.paymentUIContext.isEmbedded = true
+        mockSectionProvider.simulateEmbeddedMode()
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
 
@@ -219,7 +219,6 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
 
     func testCheckout_NonEmbedded_KeepsShowIndicatorTrue() async {
         let mockFactory = mockSectionProvider.configureMockHandlerFactory()
-        mockSectionProvider.paymentUIContext.isEmbedded = false
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
 

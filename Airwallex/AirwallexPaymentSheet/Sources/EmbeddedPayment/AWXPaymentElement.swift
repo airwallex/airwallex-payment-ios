@@ -180,7 +180,6 @@ public class AWXPaymentElement: NSObject {
         AWXTheme.shared().tintColor = configuration.appearance.tintColor
 
         // Configure payment UI context
-        self.paymentUIContext.isEmbedded = true
         self.paymentUIContext.layout = configuration.layout
         self.paymentUIContext.showsApplePayAsPrimaryButton = configuration.showsApplePayAsPrimaryButton
         self.paymentUIContext.paymentElement = self

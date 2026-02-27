@@ -30,7 +30,7 @@ private extension String {
     static let billingFieldCountryCode = "billingFieldCountryCode"
 }
     
-class NewCardPaymentSectionController: NSObject, SectionController {
+class NewCardPaymentSectionController: NSObject, PaymentSectionController {
     typealias SectionItem = CompoundItem<PaymentSectionType, String>
     static let subType = "card"
     
@@ -41,7 +41,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         methodProvider.session
     }
     private let methodProvider: PaymentMethodProvider
-    private let paymentUIContext: PaymentSheetUIContext
+    let paymentUIContext: PaymentSheetUIContext
     private let switchToConsentPaymentAction: () -> Void
     private var shouldSaveCard = false
     private var shouldReuseShippingAddress: Bool
@@ -371,15 +371,7 @@ private extension NewCardPaymentSectionController {
             methodType: methodType,
             paymentUIContext: paymentUIContext
         )
-        if paymentUIContext.isEmbedded {
-            paymentUIContext.currentPaymentMethod = AWXCardKey
-            paymentSessionHandler?.showIndicator = false
-            if let element = paymentUIContext.paymentElement,
-               !element.notifyProcessingStateChanged(for: AWXCardKey, isProcessing: true) {
-                // Delegate didn't handle it, use default loading indicator
-                context.startLoading(for: section)
-            }
-        }
+        prepareForEmbeddedCheckout(paymentMethod: AWXCardKey, handler: paymentSessionHandler)
         paymentSessionHandler?.confirmCardPayment(
             with: card,
             billing: billing,

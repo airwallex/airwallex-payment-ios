@@ -398,7 +398,7 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
 
     func testCheckout_Embedded_SetsShowIndicatorFalse() {
         let mockFactory = mockSectionProvider.configureMockHandlerFactory()
-        mockSectionProvider.paymentUIContext.isEmbedded = true
+        mockSectionProvider.simulateEmbeddedMode()
         mockMethodProvider.session.requiredBillingContactFields = []
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
@@ -426,7 +426,6 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
 
     func testCheckout_NonEmbedded_KeepsShowIndicatorTrue() {
         let mockFactory = mockSectionProvider.configureMockHandlerFactory()
-        mockSectionProvider.paymentUIContext.isEmbedded = false
         mockMethodProvider.session.requiredBillingContactFields = []
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()

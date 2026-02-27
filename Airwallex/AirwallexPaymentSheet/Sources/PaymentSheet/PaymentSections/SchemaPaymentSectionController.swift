@@ -21,7 +21,7 @@ private extension String {
 }
     
 /// This section controlelr is for schema payment
-class SchemaPaymentSectionController: NSObject, SectionController {
+class SchemaPaymentSectionController: NSObject, PaymentSectionController {
     typealias SectionItem = CompoundItem<PaymentSectionType, String>
     private var session: AWXSession {
         methodProvider.session
@@ -338,15 +338,7 @@ private extension SchemaPaymentSectionController {
             methodType: methodProvider.method(named: name),
             paymentUIContext: paymentUIContext
         )
-        if paymentUIContext.isEmbedded {
-            paymentUIContext.currentPaymentMethod = name
-            paymentSessionHandler?.showIndicator = false
-            if let element = paymentUIContext.paymentElement,
-               !element.notifyProcessingStateChanged(for: name, isProcessing: true) {
-                // Delegate didn't handle it, use default loading indicator
-                context.startLoading(for: section)
-            }
-        }
+        prepareForEmbeddedCheckout(paymentMethod: name, handler: paymentSessionHandler)
         Task { [weak self] in
             guard let self else { return }
             await paymentSessionHandler?.confirmRedirectPayment(with: paymentMethod)
