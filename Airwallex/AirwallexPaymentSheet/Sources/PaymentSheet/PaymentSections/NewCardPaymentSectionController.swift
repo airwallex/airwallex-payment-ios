@@ -381,15 +381,11 @@ private extension NewCardPaymentSectionController {
                 context.startLoading(for: section)
             }
         }
-        do {
-            try paymentSessionHandler?.confirmCardPayment(
-                with: card,
-                billing: billing,
-                saveCard: shouldSaveCard
-            )
-        } catch {
-            paymentSessionHandler?.handleFailure(error)
-        }
+        paymentSessionHandler?.confirmCardPayment(
+            with: card,
+            billing: billing,
+            saveCard: shouldSaveCard
+        )
     }
     
     func createBillingInfo() -> AWXPlaceDetails {

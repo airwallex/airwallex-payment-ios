@@ -131,11 +131,7 @@ class ApplePaySectionController: SectionController {
                 context.startLoading(for: section)
             }
         }
-        do {
-            try paymentSessionHandler?.confirmApplePay(cancelPaymentOnDismiss: paymentUIContext.isEmbedded)
-        } catch {
-            paymentSessionHandler?.handleFailure(error)
-        }
+        paymentSessionHandler?.confirmApplePay(cancelPaymentOnDismiss: paymentUIContext.isEmbedded)
     }
 
     func collectionView(didSelectItem sectionItem: SectionItem, at indexPath: IndexPath) {

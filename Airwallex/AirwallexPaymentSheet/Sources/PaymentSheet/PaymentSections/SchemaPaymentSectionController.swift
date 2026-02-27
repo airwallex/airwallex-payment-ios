@@ -350,12 +350,8 @@ private extension SchemaPaymentSectionController {
         }
         Task { [weak self] in
             guard let self else { return }
-            do {
-                try await paymentSessionHandler?.confirmRedirectPayment(with: paymentMethod)
-                debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
-            } catch {
-                paymentSessionHandler?.handleFailure(error)
-            }
+            await paymentSessionHandler?.confirmRedirectPayment(with: paymentMethod)
+            debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
         }
     }
 

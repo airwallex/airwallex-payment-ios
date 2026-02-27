@@ -1098,13 +1098,13 @@ class PaymentSessionHandlerTests: XCTestCase {
 
         // confirm with name
         XCTAssertEqual(handler.paymentMethodName, "unknown")
-        try? await handler.confirmRedirectPayment(with: "alipaycn", additionalInfo: nil)
+        await handler.confirmRedirectPayment(with: "alipaycn", additionalInfo: nil)
         XCTAssertEqual(handler.paymentMethodName, "alipaycn")
 
         // confirm with method
         let mockMethod = AWXPaymentMethod()
         mockMethod.type = "alipayhk"
-        try? await handler.confirmRedirectPayment(with: "alipayhk", additionalInfo: nil)
+        await handler.confirmRedirectPayment(with: "alipayhk", additionalInfo: nil)
         XCTAssertEqual(handler.paymentMethodName, "alipayhk")
     }
 

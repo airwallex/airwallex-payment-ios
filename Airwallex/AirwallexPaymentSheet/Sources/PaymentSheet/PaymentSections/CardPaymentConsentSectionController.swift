@@ -520,10 +520,6 @@ private extension CardPaymentConsentSectionController {
                 context.startLoading(for: section)
             }
         }
-        do {
-            try paymentSessionHandler?.confirmConsentPayment(with: consent)
-        } catch {
-            paymentSessionHandler?.handleFailure(error)
-        }
+        paymentSessionHandler?.confirmConsentPayment(with: consent)
     }
 }
