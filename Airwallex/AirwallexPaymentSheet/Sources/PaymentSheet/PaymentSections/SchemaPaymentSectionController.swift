@@ -26,7 +26,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     private var session: AWXSession {
         methodProvider.session
     }
-    private var paymentSessionHandler: PaymentSessionHandler?
+    private var paymentSessionHandler: PaymentSessionHandlerProtocol?
     private var methodProvider: PaymentMethodProvider
     let paymentUIContext: PaymentSheetUIContext
     
@@ -333,7 +333,7 @@ private extension SchemaPaymentSectionController {
     }
 
     func confirmRedirectPayment(paymentMethod: AWXPaymentMethod) {
-        paymentSessionHandler = PaymentSessionHandler(
+        paymentSessionHandler = paymentUIContext.paymentSessionHandlerFactory.createHandler(
             session: session,
             methodType: methodProvider.method(named: name),
             paymentUIContext: paymentUIContext

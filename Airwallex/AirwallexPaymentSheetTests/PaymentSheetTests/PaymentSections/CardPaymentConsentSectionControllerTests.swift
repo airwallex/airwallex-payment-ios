@@ -148,7 +148,96 @@ class CardPaymentConsentSectionControllerTests: BasePaymentSectionControllerTest
         // Validation failures now show inline errors instead of alerts
         XCTAssertNotNil(cvcCell.viewModel?.errorHint)
     }
-    
+
+    // MARK: - Checkout Tests
+
+    func testCheckout_ValidCVC_CallsConfirmConsentPayment() {
+        let mockFactory = mockSectionProvider.configureMockHandlerFactory()
+        mockMethodProvider.consents.removeLast()
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let anySectionController = mockManager.sectionControllers[PaymentSectionType.cardPaymentConsent],
+              let sectionController = anySectionController.embededSectionController as? CardPaymentConsentSectionController else {
+            XCTFail()
+            return
+        }
+
+        guard let cvcCell = sectionController.context.cellForItem(sectionController.sectionItem(.cvcField)) as? InfoCollectorCell else {
+            XCTFail()
+            return
+        }
+        cvcCell.viewModel?.text = "123"
+
+        guard let checkoutCell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
+            XCTFail()
+            return
+        }
+
+        checkoutCell.viewModel?.checkoutAction()
+
+        XCTAssertTrue(mockFactory.createHandlerCalled)
+        XCTAssertTrue(mockFactory.mockHandler.confirmConsentPaymentCalled)
+        XCTAssertNotNil(mockFactory.mockHandler.confirmConsentPaymentConsent)
+    }
+
+    func testCheckout_Embedded_SetsShowIndicatorFalse() {
+        let mockFactory = mockSectionProvider.configureMockHandlerFactory()
+        mockSectionProvider.paymentUIContext.isEmbedded = true
+        mockMethodProvider.consents.removeLast()
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let anySectionController = mockManager.sectionControllers[PaymentSectionType.cardPaymentConsent],
+              let sectionController = anySectionController.embededSectionController as? CardPaymentConsentSectionController else {
+            XCTFail()
+            return
+        }
+
+        guard let cvcCell = sectionController.context.cellForItem(sectionController.sectionItem(.cvcField)) as? InfoCollectorCell else {
+            XCTFail()
+            return
+        }
+        cvcCell.viewModel?.text = "123"
+
+        guard let checkoutCell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
+            XCTFail()
+            return
+        }
+
+        checkoutCell.viewModel?.checkoutAction()
+
+        XCTAssertFalse(mockFactory.mockHandler.showIndicator)
+    }
+
+    func testCheckout_NonEmbedded_KeepsShowIndicatorTrue() {
+        let mockFactory = mockSectionProvider.configureMockHandlerFactory()
+        mockSectionProvider.paymentUIContext.isEmbedded = false
+        mockMethodProvider.consents.removeLast()
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let anySectionController = mockManager.sectionControllers[PaymentSectionType.cardPaymentConsent],
+              let sectionController = anySectionController.embededSectionController as? CardPaymentConsentSectionController else {
+            XCTFail()
+            return
+        }
+
+        guard let cvcCell = sectionController.context.cellForItem(sectionController.sectionItem(.cvcField)) as? InfoCollectorCell else {
+            XCTFail()
+            return
+        }
+        cvcCell.viewModel?.text = "123"
+
+        guard let checkoutCell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
+            XCTFail()
+            return
+        }
+
+        checkoutCell.viewModel?.checkoutAction()
+
+        XCTAssertTrue(mockFactory.mockHandler.showIndicator)
+    }
 }
 
 // MARK: - Item Identifiers (mirroring CardPaymentConsentSectionController)

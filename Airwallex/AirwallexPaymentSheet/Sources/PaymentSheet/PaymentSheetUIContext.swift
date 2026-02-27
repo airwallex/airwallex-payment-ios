@@ -40,4 +40,8 @@ class PaymentSheetUIContext: PaymentUIContext {
 
     /// Shared image loader for payment method icons.
     private(set) lazy var imageLoader = ImageLoader()
+
+    /// Factory for creating payment session handlers.
+    /// Can be replaced with a mock factory for testing.
+    lazy var paymentSessionHandlerFactory: PaymentSessionHandlerFactory = DefaultPaymentSessionHandlerFactory()
 }

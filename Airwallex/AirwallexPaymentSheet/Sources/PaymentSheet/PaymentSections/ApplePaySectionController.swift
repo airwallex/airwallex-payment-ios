@@ -34,7 +34,7 @@ class ApplePaySectionController: SectionController {
 
     private let session: AWXSession
     private let methodType: AWXPaymentMethodType
-    private var paymentSessionHandler: PaymentSessionHandler?
+    private var paymentSessionHandler: PaymentSessionHandlerProtocol?
     private let methodProvider: PaymentMethodProvider
     private let paymentUIContext: PaymentSheetUIContext
 
@@ -116,7 +116,7 @@ class ApplePaySectionController: SectionController {
     func checkout() {
         AnalyticsLogger.log(action: .tapPayButton, extraInfo: [.paymentMethod: methodType.name])
 
-        paymentSessionHandler = PaymentSessionHandler(
+        paymentSessionHandler = paymentUIContext.paymentSessionHandlerFactory.createHandler(
             session: session,
             methodType: methodType,
             paymentUIContext: paymentUIContext

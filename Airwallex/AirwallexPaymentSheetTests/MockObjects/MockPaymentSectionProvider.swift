@@ -20,9 +20,21 @@ import XCTest
     var methodProvider: PaymentMethodProvider
 
     let paymentUIContext = PaymentSheetUIContext()
-    
+
+    /// Mock factory for testing checkout flows
+    var mockHandlerFactory: MockPaymentSessionHandlerFactory?
+
     init(methodProvider: PaymentMethodProvider) {
         self.methodProvider = methodProvider
+    }
+
+    /// Configures the payment UI context with a mock handler factory for testing checkout.
+    /// Call this before performUpdates() to inject the mock into section controllers.
+    func configureMockHandlerFactory() -> MockPaymentSessionHandlerFactory {
+        let factory = MockPaymentSessionHandlerFactory()
+        mockHandlerFactory = factory
+        paymentUIContext.paymentSessionHandlerFactory = factory
+        return factory
     }
         
     // status

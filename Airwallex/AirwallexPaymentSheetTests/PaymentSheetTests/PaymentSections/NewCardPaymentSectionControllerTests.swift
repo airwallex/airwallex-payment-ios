@@ -329,6 +329,128 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         // Validation failures now show inline errors instead of alerts
         XCTAssertNotNil(cardInfoCell.viewModel?.cardNumberConfigurer.errorHint)
     }
+
+    // MARK: - Checkout Tests
+
+    func testCheckout_ValidCard_CallsConfirmCardPayment() {
+        let mockFactory = mockSectionProvider.configureMockHandlerFactory()
+        mockMethodProvider.session.requiredBillingContactFields = []
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let sectionController = getCardSectionController() else { XCTFail(); return }
+        guard let cardInfoCell = sectionController.context.cellForItem(sectionController.sectionItem(.cardInfo)) as? CardInfoCollectorCell else {
+            XCTFail()
+            return
+        }
+
+        // Set valid card info
+        cardInfoCell.viewModel?.cardNumberConfigurer.text = mockCard.number
+        cardInfoCell.viewModel?.expireDataConfigurer.text = "\(mockCard.expiryMonth)/\(mockCard.expiryYear.suffix(2))"
+        cardInfoCell.viewModel?.cvcConfigurer.text = mockCard.cvc
+
+        guard let checkoutButtonCell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
+            XCTFail()
+            return
+        }
+
+        checkoutButtonCell.viewModel?.checkoutAction()
+
+        XCTAssertTrue(mockFactory.createHandlerCalled)
+        XCTAssertTrue(mockFactory.mockHandler.confirmCardPaymentCalled)
+        XCTAssertEqual(mockFactory.mockHandler.confirmCardPaymentCard?.number, mockCard.number)
+    }
+
+    func testCheckout_ValidCard_PassesCorrectSaveCardFlag() {
+        let mockFactory = mockSectionProvider.configureMockHandlerFactory()
+
+        let session = AWXOneOffSession()
+        session.paymentIntent = AWXPaymentIntent()
+        session.paymentIntent?.customerId = "customer_id"
+        session.requiredBillingContactFields = []
+        session.autoSaveCardForFuturePayments = true
+        mockMethodProvider.session = session
+
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let sectionController = getCardSectionController() else { XCTFail(); return }
+        guard let cardInfoCell = sectionController.context.cellForItem(sectionController.sectionItem(.cardInfo)) as? CardInfoCollectorCell else {
+            XCTFail()
+            return
+        }
+
+        // Set valid card info
+        cardInfoCell.viewModel?.cardNumberConfigurer.text = mockCard.number
+        cardInfoCell.viewModel?.expireDataConfigurer.text = "\(mockCard.expiryMonth)/\(mockCard.expiryYear.suffix(2))"
+        cardInfoCell.viewModel?.cvcConfigurer.text = mockCard.cvc
+
+        guard let checkoutButtonCell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
+            XCTFail()
+            return
+        }
+
+        checkoutButtonCell.viewModel?.checkoutAction()
+
+        XCTAssertTrue(mockFactory.mockHandler.confirmCardPaymentCalled)
+        XCTAssertEqual(mockFactory.mockHandler.confirmCardPaymentSaveCard, true)
+    }
+
+    func testCheckout_Embedded_SetsShowIndicatorFalse() {
+        let mockFactory = mockSectionProvider.configureMockHandlerFactory()
+        mockSectionProvider.paymentUIContext.isEmbedded = true
+        mockMethodProvider.session.requiredBillingContactFields = []
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let sectionController = getCardSectionController() else { XCTFail(); return }
+        guard let cardInfoCell = sectionController.context.cellForItem(sectionController.sectionItem(.cardInfo)) as? CardInfoCollectorCell else {
+            XCTFail()
+            return
+        }
+
+        // Set valid card info
+        cardInfoCell.viewModel?.cardNumberConfigurer.text = mockCard.number
+        cardInfoCell.viewModel?.expireDataConfigurer.text = "\(mockCard.expiryMonth)/\(mockCard.expiryYear.suffix(2))"
+        cardInfoCell.viewModel?.cvcConfigurer.text = mockCard.cvc
+
+        guard let checkoutButtonCell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
+            XCTFail()
+            return
+        }
+
+        checkoutButtonCell.viewModel?.checkoutAction()
+
+        XCTAssertFalse(mockFactory.mockHandler.showIndicator)
+    }
+
+    func testCheckout_NonEmbedded_KeepsShowIndicatorTrue() {
+        let mockFactory = mockSectionProvider.configureMockHandlerFactory()
+        mockSectionProvider.paymentUIContext.isEmbedded = false
+        mockMethodProvider.session.requiredBillingContactFields = []
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let sectionController = getCardSectionController() else { XCTFail(); return }
+        guard let cardInfoCell = sectionController.context.cellForItem(sectionController.sectionItem(.cardInfo)) as? CardInfoCollectorCell else {
+            XCTFail()
+            return
+        }
+
+        // Set valid card info
+        cardInfoCell.viewModel?.cardNumberConfigurer.text = mockCard.number
+        cardInfoCell.viewModel?.expireDataConfigurer.text = "\(mockCard.expiryMonth)/\(mockCard.expiryYear.suffix(2))"
+        cardInfoCell.viewModel?.cvcConfigurer.text = mockCard.cvc
+
+        guard let checkoutButtonCell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
+            XCTFail()
+            return
+        }
+
+        checkoutButtonCell.viewModel?.checkoutAction()
+
+        XCTAssertTrue(mockFactory.mockHandler.showIndicator)
+    }
 }
 
 // MARK: - Item Identifiers (mirroring NewCardPaymentSectionController)

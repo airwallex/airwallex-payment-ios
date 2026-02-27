@@ -36,7 +36,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     
     private var methodType: AWXPaymentMethodType
 
-    private var paymentSessionHandler: PaymentSessionHandler?
+    private var paymentSessionHandler: PaymentSessionHandlerProtocol?
     private var session: AWXSession {
         methodProvider.session
     }
@@ -366,7 +366,7 @@ private extension NewCardPaymentSectionController {
     }
 
     func confirmCardPayment(card: AWXCard, billing: AWXPlaceDetails) {
-        paymentSessionHandler = PaymentSessionHandler(
+        paymentSessionHandler = paymentUIContext.paymentSessionHandlerFactory.createHandler(
             session: session,
             methodType: methodType,
             paymentUIContext: paymentUIContext

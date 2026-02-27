@@ -47,8 +47,8 @@ class CardPaymentConsentSectionController: SectionController {
 
     private let addNewCardAction: () -> Void
     
-    private var paymentSessionHandler: PaymentSessionHandler?
-    
+    private var paymentSessionHandler: PaymentSessionHandlerProtocol?
+
     private var selectedConsent: AWXPaymentConsent?
     private var cvcConfigurer: InfoCollectorTextFieldViewModel?
     var mode: Mode {
@@ -506,8 +506,9 @@ private extension CardPaymentConsentSectionController {
     func confirmConsentPayment(consent: AWXPaymentConsent) {
         RiskLogger.log(.clickPaymentButton, screen: .consent)
 
-        paymentSessionHandler = PaymentSessionHandler(
+        paymentSessionHandler = paymentUIContext.paymentSessionHandlerFactory.createHandler(
             session: session,
+            methodType: nil,
             paymentUIContext: paymentUIContext
         )
         if paymentUIContext.isEmbedded {
