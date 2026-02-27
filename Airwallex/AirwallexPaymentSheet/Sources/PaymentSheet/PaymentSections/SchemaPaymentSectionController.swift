@@ -340,11 +340,10 @@ private extension SchemaPaymentSectionController {
         )
         if paymentUIContext.isEmbedded {
             paymentUIContext.currentPaymentMethod = name
-            if let element = paymentUIContext.paymentElement {
-                element.delegate?.paymentElement?(element, didStartPaymentFor: name)
-            }
             paymentSessionHandler?.showIndicator = false
-            if paymentUIContext.showsPaymentProcessingIndicator {
+            if let element = paymentUIContext.paymentElement,
+               !element.notifyProcessingStateChanged(for: name, isProcessing: true) {
+                // Delegate didn't handle it, use default loading indicator
                 context.startLoading(for: section)
             }
         }

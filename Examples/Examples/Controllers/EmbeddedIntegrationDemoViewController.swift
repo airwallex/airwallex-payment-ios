@@ -90,7 +90,6 @@ private extension EmbeddedIntegrationDemoViewController {
                 let configuration = AWXPaymentElement.Configuration()
                 configuration.layout = ExamplesKeys.paymentLayout
                 configuration.showsApplePayAsPrimaryButton = false
-                configuration.showsPaymentProcessingIndicator = false
                 let element = try await AWXPaymentElement.create(
                     session: session,
                     delegate: self,
@@ -115,11 +114,17 @@ extension EmbeddedIntegrationDemoViewController: AWXPaymentElementDelegate {
 
     func paymentElement(
         _ element: AWXPaymentElement,
-        didStartPaymentFor paymentMethod: String
+        onProcessingStateChangedFor paymentMethod: String,
+        isProcessing: Bool
     ) {
-        print("Payment started for method: \(paymentMethod)")
-        loadingIndicator.startAnimating()
-        view.isUserInteractionEnabled = false
+        if isProcessing {
+            print("Payment started for method: \(paymentMethod)")
+            loadingIndicator.startAnimating()
+            view.isUserInteractionEnabled = false
+        } else {
+            loadingIndicator.stopAnimating()
+            view.isUserInteractionEnabled = true
+        }
     }
 
     func paymentElement(
@@ -156,8 +161,6 @@ extension EmbeddedIntegrationDemoViewController: AWXPaymentElementDelegate {
                 title: "Payment cancelled"
             )
         }
-        loadingIndicator.stopAnimating()
-        view.isUserInteractionEnabled = true
     }
 
     func paymentElement(

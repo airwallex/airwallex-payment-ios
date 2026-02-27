@@ -67,17 +67,5 @@ extension AWXPaymentElement {
 
         /// Appearance configuration for customizing the visual style.
         public var appearance: Appearance = Appearance()
-
-        /// Whether to show the default loading indicator during payment processing.
-        ///
-        /// When `true` (default), the SDK displays its built-in loading indicator
-        /// while processing payments (e.g., confirming card payment, Apple Pay, etc.).
-        /// When `false`, the payment processing indicator is hidden, allowing you
-        /// to display your own using the delegate lifecycle callbacks.
-        ///
-        /// Note: This only affects the payment processing indicator. Section-level
-        /// loading indicators (e.g., when loading payment method details) are always
-        /// displayed regardless of this setting.
-        public var showsPaymentProcessingIndicator: Bool = true
     }
 }

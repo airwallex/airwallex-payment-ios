@@ -68,4 +68,21 @@ extension MockPaymentResultDelegate: AWXPaymentElementDelegate {
         self.consentId = paymentConsentId
     }
 }
+
+/// A mock delegate that implements the optional `onProcessingStateChangedFor` method.
+class MockProcessingStateDelegate: MockPaymentResultDelegate {
+    var processingStateChangedCalled = false
+    var processingStatePaymentMethod: String?
+    var processingStateIsProcessing: Bool?
+
+    func paymentElement(
+        _ element: AWXPaymentElement,
+        onProcessingStateChangedFor paymentMethod: String,
+        isProcessing: Bool
+    ) {
+        processingStateChangedCalled = true
+        processingStatePaymentMethod = paymentMethod
+        processingStateIsProcessing = isProcessing
+    }
+}
 #endif

@@ -183,7 +183,6 @@ public class AWXPaymentElement: NSObject {
         self.paymentUIContext.isEmbedded = true
         self.paymentUIContext.layout = configuration.layout
         self.paymentUIContext.showsApplePayAsPrimaryButton = configuration.showsApplePayAsPrimaryButton
-        self.paymentUIContext.showsPaymentProcessingIndicator = configuration.showsPaymentProcessingIndicator
         self.paymentUIContext.paymentElement = self
         // AWXPaymentElement implements AWXPaymentResultDelegate to bridge to AWXPaymentElementDelegate
         self.paymentUIContext.delegate = self
@@ -399,7 +398,7 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
 
 // MARK: - AWXPaymentResultDelegate
 
-extension AWXPaymentElement: AWXPaymentResultDelegate {
+extension AWXPaymentElement: @MainActor AWXPaymentResultDelegate {
     public func paymentViewController(
         _ controller: UIViewController?,
         didCompleteWith status: AirwallexPaymentStatus,
@@ -407,6 +406,7 @@ extension AWXPaymentElement: AWXPaymentResultDelegate {
     ) {
         let methodName = paymentUIContext.currentPaymentMethod ?? "unknown"
         collectionViewManager.context.stopLoading()
+        notifyProcessingStateChanged(for: methodName, isProcessing: false)
         delegate?.paymentElement(self, didCompleteFor: methodName, with: status, error: error)
     }
 
@@ -416,5 +416,28 @@ extension AWXPaymentElement: AWXPaymentResultDelegate {
     ) {
         let methodName = paymentUIContext.currentPaymentMethod ?? "unknown"
         delegate?.paymentElement?(self, didCompleteFor: methodName, withPaymentConsentId: paymentConsentId)
+    }
+}
+
+// MARK: - Processing State Notification
+
+extension AWXPaymentElement {
+    /// Notifies the delegate about payment processing state changes.
+    ///
+    /// Call this when payment processing starts or stops. If the delegate implements
+    /// `paymentElement(_:onProcessingStateChangedFor:isProcessing:)`, it will be called.
+    /// Otherwise, returns `false` so the caller can fall back to default behavior.
+    ///
+    /// - Parameters:
+    ///   - paymentMethod: The name of the payment method being processed.
+    ///   - isProcessing: `true` when processing starts, `false` when it ends.
+    /// - Returns: `true` if the delegate handled the notification, `false` if fallback is needed.
+    @discardableResult
+    func notifyProcessingStateChanged(for paymentMethod: String, isProcessing: Bool) -> Bool {
+        guard let method = delegate?.paymentElement(_:onProcessingStateChangedFor:isProcessing:) else {
+            return false
+        }
+        method(self, paymentMethod, isProcessing)
+        return true
     }
 }

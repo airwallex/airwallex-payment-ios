@@ -513,11 +513,10 @@ private extension CardPaymentConsentSectionController {
         )
         if paymentUIContext.isEmbedded {
             paymentUIContext.currentPaymentMethod = AWXCardKey
-            if let element = paymentUIContext.paymentElement {
-                element.delegate?.paymentElement?(element, didStartPaymentFor: AWXCardKey)
-            }
             paymentSessionHandler?.showIndicator = false
-            if paymentUIContext.showsPaymentProcessingIndicator {
+            if let element = paymentUIContext.paymentElement,
+               !element.notifyProcessingStateChanged(for: AWXCardKey, isProcessing: true) {
+                // Delegate didn't handle it, use default loading indicator
                 context.startLoading(for: section)
             }
         }

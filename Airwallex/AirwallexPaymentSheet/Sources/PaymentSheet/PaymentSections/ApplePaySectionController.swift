@@ -123,11 +123,10 @@ class ApplePaySectionController: SectionController {
         )
         if paymentUIContext.isEmbedded {
             paymentUIContext.currentPaymentMethod = AWXApplePayKey
-            if let element = paymentUIContext.paymentElement {
-                element.delegate?.paymentElement?(element, didStartPaymentFor: AWXApplePayKey)
-            }
             paymentSessionHandler?.showIndicator = false
-            if paymentUIContext.showsPaymentProcessingIndicator {
+            if let element = paymentUIContext.paymentElement,
+               !element.notifyProcessingStateChanged(for: AWXApplePayKey, isProcessing: true) {
+                // Delegate didn't handle it, use default loading indicator
                 context.startLoading(for: section)
             }
         }

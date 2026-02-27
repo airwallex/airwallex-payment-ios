@@ -29,9 +29,6 @@ class PaymentSheetUIContext: PaymentUIContext {
     /// Whether Apple Pay pinned at top.
     var showsApplePayAsPrimaryButton: Bool = true
 
-    /// Whether to show the loading indicator during payment processing (embedded only).
-    var showsPaymentProcessingIndicator: Bool = true
-
     /// The current payment method name being processed (for delegate callbacks).
     var currentPaymentMethod: String?
 

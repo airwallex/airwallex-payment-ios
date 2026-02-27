@@ -78,7 +78,6 @@
     } while (0);
 
     AWXPaymentElementConfiguration *config = [[AWXPaymentElementConfiguration alloc] init];
-    config.showsPaymentProcessingIndicator = NO;
     [AWXPaymentElement createWithSession:session
                                 delegate:self
                            configuration:config

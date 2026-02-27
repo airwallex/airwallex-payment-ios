@@ -18,14 +18,20 @@ import AirwallexCore
 @MainActor
 @objc public protocol AWXPaymentElementDelegate: AnyObject {
 
-    /// Called when payment processing begins.
+    /// Called when payment processing state changes.
     ///
-    /// Use this to show a custom loading indicator if `showsPaymentProcessingIndicator` is `false`.
+    /// Implement this method to display a custom loading indicator during payment processing.
+    /// This method is called with `isProcessing: true` when payment starts, and
+    /// `isProcessing: false` when payment completes (before `didCompleteFor` is called).
+    /// If this method is not implemented, a default loading indicator will be shown.
+    ///
     /// - Parameters:
-    ///   - element: The payment element that started payment.
+    ///   - element: The payment element.
     ///   - paymentMethod: The name of the payment method being used (e.g., "card", "applepay").
+    ///   - isProcessing: `true` when payment starts, `false` when payment ends.
     @objc optional func paymentElement(_ element: AWXPaymentElement,
-                                       didStartPaymentFor paymentMethod: String)
+                                       onProcessingStateChangedFor paymentMethod: String,
+                                       isProcessing: Bool)
 
     /// Called when payment processing completes.
     ///
