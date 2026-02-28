@@ -7,7 +7,7 @@
 
 import Foundation
 
-@_spi(AWX) public extension String {
+package extension String {
     func filterIllegalCharacters(in set: CharacterSet) -> String {
         components(separatedBy: set).joined()
     }

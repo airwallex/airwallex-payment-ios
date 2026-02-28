@@ -8,7 +8,7 @@
 
 #if canImport(AirwallexCore)
 import AirwallexCore
-@_spi(AWX) import AirwallexPayment
+import AirwallexPayment
 #endif
 import Foundation
 

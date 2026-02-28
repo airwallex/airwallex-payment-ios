@@ -9,7 +9,7 @@
 import UIKit
 #if canImport(AirwallexPayment)
 import AirwallexCore
-@_spi(AWX) import AirwallexPayment
+import AirwallexPayment
 #endif
 
 struct CheckoutButtonCellViewModel {

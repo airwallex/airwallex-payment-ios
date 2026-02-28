@@ -6,9 +6,9 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
+@testable import AirwallexPayment
 import UIKit
 import XCTest
-@testable @_spi(AWX) import AirwallexPayment
 
 class StringExtensionTests: XCTestCase {
     func testFilterIllegalCharacters() {

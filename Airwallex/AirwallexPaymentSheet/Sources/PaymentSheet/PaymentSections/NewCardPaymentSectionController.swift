@@ -10,7 +10,7 @@ import AirwallexRisk
 import UIKit
 #if canImport(AirwallexPayment)
 import AirwallexCore
-@_spi(AWX) import AirwallexPayment
+import AirwallexPayment
 #endif
     
 // MARK: - Item Identifiers

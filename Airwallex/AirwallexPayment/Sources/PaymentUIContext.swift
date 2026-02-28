@@ -18,7 +18,7 @@ import UIKit
 /// each payment flow to have its own isolated context.
 ///
 /// Subclass this in higher-level modules to add additional configuration properties.
-@_spi(AWX) @MainActor
+@MainActor
 open class PaymentUIContext {
 
     /// A block type for dismissing the payment UI.

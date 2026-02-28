@@ -8,7 +8,7 @@
 
 #if canImport(AirwallexPayment)
 import AirwallexCore
-@_spi(AWX) import AirwallexPayment
+import AirwallexPayment
 #endif
 
 /// Protocol that abstracts the payment session handler methods used by section controllers.

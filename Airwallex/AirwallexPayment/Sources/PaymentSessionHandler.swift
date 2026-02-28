@@ -155,9 +155,9 @@ public class PaymentSessionHandler: NSObject {
     ///   - session: The payment session containing relevant transaction details.
     ///   - methodType: The payment method type returned from the server (optional).
     ///   - paymentUIContext: The UI context containing viewController, delegate, and dismiss action.
-    @_spi(AWX) public init(session: AWXSession,
-                           methodType: AWXPaymentMethodType? = nil,
-                           paymentUIContext: PaymentUIContext) {
+    package init(session: AWXSession,
+                 methodType: AWXPaymentMethodType? = nil,
+                 paymentUIContext: PaymentUIContext) {
         self.session = session
         self.methodType = methodType
         self.paymentUIContext = paymentUIContext
@@ -283,7 +283,7 @@ public class PaymentSessionHandler: NSObject {
 }
 
 // for internal usage
-@_spi(AWX) public extension PaymentSessionHandler {
+package extension PaymentSessionHandler {
     /// Initiates an Apple Pay transaction.
     /// - Parameter cancelPaymentOnDismiss: Determines the behavior when the Apple Pay sheet is dismissed.
     ///   - If `true`, the standard Apple Pay flow is followed, and the payment result delegate

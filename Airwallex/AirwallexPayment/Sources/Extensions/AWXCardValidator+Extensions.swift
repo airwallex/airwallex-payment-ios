@@ -11,7 +11,7 @@ import UIKit
 import AirwallexCore
 #endif
 
-@_spi(AWX) public extension AWXCardValidator {
+package extension AWXCardValidator {
         
     static func validate(card: AWXCard, nameRequired: Bool, supportedSchemes: [AWXCardScheme] = []) throws {
         do {

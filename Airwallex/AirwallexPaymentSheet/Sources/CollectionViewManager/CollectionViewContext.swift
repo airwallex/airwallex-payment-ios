@@ -8,7 +8,7 @@
 
 import UIKit
 #if canImport(AirwallexPayment)
-@_spi(AWX) import AirwallexPayment
+import AirwallexPayment
 #endif
 
 /// Context that bridges section controllers with the collection view and its data source.

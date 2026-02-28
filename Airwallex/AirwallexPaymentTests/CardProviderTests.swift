@@ -7,7 +7,7 @@
 //
 
 import AirwallexCore
-@testable @_spi(AWX) import AirwallexPayment
+@testable import AirwallexPayment
 import UIKit
 import XCTest
 
@@ -137,7 +137,7 @@ class CardProviderTests: XCTestCase {
         await provider.confirmIntentWithCard(card, billing: billing, saveCard: false)
         
         // Verify the API client was called correctly
-        await MainActor.run {        
+        await MainActor.run {
             XCTAssertEqual(mockDelegate.didStartRequest, 2)
             XCTAssertEqual(mockDelegate.didEndRequest, 2)
             XCTAssertEqual(mockDelegate.completionStatus, AirwallexPaymentStatus.success)

@@ -7,7 +7,7 @@
 //
 
 import AirwallexCore
-@testable @_spi(AWX) import AirwallexPayment
+@testable import AirwallexPayment
 @testable import AirwallexPaymentSheet
 
 /// Mock implementation of PaymentSessionHandlerProtocol for testing.

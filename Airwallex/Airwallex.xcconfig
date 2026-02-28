@@ -7,3 +7,4 @@
 //
 
 AIRWALLEX_VERSION = 6.3.2
+SWIFT_PACKAGE_NAME = Airwallex
