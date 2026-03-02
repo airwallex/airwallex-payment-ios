@@ -362,9 +362,7 @@ private extension IntegrationDemoListViewController {
     }
     
     func launchShippingAddressDialog() {
-        let controller = AWXShippingViewController(nibName: nil, bundle: nil)
-        controller.delegate = self
-        controller.shipping = shippingAddress
+        let controller = AWXShippingViewController(shipping: shippingAddress, delegate: self)
         let nav = UINavigationController(rootViewController: controller)
         navigationController?.present(nav, animated: true)
     }
