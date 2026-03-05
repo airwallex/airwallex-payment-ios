@@ -186,4 +186,12 @@ extension EmbeddedIntegrationDemoViewController: AWXPaymentElementDelegate {
     ) {
         print("Payment consent created for \(paymentMethod) with ID: \(paymentConsentId)")
     }
+
+    func paymentElement(
+        _ element: AWXPaymentElement,
+        inputValidationFailedFor view: UIView
+    ) {
+        let rect = view.convert(view.bounds, to: listView.scrollView)
+        listView.scrollView.scrollRectToVisible(rect, animated: true)
+    }
 }

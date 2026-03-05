@@ -217,6 +217,34 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         XCTAssertFalse(mockFactory.mockHandler.showIndicator)
     }
 
+    func testCheckout_Embedded_InvalidInput_NotifiesDelegateOfValidationFailure() async {
+        let mockDelegate = MockValidationFailureDelegate()
+        mockSectionProvider.simulateEmbeddedMode(delegate: mockDelegate)
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let sectionController = getSchemaPaymentSectionController() else { return }
+        try? await Task.sleep(nanoseconds: 500_000_000)
+        mockViewController.view.layoutIfNeeded()
+
+        // Clear a required field to trigger validation failure
+        guard let nameCell = sectionController.context.cellForItem(sectionController.sectionItem("shopper_name")) as? InfoCollectorCell else {
+            XCTFail()
+            return
+        }
+        nameCell.viewModel?.text = nil
+
+        guard let checkoutCell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
+            XCTFail()
+            return
+        }
+
+        checkoutCell.viewModel?.checkoutAction()
+
+        XCTAssertTrue(mockDelegate.inputValidationFailedCalled)
+        XCTAssertNotNil(mockDelegate.inputValidationFailedView)
+    }
+
     func testCheckout_NonEmbedded_KeepsShowIndicatorTrue() async {
         let mockFactory = mockSectionProvider.configureMockHandlerFactory()
         mockManager.performUpdates()

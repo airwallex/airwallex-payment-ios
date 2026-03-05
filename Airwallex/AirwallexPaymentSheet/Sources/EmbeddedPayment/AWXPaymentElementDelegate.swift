@@ -54,4 +54,19 @@ import AirwallexCore
     @objc optional func paymentElement(_ element: AWXPaymentElement,
                                        didCompleteFor paymentMethod: String,
                                        withPaymentConsentId paymentConsentId: String)
+
+    /// Called when input validation fails, allowing the host app to scroll the first
+    /// invalid field into the visible area.
+    ///
+    /// Since the payment element is embedded inside the host app's view hierarchy,
+    /// the SDK cannot determine how to scroll content into view. Implement this method
+    /// to ensure the provided view is visible to the user (e.g., by calling
+    /// `scrollRectToVisible(_:animated:)` on the enclosing scroll view, converting
+    /// the view's frame with `convert(_:from:)` as needed).
+    ///
+    /// - Parameters:
+    ///   - element: The payment element.
+    ///   - view: The view containing the first invalid input field that should be scrolled into view.
+    @objc optional func paymentElement(_ element: AWXPaymentElement,
+                                       inputValidationFailedFor view: UIView)
 }

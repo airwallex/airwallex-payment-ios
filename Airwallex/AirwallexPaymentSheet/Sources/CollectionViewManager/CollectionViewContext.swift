@@ -137,12 +137,20 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
                         animatingDifferences: Bool = false) {
         _performUpdatesForSection(section, updateItems, forceReload, animatingDifferences)
     }
-    
+
     func scroll(to item: SectionItem, position: UICollectionView.ScrollPosition, animated: Bool = false) {
         guard let indexPath = dataSource.indexPath(for: item) else { return }
         collectionView.scrollToItem(at: indexPath, at: position, animated: animated)
     }
-    
+
+    func ensureVisible(for item: SectionItem, animated: Bool = true) {
+        guard let indexPath = dataSource.indexPath(for: item) else { return }
+        guard !collectionView.indexPathsForVisibleItems.contains(indexPath) else {
+            return
+        }
+        collectionView.scrollToItem(at: indexPath, at: .top, animated: animated)
+    }
+
     func cellForItem(_ item: SectionItem) -> UICollectionViewCell? {
         guard let indexPath = dataSource.indexPath(for: item) else { return nil }
         return collectionView.cellForItem(at: indexPath)

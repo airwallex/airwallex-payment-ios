@@ -439,4 +439,8 @@ extension AWXPaymentElement {
         method(self, paymentMethod, isProcessing)
         return true
     }
+
+    func notifyInputValidationFailed(for view: UIView) {
+        delegate?.paymentElement?(self, inputValidationFailedFor: view)
+    }
 }

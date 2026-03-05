@@ -85,4 +85,18 @@ class MockProcessingStateDelegate: MockPaymentResultDelegate {
         processingStateIsProcessing = isProcessing
     }
 }
+
+/// A mock delegate that implements the optional `inputValidationFailedFor` method.
+class MockValidationFailureDelegate: MockPaymentResultDelegate {
+    var inputValidationFailedCalled = false
+    var inputValidationFailedView: UIView?
+
+    func paymentElement(
+        _ element: AWXPaymentElement,
+        inputValidationFailedFor view: UIView
+    ) {
+        inputValidationFailedCalled = true
+        inputValidationFailedView = view
+    }
+}
 #endif
