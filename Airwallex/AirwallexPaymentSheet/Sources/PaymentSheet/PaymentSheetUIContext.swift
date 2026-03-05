@@ -14,10 +14,42 @@ import AirwallexPayment
 
 /// Payment UI context for payment sheet with additional configuration options.
 ///
-/// This subclass extends `PaymentUIContext` with layout configuration
-/// and other payment sheet-specific settings.
+
 @MainActor
-class PaymentSheetUIContext: PaymentUIContext {
+class PaymentSheetUIContext: PaymentUIContextProviding {
+
+    // MARK: - PaymentUIContextProviding
+
+    weak var viewController: UIViewController?
+    weak var delegate: AWXPaymentResultDelegate?
+
+    /// Conforms to `PaymentUIContextProviding` and adds layout configuration
+    /// and other payment sheet-specific settings.
+    /// A block type for dismissing the payment UI.
+    /// The block takes a completion handler that should be called after dismissal is complete.
+    typealias DismissActionBlock = (@escaping () -> Void) -> Void
+    var dismissAction: DismissActionBlock?
+
+    var hasPaymentUI: Bool { true }
+
+    init(delegate: AWXPaymentResultDelegate? = nil) {
+        self.delegate = delegate
+    }
+
+    func completePaymentSession() async {
+        await withCheckedContinuation { continuation in
+            guard let dismissAction else {
+                continuation.resume()
+                return
+            }
+            dismissAction {
+                continuation.resume()
+            }
+            self.dismissAction = nil
+        }
+    }
+
+    // MARK: - Sheet-specific
 
     /// The layout style for payment UI sections.
     var layout: AWXUIContext.PaymentLayout = .tab

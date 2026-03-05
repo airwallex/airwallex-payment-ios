@@ -119,8 +119,7 @@ public class PaymentSessionHandler: NSObject {
                                   methodType: AWXPaymentMethodType? = nil) {
         let context = PaymentUIContext(
             viewController: viewController,
-            delegate: paymentResultDelegate,
-            dismissAction: nil
+            delegate: paymentResultDelegate
         )
         self.init(
             session: session,
@@ -146,7 +145,7 @@ public class PaymentSessionHandler: NSObject {
     }
     
     // UI Integration support
-    private(set) var paymentUIContext: PaymentUIContext
+    private(set) var paymentUIContext: any PaymentUIContextProviding
 
     lazy var providerFactory: ProviderFactoryProtocol = ProviderFactory()
 
@@ -157,7 +156,7 @@ public class PaymentSessionHandler: NSObject {
     ///   - paymentUIContext: The UI context containing viewController, delegate, and dismiss action.
     package init(session: AWXSession,
                  methodType: AWXPaymentMethodType? = nil,
-                 paymentUIContext: PaymentUIContext) {
+                 paymentUIContext: any PaymentUIContextProviding) {
         self.session = session
         self.methodType = methodType
         self.paymentUIContext = paymentUIContext
@@ -482,7 +481,7 @@ extension PaymentSessionHandler: AWXProviderDelegate {
     public func provider(_ provider: AWXDefaultProvider, didCompleteWith status: AirwallexPaymentStatus, error: (any Error)?) {
         viewController.stopLoading()
         debugLog("Provider: \(type(of: provider)), stauts: \(status), error: \(error?.localizedDescription ?? "N/A")")
-        if paymentUIContext.dismissAction != nil {
+        if paymentUIContext.hasPaymentUI {
             if let methodType, methodType.name == AWXApplePayKey, status == .inProgress {
                 // Remain in PaymentViewController when the Apple Pay status is .inProgress for UI integration
                 // This status typically occurs when the user forcefully dismisses the PKPaymentAuthorizationController—
@@ -491,12 +490,11 @@ extension PaymentSessionHandler: AWXProviderDelegate {
             }
         }
         
-        paymentUIContext.dismiss { [self] in
+        Task {
+            await paymentUIContext.completePaymentSession()
             paymentResultDelegate?.paymentViewController(viewController, didCompleteWith: status, error: error)
+            logPaymentComplete(status: status, error: error)
         }
-
-        // log payment result
-        logPaymentComplete(status: status, error: error)
     }
     
     public func hostViewController() -> UIViewController {

@@ -91,7 +91,7 @@ class MockPaymentSessionHandlerFactory: PaymentSessionHandlerFactory {
     func createHandler(
         session: AWXSession,
         methodType: AWXPaymentMethodType?,
-        paymentUIContext: PaymentUIContext
+        paymentUIContext: any PaymentUIContextProviding
     ) -> PaymentSessionHandlerProtocol {
         createHandlerCalled = true
         lastSession = session

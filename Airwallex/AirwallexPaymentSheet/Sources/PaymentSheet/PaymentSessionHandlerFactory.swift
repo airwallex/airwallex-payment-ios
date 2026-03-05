@@ -58,7 +58,7 @@ protocol PaymentSessionHandlerFactory {
     func createHandler(
         session: AWXSession,
         methodType: AWXPaymentMethodType?,
-        paymentUIContext: PaymentUIContext
+        paymentUIContext: any PaymentUIContextProviding
     ) -> PaymentSessionHandlerProtocol
 }
 
@@ -70,7 +70,7 @@ final class DefaultPaymentSessionHandlerFactory: PaymentSessionHandlerFactory {
     func createHandler(
         session: AWXSession,
         methodType: AWXPaymentMethodType?,
-        paymentUIContext: PaymentUIContext
+        paymentUIContext: any PaymentUIContextProviding
     ) -> PaymentSessionHandlerProtocol {
         PaymentSessionHandler(
             session: session,
