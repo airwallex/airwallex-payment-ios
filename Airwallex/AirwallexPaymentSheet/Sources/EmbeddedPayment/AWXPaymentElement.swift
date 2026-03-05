@@ -279,7 +279,7 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
         }
 
         if let selectedMethodType = methodProvider.selectedMethod {
-            if selectedMethodType.name == AWXApplePayKey && !paymentUIContext.showsApplePayAsPrimaryButton {
+            if selectedMethodType.name == AWXApplePayKey && !excludeApplePay {
                 // Apple Pay selected from accordion (only when not prioritized)
                 sections.append(.applePay)
             } else if selectedMethodType.name == AWXCardKey {
