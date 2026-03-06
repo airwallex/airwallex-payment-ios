@@ -175,7 +175,7 @@
     if (accountId != nil) {
         [data setObject:accountId forKey:@"accountId"];
     }
-    data[@"integrationType"] = @"ios";
+    data[@"framework"] = @"native";
 
     return data;
 }

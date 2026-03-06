@@ -71,10 +71,9 @@ class EventsTests: XCTestCase {
 
         let info = AnalyticsLogger.buildSessionLevelInfo(session: session, extraInfo: nil)
 
-        XCTAssertEqual(info["layout"] as? String, "none")
         XCTAssertEqual(info["expressCheckout"] as? Bool, false)
         XCTAssertEqual(info["transactionMode"] as? String, "oneoff")
-        XCTAssertEqual(info.count, 3)
+        XCTAssertEqual(info.count, 2)
     }
 
     func testBuildSessionLevelInfoWithRecurringSession() {
@@ -82,20 +81,39 @@ class EventsTests: XCTestCase {
 
         let info = AnalyticsLogger.buildSessionLevelInfo(session: session, extraInfo: nil)
 
-        XCTAssertEqual(info["layout"] as? String, "none")
         XCTAssertEqual(info["expressCheckout"] as? Bool, false)
         XCTAssertEqual(info["transactionMode"] as? String, "recurring")
+        XCTAssertEqual(info["legacyConsentFlow"] as? Bool, true)
     }
 
     func testBuildSessionLevelInfoWithRecurringWithIntentSession() {
         let session = AWXRecurringWithIntentSession()
         let paymentIntent = AWXPaymentIntent()
         paymentIntent.id = "test_intent_id"
+        paymentIntent.amount = NSDecimalNumber(value: 100)
         session.paymentIntent = paymentIntent
 
         let info = AnalyticsLogger.buildSessionLevelInfo(session: session, extraInfo: nil)
 
         XCTAssertEqual(info["transactionMode"] as? String, "recurring")
+        XCTAssertNil(info["legacyConsentFlow"])
+    }
+
+    func testBuildSessionLevelInfoWithRecurringSessionZeroAmount() {
+        let paymentIntent = AWXPaymentIntent()
+        paymentIntent.id = "test_intent_id"
+        paymentIntent.amount = NSDecimalNumber.zero
+        paymentIntent.currency = "AUD"
+        let session = Session(
+            paymentIntent: paymentIntent,
+            countryCode: "AU",
+            paymentConsentOptions: PaymentConsentOptions(nextTriggeredBy: .customerType)
+        )
+
+        let info = AnalyticsLogger.buildSessionLevelInfo(session: session, extraInfo: nil)
+
+        XCTAssertEqual(info["transactionMode"] as? String, "recurring")
+        XCTAssertEqual(info["legacyConsentFlow"] as? Bool, true)
     }
 
     func testBuildSessionLevelInfoWithExtraInfo() {
@@ -111,12 +129,11 @@ class EventsTests: XCTestCase {
 
         let info = AnalyticsLogger.buildSessionLevelInfo(session: session, extraInfo: extraInfo)
 
-        XCTAssertEqual(info["layout"] as? String, "none")
         XCTAssertEqual(info["expressCheckout"] as? Bool, false)
         XCTAssertEqual(info["transactionMode"] as? String, "oneoff")
         XCTAssertEqual(info["launchType"] as? String, "dropin")
         XCTAssertEqual(info["paymentMethod"] as? String, AWXCardKey)
-        XCTAssertEqual(info.count, 5)
+        XCTAssertEqual(info.count, 4)
     }
 
     func testBuildSessionLevelInfoExtraInfoOverridesDefaults() {

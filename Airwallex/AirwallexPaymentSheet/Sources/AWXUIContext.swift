@@ -29,8 +29,7 @@ import AirwallexCore
 /// ```
 @MainActor
 @objc public class AWXUIContext: NSObject {
-    private static let subtypeDropin = "dropin"
-    private static let subtypeComponent = "component"
+    private static let launchType = "hpp"
     @objc public enum LaunchStyle: Int {
         case push
         case present
@@ -152,7 +151,7 @@ import AirwallexCore
         AnalyticsLogger.bindSession(
             session: session,
             extraInfo: [
-                .launchType: Self.subtypeDropin,
+                .launchType: Self.launchType,
                 .layout: layout.displayName
             ]
         )
@@ -254,7 +253,7 @@ import AirwallexCore
         AnalyticsLogger.bindSession(
             session: session,
             extraInfo: [
-                .launchType: Self.subtypeComponent,
+                .launchType: Self.launchType,
             ]
         )
 

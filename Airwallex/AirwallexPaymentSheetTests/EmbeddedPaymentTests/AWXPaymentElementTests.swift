@@ -56,7 +56,7 @@ final class AWXPaymentElementTests: XCTestCase {
 
     func testConfiguration_DefaultElementType_IsStandard() {
         let configuration = AWXPaymentElement.Configuration()
-        XCTAssertEqual(configuration.elementType, .standard)
+        XCTAssertEqual(configuration.elementType, .paymentSheet)
     }
 
     func testConfiguration_CanSetCardElementType() {
@@ -133,7 +133,7 @@ final class AWXPaymentElementTests: XCTestCase {
     func testMakeMethodProvider_StandardElementType_ReturnsPaymentSheetMethodProvider() throws {
         let session = makeTestSession()
         let configuration = AWXPaymentElement.Configuration()
-        configuration.elementType = .standard
+        configuration.elementType = .paymentSheet
 
         let provider = try AWXPaymentElement.makeMethodProvider(session: session, configuration: configuration)
 

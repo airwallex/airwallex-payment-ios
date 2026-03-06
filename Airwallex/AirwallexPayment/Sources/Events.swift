@@ -30,6 +30,7 @@ import AirwallexCore
         case layout // tab, accordion, none
         case transactionMode // oneoff, recurring
         case showsApplePayAsPrimaryButton // boolean value
+        case legacyConsentFlow // true
     }
     
     @_spi(AWX) public enum PageView: String {
@@ -148,10 +149,13 @@ extension ErrorLoggable {
         extraInfo: [AnalyticEvent.Fields: Any]?
     ) -> [String: Any] {
         var dictionary: [AnalyticEvent.Fields: Any] = [
-            .layout: "none",
             .expressCheckout: session.isExpressCheckout,
             .transactionMode: session.transactionMode()
         ]
+        if session.transactionMode() == AWXPaymentTransactionModeRecurring,
+           session is AWXRecurringSession || session.amount() == 0 {
+            dictionary[.legacyConsentFlow] = true
+        }
         if let extraInfo {
             dictionary.merge(extraInfo, uniquingKeysWith: { _, new in new })
         }

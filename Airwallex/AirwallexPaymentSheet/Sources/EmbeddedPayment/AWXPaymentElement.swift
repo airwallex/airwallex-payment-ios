@@ -116,7 +116,7 @@ public class AWXPaymentElement: NSObject {
         configuration: Configuration
     ) throws -> PaymentMethodProvider {
         switch configuration.elementType {
-        case .standard:
+        case .paymentSheet:
             return PaymentSheetMethodProvider(
                 session: session,
                 isApplePaySelectable: !configuration.showsApplePayAsPrimaryButton
@@ -156,7 +156,6 @@ public class AWXPaymentElement: NSObject {
         // Analytics
         let extraInfo: [AnalyticEvent.Fields: Any] = if configuration.elementType == .addCard {
             [.launchType: launchType,
-             .showsApplePayAsPrimaryButton: configuration.showsApplePayAsPrimaryButton,
              .paymentMethod: AWXCardKey]
         } else {
             [.launchType: launchType,
