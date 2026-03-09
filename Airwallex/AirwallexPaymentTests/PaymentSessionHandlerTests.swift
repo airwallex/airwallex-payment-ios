@@ -560,37 +560,47 @@ class PaymentSessionHandlerTests: XCTestCase {
         XCTAssertEqual(mockPaymentResultDelegate.consentId, paymentConsentId)
     }
 
-    func testProviderDidCompleteWithStatus() {
+    func testProviderDidCompleteWithStatus() async {
         let allCases: [AirwallexPaymentStatus] = [.cancel, .failure, .inProgress, .success]
         for status in allCases {
             mockSessionHandler.provider(mockProvider, didCompleteWith: status, error: nil)
+            await Task.yield()
+            await Task.yield()
             XCTAssertEqual(mockPaymentResultDelegate.status, status)
         }
         for status in allCases {
             mockSessionHandler.provider(mockProvider, didCompleteWith: status, error: nil)
+            await Task.yield()
+            await Task.yield()
             XCTAssertEqual(mockPaymentResultDelegate.status, status)
         }
     }
-    
-    func testProviderDidCompleteWithApplePayInProgress() {
+
+    func testProviderDidCompleteWithApplePayInProgress() async {
         mockMethodType.name = AWXApplePayKey
         mockSessionHandler.provider(mockProvider, didCompleteWith: .inProgress, error: nil)
+        await Task.yield()
+        await Task.yield()
         XCTAssertEqual(mockPaymentResultDelegate.status, .inProgress)
     }
 
-    func testProviderShouldHandleNextAction() {
+    func testProviderShouldHandleNextAction() async {
         let nextAction = AWXConfirmPaymentNextAction()
         mockSessionHandler.provider(mockProvider, shouldHandle: nextAction)
+        await Task.yield()
+        await Task.yield()
         XCTAssertEqual(mockPaymentResultDelegate.status, .failure)
     }
 
-    func testProviderHandleNotExistingCallSDKAction() {
+    func testProviderHandleNotExistingCallSDKAction() async {
         let nextAction = AWXConfirmPaymentNextAction.decode(fromJSON: ["type": "call_sdk"]) as! AWXConfirmPaymentNextAction
         mockSessionHandler.provider(mockProvider, shouldHandle: nextAction)
+        await Task.yield()
+        await Task.yield()
         XCTAssertEqual(mockPaymentResultDelegate.status, .failure)
     }
 
-    func testProviderShouldHandleNextActionWithConsent() {
+    func testProviderShouldHandleNextActionWithConsent() async {
         let mockConsent = AWXPaymentConsent()
         mockConsent.id = "mock_cst_id"
         let nextAction = AWXConfirmPaymentNextAction.decode(fromJSON: [
@@ -600,10 +610,12 @@ class PaymentSessionHandlerTests: XCTestCase {
         ]) as! AWXConfirmPaymentNextAction
         mockProvider.paymentConsent = mockConsent
         mockSessionHandler.provider(mockProvider, shouldHandle: nextAction)
-        XCTAssertEqual(mockPaymentResultDelegate.status, .failure)
         XCTAssertNotNil(mockSessionHandler.actionProvider)
         XCTAssertNotNil(mockSessionHandler.actionProvider?.paymentConsent)
         XCTAssertEqual(mockSessionHandler.actionProvider?.paymentConsent?.id, mockConsent.id)
+        await Task.yield()
+        await Task.yield()
+        XCTAssertEqual(mockPaymentResultDelegate.status, .failure)
     }
 
     func testProviderShouldInsertController() {
