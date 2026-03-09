@@ -42,7 +42,7 @@ import AirwallexCore
 @objc
 public class AWXPaymentElement: NSObject {
 
-    private let subtype = "embedded_element"
+    private static let launchType = "embedded_element"
 
     /// The embeddable view containing the payment UI.
     ///
@@ -116,7 +116,7 @@ public class AWXPaymentElement: NSObject {
         configuration: Configuration
     ) throws -> PaymentMethodProvider {
         switch configuration.elementType {
-        case .standard:
+        case .paymentSheet:
             return PaymentSheetMethodProvider(
                 session: session,
                 isApplePaySelectable: !configuration.showsApplePayAsPrimaryButton
@@ -150,14 +150,23 @@ public class AWXPaymentElement: NSObject {
             throw AWXUIContext.LaunchError.invalidSession(underlyingError: error)
         }
 
-        // Update logger.session for embedded integration
-        AnalyticsLogger.shared().session = session
+        // Risk event
+        RiskLogger.log(.transactionInitiated)
+        
+        // Analytics
+        let extraInfo: [AnalyticEvent.Fields: Any] = if configuration.elementType == .addCard {
+            [.launchType: launchType,
+             .paymentMethod: AWXCardKey]
+        } else {
+            [.launchType: launchType,
+             .showsApplePayAsPrimaryButton: configuration.showsApplePayAsPrimaryButton,
+             .layout: configuration.layout.displayName]
+        }
+        AnalyticsLogger.bindSession(session: session, extraInfo: extraInfo)
+        AnalyticsLogger.log(action: .paymentLaunched)
 
         // fetch payment methods using method provider
         try await methodProvider.getPaymentMethodTypes()
-
-        // Risk event
-        RiskLogger.log(.transactionInitiated)
 
         // Create element with all dependencies ready
         let element = AWXPaymentElement(
@@ -166,17 +175,6 @@ public class AWXPaymentElement: NSObject {
             delegate: delegate,
             configuration: configuration
         )
-
-        // Analytics
-        var extraInfo: [AnalyticEvent.Fields: Any] = [
-            .subtype: element.subtype,
-            .expressCheckout: session.isExpressCheckout
-        ]
-        if configuration.elementType == .addCard {
-            extraInfo[.paymentMethod] = AWXCardKey
-        }
-
-        AnalyticsLogger.log(action: .paymentLaunched, extraInfo: extraInfo)
 
         return element
     }

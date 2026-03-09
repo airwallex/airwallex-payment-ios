@@ -167,9 +167,6 @@ public class PaymentSessionHandler: NSObject {
         self.session = session
         self.methodType = methodType
         self.paymentUIContext = paymentUIContext
-
-        // update logger.session here for low-level API integration
-        AnalyticsLogger.shared().session = session
     }
 }
 
@@ -179,14 +176,7 @@ public class PaymentSessionHandler: NSObject {
     /// This method sets up and starts the Apple Pay payment flow.
     func startApplePay() {
         do {
-            AnalyticsLogger.log(
-                action: .paymentLaunched,
-                extraInfo: [
-                    .subtype: launchSubtype,
-                    .paymentMethod: AWXApplePayKey,
-                    .expressCheckout: session.isExpressCheckout
-                ]
-            )
+            logPaymentLaunched(AWXApplePayKey)
             try confirmApplePay(cancelPaymentOnDismiss: true)
         } catch {
             handleFailure(paymentResultDelegate, error)
@@ -203,14 +193,7 @@ public class PaymentSessionHandler: NSObject {
                           billing: AWXPlaceDetails?,
                           saveCard: Bool = false) {
         do {
-            AnalyticsLogger.log(
-                action: .paymentLaunched,
-                extraInfo: [
-                    .subtype: launchSubtype,
-                    .paymentMethod: AWXCardKey,
-                    .expressCheckout: session.isExpressCheckout
-                ]
-            )
+            logPaymentLaunched(AWXCardKey)
             try confirmCardPayment(with: card, billing: billing, saveCard: saveCard)
         } catch {
             handleFailure(paymentResultDelegate, error)
@@ -231,15 +214,7 @@ public class PaymentSessionHandler: NSObject {
     ///                     This consent must be valid and not expired.
     func startConsentPayment(with consent: AWXPaymentConsent) {
         do {
-            AnalyticsLogger.log(
-                action: .paymentLaunched,
-                extraInfo: [
-                    .subtype: launchSubtype,
-                    .paymentMethod: AWXCardKey,
-                    .consentId: consent.id,
-                    .expressCheckout: session.isExpressCheckout
-                ]
-            )
+            logPaymentLaunched(AWXCardKey, extraInfo: [.consentId: consent.id])
             try confirmConsentPayment(with: consent)
         } catch {
             handleFailure(paymentResultDelegate, error)
@@ -260,15 +235,7 @@ public class PaymentSessionHandler: NSObject {
     ///                  Set to `true` for PAN-type consents that require CVC validation.
     func startConsentPayment(withId consentId: String, requiresCVC: Bool = false) {
         do {
-            AnalyticsLogger.log(
-                action: .paymentLaunched,
-                extraInfo: [
-                    .subtype: launchSubtype,
-                    .paymentMethod: AWXCardKey,
-                    .consentId: consentId,
-                    .expressCheckout: session.isExpressCheckout
-                ]
-            )
+            logPaymentLaunched(AWXCardKey, extraInfo: [.consentId: consentId])
             try confirmConsentPayment(withId: consentId, requiresCVC: requiresCVC)
         } catch {
             handleFailure(paymentResultDelegate, error)
@@ -297,14 +264,7 @@ public class PaymentSessionHandler: NSObject {
     func startRedirectPayment(with name: String, additionalInfo: [String: String]?) {
         Task {
             do {
-                AnalyticsLogger.log(
-                    action: .paymentLaunched,
-                    extraInfo: [
-                        .subtype: launchSubtype,
-                        .paymentMethod: name,
-                        .expressCheckout: session.isExpressCheckout
-                    ]
-                )
+                logPaymentLaunched(name)
                 try await confirmRedirectPayment(with: name, additionalInfo: additionalInfo)
             } catch {
                 handleFailure(paymentResultDelegate, error)
@@ -541,29 +501,6 @@ extension PaymentSessionHandler: AWXProviderDelegate {
         logPaymentComplete(status: status, error: error)
     }
     
-    private func logPaymentComplete(status: AirwallexPaymentStatus, error: (any Error)?) {
-        var extraInfo: [AnalyticEvent.Fields: String] = [
-            .paymentMethod: paymentMethodName
-        ]
-        switch status {
-        case .success:
-            AnalyticsLogger.log(action: .paymentSuccess, extraInfo: extraInfo)
-        case .cancel:
-            AnalyticsLogger.log(action: .paymentCanceled, extraInfo: extraInfo)
-        case .failure:
-            if let message = error?.localizedDescription {
-                extraInfo[.message] = message
-            }
-            AnalyticsLogger.log(action: .paymentFailed, extraInfo: extraInfo)
-        case .inProgress:
-            AnalyticsLogger.log(action: .paymentInProgress, extraInfo: extraInfo)
-        }
-
-        // clear session status
-        AnalyticsLogger.shared().session = nil
-        calledMethodName = nil
-    }
-    
     public func hostViewController() -> UIViewController {
         return viewController
     }
@@ -615,5 +552,47 @@ extension PaymentSessionHandler: AWXProviderDelegate {
         } else {
             viewController.present(controller, animated: withAnimation)
         }
+    }
+}
+
+private extension PaymentSessionHandler {
+
+    func logPaymentLaunched(_ methodName: String, extraInfo: [AnalyticEvent.Fields: Any]? = nil) {
+        // bind logger.session here for low-level API integration
+        AnalyticsLogger.bindSession(
+            session: session,
+            extraInfo: [
+                .launchType: launchSubtype,
+                .paymentMethod: methodName
+            ]
+        )
+
+        // event for payment launch - api integration
+        AnalyticsLogger.log(
+            action: .paymentLaunched,
+            extraInfo: extraInfo
+        )
+    }
+
+    func logPaymentComplete(status: AirwallexPaymentStatus, error: (any Error)?) {
+        var extraInfo: [AnalyticEvent.Fields: String] = [
+            .paymentMethod: paymentMethodName
+        ]
+        switch status {
+        case .success:
+            AnalyticsLogger.log(action: .paymentSuccess, extraInfo: extraInfo)
+        case .cancel:
+            AnalyticsLogger.log(action: .paymentCanceled, extraInfo: extraInfo)
+        case .failure:
+            if let message = error?.localizedDescription {
+                extraInfo[.message] = message
+            }
+            AnalyticsLogger.log(action: .paymentFailed, extraInfo: extraInfo)
+        case .inProgress:
+            AnalyticsLogger.log(action: .paymentInProgress, extraInfo: extraInfo)
+        }
+
+        // clear session status
+        calledMethodName = nil
     }
 }

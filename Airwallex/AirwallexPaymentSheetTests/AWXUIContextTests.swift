@@ -214,8 +214,7 @@ import XCTest
             XCTFail("unexpected error: \(mockViewController.error!)")
             return
         }
-        
-        XCTAssert(AnalyticsLogger.shared().session === mockOneoffSession)
+
         XCTAssert(mockOneoffSession.paymentMethods?.count == 1 && mockOneoffSession.paymentMethods?.first == AWXApplePayKey)
     }
     
@@ -231,7 +230,6 @@ import XCTest
             return
         }
         
-        XCTAssert(AnalyticsLogger.shared().session === mockOneoffSession)
         XCTAssertNil(mockOneoffSession.paymentMethods)
         XCTAssertFalse(mockOneoffSession.hidePaymentConsents)
     }

@@ -26,6 +26,11 @@ import AirwallexCore
         case eventType
         case supportedNetworks
         case expressCheckout // boolean value
+        case launchType // dropin, component, embedded_element, api
+        case layout // tab, accordion, none
+        case transactionMode // oneoff, recurring
+        case showsApplePayAsPrimaryButton // boolean value
+        case legacyConsentFlow // true
     }
     
     @_spi(AWX) public enum PageView: String {
@@ -137,6 +142,34 @@ extension ErrorLoggable {
             }
         }
         return (error.eventName, dict)
+    }
+
+    static func buildSessionLevelInfo(
+        session: AWXSession,
+        extraInfo: [AnalyticEvent.Fields: Any]?
+    ) -> [String: Any] {
+        var dictionary: [AnalyticEvent.Fields: Any] = [
+            .expressCheckout: session.isExpressCheckout,
+            .transactionMode: session.transactionMode()
+        ]
+        if session.transactionMode() == AWXPaymentTransactionModeRecurring,
+           session is AWXRecurringSession || session.amount() == 0 {
+            dictionary[.legacyConsentFlow] = true
+        }
+        if let extraInfo {
+            dictionary.merge(extraInfo, uniquingKeysWith: { _, new in new })
+        }
+        return dictionary.reduce(into: [String: Any]()) { partialResult, keyValuePair in
+            partialResult[keyValuePair.key.rawValue] = keyValuePair.value
+        }
+    }
+
+    static func bindSession(
+        session: AWXSession,
+        extraInfo: [AnalyticEvent.Fields: Any]? = nil
+    ) {
+        let processedInfo = buildSessionLevelInfo(session: session, extraInfo: extraInfo)
+        AnalyticsLogger.shared().bindSession(session, additionalInfo: processedInfo)
     }
 }
 

@@ -29,8 +29,7 @@ import AirwallexCore
 /// ```
 @MainActor
 @objc public class AWXUIContext: NSObject {
-    private static let subtypeDropin = "dropin"
-    private static let subtypeElement = "component"
+    private static let launchType = "hpp"
     @objc public enum LaunchStyle: Int {
         case push
         case present
@@ -147,6 +146,18 @@ import AirwallexCore
             }
             session.paymentMethods = methodNames
         }
+
+        // bind session level info
+        AnalyticsLogger.bindSession(
+            session: session,
+            extraInfo: [
+                .launchType: Self.launchType,
+                .layout: layout.displayName
+            ]
+        )
+
+        AnalyticsLogger.log(action: .paymentLaunched)
+
         launchPayment(
             from: hostingVC,
             session: session,
@@ -154,14 +165,6 @@ import AirwallexCore
             paymentResultDelegate: paymentResultDelegate,
             launchStyle: launchStyle,
             layout: layout
-        )
-        
-        AnalyticsLogger.log(
-            action: .paymentLaunched,
-            extraInfo: [
-                .subtype: Self.subtypeDropin,
-                .expressCheckout: session.isExpressCheckout
-            ]
         )
     }
     // MARK: - Launch by Payment Method
@@ -245,20 +248,28 @@ import AirwallexCore
             name: name,
             supportedCardBrands: supportedBrands
         )
+
+        // bind session level info
+        AnalyticsLogger.bindSession(
+            session: session,
+            extraInfo: [
+                .launchType: Self.launchType,
+            ]
+        )
+
+        AnalyticsLogger.log(
+            action: .paymentLaunched,
+            extraInfo: [
+                .paymentMethod: name
+            ]
+        )
+
         launchPayment(
             from: hostingVC,
             session: session,
             paymentMethodProvider: methodProvider,
             paymentResultDelegate: paymentResultDelegate,
             launchStyle: launchStyle
-        )
-        AnalyticsLogger.log(
-            action: .paymentLaunched,
-            extraInfo: [
-                .subtype: Self.subtypeElement,
-                .paymentMethod: name,
-                .expressCheckout: session.isExpressCheckout
-            ]
         )
     }
 }
@@ -294,10 +305,7 @@ private extension AWXUIContext {
                 return
             }
         }
-        
-        // update logger.session for UI integration
-        AnalyticsLogger.shared().session = session
-        
+
         // Risk event
         RiskLogger.log(.transactionInitiated)
         

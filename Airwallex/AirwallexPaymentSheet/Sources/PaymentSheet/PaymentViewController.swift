@@ -54,7 +54,6 @@ class PaymentViewController: AWXViewController {
                     paymentUIContext.delegate?.paymentViewController(nil, didCompleteWith: .cancel, error: nil)
                 }
             }
-            AnalyticsLogger.shared().session = nil
         }
     }
     
@@ -178,7 +177,7 @@ class PaymentViewController: AWXViewController {
 
 extension PaymentViewController: AWXPageViewTrackable {
     var pageName: String! {
-        "payment_method_list"
+        AnalyticEvent.PageView.paymentMethodList.rawValue
     }
 }
 
