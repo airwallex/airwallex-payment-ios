@@ -54,6 +54,25 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertEqual(configuration.layout, .accordion)
     }
 
+    func testConfiguration_AddCardElementType_AlwaysReturnsTabLayout() {
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.elementType = .addCard
+        XCTAssertEqual(configuration.layout, .tab)
+
+        configuration.layout = .accordion
+        XCTAssertEqual(configuration.layout, .tab, "addCard element type should always use tab layout even when accordion is set")
+    }
+
+    func testConfiguration_AddCardElementType_PreservesLayoutAfterSwitchingBack() {
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.layout = .accordion
+        configuration.elementType = .addCard
+        XCTAssertEqual(configuration.layout, .tab, "addCard should force tab layout")
+
+        configuration.elementType = .paymentSheet
+        XCTAssertEqual(configuration.layout, .accordion, "Switching back to standard should restore the previously set accordion layout")
+    }
+
     func testConfiguration_DefaultElementType_IsStandard() {
         let configuration = AWXPaymentElement.Configuration()
         XCTAssertEqual(configuration.elementType, .paymentSheet)

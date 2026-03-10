@@ -50,25 +50,25 @@ class UIIntegrationDemoViewController: IntegrationDemoListViewController {
                 }
             ),
             ActionViewModel(
-                title: "Embedded element - standard",
+                title: "Embedded element",
                 action: { [weak self] in
                     self?.launchEmbeddedElement(
-                        elementType: .standard,
+                        elementType: .paymentSheet,
                         showsApplePayAsPrimaryButton: true
                     )
                 }
             ),
             ActionViewModel(
-                title: "Embedded element - standard2",
+                title: "Embedded element (inline apple pay)",
                 action: { [weak self] in
                     self?.launchEmbeddedElement(
-                        elementType: .standard,
+                        elementType: .paymentSheet,
                         showsApplePayAsPrimaryButton: false
                     )
                 }
             ),
             ActionViewModel(
-                title: "Embedded element - addCard",
+                title: "Embedded element (card only)",
                 action: { [weak self] in
                     self?.launchEmbeddedElement(
                         elementType: .addCard,

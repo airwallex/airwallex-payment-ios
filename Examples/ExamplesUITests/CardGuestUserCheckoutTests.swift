@@ -70,7 +70,7 @@ final class CardGuestUserCheckoutTests: XCTestCase {
         )
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
-        CardPaymentScreen.payWithCard(
+        CardPaymentMethodView.payWithCard(
             cardNumber: cardNumber,
             canSaveCard: false
         )
@@ -93,7 +93,7 @@ final class CardGuestUserCheckoutTests: XCTestCase {
         launchAppAndEnsureSettings(app, checkoutMode: .oneOff)
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
-        CardPaymentScreen.payWithCard(
+        CardPaymentMethodView.payWithCard(
             cardNumber: TestCards.visa3DS,
             canSaveCard: false
         )

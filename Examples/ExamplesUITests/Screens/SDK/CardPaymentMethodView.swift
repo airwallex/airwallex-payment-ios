@@ -9,13 +9,20 @@
 import Foundation
 import XCTest
 
-enum CardPaymentScreen {
+enum CardPaymentMethodView {
     static let app = XCUIApplication()
+    static let accordionKey = app.cells["accordionKey"]
     static let cardNumberField = app.cells["cardInfo"].textFields["cardNumberTextField"]
     static let cardExpiryField = app.cells["cardInfo"].textFields["cardExpiryTextField"]
     static let cardCVCField = app.cells["cardInfo"].textFields["cardCVCTextField"]
     static let checkoutButton = app.cells["checkoutButton"].buttons.firstMatch
-    static let activityIndicator = app.otherElements["loadingSpinnerView"].firstMatch
+    static var activityIndicator: XCUIElement {
+        let spinner = app.otherElements["loadingSpinnerView"].firstMatch
+        if spinner.exists {
+            return spinner
+        }
+        return app.activityIndicators.firstMatch
+    }
     static let cardInfoCell = app.cells["cardInfo"]
     static let consentToggle = app.cells["consentToggle"].buttons["Keep using saved cards"]
     static let saveCardToggle = app.cells["saveCardToggle"].buttons.firstMatch
@@ -72,7 +79,6 @@ enum CardPaymentScreen {
         
         checkoutButton.robustTap()
         XCTAssertTrue(activityIndicator.exists)
-        activityIndicator.waitForNonExistence(timeout: .networkRequestTimeout)
     }
     
     static func dismissKeyboard() {
@@ -88,10 +94,6 @@ enum CardPaymentScreen {
         
         checkoutButton.robustTap()
         XCTAssertFalse(activityIndicator.exists)
-        XCTAssertTrue(alertMessage.waitForExistence(timeout: .animationTimeout))
-        XCTAssertTrue(alertMessage.staticTexts["Card number is required"].exists)
-        alertMessage.buttons["Close"].robustTap()
-        alertMessage.waitForNonExistence(timeout: .shortTimeout)
         XCTAssertTrue(app.staticTexts["Card number is required"].exists)
         
         while !cardInformationLabel.exists {

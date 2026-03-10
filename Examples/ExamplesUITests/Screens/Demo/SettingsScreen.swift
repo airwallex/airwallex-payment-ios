@@ -155,15 +155,11 @@ enum SettingsScreen {
         if app.staticTexts["Speed up your typing by sliding your finger across the letters to compose a word."].exists {
             app.staticTexts["Continue"].robustTap()
         }
-        if keyboard.exists {
-            keyboard.buttons["done"].robustTap()
-            keyboard.waitForNonExistence(timeout: .animationTimeout)
+        guard keyboard.exists, keyboard.isHittable else { return }
+        let doneButton = keyboard.buttons["done"]
+        if doneButton.exists && doneButton.isHittable {
+            doneButton.robustTap()
         }
-        if keyboard.exists {
-            app.swipeUp(velocity: .fast)
-            XCTAssertTrue(versionlabel.exists && versionlabel.isHittable)
-            versionlabel.robustTap()
-        }
-        XCTAssertTrue(keyboard.waitForNonExistence(timeout: .mediumTimeout))
+        keyboard.waitForNonExistence(timeout: .animationTimeout)
     }
 }

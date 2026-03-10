@@ -31,5 +31,6 @@ enum UITestingEnvironmentVariable {
     static let isUITesting = "IS_UI_TESTING"
     static let customerID = "UI_TESTING_CUSTOMER_ID"
     static let customerID_2 = "UI_TESTING_CUSTOMER_ID_2"
+    static let customerID_3 = "UI_TESTING_CUSTOMER_ID_3"
     static let mockApplePayToken = "UI_TESTING_MOCK_APPLEPAY_TOKEN"
 }

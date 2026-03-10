@@ -331,7 +331,7 @@ private extension SchemaPaymentSectionController {
                         paymentUIContext.paymentElement?.notifyInputValidationFailed(for: view)
                     }
                 } else {
-                    context.scroll(to: item, position: .top, animated: true)
+                    context.ensureVisible(for: item)
                 }
                 return
             }
