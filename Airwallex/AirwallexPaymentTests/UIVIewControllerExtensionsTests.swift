@@ -6,7 +6,7 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-@_spi(AWX) @testable import AirwallexPayment
+@testable import AirwallexPayment
 import UIKit
 import XCTest
 

@@ -10,7 +10,7 @@ import Combine
 import UIKit
 #if canImport(AirwallexPayment)
 import AirwallexCore
-@_spi(AWX) import AirwallexPayment
+import AirwallexPayment
 #endif
 
 /// An embeddable payment element that can be added to any view hierarchy.

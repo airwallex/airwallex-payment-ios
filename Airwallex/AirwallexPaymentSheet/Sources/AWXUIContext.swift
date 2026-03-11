@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 #if canImport(AirwallexPayment)
 import AirwallexCore
-@_spi(AWX) import AirwallexPayment
+import AirwallexPayment
 #endif
 
 /// The main UI context for Airwallex payment flows.

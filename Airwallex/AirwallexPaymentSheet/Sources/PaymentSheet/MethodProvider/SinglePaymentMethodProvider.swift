@@ -10,7 +10,7 @@ import Combine
 import Foundation
 #if canImport(AirwallexPayment)
 import AirwallexCore
-@_spi(AWX) import AirwallexPayment
+import AirwallexPayment
 #endif
 
 class SinglePaymentMethodProvider: PaymentMethodProvider {

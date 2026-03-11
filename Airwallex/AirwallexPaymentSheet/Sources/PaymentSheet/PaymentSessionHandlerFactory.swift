@@ -8,7 +8,7 @@
 
 #if canImport(AirwallexPayment)
 import AirwallexCore
-@_spi(AWX) import AirwallexPayment
+import AirwallexPayment
 #endif
 
 /// Protocol that abstracts the payment session handler methods used by section controllers.
@@ -58,7 +58,7 @@ protocol PaymentSessionHandlerFactory {
     func createHandler(
         session: AWXSession,
         methodType: AWXPaymentMethodType?,
-        paymentUIContext: PaymentUIContext
+        paymentUIContext: any PaymentUIContextProviding
     ) -> PaymentSessionHandlerProtocol
 }
 
@@ -70,7 +70,7 @@ final class DefaultPaymentSessionHandlerFactory: PaymentSessionHandlerFactory {
     func createHandler(
         session: AWXSession,
         methodType: AWXPaymentMethodType?,
-        paymentUIContext: PaymentUIContext
+        paymentUIContext: any PaymentUIContextProviding
     ) -> PaymentSessionHandlerProtocol {
         PaymentSessionHandler(
             session: session,

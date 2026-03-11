@@ -9,7 +9,7 @@
 
 import XCTest
 #if canImport(AirwallexPayment)
-@testable @_spi(AWX) import AirwallexPayment
+@testable import AirwallexPayment
 #endif
 import AirwallexCore
 

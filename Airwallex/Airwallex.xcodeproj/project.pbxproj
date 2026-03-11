@@ -148,6 +148,7 @@
 		D829FE142F0D11450056EE6E /* AWXPaymentElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = D829FE102F0D11450056EE6E /* AWXPaymentElement.swift */; };
 		D829FE162F0D11450056EE6E /* EmbeddedPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D829FE122F0D11450056EE6E /* EmbeddedPaymentView.swift */; };
 		D8316DC22E6AF16D002A42BA /* SchemaFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8316DC12E6AF16D002A42BA /* SchemaFieldValidator.swift */; };
+		D8344E052F5979BF0087BF54 /* PaymentUIContextProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8344E042F5979BF0087BF54 /* PaymentUIContextProviding.swift */; };
 		D83AD9C82EF544A600649996 /* CompoundItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83AD9C72EF544A600649996 /* CompoundItem.swift */; };
 		D84E94D52D68324600CDC04C /* WechatOpenSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */; };
 		D85041C82DA7957A0074BA7F /* AirwallexPaymentSheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D850407B2DA795470074BA7F /* AirwallexPaymentSheet.framework */; };
@@ -633,6 +634,7 @@
 		D829FE102F0D11450056EE6E /* AWXPaymentElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWXPaymentElement.swift; sourceTree = "<group>"; };
 		D829FE122F0D11450056EE6E /* EmbeddedPaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedPaymentView.swift; sourceTree = "<group>"; };
 		D8316DC12E6AF16D002A42BA /* SchemaFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaFieldValidator.swift; sourceTree = "<group>"; };
+		D8344E042F5979BF0087BF54 /* PaymentUIContextProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentUIContextProviding.swift; sourceTree = "<group>"; };
 		D8352B4D2DA640B10025BE9E /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		D83AD9C72EF544A600649996 /* CompoundItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundItem.swift; sourceTree = "<group>"; };
 		D84E94D42D68324600CDC04C /* WechatOpenSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WechatOpenSDK.xcframework; path = ../Frameworks/WechatOpenSDK.xcframework; sourceTree = "<group>"; };
@@ -796,7 +798,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		D85C1E362EC34C8500465FC8 /* Exceptions for "AirwallexPaymentTests" folder in "AirwallexPaymentSheetTests" target */ = {
+		D85C1E362EC34C8500465FC8 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				MockObjects/MockPaymentIntentProvider.swift,
@@ -806,29 +808,8 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		D8D371412E60566A005618D4 /* AirwallexPaymentTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				D85C1E362EC34C8500465FC8 /* Exceptions for "AirwallexPaymentTests" folder in "AirwallexPaymentSheetTests" target */,
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = AirwallexPaymentTests;
-			sourceTree = "<group>";
-		};
-		D8D371942E605670005618D4 /* AirwallexPaymentSheetTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = AirwallexPaymentSheetTests;
-			sourceTree = "<group>";
-		};
+		D8D371412E60566A005618D4 /* AirwallexPaymentTests */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (D85C1E362EC34C8500465FC8 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = AirwallexPaymentTests; sourceTree = "<group>"; };
+		D8D371942E605670005618D4 /* AirwallexPaymentSheetTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AirwallexPaymentSheetTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1431,6 +1412,7 @@
 				D8D36E6B2E5C5CAC005618D4 /* ApplePayProvider.swift */,
 				D8D36E6C2E5C5CAC005618D4 /* CardProvider.swift */,
 				D8D36E5E2E5C5CAC005618D4 /* PaymentProvider.swift */,
+				D8344E042F5979BF0087BF54 /* PaymentUIContextProviding.swift */,
 				D8D36E6D2E5C5CAC005618D4 /* ErrorMessage.swift */,
 				D8D36E6E2E5C5CAC005618D4 /* Events.swift */,
 				D8D36E6F2E5C5CAC005618D4 /* PaymentSessionHandler.swift */,
@@ -2101,9 +2083,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AirwallexCoreTests/Pods-AirwallexCoreTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2414,6 +2400,7 @@
 				D8D36E7B2E5C5CAC005618D4 /* PaymentProvider.swift in Sources */,
 				D8D3726D2E617332005618D4 /* ProviderFactory.swift in Sources */,
 				D8D36E7C2E5C5CAC005618D4 /* AWXPaymentConsent+Extensions.swift in Sources */,
+				D8344E052F5979BF0087BF54 /* PaymentUIContextProviding.swift in Sources */,
 				D8D370542E5D8D73005618D4 /* AirwallexPaymentStatus+Extension.swift in Sources */,
 				D8D36E7D2E5C5CAC005618D4 /* AWXPlaceDetails+Extensions.swift in Sources */,
 				D8D36E7E2E5C5CAC005618D4 /* AWXSession+Extensions.swift in Sources */,

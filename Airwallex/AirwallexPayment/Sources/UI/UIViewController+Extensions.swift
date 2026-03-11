@@ -8,7 +8,7 @@
 
 import UIKit
 
-@_spi(AWX) public extension UIViewController {
+package extension UIViewController {
     func startLoading() {
         view.startLoading()
     }
@@ -22,7 +22,7 @@ import UIKit
     }
 }
 
-@_spi(AWX) public extension UIViewController {
+package extension UIViewController {
     static var topMost: UIViewController? {
         let windowScene = UIApplication.shared.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene
         let keyWindow: UIWindow?
@@ -50,7 +50,7 @@ import UIKit
     }
 }
 
-@_spi(AWX) public extension UIView {
+package extension UIView {
     private static let tagForActivityIndicator = Int.random(in: Int.max/2...Int.max)
     func startLoading() {
         isUserInteractionEnabled = false

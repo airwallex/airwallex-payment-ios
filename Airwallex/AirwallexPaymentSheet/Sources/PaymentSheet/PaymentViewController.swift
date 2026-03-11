@@ -10,7 +10,7 @@ import Combine
 import UIKit
 #if canImport(AirwallexPayment)
 import AirwallexCore
-@_spi(AWX) import AirwallexPayment
+import AirwallexPayment
 #endif
 
 enum PaymentSectionType: Hashable {
@@ -48,11 +48,11 @@ class PaymentViewController: AWXViewController {
     deinit {
         Task { @MainActor [paymentUIContext] in
             if paymentUIContext.dismissAction != nil {
-                // user cancel payment by navigation stack interactions, like screen edge pan gesture
-                paymentUIContext.dismiss {
-                    AnalyticsLogger.log(action: .paymentCanceled)
-                    paymentUIContext.delegate?.paymentViewController(nil, didCompleteWith: .cancel, error: nil)
-                }
+                await paymentUIContext.completePaymentSession()
+                // this fallback logic handles user cancel payment by navigation stack interactions
+                // e.g. screen edge pan gesture
+                AnalyticsLogger.log(action: .paymentCanceled)
+                paymentUIContext.delegate?.paymentViewController(nil, didCompleteWith: .cancel, error: nil)
             }
         }
     }
@@ -161,7 +161,8 @@ class PaymentViewController: AWXViewController {
                     guard self.methodProvider.methods.isEmpty else {
                         return
                     }
-                    self.paymentUIContext.dismiss {
+                    Task {
+                        await self.paymentUIContext.completePaymentSession()
                         self.paymentUIContext.delegate?.paymentViewController(self, didCompleteWith: .failure, error: error)
                     }
                 }

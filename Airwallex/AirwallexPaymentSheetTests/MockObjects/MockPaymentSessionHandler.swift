@@ -7,7 +7,7 @@
 //
 
 import AirwallexCore
-@testable @_spi(AWX) import AirwallexPayment
+@testable import AirwallexPayment
 @testable import AirwallexPaymentSheet
 
 /// Mock implementation of PaymentSessionHandlerProtocol for testing.
@@ -91,7 +91,7 @@ class MockPaymentSessionHandlerFactory: PaymentSessionHandlerFactory {
     func createHandler(
         session: AWXSession,
         methodType: AWXPaymentMethodType?,
-        paymentUIContext: PaymentUIContext
+        paymentUIContext: any PaymentUIContextProviding
     ) -> PaymentSessionHandlerProtocol {
         createHandlerCalled = true
         lastSession = session

@@ -209,7 +209,7 @@ import Foundation
     ///   - Both `paymentIntent` and `paymentIntentProvider` are nil
     ///   - The provider's `createPaymentIntent()` method throws an error
     @discardableResult
-    @_spi(AWX) public func ensurePaymentIntent() async throws -> AWXPaymentIntent {
+    package func ensurePaymentIntent() async throws -> AWXPaymentIntent {
         // Return existing intent if available
         if let paymentIntent {
             AWXAPIClientConfiguration.shared().clientSecret = paymentIntent.clientSecret

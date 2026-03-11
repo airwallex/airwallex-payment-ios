@@ -12,8 +12,8 @@ import UIKit
 import AirwallexCore
 #endif
 
-@_spi(AWX) public class LoadingSpinnerView: UIView {
-    public enum Style {
+package class LoadingSpinnerView: UIView {
+    package enum Style {
         case small
         case medium
         case large
