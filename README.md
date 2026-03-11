@@ -13,13 +13,13 @@ The Airwallex iOS SDK is a flexible tool that enables you to integrate payment m
 We support the following localizations: English, Chinese Simplified, Chinese Traditional, French, German, Japanese, Korean, Portuguese Portugal, Portuguese Brazil, Russian, Spanish, Thai
 
 <p align="left">
-<img src="https://github.com/user-attachments/assets/babf2af3-d59b-49fc-8b86-26e85df28a0c" width="200" hspace="10">
-<img src="https://github.com/user-attachments/assets/d228ed51-2405-4322-be08-b1946801e076" width="200" hspace="10">
-<img src="https://github.com/user-attachments/assets/c86b7f3f-d2bc-4326-b82e-145f52d35c72" width="200" hspace="10">
-<img src="https://github.com/user-attachments/assets/938e6101-edb2-4fcf-89fa-07936e4af5a9" width="200" hspace="10">
-<img src="https://github.com/user-attachments/assets/5556a6af-882d-4474-915e-2c9d5953aaa8" width="200" hspace="10">
-<img src="https://github.com/user-attachments/assets/eb6f0b38-d88b-4c27-b843-9948bc25c5a0" width="200" hspace="10">
-<img src="https://github.com/user-attachments/assets/1de983a9-b062-4108-82f5-917e0fc0fb57" width="200" hspace="10">
+<img src="Screenshots/hpp_tab.png" width="200" hspace="10">
+<img src="Screenshots/hpp_accordion.png" width="200" hspace="10">
+<img src="Screenshots/apple_pay.png" width="200" hspace="10">
+<img src="Screenshots/card_payment_with_billing.png" width="200" hspace="10">
+<img src="Screenshots/3ds_authentication.png" width="200" hspace="10">
+<img src="Screenshots/online_banking.png" width="200" hspace="10">
+<img src="Screenshots/redirect_payment.png" width="200" hspace="10">
 </p>
 
 Table of contents
@@ -367,8 +367,8 @@ AWXUIContext.launchPayment(
 
 We provide `tab` and `accordian` styles for our payment sheet:
 <p align="left">
-<img src="https://github.com/user-attachments/assets/babf2af3-d59b-49fc-8b86-26e85df28a0c" width="200">
-<img src="https://github.com/user-attachments/assets/d228ed51-2405-4322-be08-b1946801e076" width="200">
+<img src="Screenshots/hpp_tab.png" width="200">
+<img src="Screenshots/hpp_accordion.png" width="200">
 </p>
 
 ---
@@ -437,6 +437,12 @@ Unlike `AWXUIContext.launchPayment()` which presents a full payment sheet as a v
 
 Make sure you add dependency for `Airwallex` or `AirwallexPaymentSheet`.
 
+<p align="left">
+<img src="Screenshots/embedded_tab.png" width="200">
+<img src="Screenshots/embedded_accordion.png" width="200">
+<img src="Screenshots/embedded_accordion_inline_applepay.png" width="200">
+</p>
+
 > [!NOTE]
 > - The embedded view requires Auto Layout constraints for proper sizing.
 > - The view's height updates automatically based on content.
@@ -495,26 +501,6 @@ containerView.addSubview(paymentView)
 | `showsApplePayAsPrimaryButton` | Show Apple Pay as a prominent button at the top | `true` |
 | `supportedCardBrands` | Accepted card brands (only applies to `.addCard`) | All available brands |
 | `appearance.tintColor` | Primary brand color used throughout the payment element | SDK default |
-
-**Layout**
-
-<p align="left">
-<img src="TODO: screenshot for tab layout" width="200">
-<img src="TODO: screenshot for accordion layout" width="200">
-</p>
-
-**showsApplePayAsPrimaryButton**
-
-<p align="left">
-<img src="TODO: screenshot for showsApplePayAsPrimaryButton = true" width="200">
-<img src="TODO: screenshot for showsApplePayAsPrimaryButton = false" width="200">
-</p>
-
-**appearance.tintColor**
-
-<p align="left">
-<img src="TODO: screenshot for custom tintColor" width="200">
-</p>
 
 ---
 #### Handle Payment Element Events

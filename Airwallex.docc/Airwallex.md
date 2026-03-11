@@ -17,8 +17,11 @@ The Airwallex iOS SDK is a flexible tool that enables you to integrate payment m
 - ``AWXApplePayOptions``
 - ``AWXAPIClientConfiguration``
 
-### UI Integration
+### UI Integration - HPP
 - ``AWXUIContext``
+
+### UI Integration - Embedded
+- ``AWXPaymentElement``
 
 ### API Integration
 - ``PaymentSessionHandler``
