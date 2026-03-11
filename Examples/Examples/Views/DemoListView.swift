@@ -28,7 +28,7 @@ class DemoListView: UIView {
         return view
     }()
     
-    private lazy var topStack: UIStackView = {
+    private(set) lazy var topStack: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.spacing = 16
@@ -44,7 +44,7 @@ class DemoListView: UIView {
         return view
     }()
     
-    private lazy var separator: UIView = {
+    private(set) lazy var separator: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .awxColor(.borderDecorative)
@@ -107,23 +107,5 @@ class DemoListView: UIView {
         ]
         
         NSLayoutConstraint.activate(constraints)
-    }
-
-    func addViewToTopStack(_ view: UIView) {
-        topStack.addArrangedSubview(view)
-    }
-
-    func removeViewFromTopStack(_ view: UIView) {
-        topStack.removeArrangedSubview(view)
-        view.removeFromSuperview()
-    }
-
-    func addViewToBottomStack(_ view: UIView) {
-        bottomStack.addArrangedSubview(view)
-    }
-
-    func removeViewFromBottomStack(_ view: UIView) {
-        bottomStack.removeArrangedSubview(view)
-        view.removeFromSuperview()
     }
 }

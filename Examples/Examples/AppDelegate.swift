@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        AWXTheme.shared().tintColor = UIColor.systemBrown
         UISwitch.appearance().onTintColor = .awxColor(.theme)
         UIView.appearance().tintColor = .awxColor(.theme)
-        AnalyticsLogger.shared().verbose = true
+//        AnalyticsLogger.shared().verbose = true
 
         disableAnimationForUITesting()
         return true

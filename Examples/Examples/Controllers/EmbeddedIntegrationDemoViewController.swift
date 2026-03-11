@@ -26,7 +26,7 @@ class EmbeddedIntegrationDemoViewController: IntegrationDemoListViewController {
     // MARK: - Abstract Property Overrides
 
     override var pageTitle: String {
-        "Shopping Cart"
+        "Demo Store"
     }
 
     override var actionViewModels: [ActionViewModel] {
@@ -57,17 +57,26 @@ class EmbeddedIntegrationDemoViewController: IntegrationDemoListViewController {
 private extension EmbeddedIntegrationDemoViewController {
 
     func setupShoppingCartUI() {
-        // Hide optionView and gear button
+        // Navigation title
+        navigationItem.title = "Demo checkout"
+        navigationItem.largeTitleDisplayMode = .never
+
+        // Hide optionView, gear button, and page title
         listView.optionView.isHidden = true
-        listView.topView.setActionButtonHidden(true)
+        listView.topView.isHidden = true
+        listView.bottomStack.isHidden = true
+        listView.separator.isHidden = true
 
         // Add order info to top stack
         let orderInfoView = OrderInfoView(
-            products: DemoDataSource.products,
-            shipping: DemoDataSource.shippingAddress
+            order: DemoDataSource.createOrder(),
+            amount: Decimal(string: ExamplesKeys.amount) ?? 0,
+            currency: ExamplesKeys.currency,
+            countryCode: ExamplesKeys.countryCode
         )
         orderInfoView.translatesAutoresizingMaskIntoConstraints = false
-        listView.addViewToTopStack(orderInfoView)
+        listView.topStack.addArrangedSubview(orderInfoView)
+        listView.topStack.setCustomSpacing(40, after: orderInfoView)
 
         //  Custom loading indicator
         view.addSubview(loadingIndicator)
@@ -89,7 +98,7 @@ private extension EmbeddedIntegrationDemoViewController {
                 let session = try await createPaymentSession()
                 let configuration = AWXPaymentElement.Configuration()
                 configuration.layout = ExamplesKeys.paymentLayout
-                configuration.showsApplePayAsPrimaryButton = false
+//                configuration.showsApplePayAsPrimaryButton = false
                 let element = try await AWXPaymentElement.create(
                     session: session,
                     delegate: self,
@@ -97,9 +106,16 @@ private extension EmbeddedIntegrationDemoViewController {
                 )
                 self.paymentElement = element
 
+                let paymentMethodsLabel = UILabel()
+                paymentMethodsLabel.text = "Payment methods"
+                paymentMethodsLabel.font = .awxFont(.title3, weight: .bold)
+                paymentMethodsLabel.textColor = .awxColor(.textPrimary)
+                listView.topStack.addArrangedSubview(paymentMethodsLabel)
+                listView.topStack.setCustomSpacing(24, after: paymentMethodsLabel)
+
                 let elementView = element.view
                 elementView.translatesAutoresizingMaskIntoConstraints = false
-                listView.addViewToBottomStack(elementView)
+                listView.topStack.addArrangedSubview(elementView)
             } catch {
                 showAlert(message: error.localizedDescription)
             }
