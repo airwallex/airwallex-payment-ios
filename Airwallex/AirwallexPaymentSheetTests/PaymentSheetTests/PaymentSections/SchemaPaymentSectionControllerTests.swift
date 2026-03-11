@@ -241,8 +241,8 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
 
         checkoutCell.viewModel?.checkoutAction()
 
-        XCTAssertTrue(mockDelegate.inputValidationFailedCalled)
-        XCTAssertNotNil(mockDelegate.inputValidationFailedView)
+        XCTAssertTrue(mockDelegate.validationFailedCalled)
+        XCTAssertNotNil(mockDelegate.validationFailedView)
     }
 
     func testCheckout_NonEmbedded_KeepsShowIndicatorTrue() async {

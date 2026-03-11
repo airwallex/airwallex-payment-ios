@@ -386,7 +386,10 @@ private extension NewCardPaymentSectionController {
                 let item = sectionItem(entry.itemIdentifier)
                 if paymentUIContext.isEmbedded {
                     if let view = context.cellForItem(item) {
-                        paymentUIContext.paymentElement?.notifyInputValidationFailed(for: view)
+                        paymentUIContext.paymentElement?.notifyValidationFailed(
+                            for: methodType.name,
+                            invalidInputView: view
+                        )
                     }
                 } else {
                     context.ensureVisible(for: item)

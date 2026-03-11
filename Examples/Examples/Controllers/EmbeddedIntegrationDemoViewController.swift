@@ -204,9 +204,10 @@ extension EmbeddedIntegrationDemoViewController: AWXPaymentElementDelegate {
 
     func paymentElement(
         _ element: AWXPaymentElement,
-        inputValidationFailedFor view: UIView
+        validationFailedFor paymentMethod: String,
+        invalidInputView: UIView
     ) {
-        let rect = view.convert(view.bounds, to: listView.scrollView)
+        let rect = invalidInputView.convert(invalidInputView.bounds, to: listView.scrollView)
         listView.scrollView.scrollRectToVisible(rect, animated: true)
     }
 }

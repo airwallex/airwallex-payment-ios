@@ -66,7 +66,9 @@ import AirwallexCore
     ///
     /// - Parameters:
     ///   - element: The payment element.
-    ///   - view: The view containing the first invalid input field that should be scrolled into view.
+    ///   - paymentMethod: The name of the payment method being validated (e.g., "card").
+    ///   - invalidInputView: The view containing the first invalid input field that should be scrolled into view.
     @objc optional func paymentElement(_ element: AWXPaymentElement,
-                                       inputValidationFailedFor view: UIView)
+                                       validationFailedFor paymentMethod: String,
+                                       invalidInputView: UIView)
 }
