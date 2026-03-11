@@ -62,8 +62,8 @@ import XCTest
 
     func testAccordionLayout_Items() {
         mockSectionProvider.layout = .accordion
-        mockSectionProvider.paymentUIContext.isEmbedded = true
-        mockSectionProvider.paymentUIContext.prioritizeApplePay = false  // Apple Pay integrated in accordion
+        mockSectionProvider.simulateEmbeddedMode()
+        mockSectionProvider.paymentUIContext.showsApplePayAsPrimaryButton = false  // Apple Pay integrated in accordion
         mockMethodProvider.selectedMethod = mockMethodProvider.methods.first
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
@@ -78,8 +78,8 @@ import XCTest
 
     func testAccordionLayout_Cells() {
         mockSectionProvider.layout = .accordion
-        mockSectionProvider.paymentUIContext.isEmbedded = true
-        mockSectionProvider.paymentUIContext.prioritizeApplePay = false  // Apple Pay integrated in accordion
+        mockSectionProvider.simulateEmbeddedMode()
+        mockSectionProvider.paymentUIContext.showsApplePayAsPrimaryButton = false  // Apple Pay integrated in accordion
         mockMethodProvider.selectedMethod = mockMethodProvider.methods.first
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
@@ -104,7 +104,6 @@ import XCTest
         // Accordion layout should only apply when BOTH isEmbedded == true AND layout == .accordion
         // When layout is .accordion but isEmbedded is false, it should use tab layout (just button)
         mockSectionProvider.layout = .accordion
-        mockSectionProvider.paymentUIContext.isEmbedded = false
         mockMethodProvider.selectedMethod = mockMethodProvider.methods.first
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
@@ -121,7 +120,7 @@ import XCTest
     func testTabLayout_WhenEmbedded_UsesTabLayout() {
         // When layout is .tab, it should use tab layout regardless of isEmbedded
         mockSectionProvider.layout = .tab
-        mockSectionProvider.paymentUIContext.isEmbedded = true
+        mockSectionProvider.simulateEmbeddedMode()
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
 
@@ -137,7 +136,6 @@ import XCTest
     func testTabLayout_WhenNotEmbedded_UsesTabLayout() {
         // Default behavior: tab layout + not embedded should use tab layout
         mockSectionProvider.layout = .tab
-        mockSectionProvider.paymentUIContext.isEmbedded = false
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
 
@@ -150,12 +148,12 @@ import XCTest
         XCTAssertEqual(controller.items, [.applePayButton])
     }
 
-    func testTabLayout_WhenPrioritizeApplePayFalse_ShowsReminderAndButton() {
+    func testTabLayout_WhenShowsApplePayAsPrimaryButtonFalse_ShowsReminderAndButton() {
         // When showsApplePayAsPrimaryButton is false and layout is tab,
         // Apple Pay is selected from the tab list and should show reminder + button
         mockSectionProvider.layout = .tab
-        mockSectionProvider.paymentUIContext.isEmbedded = true
-        mockSectionProvider.paymentUIContext.prioritizeApplePay = false
+        mockSectionProvider.simulateEmbeddedMode()
+        mockSectionProvider.paymentUIContext.showsApplePayAsPrimaryButton = false
         mockMethodProvider.selectedMethod = mockMethodProvider.methods.first
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
@@ -167,6 +165,77 @@ import XCTest
 
         // Tab layout type should show reminder + button (no accordion key)
         XCTAssertEqual(controller.items, [.applePayReminder, .applePayButton])
+    }
+
+    // MARK: - Checkout Tests
+
+    func testCheckout_CallsConfirmApplePay() {
+        let mockFactory = mockSectionProvider.configureMockHandlerFactory()
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let controller = mockManager.sectionControllers[PaymentSectionType.applePay],
+              let applePayController = controller.embededSectionController as? ApplePaySectionController else {
+            XCTFail("apple pay section controller not initialized")
+            return
+        }
+
+        applePayController.checkout()
+
+        XCTAssertTrue(mockFactory.createHandlerCalled)
+        XCTAssertTrue(mockFactory.mockHandler.confirmApplePayCalled)
+        XCTAssertEqual(mockFactory.mockHandler.confirmApplePayCancelOnDismiss, false)
+    }
+
+    func testCheckout_Embedded_CallsConfirmApplePayWithCancelOnDismissTrue() {
+        let mockFactory = mockSectionProvider.configureMockHandlerFactory()
+        mockSectionProvider.simulateEmbeddedMode()
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let controller = mockManager.sectionControllers[PaymentSectionType.applePay],
+              let applePayController = controller.embededSectionController as? ApplePaySectionController else {
+            XCTFail("apple pay section controller not initialized")
+            return
+        }
+
+        applePayController.checkout()
+
+        XCTAssertTrue(mockFactory.mockHandler.confirmApplePayCalled)
+        XCTAssertEqual(mockFactory.mockHandler.confirmApplePayCancelOnDismiss, true)
+    }
+
+    func testCheckout_Embedded_SetsShowIndicatorFalse() {
+        let mockFactory = mockSectionProvider.configureMockHandlerFactory()
+        mockSectionProvider.simulateEmbeddedMode()
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let controller = mockManager.sectionControllers[PaymentSectionType.applePay],
+              let applePayController = controller.embededSectionController as? ApplePaySectionController else {
+            XCTFail("apple pay section controller not initialized")
+            return
+        }
+
+        applePayController.checkout()
+
+        XCTAssertFalse(mockFactory.mockHandler.showIndicator)
+    }
+
+    func testCheckout_NonEmbedded_KeepsShowIndicatorTrue() {
+        let mockFactory = mockSectionProvider.configureMockHandlerFactory()
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let controller = mockManager.sectionControllers[PaymentSectionType.applePay],
+              let applePayController = controller.embededSectionController as? ApplePaySectionController else {
+            XCTFail("apple pay section controller not initialized")
+            return
+        }
+
+        applePayController.checkout()
+
+        XCTAssertTrue(mockFactory.mockHandler.showIndicator)
     }
 }
 

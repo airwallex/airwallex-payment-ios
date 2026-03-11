@@ -19,7 +19,7 @@ private extension String {
     static let applePayButton = "applePayButton"
 }
     
-class ApplePaySectionController: SectionController {
+class ApplePaySectionController: PaymentSectionController {
     typealias SectionItem = CompoundItem<PaymentSectionType, String>
 
     /// Layout type for Apple Pay section.
@@ -34,9 +34,9 @@ class ApplePaySectionController: SectionController {
 
     private let session: AWXSession
     private let methodType: AWXPaymentMethodType
-    private var paymentSessionHandler: PaymentSessionHandler?
+    private var paymentSessionHandler: PaymentSessionHandlerProtocol?
     private let methodProvider: PaymentMethodProvider
-    private let paymentUIContext: PaymentSheetUIContext
+    let paymentUIContext: PaymentSheetUIContext
 
     init(session: AWXSession,
          methodType: AWXPaymentMethodType,
@@ -52,7 +52,7 @@ class ApplePaySectionController: SectionController {
     let section = PaymentSectionType.applePay
 
     private var layoutType: LayoutType {
-        if paymentUIContext.prioritizeApplePay {
+        if paymentUIContext.showsApplePayAsPrimaryButton {
             return .prioritized
         }
         switch paymentUIContext.layout {
@@ -103,17 +103,7 @@ class ApplePaySectionController: SectionController {
             let cell = context.dequeueReusableCell(ApplePayCell.self, for: sectionItem, indexPath: indexPath)
             let viewModel = ApplePayViewModel { [weak self] in
                 guard let self else { return }
-                AnalyticsLogger.log(action: .tapPayButton, extraInfo: [.paymentMethod: methodType.name])
-                do {
-                    self.paymentSessionHandler = PaymentSessionHandler(
-                        session: self.session,
-                        methodType: methodType,
-                        paymentUIContext: self.paymentUIContext
-                    )
-                    try self.paymentSessionHandler?.confirmApplePay(cancelPaymentOnDismiss: false)
-                } catch {
-                    self.context.viewController?.showAlert(message: error.localizedDescription)
-                }
+                checkout()
             }
             cell.setup(viewModel)
             return cell
@@ -122,7 +112,19 @@ class ApplePaySectionController: SectionController {
             return UICollectionViewCell()
         }
     }
-    
+
+    func checkout() {
+        AnalyticsLogger.log(action: .tapPayButton, extraInfo: [.paymentMethod: methodType.name])
+
+        paymentSessionHandler = paymentUIContext.paymentSessionHandlerFactory.createHandler(
+            session: session,
+            methodType: methodType,
+            paymentUIContext: paymentUIContext
+        )
+        prepareForEmbeddedCheckout(paymentMethod: AWXApplePayKey, handler: paymentSessionHandler)
+        paymentSessionHandler?.confirmApplePay(cancelPaymentOnDismiss: paymentUIContext.isEmbedded)
+    }
+
     func collectionView(didSelectItem sectionItem: SectionItem, at indexPath: IndexPath) {
         context.endEditing()
     }

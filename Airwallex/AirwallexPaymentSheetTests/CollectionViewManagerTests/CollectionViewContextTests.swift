@@ -6,9 +6,9 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import XCTest
 @testable import AirwallexPayment
 @testable import AirwallexPaymentSheet
+import XCTest
 
 @MainActor class CollectionViewContextTests: XCTestCase {
 
@@ -21,7 +21,6 @@ import XCTest
         mockViewController = UIViewController()
         mockProvider = MockABSectionProvider()
         mockManager = CollectionViewManager(
-            viewController: mockViewController,
             sectionProvider: mockProvider
         )
         let collectionView = mockManager.collectionView
@@ -31,21 +30,16 @@ import XCTest
     }
     
     func testContextBinding() {
-        func testSectionControllerContextBinding() {
-            mockProvider.status = .A
-            // Start from status A
-            let sectionController = mockProvider.sectionControllerA
-            XCTAssertNil(sectionController.context)
-            // Perform updates to bind context
-            mockManager.performUpdates()
-            mockManager.collectionView.layoutIfNeeded()
-    
-            // Check context is bound after update
-            XCTAssertNotNil(sectionController.context)
-    
-            // Check viewController on context is mockViewController and not nil
-            XCTAssertEqual(sectionController.context.viewController, mockViewController)
-        }
+        mockProvider.status = .A
+        // Start from status A
+        let sectionController = mockProvider.sectionControllerA
+        XCTAssertNil(sectionController.context)
+        // Perform updates to bind context
+        mockManager.performUpdates()
+        mockManager.collectionView.layoutIfNeeded()
+
+        // Check context is bound after update
+        XCTAssertNotNil(sectionController.context)
     }
     
     func testCurrentSnapshot() {
@@ -445,28 +439,178 @@ import XCTest
         mockProvider.sectionControllerA.items = [.A1]
         mockManager.performUpdates()
         mockManager.collectionView.layoutIfNeeded()
-    
+
         // Get context from sectionControllerA
         guard let context = mockProvider.sectionControllerA.context else {
             XCTFail("Context should not be nil")
             return
         }
-    
+
         // Get cell from sectionControllerA by indexPath
         let indexPath = IndexPath(item: 0, section: 0)
         guard let cell = mockProvider.sectionControllerA.willDisplayCellCalled?.cell else {
             XCTFail("cell not found")
             return
         }
-    
+
         // Get cell from context by indexPath
         let cellFromCollectionViewByIndexPath = context.cellForItem(CompoundItem(.A, .A1))
-    
+
         // Get cell from context by identifier
         let cellFromContextByIdentifier = mockManager.collectionView.cellForItem(at: indexPath)
-    
+
         // Verify that all cells are the same
         XCTAssertEqual(cell, cellFromCollectionViewByIndexPath)
         XCTAssertEqual(cell, cellFromContextByIdentifier)
+    }
+
+    // MARK: - Section Loading Tests
+
+    func testStartLoading_addsSpinnerToCollectionView() {
+        // Start with status AB
+        mockProvider.status = .AB
+        mockManager.performUpdates()
+        mockManager.collectionView.layoutIfNeeded()
+
+        guard let context = mockProvider.sectionControllerA.context else {
+            XCTFail("Context should not be nil")
+            return
+        }
+
+        // Start loading for section A
+        context.startLoading(for: .A)
+
+        // Verify that interaction is disabled
+        XCTAssertFalse(mockManager.collectionView.isUserInteractionEnabled)
+    }
+
+    func testStartLoading_whenAlreadyLoading_doesNotAddAnotherSpinner() {
+        // Start with status AB
+        mockProvider.status = .AB
+        mockManager.performUpdates()
+        mockManager.collectionView.layoutIfNeeded()
+
+        guard let context = mockProvider.sectionControllerA.context else {
+            XCTFail("Context should not be nil")
+            return
+        }
+
+        // Start loading twice
+        context.startLoading(for: .A)
+        let subviewCountAfterFirst = mockManager.collectionView.subviews.count
+
+        context.startLoading(for: .A)
+        let subviewCountAfterSecond = mockManager.collectionView.subviews.count
+
+        // Should not add additional spinner
+        XCTAssertEqual(subviewCountAfterFirst, subviewCountAfterSecond)
+    }
+
+    func testStartLoading_withInvalidSection_doesNothing() {
+        // Start with only section A
+        mockProvider.status = .A
+        mockManager.performUpdates()
+        mockManager.collectionView.layoutIfNeeded()
+
+        guard let context = mockProvider.sectionControllerA.context else {
+            XCTFail("Context should not be nil")
+            return
+        }
+
+        let subviewCountBefore = mockManager.collectionView.subviews.count
+
+        // Try to start loading for section B which doesn't exist
+        context.startLoading(for: .B)
+
+        // Should not add spinner for non-existent section
+        XCTAssertEqual(mockManager.collectionView.subviews.count, subviewCountBefore)
+        XCTAssertTrue(mockManager.collectionView.isUserInteractionEnabled)
+    }
+
+    func testStartLoading_withEmptySection_doesNothing() {
+        // Start with status AB, but make section B empty
+        mockProvider.status = .AB
+        mockProvider.sectionControllerB.items = []
+        mockManager.performUpdates()
+        mockManager.collectionView.layoutIfNeeded()
+
+        guard let context = mockProvider.sectionControllerA.context else {
+            XCTFail("Context should not be nil")
+            return
+        }
+
+        let subviewCountBefore = mockManager.collectionView.subviews.count
+
+        // Try to start loading for empty section B
+        context.startLoading(for: .B)
+
+        // Should not add spinner for empty section
+        XCTAssertEqual(mockManager.collectionView.subviews.count, subviewCountBefore)
+        XCTAssertTrue(mockManager.collectionView.isUserInteractionEnabled)
+    }
+
+    func testStopLoading_removesSpinnerAndRestoresInteraction() {
+        // Start with status A
+        mockProvider.status = .A
+        mockManager.performUpdates()
+        mockManager.collectionView.layoutIfNeeded()
+
+        guard let context = mockProvider.sectionControllerA.context else {
+            XCTFail("Context should not be nil")
+            return
+        }
+
+        // Start loading
+        context.startLoading(for: .A)
+        XCTAssertFalse(mockManager.collectionView.isUserInteractionEnabled)
+
+        // Stop loading
+        context.stopLoading()
+
+        // Verify interaction is restored
+        XCTAssertTrue(mockManager.collectionView.isUserInteractionEnabled)
+    }
+
+    func testStopLoading_whenNotLoading_doesNotCrash() {
+        // Start with status A
+        mockProvider.status = .A
+        mockManager.performUpdates()
+        mockManager.collectionView.layoutIfNeeded()
+
+        guard let context = mockProvider.sectionControllerA.context else {
+            XCTFail("Context should not be nil")
+            return
+        }
+
+        // Stop loading without starting - should not crash
+        context.stopLoading()
+
+        // Interaction should be enabled
+        XCTAssertTrue(mockManager.collectionView.isUserInteractionEnabled)
+    }
+
+    func testStartAndStopLoading_multipleTimesWorks() {
+        // Start with status A
+        mockProvider.status = .A
+        mockManager.performUpdates()
+        mockManager.collectionView.layoutIfNeeded()
+
+        guard let context = mockProvider.sectionControllerA.context else {
+            XCTFail("Context should not be nil")
+            return
+        }
+
+        // Start -> Stop -> Start -> Stop
+        context.startLoading(for: .A)
+        XCTAssertFalse(mockManager.collectionView.isUserInteractionEnabled)
+
+        context.stopLoading()
+        XCTAssertTrue(mockManager.collectionView.isUserInteractionEnabled)
+
+        context.startLoading(for: .A)
+        XCTAssertFalse(mockManager.collectionView.isUserInteractionEnabled)
+
+        context.stopLoading()
+        XCTAssertTrue(mockManager.collectionView.isUserInteractionEnabled)
     }
 }

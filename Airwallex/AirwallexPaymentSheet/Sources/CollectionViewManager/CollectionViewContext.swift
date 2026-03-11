@@ -7,28 +7,32 @@
 //
 
 import UIKit
+#if canImport(AirwallexPayment)
+@_spi(AWX) import AirwallexPayment
+#endif
 
 /// Context that bridges section controllers with the collection view and its data source.
 /// All item operations use SectionItem to ensure global uniqueness.
+@MainActor
 class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Sendable> {
 
     /// Type alias for the compound item type
     typealias SectionItem = CompoundItem<Section, Item>
-    
-    private(set) weak var viewController: UIViewController?
+
     private weak var collectionView: UICollectionView!
     private weak var layout: UICollectionViewCompositionalLayout!
     private var dataSource: UICollectionViewDiffableDataSource<Section, SectionItem>
     private var _performUpdates: (Bool, Bool) -> Void
     private var _performUpdatesForSection: (Section, Bool, Bool, Bool) -> Void
-    
-    init(viewController: UIViewController,
-         collectionView: UICollectionView,
+
+    /// Loading indicator for payment processing
+    private var loadingView: LoadingSpinnerView?
+
+    init(collectionView: UICollectionView,
          layout: UICollectionViewCompositionalLayout,
          dataSource: UICollectionViewDiffableDataSource<Section, SectionItem>,
          performSectionUpdates: @escaping (Section, Bool, Bool, Bool) -> Void,
          performUpdates: @escaping (Bool, Bool) -> Void) {
-        self.viewController = viewController
         self.collectionView = collectionView
         self.layout = layout
         self.dataSource = dataSource
@@ -175,7 +179,48 @@ class CollectionViewContext<Section: Hashable & Sendable, Item: Hashable & Senda
         }
         return false
     }
-    
+
+    // MARK: - Section Loading
+
+    /// Shows a loading indicator centered on the specified section
+    func startLoading(for section: Section) {
+        guard loadingView == nil else { return }
+
+        let snapshot = dataSource.snapshot()
+        guard let sectionIndex = snapshot.sectionIdentifiers.firstIndex(of: section) else { return }
+
+        // Calculate section frame from layout attributes
+        let itemCount = snapshot.numberOfItems(inSection: section)
+        guard itemCount > 0 else { return }
+
+        var sectionFrame = CGRect.null
+        for itemIndex in 0..<itemCount {
+            let indexPath = IndexPath(item: itemIndex, section: sectionIndex)
+            if let attributes = layout.layoutAttributesForItem(at: indexPath) {
+                sectionFrame = sectionFrame.union(attributes.frame)
+            }
+        }
+
+        guard !sectionFrame.isNull else { return }
+
+        // Create and position loading indicator
+        let spinner = LoadingSpinnerView(size: .medium)
+        spinner.center = CGPoint(x: sectionFrame.midX, y: sectionFrame.midY)
+        collectionView.addSubview(spinner)
+        spinner.startAnimating()
+
+        loadingView = spinner
+        collectionView.isUserInteractionEnabled = false
+    }
+
+    /// Hides the loading indicator
+    func stopLoading() {
+        loadingView?.stopAnimating()
+        loadingView?.removeFromSuperview()
+        loadingView = nil
+        collectionView.isUserInteractionEnabled = true
+    }
+
     // MARK: - register reusable views
     
     private lazy var registeredCells = Set<String>()

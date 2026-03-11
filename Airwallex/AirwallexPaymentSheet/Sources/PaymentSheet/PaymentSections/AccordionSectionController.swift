@@ -127,7 +127,7 @@ class AccordionSectionController: SectionController {
         
         viewModels = methodProvider.methodsForAccordionPosition(
             position,
-            excludeApplePay: paymentUIContext.prioritizeApplePay
+            excludeApplePay: paymentUIContext.showsApplePayAsPrimaryButton
         ).map { methodType in
             PaymentMethodCellViewModel(
                 name: methodType.name,

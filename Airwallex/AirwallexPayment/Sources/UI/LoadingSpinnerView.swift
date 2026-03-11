@@ -12,8 +12,8 @@ import UIKit
 import AirwallexCore
 #endif
 
-class LoadingSpinnerView: UIView {
-    enum Style {
+@_spi(AWX) public class LoadingSpinnerView: UIView {
+    public enum Style {
         case small
         case medium
         case large
@@ -56,13 +56,13 @@ class LoadingSpinnerView: UIView {
     private let animationKey = "rotation"
     private let shapeLayer = CAShapeLayer()
 
-    init(size: Style) {
+    public init(size: Style) {
         self.style = size
         super.init(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         commonInit()
     }
     
-    override var intrinsicContentSize: CGSize {
+    public override var intrinsicContentSize: CGSize {
         .init(width: style.width, height: style.height)
     }
 
@@ -90,7 +90,7 @@ class LoadingSpinnerView: UIView {
         setupShadow()
     }
     
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         if shapeLayer.frame != bounds {
             shapeLayer.frame = bounds
@@ -105,7 +105,7 @@ class LoadingSpinnerView: UIView {
         }
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             setupShadow()
@@ -120,7 +120,7 @@ class LoadingSpinnerView: UIView {
         layer.shadowRadius = 8
     }
 
-    func startAnimating() {
+    public func startAnimating() {
         guard shapeLayer.animation(forKey: animationKey) == nil else {
             return
         }
@@ -133,7 +133,7 @@ class LoadingSpinnerView: UIView {
         isHidden = false
     }
 
-    func stopAnimating() {
+    public func stopAnimating() {
         self.isHidden = true
         self.shapeLayer.removeAnimation(forKey: self.animationKey)
     }

@@ -120,22 +120,20 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         XCTAssertNotNil(bankCell.viewModel?.bank)
     }
     
-    func testBankSelection() async {
+    func testBankSelectionValidation() async {
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
         guard let sectionController = getSchemaPaymentSectionController() else { return }
         try? await Task.sleep(nanoseconds: 1000_000_000)
         mockViewController.view.layoutIfNeeded()
-        
+
         guard let bankCell = sectionController.context.cellForItem(sectionController.sectionItem(.bankName)) as? BankSelectionCell else {
             XCTFail()
             return
         }
         XCTAssertNotNil(bankCell.viewModel?.bank)
-        bankCell.viewModel?.handleUserInteraction()
-        XCTAssert(mockViewController.presentedViewControllerSpy is AWXPaymentFormViewController)
-        
-        // checkout validation
+
+        // Checkout validation - when bank is nil, inline error should be shown
         XCTAssertNil(bankCell.viewModel?.errorHint)
         bankCell.viewModel?.bank = nil
         guard let checkoutCell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
@@ -168,6 +166,77 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         }
         checkoutCell.viewModel?.checkoutAction()
         XCTAssertNotNil(nameCell.viewModel?.errorHint)
+    }
+
+    // MARK: - Checkout Tests
+
+    func testCheckout_ValidInputs_CallsConfirmRedirectPayment() async {
+        let mockFactory = mockSectionProvider.configureMockHandlerFactory()
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let sectionController = getSchemaPaymentSectionController() else { return }
+        try? await Task.sleep(nanoseconds: 500_000_000)
+        mockViewController.view.layoutIfNeeded()
+
+        guard let checkoutCell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
+            XCTFail()
+            return
+        }
+
+        checkoutCell.viewModel?.checkoutAction()
+
+        // Wait for async task to complete
+        try? await Task.sleep(nanoseconds: 100_000_000)
+
+        XCTAssertTrue(mockFactory.createHandlerCalled)
+        XCTAssertTrue(mockFactory.mockHandler.confirmRedirectPaymentCalled)
+        XCTAssertEqual(mockFactory.mockHandler.confirmRedirectPaymentMethod?.type, "online_banking")
+    }
+
+    func testCheckout_Embedded_SetsShowIndicatorFalse() async {
+        let mockFactory = mockSectionProvider.configureMockHandlerFactory()
+        mockSectionProvider.simulateEmbeddedMode()
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let sectionController = getSchemaPaymentSectionController() else { return }
+        try? await Task.sleep(nanoseconds: 500_000_000)
+        mockViewController.view.layoutIfNeeded()
+
+        guard let checkoutCell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
+            XCTFail()
+            return
+        }
+
+        checkoutCell.viewModel?.checkoutAction()
+
+        // Wait for async task to complete
+        try? await Task.sleep(nanoseconds: 100_000_000)
+
+        XCTAssertFalse(mockFactory.mockHandler.showIndicator)
+    }
+
+    func testCheckout_NonEmbedded_KeepsShowIndicatorTrue() async {
+        let mockFactory = mockSectionProvider.configureMockHandlerFactory()
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let sectionController = getSchemaPaymentSectionController() else { return }
+        try? await Task.sleep(nanoseconds: 500_000_000)
+        mockViewController.view.layoutIfNeeded()
+
+        guard let checkoutCell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
+            XCTFail()
+            return
+        }
+
+        checkoutCell.viewModel?.checkoutAction()
+
+        // Wait for async task to complete
+        try? await Task.sleep(nanoseconds: 100_000_000)
+
+        XCTAssertTrue(mockFactory.mockHandler.showIndicator)
     }
 }
 

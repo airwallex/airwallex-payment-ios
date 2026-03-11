@@ -21,12 +21,12 @@ private extension String {
 }
     
 /// This section controlelr is for schema payment
-class SchemaPaymentSectionController: NSObject, SectionController {
+class SchemaPaymentSectionController: NSObject, PaymentSectionController {
     typealias SectionItem = CompoundItem<PaymentSectionType, String>
     private var session: AWXSession {
         methodProvider.session
     }
-    private var paymentSessionHandler: PaymentSessionHandler?
+    private var paymentSessionHandler: PaymentSessionHandlerProtocol?
     private var methodProvider: PaymentMethodProvider
     let paymentUIContext: PaymentSheetUIContext
     
@@ -166,9 +166,9 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         task = Task {
             do {
                 // block user from checkout when paymentmethod type is loading
-                context.viewController?.startLoading()
+                context.startLoading(for: section)
                 defer {
-                    context.viewController?.stopLoading()
+                    context.stopLoading()
                 }
                 //  request method details from server
                 let response = try await methodProvider.getPaymentMethodTypeDetails(name: name)
@@ -268,7 +268,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 schema = nil
                 bankList = nil
                 task = nil
-                context.viewController?.showAlert(message: error.localizedDescription)
+                UIViewController.topMost?.showAlert(message: error.localizedDescription)
                 debugLog("Failed to get schema for selected method. Error: \(error.localizedDescription)")
             }
         }
@@ -290,64 +290,62 @@ private extension SchemaPaymentSectionController {
             updateItemsIfNecessary()
             return
         }
-        
+
+        // Validation phase
         do {
             // validate bank selection
             try bankSelectionViewModel?.validate()
-            
             // validate uiFields
             for viewModel in uiFieldViewModels {
-                do {
-                    try viewModel.validate()
-                } catch {
-                    context.scroll(to: sectionItem(viewModel.fieldName), position: .bottom, animated: true)
-                    throw error
-                }
+                try viewModel.validate()
             }
-            
-            let paymentMethod = AWXPaymentMethod()
-            paymentMethod.type = name
-            
-            // update bank selection
-            if let bankSelectionViewModel {
-                paymentMethod.appendAdditionalParams([bankSelectionViewModel.fieldName: bankSelectionViewModel.bank?.name ?? ""])
-            }
-            
-            //  update from UI fields
-            let inputContents = uiFieldViewModels.reduce(into: [String: String]()) { partialResult, viewModel in
-                partialResult[viewModel.fieldName] = viewModel.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-            }
-            paymentMethod.appendAdditionalParams(inputContents)
-            
-            // update hidden fields
-            paymentMethod.appendAdditionalParams(schema.parametersForHiddenFields(countryCode: session.countryCode))
-            
-            paymentSessionHandler = PaymentSessionHandler(
-                session: session,
-                methodType: methodProvider.method(named: name),
-                paymentUIContext: paymentUIContext
-            )
-            
-            Task { @MainActor in
-                do {
-                    try await paymentSessionHandler?.confirmRedirectPayment(with: paymentMethod)
-                    debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
-                } catch {
-                    context.viewController?.showAlert(message: error.localizedDescription)
-                    for viewModel in uiFieldViewModels {
-                        viewModel.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
-                    }
-                }
-            }
-            
         } catch {
-            context.viewController?.showAlert(message: error.localizedDescription)
             for viewModel in uiFieldViewModels {
                 viewModel.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
             }
+            return
+        }
+
+        // Confirm payment phase
+        let paymentMethod = buildPaymentMethod(schema: schema)
+        confirmRedirectPayment(paymentMethod: paymentMethod)
+    }
+
+    func buildPaymentMethod(schema: AWXSchema) -> AWXPaymentMethod {
+        let paymentMethod = AWXPaymentMethod()
+        paymentMethod.type = name
+
+        // update bank selection
+        if let bankSelectionViewModel {
+            paymentMethod.appendAdditionalParams([bankSelectionViewModel.fieldName: bankSelectionViewModel.bank?.name ?? ""])
+        }
+
+        // update from UI fields
+        let inputContents = uiFieldViewModels.reduce(into: [String: String]()) { partialResult, viewModel in
+            partialResult[viewModel.fieldName] = viewModel.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        paymentMethod.appendAdditionalParams(inputContents)
+
+        // update hidden fields
+        paymentMethod.appendAdditionalParams(schema.parametersForHiddenFields(countryCode: session.countryCode))
+
+        return paymentMethod
+    }
+
+    func confirmRedirectPayment(paymentMethod: AWXPaymentMethod) {
+        paymentSessionHandler = paymentUIContext.paymentSessionHandlerFactory.createHandler(
+            session: session,
+            methodType: methodProvider.method(named: name),
+            paymentUIContext: paymentUIContext
+        )
+        prepareForEmbeddedCheckout(paymentMethod: name, handler: paymentSessionHandler)
+        Task { [weak self] in
+            guard let self else { return }
+            await paymentSessionHandler?.confirmRedirectPayment(with: paymentMethod)
+            debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
         }
     }
-    
+
     func handleBankSelection() {
         context.endEditing()
         guard let bankList = bankList else { return }
@@ -366,7 +364,7 @@ private extension SchemaPaymentSectionController {
         controller.formMapping = formMapping
         controller.modalPresentationStyle = .overFullScreen
         controller.modalTransitionStyle = .crossDissolve
-        context.viewController?.present(controller, animated: false)
+        UIViewController.topMost?.present(controller, animated: false)
     }
 }
     

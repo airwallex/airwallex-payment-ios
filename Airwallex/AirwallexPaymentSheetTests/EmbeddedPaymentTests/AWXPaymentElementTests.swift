@@ -76,12 +76,12 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertEqual(configuration.supportedCardBrands, [.visa, .mastercard])
     }
 
-    func testConfiguration_DefaultPrioritizeApplePay_IsTrue() {
+    func testConfiguration_DefaultShowsApplePayAsPrimaryButton_IsTrue() {
         let configuration = AWXPaymentElement.Configuration()
         XCTAssertTrue(configuration.showsApplePayAsPrimaryButton)
     }
 
-    func testConfiguration_CanSetPrioritizeApplePayToFalse() {
+    func testConfiguration_CanSetShowsApplePayAsPrimaryButtonToFalse() {
         let configuration = AWXPaymentElement.Configuration()
         configuration.showsApplePayAsPrimaryButton = false
         XCTAssertFalse(configuration.showsApplePayAsPrimaryButton)
@@ -119,7 +119,6 @@ final class AWXPaymentElementTests: XCTestCase {
         configuration.appearance.tintColor = customColor
 
         _ = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController,
             configuration: configuration
@@ -190,7 +189,6 @@ final class AWXPaymentElementTests: XCTestCase {
         mockMethodProvider.selectedMethod = cardMethod
 
         let element = try await AWXPaymentElement.create(
-            hostViewController: mockViewController,
             session: mockMethodProvider.session,
             methodProvider: mockMethodProvider,
             delegate: mockViewController
@@ -210,8 +208,7 @@ final class AWXPaymentElementTests: XCTestCase {
 
         do {
             _ = try await AWXPaymentElement.create(
-                hostViewController: mockViewController,
-                session: invalidSession,
+                    session: invalidSession,
                 methodProvider: mockMethodProvider,
                 delegate: mockViewController
             )
@@ -235,8 +232,7 @@ final class AWXPaymentElementTests: XCTestCase {
 
         do {
             _ = try await AWXPaymentElement.create(
-                hostViewController: mockViewController,
-                session: mockMethodProvider.session,
+                    session: mockMethodProvider.session,
                 methodProvider: mockMethodProvider,
                 delegate: mockViewController
             )
@@ -260,7 +256,6 @@ final class AWXPaymentElementTests: XCTestCase {
         configuration.layout = .accordion
 
         let element = try await AWXPaymentElement.create(
-            hostViewController: mockViewController,
             session: mockMethodProvider.session,
             methodProvider: mockMethodProvider,
             delegate: mockViewController,
@@ -289,7 +284,6 @@ final class AWXPaymentElementTests: XCTestCase {
         mockMethodProvider.selectedMethod = cardMethod
 
         let element = try await AWXPaymentElement.create(
-            hostViewController: mockViewController,
             session: mockMethodProvider.session,
             methodProvider: mockMethodProvider,
             delegate: mockViewController
@@ -313,7 +307,6 @@ final class AWXPaymentElementTests: XCTestCase {
         mockMethodProvider.selectedMethod = cardMethod
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController
         )
@@ -328,7 +321,6 @@ final class AWXPaymentElementTests: XCTestCase {
         mockMethodProvider.selectedMethod = cardMethod
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController
         )
@@ -346,7 +338,6 @@ final class AWXPaymentElementTests: XCTestCase {
         configuration.layout = .accordion
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController,
             configuration: configuration
@@ -362,27 +353,26 @@ final class AWXPaymentElementTests: XCTestCase {
         mockMethodProvider.selectedMethod = cardMethod
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController
         )
 
-        XCTAssertTrue(element.paymentUIContext.delegate === mockViewController)
+        // AWXPaymentElement sets itself as the delegate to bridge callbacks
+        XCTAssertTrue(element.paymentUIContext.delegate === element)
     }
 
-    func testInit_PaymentUIContext_ViewControllerIsSet() {
+    func testInit_PaymentUIContext_PaymentElementIsSet() {
         let cardMethod = AWXPaymentMethodType()
         cardMethod.name = AWXCardKey
         mockMethodProvider.methods = [cardMethod]
         mockMethodProvider.selectedMethod = cardMethod
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController
         )
 
-        XCTAssertTrue(element.paymentUIContext.viewController === mockViewController)
+        XCTAssertTrue(element.paymentUIContext.paymentElement === element)
     }
 
     // MARK: - View Tests
@@ -394,7 +384,6 @@ final class AWXPaymentElementTests: XCTestCase {
         mockMethodProvider.selectedMethod = cardMethod
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController
         )
@@ -416,7 +405,6 @@ final class AWXPaymentElementTests: XCTestCase {
         mockMethodProvider.selectedMethod = cardMethod
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController
         )
@@ -434,7 +422,6 @@ final class AWXPaymentElementTests: XCTestCase {
         mockMethodProvider.methods = [applePayMethod]
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController
         )
@@ -454,7 +441,6 @@ final class AWXPaymentElementTests: XCTestCase {
         mockMethodProvider.selectedMethod = mockAlipay
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController
         )
@@ -479,7 +465,6 @@ final class AWXPaymentElementTests: XCTestCase {
         mockMethodProvider.consents = [consent]
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController
         )
@@ -503,7 +488,6 @@ final class AWXPaymentElementTests: XCTestCase {
         mockMethodProvider.selectedMethod = cardMethod
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController
         )
@@ -526,7 +510,6 @@ final class AWXPaymentElementTests: XCTestCase {
         mockMethodProvider.selectedMethod = cardMethod
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController
         )
@@ -553,7 +536,6 @@ final class AWXPaymentElementTests: XCTestCase {
         mockMethodProvider.selectedMethod = cardMethod
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController
         )
@@ -565,7 +547,7 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertTrue(sections.contains(.applePay))
     }
 
-    func testSections_TabLayout_PrioritizeApplePay_ShowsApplePayAtTop() {
+    func testSections_TabLayout_ShowsApplePayAsPrimaryButton_ShowsApplePayAtTop() {
         let applePayMethod = AWXPaymentMethodType()
         applePayMethod.name = AWXApplePayKey
 
@@ -580,7 +562,6 @@ final class AWXPaymentElementTests: XCTestCase {
         configuration.layout = .tab
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController,
             configuration: configuration
@@ -595,7 +576,7 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertTrue(sections.contains(.methodList), "Should contain method list")
     }
 
-    func testSections_TabLayout_PrioritizeApplePayFalse_IncludesApplePayInMethodListWhenSelected() {
+    func testSections_TabLayout_ShowsApplePayAsPrimaryButtonFalse_IncludesApplePayInMethodListWhenSelected() {
         let applePayMethod = AWXPaymentMethodType()
         applePayMethod.name = AWXApplePayKey
 
@@ -611,7 +592,6 @@ final class AWXPaymentElementTests: XCTestCase {
         configuration.showsApplePayAsPrimaryButton = false
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController,
             configuration: configuration
@@ -644,7 +624,6 @@ final class AWXPaymentElementTests: XCTestCase {
         let configuration = AWXPaymentElement.Configuration()
         configuration.layout = .accordion
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController,
             configuration: configuration
@@ -659,7 +638,6 @@ final class AWXPaymentElementTests: XCTestCase {
         // First method selected: only bottom
         mockMethodProvider.selectedMethod = method1
         let element2 = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController,
             configuration: configuration
@@ -671,7 +649,6 @@ final class AWXPaymentElementTests: XCTestCase {
         // Last method selected: only top
         mockMethodProvider.selectedMethod = method3
         let element3 = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController,
             configuration: configuration
@@ -699,7 +676,6 @@ final class AWXPaymentElementTests: XCTestCase {
         configuration.showsApplePayAsPrimaryButton = false  // Apple Pay integrated in accordion
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController,
             configuration: configuration
@@ -731,7 +707,6 @@ final class AWXPaymentElementTests: XCTestCase {
         configuration.showsApplePayAsPrimaryButton = false  // Apple Pay integrated in accordion
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController,
             configuration: configuration
@@ -744,7 +719,7 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertTrue(sections.contains(.accordion(.bottom)), "Methods below Apple Pay should be in bottom accordion")
     }
 
-    func testSections_AccordionLayout_PrioritizeApplePay_ShowsApplePayAtTopBeforeAccordion() {
+    func testSections_AccordionLayout_ShowsApplePayAsPrimaryButton_ShowsApplePayAtTopBeforeAccordion() {
         let applePayMethod = AWXPaymentMethodType()
         applePayMethod.name = AWXApplePayKey
 
@@ -768,7 +743,6 @@ final class AWXPaymentElementTests: XCTestCase {
         configuration.layout = .accordion
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController,
             configuration: configuration
@@ -798,7 +772,6 @@ final class AWXPaymentElementTests: XCTestCase {
         configuration.layout = .accordion
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController,
             configuration: configuration
@@ -830,7 +803,6 @@ final class AWXPaymentElementTests: XCTestCase {
         configuration.layout = .accordion
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController,
             configuration: configuration
@@ -857,7 +829,6 @@ final class AWXPaymentElementTests: XCTestCase {
         configuration.layout = .accordion
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController,
             configuration: configuration
@@ -880,7 +851,6 @@ final class AWXPaymentElementTests: XCTestCase {
         configuration.elementType = .addCard
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController,
             configuration: configuration
@@ -906,7 +876,6 @@ final class AWXPaymentElementTests: XCTestCase {
         configuration.elementType = .addCard
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController,
             configuration: configuration
@@ -933,7 +902,6 @@ final class AWXPaymentElementTests: XCTestCase {
         configuration.elementType = .addCard
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController,
             configuration: configuration
@@ -964,7 +932,6 @@ final class AWXPaymentElementTests: XCTestCase {
         configuration.elementType = .addCard
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController,
             configuration: configuration
@@ -986,7 +953,6 @@ final class AWXPaymentElementTests: XCTestCase {
         mockMethodProvider.selectedMethod = applePayMethod
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController
         )
@@ -996,7 +962,7 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertFalse(sections.contains(.methodList), "Single Apple Pay should hide method list")
     }
 
-    func testDisplayMethodList_SingleApplePayWithPrioritizeApplePayFalse_ShowsMethodList() {
+    func testDisplayMethodList_SingleApplePayWithShowsApplePayAsPrimaryButtonFalse_ShowsMethodList() {
         let applePayMethod = AWXPaymentMethodType()
         applePayMethod.name = AWXApplePayKey
         mockMethodProvider.methods = [applePayMethod]
@@ -1008,7 +974,6 @@ final class AWXPaymentElementTests: XCTestCase {
         configuration.showsApplePayAsPrimaryButton = false
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController,
             configuration: configuration
@@ -1027,7 +992,6 @@ final class AWXPaymentElementTests: XCTestCase {
         mockMethodProvider.consents = []
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController
         )
@@ -1051,7 +1015,6 @@ final class AWXPaymentElementTests: XCTestCase {
         mockMethodProvider.consents = [consent]
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController
         )
@@ -1070,7 +1033,6 @@ final class AWXPaymentElementTests: XCTestCase {
         mockMethodProvider.selectedMethod = alipayMethod
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController
         )
@@ -1093,7 +1055,6 @@ final class AWXPaymentElementTests: XCTestCase {
         mockMethodProvider.selectedMethod = cardMethod
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController
         )
@@ -1119,7 +1080,6 @@ final class AWXPaymentElementTests: XCTestCase {
         configuration.layout = .accordion
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController,
             configuration: configuration
@@ -1139,7 +1099,6 @@ final class AWXPaymentElementTests: XCTestCase {
         mockMethodProvider.selectedMethod = cardMethod
 
         let element = AWXPaymentElement(
-            hostViewController: mockViewController,
             methodProvider: mockMethodProvider,
             delegate: mockViewController
         )
@@ -1150,5 +1109,221 @@ final class AWXPaymentElementTests: XCTestCase {
 
         // The fallback controller should still return a valid controller
         XCTAssertNotNil(controller)
+    }
+
+    // MARK: - AWXPaymentResultDelegate Bridging Tests
+
+    func testPaymentViewController_didCompleteWithStatus_bridgesToDelegate() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let element = AWXPaymentElement(
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        // Simulate setting current payment method in context
+        element.paymentUIContext.currentPaymentMethod = "card"
+
+        // Call the delegate method through the element
+        element.paymentViewController(nil, didCompleteWith: .success, error: nil)
+
+        // Verify bridging to AWXPaymentElementDelegate
+        XCTAssertEqual(mockViewController.status, .success)
+        XCTAssertEqual(mockViewController.paymentMethod, "card")
+        XCTAssertNil(mockViewController.error)
+    }
+
+    func testPaymentViewController_didCompleteWithStatusAndError_bridgesToDelegate() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let element = AWXPaymentElement(
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        // Simulate setting current payment method in context
+        element.paymentUIContext.currentPaymentMethod = "card"
+
+        let testError = NSError(domain: "TestError", code: 100, userInfo: nil)
+        element.paymentViewController(nil, didCompleteWith: .failure, error: testError)
+
+        // Verify bridging to AWXPaymentElementDelegate
+        XCTAssertEqual(mockViewController.status, .failure)
+        XCTAssertEqual(mockViewController.paymentMethod, "card")
+        XCTAssertNotNil(mockViewController.error)
+        XCTAssertEqual((mockViewController.error as? NSError)?.code, 100)
+    }
+
+    func testPaymentViewController_didCompleteWithStatus_usesUnknownWhenNoCurrentPaymentMethod() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let element = AWXPaymentElement(
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        // Do not set current payment method
+        element.paymentUIContext.currentPaymentMethod = nil
+
+        element.paymentViewController(nil, didCompleteWith: .cancel, error: nil)
+
+        // Verify "unknown" is used when no payment method is set
+        XCTAssertEqual(mockViewController.status, .cancel)
+        XCTAssertEqual(mockViewController.paymentMethod, "unknown")
+    }
+
+    func testPaymentViewController_didCompleteWithConsentId_bridgesToDelegate() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let element = AWXPaymentElement(
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        // Simulate setting current payment method in context
+        element.paymentUIContext.currentPaymentMethod = "card"
+
+        element.paymentViewController(nil, didCompleteWithPaymentConsentId: "test_consent_123")
+
+        // Verify bridging to AWXPaymentElementDelegate
+        XCTAssertEqual(mockViewController.consentId, "test_consent_123")
+        XCTAssertEqual(mockViewController.paymentMethod, "card")
+    }
+
+    func testPaymentViewController_didCompleteWithConsentId_usesUnknownWhenNoCurrentPaymentMethod() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let element = AWXPaymentElement(
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        // Do not set current payment method
+        element.paymentUIContext.currentPaymentMethod = nil
+
+        element.paymentViewController(nil, didCompleteWithPaymentConsentId: "consent_456")
+
+        // Verify "unknown" is used when no payment method is set
+        XCTAssertEqual(mockViewController.consentId, "consent_456")
+        XCTAssertEqual(mockViewController.paymentMethod, "unknown")
+    }
+
+    // MARK: - notifyProcessingStateChanged Tests
+
+    func testNotifyProcessingStateChanged_WhenDelegateImplementsMethod_ReturnsTrue() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let mockDelegateWithProcessing = MockProcessingStateDelegate()
+
+        let element = AWXPaymentElement(
+            methodProvider: mockMethodProvider,
+            delegate: mockDelegateWithProcessing
+        )
+
+        let result = element.notifyProcessingStateChanged(for: "card", isProcessing: true)
+
+        XCTAssertTrue(result)
+        XCTAssertTrue(mockDelegateWithProcessing.processingStateChangedCalled)
+        XCTAssertEqual(mockDelegateWithProcessing.processingStatePaymentMethod, "card")
+        XCTAssertEqual(mockDelegateWithProcessing.processingStateIsProcessing, true)
+    }
+
+    func testNotifyProcessingStateChanged_WhenDelegateDoesNotImplementMethod_ReturnsFalse() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        // mockViewController is MockPaymentResultDelegate which does NOT implement onProcessingStateChangedFor
+        let element = AWXPaymentElement(
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        let result = element.notifyProcessingStateChanged(for: "card", isProcessing: true)
+
+        XCTAssertFalse(result)
+    }
+
+    func testNotifyProcessingStateChanged_WhenDelegateIsNil_ReturnsFalse() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let element = AWXPaymentElement(
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        // Set delegate to nil after creation
+        element.delegate = nil
+
+        let result = element.notifyProcessingStateChanged(for: "card", isProcessing: true)
+
+        XCTAssertFalse(result)
+    }
+
+    func testNotifyProcessingStateChanged_PassesCorrectIsProcessingValue() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let mockDelegateWithProcessing = MockProcessingStateDelegate()
+
+        let element = AWXPaymentElement(
+            methodProvider: mockMethodProvider,
+            delegate: mockDelegateWithProcessing
+        )
+
+        // Test with isProcessing = false
+        _ = element.notifyProcessingStateChanged(for: "applepay", isProcessing: false)
+
+        XCTAssertEqual(mockDelegateWithProcessing.processingStatePaymentMethod, "applepay")
+        XCTAssertEqual(mockDelegateWithProcessing.processingStateIsProcessing, false)
+    }
+
+    func testPaymentViewControllerDidComplete_NotifiesProcessingStateEnded() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let mockDelegateWithProcessing = MockProcessingStateDelegate()
+
+        let element = AWXPaymentElement(
+            methodProvider: mockMethodProvider,
+            delegate: mockDelegateWithProcessing
+        )
+
+        // Set current payment method (normally set by section controller during checkout)
+        element.paymentUIContext.currentPaymentMethod = "card"
+
+        // Call paymentViewController didCompleteWith
+        element.paymentViewController(nil, didCompleteWith: .success, error: nil)
+
+        // Verify delegate was notified with isProcessing = false
+        XCTAssertTrue(mockDelegateWithProcessing.processingStateChangedCalled)
+        XCTAssertEqual(mockDelegateWithProcessing.processingStatePaymentMethod, "card")
+        XCTAssertEqual(mockDelegateWithProcessing.processingStateIsProcessing, false)
     }
 }

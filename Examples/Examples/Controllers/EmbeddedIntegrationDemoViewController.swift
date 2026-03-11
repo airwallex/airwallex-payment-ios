@@ -16,6 +16,13 @@ class EmbeddedIntegrationDemoViewController: IntegrationDemoListViewController {
     private var paymentElement: AWXPaymentElement?
     private lazy var keyboardHandler = KeyboardHandler()
 
+    private lazy var loadingIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
+
     // MARK: - Abstract Property Overrides
 
     override var pageTitle: String {
@@ -61,6 +68,13 @@ private extension EmbeddedIntegrationDemoViewController {
         )
         orderInfoView.translatesAutoresizingMaskIntoConstraints = false
         listView.addViewToTopStack(orderInfoView)
+
+        //  Custom loading indicator
+        view.addSubview(loadingIndicator)
+        NSLayoutConstraint.activate([
+            loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
     }
 }
 
@@ -70,14 +84,13 @@ private extension EmbeddedIntegrationDemoViewController {
 
     func loadPaymentElement() {
         Task {
-            startLoading()
+            loadingIndicator.startAnimating()
             do {
                 let session = try await createPaymentSession()
                 let configuration = AWXPaymentElement.Configuration()
                 configuration.layout = ExamplesKeys.paymentLayout
                 configuration.showsApplePayAsPrimaryButton = false
                 let element = try await AWXPaymentElement.create(
-                    hostViewController: self,
                     session: session,
                     delegate: self,
                     configuration: configuration
@@ -90,18 +103,34 @@ private extension EmbeddedIntegrationDemoViewController {
             } catch {
                 showAlert(message: error.localizedDescription)
             }
-            stopLoading()
+            loadingIndicator.stopAnimating()
         }
     }
 }
 
-// MARK: - AWXPaymentResultDelegate override
+// MARK: - AWXPaymentElementDelegate
 
-extension EmbeddedIntegrationDemoViewController {
+extension EmbeddedIntegrationDemoViewController: AWXPaymentElementDelegate {
 
-    override func paymentViewController(
-        _ controller: UIViewController?,
-        didCompleteWith status: AirwallexPaymentStatus,
+    func paymentElement(
+        _ element: AWXPaymentElement,
+        onProcessingStateChangedFor paymentMethod: String,
+        isProcessing: Bool
+    ) {
+        if isProcessing {
+            print("Payment started for method: \(paymentMethod)")
+            loadingIndicator.startAnimating()
+            view.isUserInteractionEnabled = false
+        } else {
+            loadingIndicator.stopAnimating()
+            view.isUserInteractionEnabled = true
+        }
+    }
+
+    func paymentElement(
+        _ element: AWXPaymentElement,
+        didCompleteFor paymentMethod: String,
+        with status: AirwallexPaymentStatus,
         error: Error?
     ) {
         let action: () -> Void = {
@@ -115,7 +144,7 @@ extension EmbeddedIntegrationDemoViewController {
                 action: action
             )
         case .inProgress:
-            print("Payment in progress, you should check payment status from time to time from backend and show result to the payer")
+            print("Payment in progress for \(paymentMethod), you should check payment status from time to time from backend and show result to the payer")
             showAlert(
                 message: "Payment in progress",
                 action: action
@@ -129,9 +158,16 @@ extension EmbeddedIntegrationDemoViewController {
         case .cancel:
             showAlert(
                 message: "Your payment has been cancelled",
-                title: "Payment cancelled",
-                action: action
+                title: "Payment cancelled"
             )
         }
+    }
+
+    func paymentElement(
+        _ element: AWXPaymentElement,
+        didCompleteFor paymentMethod: String,
+        withPaymentConsentId paymentConsentId: String
+    ) {
+        print("Payment consent created for \(paymentMethod) with ID: \(paymentConsentId)")
     }
 }

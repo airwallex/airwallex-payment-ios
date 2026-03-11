@@ -25,7 +25,6 @@ import AirwallexCore
 /// configuration.layout = .accordion
 ///
 /// let element = try await AWXPaymentElement.create(
-///     hostViewController: self,
 ///     session: session,
 ///     delegate: self,
 ///     configuration: configuration
@@ -36,7 +35,6 @@ import AirwallexCore
 /// ## Important Notes
 /// - The embedded view requires Auto Layout constraints for proper sizing
 /// - The view's height updates automatically based on content
-/// - A host view controller is required for presenting modals (3DS, redirects, etc.)
 /// - Keyboard handling is the host app's responsibility
 @MainActor
 @objc
@@ -50,12 +48,8 @@ public class AWXPaymentElement: NSObject {
     /// The view's height will update automatically based on its content.
     @objc public var view: UIView { embeddedView }
 
-    /// The delegate that receives payment result callbacks.
-    @objc public weak var delegate: AWXPaymentResultDelegate? {
-        didSet {
-            paymentUIContext.delegate = delegate
-        }
-    }
+    /// The delegate that receives payment lifecycle callbacks.
+    @objc public weak var delegate: AWXPaymentElementDelegate?
 
     // MARK: - Private Properties
 
@@ -65,7 +59,6 @@ public class AWXPaymentElement: NSObject {
         let listConfiguration = UICollectionViewCompositionalLayoutConfiguration()
         listConfiguration.interSectionSpacing = 16
         let manager = CollectionViewManager(
-            viewController: self.paymentUIContext.viewController!,
             sectionProvider: self,
             listConfiguration: listConfiguration
         )
@@ -86,24 +79,20 @@ public class AWXPaymentElement: NSObject {
     /// and creates a fully configured payment element.
     ///
     /// - Parameters:
-    ///   - hostViewController: The view controller that will host this element.
-    ///     Used for presenting modals like 3DS authentication, redirects, and country selection.
     ///   - session: The payment session containing transaction details.
-    ///   - delegate: The delegate that receives payment result callbacks.
+    ///   - delegate: The delegate that receives payment lifecycle callbacks.
     ///   - configuration: Configuration options for the payment element.
     /// - Returns: A configured `AWXPaymentElement` ready to be embedded.
     /// - Throws: `AWXUIContext.LaunchError` if session validation fails or payment methods cannot be fetched.
     @objc
     public static func create(
-        hostViewController: UIViewController,
         session: AWXSession,
-        delegate: AWXPaymentResultDelegate,
+        delegate: AWXPaymentElementDelegate,
         configuration: Configuration = Configuration()
     ) async throws -> AWXPaymentElement {
         let methodProvider = try makeMethodProvider(session: session, configuration: configuration)
 
         return try await create(
-            hostViewController: hostViewController,
             session: session,
             methodProvider: methodProvider,
             delegate: delegate,
@@ -137,10 +126,9 @@ public class AWXPaymentElement: NSObject {
     }
     
     static func create(
-        hostViewController: UIViewController,
         session: AWXSession,
         methodProvider: PaymentMethodProvider,
-        delegate: AWXPaymentResultDelegate,
+        delegate: AWXPaymentElementDelegate,
         configuration: Configuration = Configuration()
     ) async throws -> AWXPaymentElement {
         // Validate session
@@ -152,7 +140,7 @@ public class AWXPaymentElement: NSObject {
 
         // Risk event
         RiskLogger.log(.transactionInitiated)
-        
+
         // Analytics
         let extraInfo: [AnalyticEvent.Fields: Any] = if configuration.elementType == .addCard {
             [.launchType: launchType,
@@ -170,7 +158,6 @@ public class AWXPaymentElement: NSObject {
 
         // Create element with all dependencies ready
         let element = AWXPaymentElement(
-            hostViewController: hostViewController,
             methodProvider: methodProvider,
             delegate: delegate,
             configuration: configuration
@@ -180,9 +167,8 @@ public class AWXPaymentElement: NSObject {
     }
 
     init(
-        hostViewController: UIViewController,
         methodProvider: PaymentMethodProvider,
-        delegate: AWXPaymentResultDelegate,
+        delegate: AWXPaymentElementDelegate,
         configuration: Configuration = Configuration()
     ) {
         self.methodProvider = methodProvider
@@ -193,12 +179,12 @@ public class AWXPaymentElement: NSObject {
         // Apply theme color from appearance configuration
         AWXTheme.shared().tintColor = configuration.appearance.tintColor
 
-        // Now set the internal delegate and viewController
-        self.paymentUIContext.delegate = delegate
-        self.paymentUIContext.viewController = hostViewController
-        self.paymentUIContext.isEmbedded = true
+        // Configure payment UI context
         self.paymentUIContext.layout = configuration.layout
-        self.paymentUIContext.prioritizeApplePay = configuration.showsApplePayAsPrimaryButton
+        self.paymentUIContext.showsApplePayAsPrimaryButton = configuration.showsApplePayAsPrimaryButton
+        self.paymentUIContext.paymentElement = self
+        // AWXPaymentElement implements AWXPaymentResultDelegate to bridge to AWXPaymentElementDelegate
+        self.paymentUIContext.delegate = self
 
         // Configure collection view
         let collectionView = collectionViewManager.collectionView!
@@ -236,7 +222,7 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
             // hide method tab when only apple pay or add card available
             switch methodName {
             case AWXApplePayKey:
-                return !paymentUIContext.prioritizeApplePay
+                return !paymentUIContext.showsApplePayAsPrimaryButton
             case AWXCardKey:
                 return !methodProvider.consents.isEmpty
             default:
@@ -253,7 +239,7 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
 
     private func sectionsForTabLayout() -> [PaymentSectionType] {
         var sections = [PaymentSectionType]()
-        if paymentUIContext.prioritizeApplePay && methodProvider.isApplePayAvailable {
+        if paymentUIContext.showsApplePayAsPrimaryButton && methodProvider.isApplePayAvailable {
             sections.append(.applePay)
         }
         if displayMethodTab {
@@ -262,7 +248,7 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
         }
         //  display selected payment method
         if let selectedMethodType = methodProvider.selectedMethod {
-            if selectedMethodType.name == AWXApplePayKey && !paymentUIContext.prioritizeApplePay {
+            if selectedMethodType.name == AWXApplePayKey && !paymentUIContext.showsApplePayAsPrimaryButton {
                 // Apple Pay selected from tab list (only when not prioritized)
                 sections.append(.applePay)
             } else if selectedMethodType.name == AWXCardKey {
@@ -282,18 +268,18 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
         var sections = [PaymentSectionType]()
 
         // When Apple Pay is prioritized, show it at top before accordion sections
-        if paymentUIContext.prioritizeApplePay && methodProvider.isApplePayAvailable {
+        if paymentUIContext.showsApplePayAsPrimaryButton && methodProvider.isApplePayAvailable {
             sections.append(.applePay)
         }
 
         // Exclude Apple Pay from accordion list when prioritized
-        let excludeApplePay = paymentUIContext.prioritizeApplePay
+        let excludeApplePay = paymentUIContext.showsApplePayAsPrimaryButton
         if !methodProvider.methodsForAccordionPosition(.top, excludeApplePay: excludeApplePay).isEmpty {
             sections.append(.accordion(.top))
         }
 
         if let selectedMethodType = methodProvider.selectedMethod {
-            if selectedMethodType.name == AWXApplePayKey && !paymentUIContext.prioritizeApplePay {
+            if selectedMethodType.name == AWXApplePayKey && !paymentUIContext.showsApplePayAsPrimaryButton {
                 // Apple Pay selected from accordion (only when not prioritized)
                 sections.append(.applePay)
             } else if selectedMethodType.name == AWXCardKey {
@@ -406,5 +392,51 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
 
     func listBoundaryItemProviders() -> [BoundarySupplementaryItemProvider]? {
         return nil
+    }
+}
+
+// MARK: - AWXPaymentResultDelegate
+
+extension AWXPaymentElement: @MainActor AWXPaymentResultDelegate {
+    public func paymentViewController(
+        _ controller: UIViewController?,
+        didCompleteWith status: AirwallexPaymentStatus,
+        error: Error?
+    ) {
+        let methodName = paymentUIContext.currentPaymentMethod ?? "unknown"
+        collectionViewManager.context.stopLoading()
+        notifyProcessingStateChanged(for: methodName, isProcessing: false)
+        delegate?.paymentElement(self, didCompleteFor: methodName, with: status, error: error)
+    }
+
+    public func paymentViewController(
+        _ controller: UIViewController?,
+        didCompleteWithPaymentConsentId paymentConsentId: String
+    ) {
+        let methodName = paymentUIContext.currentPaymentMethod ?? "unknown"
+        delegate?.paymentElement?(self, didCompleteFor: methodName, withPaymentConsentId: paymentConsentId)
+    }
+}
+
+// MARK: - Processing State Notification
+
+extension AWXPaymentElement {
+    /// Notifies the delegate about payment processing state changes.
+    ///
+    /// Call this when payment processing starts or stops. If the delegate implements
+    /// `paymentElement(_:onProcessingStateChangedFor:isProcessing:)`, it will be called.
+    /// Otherwise, returns `false` so the caller can fall back to default behavior.
+    ///
+    /// - Parameters:
+    ///   - paymentMethod: The name of the payment method being processed.
+    ///   - isProcessing: `true` when processing starts, `false` when it ends.
+    /// - Returns: `true` if the delegate handled the notification, `false` if fallback is needed.
+    @discardableResult
+    func notifyProcessingStateChanged(for paymentMethod: String, isProcessing: Bool) -> Bool {
+        guard let method = delegate?.paymentElement(_:onProcessingStateChangedFor:isProcessing:) else {
+            return false
+        }
+        method(self, paymentMethod, isProcessing)
+        return true
     }
 }

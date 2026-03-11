@@ -20,11 +20,39 @@ import XCTest
     var methodProvider: PaymentMethodProvider
 
     let paymentUIContext = PaymentSheetUIContext()
-    
+
+    /// Mock factory for testing checkout flows
+    var mockHandlerFactory: MockPaymentSessionHandlerFactory?
+
+    /// Holds a strong reference to the payment element for embedded mode testing
+    private var embeddedElement: AWXPaymentElement?
+
     init(methodProvider: PaymentMethodProvider) {
         self.methodProvider = methodProvider
     }
-        
+
+    /// Configures the payment UI context with a mock handler factory for testing checkout.
+    /// Call this before performUpdates() to inject the mock into section controllers.
+    func configureMockHandlerFactory() -> MockPaymentSessionHandlerFactory {
+        let factory = MockPaymentSessionHandlerFactory()
+        mockHandlerFactory = factory
+        paymentUIContext.paymentSessionHandlerFactory = factory
+        return factory
+    }
+
+    /// Simulates embedded mode by creating a payment element.
+    /// This sets `paymentUIContext.isEmbedded` to `true`.
+    func simulateEmbeddedMode(delegate: AWXPaymentElementDelegate? = nil) {
+        let mockDelegate = delegate ?? MockPaymentResultDelegate()
+        let element = AWXPaymentElement(
+            methodProvider: methodProvider,
+            delegate: mockDelegate
+        )
+        // Store strong reference to prevent deallocation (paymentElement is weak)
+        embeddedElement = element
+        paymentUIContext.paymentElement = element
+    }
+
     // status
     var actionCalled = false
 }
