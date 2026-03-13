@@ -24,6 +24,8 @@ class CheckoutButtonCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.setTitle("Pay", for: .normal)
         view.addTarget(self, action: #selector(onButtonTapped), for: .touchUpInside)
+        view.addTarget(self, action: #selector(onButtonTouchDown), for: .touchDown)
+        view.addTarget(self, action: #selector(onButtonTouchUp), for: [.touchUpInside, .touchUpOutside, .touchCancel])
         
         view.setTitleColor(.awxColor(.textInverse), for: .normal)
         view.titleLabel?.font = .awxFont(.headline1, weight: .bold)
@@ -61,5 +63,17 @@ class CheckoutButtonCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
     @objc func onButtonTapped() {
         viewModel?.checkoutAction()
+    }
+
+    @objc private func onButtonTouchDown() {
+        UIView.animate(withDuration: 0.1) {
+            self.button.alpha = 0.9
+        }
+    }
+
+    @objc private func onButtonTouchUp() {
+        UIView.animate(withDuration: 0.3) {
+            self.button.alpha = 1.0
+        }
     }
 }

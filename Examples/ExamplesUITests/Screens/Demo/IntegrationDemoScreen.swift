@@ -13,6 +13,9 @@ enum UIIntegrationDemoScreen {
     static let app = XCUIApplication()
     static let title = app.staticTexts["Integrate with Airwallex UI"]
     static let buttonForDefaultPaymentList: XCUIElement = app.buttons["Launch default payments list"]
+    static let buttonForEmbeddedElement1: XCUIElement = app.buttons["Embedded element"]
+    static let buttonForEmbeddedElement2: XCUIElement = app.buttons["Embedded element (inline apple pay)"]
+    static let buttonForEmbeddedElement3: XCUIElement = app.buttons["Embedded element (card only)"]
     static let settingsButton = app.buttons["gear"]
     static let backButton = app.buttons["Back"]
     static let paymentOptionView = app.otherElements[AccessibilityIdentifiers.SettingsScreen.optionButtonForPaymentType]
@@ -40,6 +43,35 @@ enum UIIntegrationDemoScreen {
         title.waitForNonExistence(timeout: .networkRequestTimeout)
     }
     
+    static func openEmbeddedElement(elementStyle: EmbeddedElementStyle) {
+        let button: XCUIElement
+        switch elementStyle {
+        case .paymentSheetDefault:
+            button = buttonForEmbeddedElement1
+        case .paymentSheetInlineApplePay:
+            button = buttonForEmbeddedElement2
+        case .addCard:
+            button = buttonForEmbeddedElement3
+        }
+        button.robustTap()
+        EmbeddedElementScreen.waitForExistence()
+        if elementStyle == .paymentSheetDefault {
+            XCTAssertTrue(EmbeddedElementScreen.applePayButton.exists)
+        } else if elementStyle == .paymentSheetInlineApplePay {
+            // usually card is displayed as default payment method
+            XCTAssertFalse(EmbeddedElementScreen.applePayButton.exists)
+        }
+    }
+    
+    enum EmbeddedElementStyle {
+        /// `.paymentSheet` element with Apple Pay as primary button
+        case paymentSheetDefault
+        /// `.paymentSheet` element with Apple Pay in method list
+        case paymentSheetInlineApplePay
+        /// `.addCard` element
+        case addCard
+    }
+    
     static func ensureCheckoutMode(_ mode: CheckoutMode) {
         XCTAssertTrue(paymentOptionView.exists)
         guard !paymentOptionView.staticTexts[mode.localizedDescription].exists else {
@@ -51,12 +83,6 @@ enum UIIntegrationDemoScreen {
         XCTAssertTrue(app.buttons[mode.localizedDescription].waitForExistence(timeout: .animationTimeout))
         app.buttons[mode.localizedDescription].robustTap()
         XCTAssertTrue(paymentOptionView.staticTexts[mode.localizedDescription].exists)
-    }
-    
-    enum PaymentStatus {
-        case success
-        case failure
-        case cancel
     }
     
     static func verifyAlertForPaymentStatus(_ status: PaymentStatus) {

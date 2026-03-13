@@ -353,6 +353,9 @@ private extension NewCardPaymentSectionController {
         for viewModel in otherViewModels {
             viewModel?.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
         }
+
+        scrollToFirstInvalidField()
+
         let message = error.localizedDescription
 
         AnalyticsLogger.log(
@@ -363,6 +366,36 @@ private extension NewCardPaymentSectionController {
             ]
         )
         debugLog("Payment failed. Intent ID: \(session.paymentIntentId() ?? ""). Reason: \(message)")
+    }
+
+    func scrollToFirstInvalidField() {
+        // Check view models in the same order as validateForCheckout
+        let validatableItems: [(viewModel: (any ViewModelValidatable)?, itemIdentifier: String)] = [
+            (viewModelForCardInfo, .cardInfo),
+            (viewModelForCardholderName, .cardholderName),
+            (viewModelForEmail, .billingFieldEmail),
+            (viewModelForPhoneNumber, .billingFieldPhone),
+            (viewModelForBillingAddress, .billingFieldAddress),
+            (viewModelForCountryCode, .billingFieldCountryCode)
+        ]
+        for entry in validatableItems {
+            guard let viewModel = entry.viewModel else { continue }
+            do {
+                try viewModel.validate()
+            } catch {
+                let item = sectionItem(entry.itemIdentifier)
+                if paymentUIContext.isEmbedded {
+                    if let view = context.cellForItem(item) {
+                        paymentUIContext.paymentElement?.notifyValidationFailed(
+                            for: methodType.name,
+                            invalidInputView: view
+                        )
+                    }
+                } else {
+                    context.ensureVisible(for: item)
+                }
+            }
+        }
     }
 
     func confirmCardPayment(card: AWXCard, billing: AWXPlaceDetails) {

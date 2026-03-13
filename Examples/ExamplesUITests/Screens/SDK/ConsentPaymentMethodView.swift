@@ -1,5 +1,5 @@
 //
-//  ConsentPaymentScreen.swift
+//  ConsentPaymentMethodView.swift
 //  ExamplesUITests
 //
 //  Created by Weiping Li on 21/5/25.
@@ -9,9 +9,15 @@
 import Foundation
 import XCTest
 
-enum ConsentPaymentScreen {
+enum ConsentPaymentMethodView {
     static let app = XCUIApplication()
-    static let activityIndicator = app.otherElements["loadingSpinnerView"].firstMatch
+    static var activityIndicator: XCUIElement {
+        let spinner = app.otherElements["loadingSpinnerView"].firstMatch
+        if spinner.exists {
+            return spinner
+        }
+        return app.activityIndicators.firstMatch
+    }
 
     // consent list
     static let addNewCardToggle = app.cells["addNewCardToggle"].buttons["Add new"]

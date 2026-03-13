@@ -23,6 +23,20 @@ class EmbeddedIntegrationDemoViewController: IntegrationDemoListViewController {
         return indicator
     }()
 
+    let showsApplePayAsPrimaryButton: Bool
+    let elementType: AWXPaymentElement.ElementType
+
+    init(elementType: AWXPaymentElement.ElementType,
+         showsApplePayAsPrimaryButton: Bool) {
+        self.elementType = elementType
+        self.showsApplePayAsPrimaryButton = showsApplePayAsPrimaryButton
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @MainActor required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     // MARK: - Abstract Property Overrides
 
     override var pageTitle: String {
@@ -98,7 +112,8 @@ private extension EmbeddedIntegrationDemoViewController {
                 let session = try await createPaymentSession()
                 let configuration = AWXPaymentElement.Configuration()
                 configuration.layout = ExamplesKeys.paymentLayout
-//                configuration.showsApplePayAsPrimaryButton = false
+                configuration.showsApplePayAsPrimaryButton = showsApplePayAsPrimaryButton
+                configuration.elementType = elementType
                 let element = try await AWXPaymentElement.create(
                     session: session,
                     delegate: self,
@@ -185,5 +200,14 @@ extension EmbeddedIntegrationDemoViewController: AWXPaymentElementDelegate {
         withPaymentConsentId paymentConsentId: String
     ) {
         print("Payment consent created for \(paymentMethod) with ID: \(paymentConsentId)")
+    }
+
+    func paymentElement(
+        _ element: AWXPaymentElement,
+        validationFailedFor paymentMethod: String,
+        invalidInputView: UIView
+    ) {
+        let rect = invalidInputView.convert(invalidInputView.bounds, to: listView.scrollView)
+        listView.scrollView.scrollRectToVisible(rect, animated: true)
     }
 }

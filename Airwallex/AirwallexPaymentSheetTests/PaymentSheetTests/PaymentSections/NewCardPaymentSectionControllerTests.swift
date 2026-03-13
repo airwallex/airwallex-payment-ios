@@ -424,6 +424,35 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         XCTAssertFalse(mockFactory.mockHandler.showIndicator)
     }
 
+    func testCheckout_Embedded_InvalidCard_NotifiesDelegateOfValidationFailure() {
+        let mockDelegate = MockValidationFailureDelegate()
+        mockSectionProvider.simulateEmbeddedMode(delegate: mockDelegate)
+        mockMethodProvider.session.requiredBillingContactFields = []
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let sectionController = getCardSectionController() else { XCTFail(); return }
+        guard let cardInfoCell = sectionController.context.cellForItem(sectionController.sectionItem(.cardInfo)) as? CardInfoCollectorCell else {
+            XCTFail()
+            return
+        }
+
+        // Set invalid card info to trigger validation failure
+        cardInfoCell.viewModel?.cardNumberConfigurer.text = "4111"
+        cardInfoCell.viewModel?.expireDataConfigurer.text = "\(mockCard.expiryMonth)/\(mockCard.expiryYear.suffix(2))"
+        cardInfoCell.viewModel?.cvcConfigurer.text = mockCard.cvc
+
+        guard let checkoutButtonCell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
+            XCTFail()
+            return
+        }
+
+        checkoutButtonCell.viewModel?.checkoutAction()
+
+        XCTAssertTrue(mockDelegate.validationFailedCalled)
+        XCTAssertNotNil(mockDelegate.validationFailedView)
+    }
+
     func testCheckout_NonEmbedded_KeepsShowIndicatorTrue() {
         let mockFactory = mockSectionProvider.configureMockHandlerFactory()
         mockMethodProvider.session.requiredBillingContactFields = []

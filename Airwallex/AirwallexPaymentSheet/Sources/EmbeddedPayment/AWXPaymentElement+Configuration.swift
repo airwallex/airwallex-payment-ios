@@ -49,7 +49,20 @@ extension AWXPaymentElement {
         /// Only applies when `elementType` is `.paymentSheet`.
         /// - `.tab`: Displays payment methods in a horizontal tab bar (default)
         /// - `.accordion`: Displays payment methods in an expandable accordion layout
-        public var layout: AWXUIContext.PaymentLayout = .tab
+        public var layout: AWXUIContext.PaymentLayout {
+            get {
+                if elementType == .addCard {
+                    return .tab
+                } else {
+                    return _layout
+                }
+            }
+            set {
+                _layout = newValue
+            }
+        }
+
+        private var _layout: AWXUIContext.PaymentLayout = .tab
 
         /// Supported card brands for card payment.
         ///

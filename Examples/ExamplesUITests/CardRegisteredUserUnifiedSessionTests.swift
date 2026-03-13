@@ -41,11 +41,11 @@ import XCTest
         )
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
-        ConsentPaymentScreen.validate()
-        ConsentPaymentScreen.deleteAllCITConsents()
-        ConsentPaymentScreen.validateConsentCount(cit: 0, mit: 1)
-        ConsentPaymentScreen.addNewCardToggle.tap()
-        CardPaymentScreen.payWithCard(
+        ConsentPaymentMethodView.validate()
+        ConsentPaymentMethodView.deleteAllCITConsents()
+        ConsentPaymentMethodView.validateConsentCount(cit: 0, mit: 1)
+        ConsentPaymentMethodView.addNewCardToggle.tap()
+        CardPaymentMethodView.payWithCard(
             cardNumber: TestCards.visa3DS,
             canSaveCard: true,
             shouldSave: false
@@ -56,7 +56,7 @@ import XCTest
         // check no consents saved
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
-        ConsentPaymentScreen.validateConsentCount(cit: 0, mit: 1)
+        ConsentPaymentMethodView.validateConsentCount(cit: 0, mit: 1)
     }
     
     /// pay with MIT consent
@@ -68,37 +68,37 @@ import XCTest
             customerID: customerId,
             preferUnifiedSession: true
         )
-        // paye with MIT
+        // pay with MIT
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
-        ConsentPaymentScreen.deleteAllCITConsents()
-        ConsentPaymentScreen.validateConsentCount(cit: 0, mit: 1)
-        ConsentPaymentScreen.validateFirstConsent(
+        ConsentPaymentMethodView.deleteAllCITConsents()
+        ConsentPaymentMethodView.validateConsentCount(cit: 0, mit: 1)
+        ConsentPaymentMethodView.validateFirstConsent(
             prefix: "Visa",
             last4: String(TestCards.visa.suffix(4))
         )
-        ConsentPaymentScreen.payWithFirstConsent(cit: false)
+        ConsentPaymentMethodView.payWithFirstConsent(cit: false)
         
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.success)
         
         // pay with CIT
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
-        ConsentPaymentScreen.validateConsentCount(cit: 1, mit: 0)
-        ConsentPaymentScreen.validateFirstConsent(
+        ConsentPaymentMethodView.validateConsentCount(cit: 1, mit: 0)
+        ConsentPaymentMethodView.validateFirstConsent(
             prefix: "Visa",
             last4: String(TestCards.visa.suffix(4))
         )
-        ConsentPaymentScreen.payWithFirstConsent(cit: true)
+        ConsentPaymentMethodView.payWithFirstConsent(cit: true)
         
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.success)
         
         // clean up
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
-        ConsentPaymentScreen.validate()
-        ConsentPaymentScreen.deleteAllCITConsents()
-        ConsentPaymentScreen.validateConsentCount(cit: 0, mit: 1)
+        ConsentPaymentMethodView.validate()
+        ConsentPaymentMethodView.deleteAllCITConsents()
+        ConsentPaymentMethodView.validateConsentCount(cit: 0, mit: 1)
     }
     
     /// pay with TestCards.visa3DS
@@ -115,15 +115,15 @@ import XCTest
         // pay with TestCards.visa3DS
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
-        ConsentPaymentScreen.validate()
-        ConsentPaymentScreen.deleteAllCITConsents()
-        ConsentPaymentScreen.validateConsentCount(cit: 0, mit: 1)
-        ConsentPaymentScreen.validateFirstConsent(
+        ConsentPaymentMethodView.validate()
+        ConsentPaymentMethodView.deleteAllCITConsents()
+        ConsentPaymentMethodView.validateConsentCount(cit: 0, mit: 1)
+        ConsentPaymentMethodView.validateFirstConsent(
             prefix: "Visa",
             last4: String(TestCards.visa.suffix(4))
         )
-        ConsentPaymentScreen.addNewCardToggle.tap()
-        CardPaymentScreen.payWithCard(
+        ConsentPaymentMethodView.addNewCardToggle.tap()
+        CardPaymentMethodView.payWithCard(
             cardNumber: TestCards.visa3DS,
             canSaveCard: true,
             shouldSave: true
@@ -135,23 +135,23 @@ import XCTest
         // validate new consent saved
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
-        ConsentPaymentScreen.validateConsentCount(cit: 1, mit: 1)
-        ConsentPaymentScreen.validateFirstConsent(
+        ConsentPaymentMethodView.validateConsentCount(cit: 1, mit: 1)
+        ConsentPaymentMethodView.validateFirstConsent(
             prefix: "Visa",
             last4: String(TestCards.visa3DS.suffix(4))
         )
         
         // pay with new cit consent
-        ConsentPaymentScreen.payWithFirstConsent(cit: true)
+        ConsentPaymentMethodView.payWithFirstConsent(cit: true)
         ThreeDSScreen.handleThreeDS()
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.success)
         
         // clean up
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
-        ConsentPaymentScreen.validate()
-        ConsentPaymentScreen.deleteAllCITConsents()
-        ConsentPaymentScreen.validateConsentCount(cit: 0, mit: 1)
+        ConsentPaymentMethodView.validate()
+        ConsentPaymentMethodView.deleteAllCITConsents()
+        ConsentPaymentMethodView.validateConsentCount(cit: 0, mit: 1)
     }
     
     func testCreateCITConsentWithCard() {
@@ -192,15 +192,15 @@ private extension CardRegisteredUserUnifiedSessionTests {
         // pay with TestCards.visa3DS
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
-        ConsentPaymentScreen.validate()
-        ConsentPaymentScreen.deleteAllCITConsents()
-        ConsentPaymentScreen.validateConsentCount(cit: 0, mit: 1)
-        ConsentPaymentScreen.validateFirstConsent(
+        ConsentPaymentMethodView.validate()
+        ConsentPaymentMethodView.deleteAllCITConsents()
+        ConsentPaymentMethodView.validateConsentCount(cit: 0, mit: 1)
+        ConsentPaymentMethodView.validateFirstConsent(
             prefix: "Visa",
             last4: String(TestCards.visa.suffix(4))
         )
-        ConsentPaymentScreen.addNewCardToggle.tap()
-        CardPaymentScreen.payWithCard(
+        ConsentPaymentMethodView.addNewCardToggle.tap()
+        CardPaymentMethodView.payWithCard(
             cardNumber: TestCards.visa3DS,
             canSaveCard: false
         )
@@ -211,23 +211,23 @@ private extension CardRegisteredUserUnifiedSessionTests {
         // validate new consent saved
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
-        ConsentPaymentScreen.validateConsentCount(cit: 1, mit: 1)
-        ConsentPaymentScreen.validateFirstConsent(
+        ConsentPaymentMethodView.validateConsentCount(cit: 1, mit: 1)
+        ConsentPaymentMethodView.validateFirstConsent(
             prefix: "Visa",
             last4: String(TestCards.visa3DS.suffix(4))
         )
         
         // pay with new cit consent
-        ConsentPaymentScreen.payWithFirstConsent(cit: true)
+        ConsentPaymentMethodView.payWithFirstConsent(cit: true)
         ThreeDSScreen.handleThreeDS()
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.success)
         
         // clean up
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
-        ConsentPaymentScreen.validate()
-        ConsentPaymentScreen.deleteAllCITConsents()
-        ConsentPaymentScreen.validateConsentCount(cit: 0, mit: 1)
+        ConsentPaymentMethodView.validate()
+        ConsentPaymentMethodView.deleteAllCITConsents()
+        ConsentPaymentMethodView.validateConsentCount(cit: 0, mit: 1)
     }
     
     /// pay with TestCards.visa
@@ -244,15 +244,15 @@ private extension CardRegisteredUserUnifiedSessionTests {
         // pay with TestCards.visa
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
-        ConsentPaymentScreen.validate()
-        ConsentPaymentScreen.deleteAllCITConsents()
-        ConsentPaymentScreen.validateConsentCount(cit: 0, mit: 1)
-        ConsentPaymentScreen.validateFirstConsent(
+        ConsentPaymentMethodView.validate()
+        ConsentPaymentMethodView.deleteAllCITConsents()
+        ConsentPaymentMethodView.validateConsentCount(cit: 0, mit: 1)
+        ConsentPaymentMethodView.validateFirstConsent(
             prefix: "Visa",
             last4: String(TestCards.visa.suffix(4))
         )
-        ConsentPaymentScreen.addNewCardToggle.tap()
-        CardPaymentScreen.payWithCard(
+        ConsentPaymentMethodView.addNewCardToggle.tap()
+        CardPaymentMethodView.payWithCard(
             cardNumber: TestCards.visa,
             canSaveCard: false
         )
@@ -263,9 +263,9 @@ private extension CardRegisteredUserUnifiedSessionTests {
         // clean up
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
-        ConsentPaymentScreen.validate()
-        ConsentPaymentScreen.deleteAllCITConsents()
-        ConsentPaymentScreen.validateConsentCount(cit: 0, mit: 1)
+        ConsentPaymentMethodView.validate()
+        ConsentPaymentMethodView.deleteAllCITConsents()
+        ConsentPaymentMethodView.validateConsentCount(cit: 0, mit: 1)
     }
     
     /// creat CIT consent with MIT consent of TestCards.visa
@@ -281,14 +281,14 @@ private extension CardRegisteredUserUnifiedSessionTests {
         // create CIT consent from MIT consent
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
-        ConsentPaymentScreen.validate()
-        ConsentPaymentScreen.deleteAllCITConsents()
-        ConsentPaymentScreen.validateConsentCount(cit: 0, mit: 1)
-        ConsentPaymentScreen.validateFirstConsent(
+        ConsentPaymentMethodView.validate()
+        ConsentPaymentMethodView.deleteAllCITConsents()
+        ConsentPaymentMethodView.validateConsentCount(cit: 0, mit: 1)
+        ConsentPaymentMethodView.validateFirstConsent(
             prefix: "Visa",
             last4: String(TestCards.visa.suffix(4))
         )
-        ConsentPaymentScreen.payWithFirstConsent(cit: false)
+        ConsentPaymentMethodView.payWithFirstConsent(cit: false)
 //        ThreeDSScreen.handleThreeDS()
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.success)
         
@@ -298,21 +298,21 @@ private extension CardRegisteredUserUnifiedSessionTests {
         SettingsScreen.close()
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
-        ConsentPaymentScreen.validate()
-        ConsentPaymentScreen.validateConsentCount(cit: 1, mit: 0)
-        ConsentPaymentScreen.validateFirstConsent(
+        ConsentPaymentMethodView.validate()
+        ConsentPaymentMethodView.validateConsentCount(cit: 1, mit: 0)
+        ConsentPaymentMethodView.validateFirstConsent(
             prefix: "Visa",
             last4: String(TestCards.visa.suffix(4))
         )
-        ConsentPaymentScreen.payWithFirstConsent(cit: true)
+        ConsentPaymentMethodView.payWithFirstConsent(cit: true)
 //        ThreeDSScreen.handleThreeDS()
         UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.success)
         
         // clean up
         UIIntegrationDemoScreen.openDefaultPaymentList()
         PaymentSheetScreen.waitForExistence()
-        ConsentPaymentScreen.validate()
-        ConsentPaymentScreen.deleteAllCITConsents()
-        ConsentPaymentScreen.validateConsentCount(cit: 0, mit: 1)
+        ConsentPaymentMethodView.validate()
+        ConsentPaymentMethodView.deleteAllCITConsents()
+        ConsentPaymentMethodView.validateConsentCount(cit: 0, mit: 1)
     }
 }

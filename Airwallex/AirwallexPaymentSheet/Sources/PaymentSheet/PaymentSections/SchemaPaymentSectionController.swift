@@ -300,15 +300,45 @@ private extension SchemaPaymentSectionController {
                 try viewModel.validate()
             }
         } catch {
-            for viewModel in uiFieldViewModels {
-                viewModel.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
+            for viewModel in [bankSelectionViewModel] + uiFieldViewModels {
+                viewModel?.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
             }
+            scrollToFirstInvalidField()
             return
         }
 
         // Confirm payment phase
         let paymentMethod = buildPaymentMethod(schema: schema)
         confirmRedirectPayment(paymentMethod: paymentMethod)
+    }
+
+    func scrollToFirstInvalidField() {
+        // Build list of (viewModel, itemIdentifier) pairs in validation order
+        var validatableItems: [(viewModel: InfoCollectorTextFieldViewModel, itemIdentifier: String)] = []
+        if let bankSelectionViewModel {
+            validatableItems.append((bankSelectionViewModel, bankSelectionViewModel.itemIdentifier))
+        }
+        for viewModel in uiFieldViewModels {
+            validatableItems.append((viewModel, viewModel.fieldName))
+        }
+        for entry in validatableItems {
+            do {
+                try entry.viewModel.validate()
+            } catch {
+                let item = sectionItem(entry.itemIdentifier)
+                if paymentUIContext.isEmbedded {
+                    if let view = context.cellForItem(item) {
+                        paymentUIContext.paymentElement?.notifyValidationFailed(
+                            for: methodType.name,
+                            invalidInputView: view
+                        )
+                    }
+                } else {
+                    context.ensureVisible(for: item)
+                }
+                return
+            }
+        }
     }
 
     func buildPaymentMethod(schema: AWXSchema) -> AWXPaymentMethod {

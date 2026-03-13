@@ -41,6 +41,10 @@
 		D823D8E02DDC36E500B27CA1 /* CheckoutMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D823D8DF2DDC36E500B27CA1 /* CheckoutMode.swift */; };
 		D823D8E12DDC36F400B27CA1 /* CheckoutMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D823D8DF2DDC36E500B27CA1 /* CheckoutMode.swift */; };
 		D8331FF02DB0E63300D85575 /* Keys.json in Resources */ = {isa = PBXBuildFile; fileRef = D8B38C252D9E5F2B00909ADD /* Keys.json */; };
+		D8344EC12F599ADE0087BF54 /* EmbeddedElementScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8344EC02F599ADE0087BF54 /* EmbeddedElementScreen.swift */; };
+		D8344EC32F599C0E0087BF54 /* EmbeddedElementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8344EC22F599C0E0087BF54 /* EmbeddedElementTests.swift */; };
+		D83452972F5EC40B0087BF54 /* ExamplesUITests.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = D83452962F5EC40B0087BF54 /* ExamplesUITests.xctestplan */; };
+		D83452992F5EC8F30087BF54 /* ApplePaymentMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83452982F5EC8F30087BF54 /* ApplePaymentMethodView.swift */; };
 		D872B35A2D5DFA24007BC089 /* DemoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D872B3592D5DFA1A007BC089 /* DemoListView.swift */; };
 		D872B35C2D5DFA25007BC089 /* OrderInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D872B35B2D5DFA25007BC089 /* OrderInfoView.swift */; };
 		D89C7AEB2D422CA70042FC3B /* TextContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89C7AEA2D422CA70042FC3B /* TextContentViewController.swift */; };
@@ -62,8 +66,8 @@
 		D8D506482E3CB7060098CACD /* IntegrationDemoScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D506382E3CB7060098CACD /* IntegrationDemoScreen.swift */; };
 		D8D506492E3CB7060098CACD /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D506392E3CB7060098CACD /* SettingsScreen.swift */; };
 		D8D5064A2E3CB7060098CACD /* ApplePaymentSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D5063B2E3CB7060098CACD /* ApplePaymentSheet.swift */; };
-		D8D5064B2E3CB7060098CACD /* CardPaymentScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D5063C2E3CB7060098CACD /* CardPaymentScreen.swift */; };
-		D8D5064C2E3CB7060098CACD /* ConsentPaymentScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D5063D2E3CB7060098CACD /* ConsentPaymentScreen.swift */; };
+		D8D5064B2E3CB7060098CACD /* CardPaymentMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D5063C2E3CB7060098CACD /* CardPaymentMethodView.swift */; };
+		D8D5064C2E3CB7060098CACD /* ConsentPaymentMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D5063D2E3CB7060098CACD /* ConsentPaymentMethodView.swift */; };
 		D8D5064D2E3CB7060098CACD /* PaymentSheetScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D5063E2E3CB7060098CACD /* PaymentSheetScreen.swift */; };
 		D8D5064E2E3CB7060098CACD /* ThreeDSScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D5063F2E3CB7060098CACD /* ThreeDSScreen.swift */; };
 		D8D5064F2E3CB7060098CACD /* ApplePayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D506422E3CB7060098CACD /* ApplePayTests.swift */; };
@@ -153,6 +157,10 @@
 		D81EAF802D3FAABA00B44784 /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
 		D81EAFA52D41DA1C00B44784 /* GetPaymentMethodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPaymentMethodsViewController.swift; sourceTree = "<group>"; };
 		D823D8DF2DDC36E500B27CA1 /* CheckoutMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutMode.swift; sourceTree = "<group>"; };
+		D8344EC02F599ADE0087BF54 /* EmbeddedElementScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedElementScreen.swift; sourceTree = "<group>"; };
+		D8344EC22F599C0E0087BF54 /* EmbeddedElementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedElementTests.swift; sourceTree = "<group>"; };
+		D83452962F5EC40B0087BF54 /* ExamplesUITests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = ExamplesUITests.xctestplan; path = ../ExamplesUITests.xctestplan; sourceTree = "<group>"; };
+		D83452982F5EC8F30087BF54 /* ApplePaymentMethodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePaymentMethodView.swift; sourceTree = "<group>"; };
 		D872B3592D5DFA1A007BC089 /* DemoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoListView.swift; sourceTree = "<group>"; };
 		D872B35B2D5DFA25007BC089 /* OrderInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderInfoView.swift; sourceTree = "<group>"; };
 		D89C7AEA2D422CA70042FC3B /* TextContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextContentViewController.swift; sourceTree = "<group>"; };
@@ -175,8 +183,8 @@
 		D8D506382E3CB7060098CACD /* IntegrationDemoScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationDemoScreen.swift; sourceTree = "<group>"; };
 		D8D506392E3CB7060098CACD /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		D8D5063B2E3CB7060098CACD /* ApplePaymentSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePaymentSheet.swift; sourceTree = "<group>"; };
-		D8D5063C2E3CB7060098CACD /* CardPaymentScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPaymentScreen.swift; sourceTree = "<group>"; };
-		D8D5063D2E3CB7060098CACD /* ConsentPaymentScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentPaymentScreen.swift; sourceTree = "<group>"; };
+		D8D5063C2E3CB7060098CACD /* CardPaymentMethodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPaymentMethodView.swift; sourceTree = "<group>"; };
+		D8D5063D2E3CB7060098CACD /* ConsentPaymentMethodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentPaymentMethodView.swift; sourceTree = "<group>"; };
 		D8D5063E2E3CB7060098CACD /* PaymentSheetScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSheetScreen.swift; sourceTree = "<group>"; };
 		D8D5063F2E3CB7060098CACD /* ThreeDSScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDSScreen.swift; sourceTree = "<group>"; };
 		D8D506422E3CB7060098CACD /* ApplePayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayTests.swift; sourceTree = "<group>"; };
@@ -386,6 +394,7 @@
 				D8D506372E3CB7060098CACD /* HomeScreen.swift */,
 				D8D506382E3CB7060098CACD /* IntegrationDemoScreen.swift */,
 				D8D506392E3CB7060098CACD /* SettingsScreen.swift */,
+				D8344EC02F599ADE0087BF54 /* EmbeddedElementScreen.swift */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -394,8 +403,9 @@
 			isa = PBXGroup;
 			children = (
 				D8D5063B2E3CB7060098CACD /* ApplePaymentSheet.swift */,
-				D8D5063C2E3CB7060098CACD /* CardPaymentScreen.swift */,
-				D8D5063D2E3CB7060098CACD /* ConsentPaymentScreen.swift */,
+				D8D5063C2E3CB7060098CACD /* CardPaymentMethodView.swift */,
+				D83452982F5EC8F30087BF54 /* ApplePaymentMethodView.swift */,
+				D8D5063D2E3CB7060098CACD /* ConsentPaymentMethodView.swift */,
 				D8D5063E2E3CB7060098CACD /* PaymentSheetScreen.swift */,
 				D8D5063F2E3CB7060098CACD /* ThreeDSScreen.swift */,
 			);
@@ -419,7 +429,9 @@
 				D8D506432E3CB7060098CACD /* CardGuestUserCheckoutTests.swift */,
 				D8D506442E3CB7060098CACD /* CardRegisteredUserCheckoutTests.swift */,
 				D8C8CA792E695CFF00A2B5E8 /* CardRegisteredUserUnifiedSessionTests.swift */,
+				D8344EC22F599C0E0087BF54 /* EmbeddedElementTests.swift */,
 				D8D506452E3CB7060098CACD /* UITestingUtils.swift */,
+				D83452962F5EC40B0087BF54 /* ExamplesUITests.xctestplan */,
 			);
 			path = ExamplesUITests;
 			sourceTree = "<group>";
@@ -538,6 +550,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D83452972F5EC40B0087BF54 /* ExamplesUITests.xctestplan in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -723,13 +736,16 @@
 				D8D506472E3CB7060098CACD /* HomeScreen.swift in Sources */,
 				D8D506482E3CB7060098CACD /* IntegrationDemoScreen.swift in Sources */,
 				D8D506492E3CB7060098CACD /* SettingsScreen.swift in Sources */,
+				D83452992F5EC8F30087BF54 /* ApplePaymentMethodView.swift in Sources */,
 				D8D5064A2E3CB7060098CACD /* ApplePaymentSheet.swift in Sources */,
-				D8D5064B2E3CB7060098CACD /* CardPaymentScreen.swift in Sources */,
-				D8D5064C2E3CB7060098CACD /* ConsentPaymentScreen.swift in Sources */,
+				D8D5064B2E3CB7060098CACD /* CardPaymentMethodView.swift in Sources */,
+				D8D5064C2E3CB7060098CACD /* ConsentPaymentMethodView.swift in Sources */,
 				D8D5064D2E3CB7060098CACD /* PaymentSheetScreen.swift in Sources */,
 				D8D5064E2E3CB7060098CACD /* ThreeDSScreen.swift in Sources */,
 				D8D5064F2E3CB7060098CACD /* ApplePayTests.swift in Sources */,
+				D8344EC12F599ADE0087BF54 /* EmbeddedElementScreen.swift in Sources */,
 				D8C8CA7A2E695CFF00A2B5E8 /* CardRegisteredUserUnifiedSessionTests.swift in Sources */,
+				D8344EC32F599C0E0087BF54 /* EmbeddedElementTests.swift in Sources */,
 				D8D506502E3CB7060098CACD /* CardGuestUserCheckoutTests.swift in Sources */,
 				D8D506512E3CB7060098CACD /* CardRegisteredUserCheckoutTests.swift in Sources */,
 				D8D506522E3CB7060098CACD /* UITestingUtils.swift in Sources */,

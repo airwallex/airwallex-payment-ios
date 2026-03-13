@@ -54,6 +54,25 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertEqual(configuration.layout, .accordion)
     }
 
+    func testConfiguration_AddCardElementType_AlwaysReturnsTabLayout() {
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.elementType = .addCard
+        XCTAssertEqual(configuration.layout, .tab)
+
+        configuration.layout = .accordion
+        XCTAssertEqual(configuration.layout, .tab, "addCard element type should always use tab layout even when accordion is set")
+    }
+
+    func testConfiguration_AddCardElementType_PreservesLayoutAfterSwitchingBack() {
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.layout = .accordion
+        configuration.elementType = .addCard
+        XCTAssertEqual(configuration.layout, .tab, "addCard should force tab layout")
+
+        configuration.elementType = .paymentSheet
+        XCTAssertEqual(configuration.layout, .accordion, "Switching back to standard should restore the previously set accordion layout")
+    }
+
     func testConfiguration_DefaultElementType_IsStandard() {
         let configuration = AWXPaymentElement.Configuration()
         XCTAssertEqual(configuration.elementType, .paymentSheet)
@@ -1325,5 +1344,95 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertTrue(mockDelegateWithProcessing.processingStateChangedCalled)
         XCTAssertEqual(mockDelegateWithProcessing.processingStatePaymentMethod, "card")
         XCTAssertEqual(mockDelegateWithProcessing.processingStateIsProcessing, false)
+    }
+
+    // MARK: - notifyValidationFailed Tests
+
+    func testNotifyValidationFailed_WhenDelegateImplementsMethod_CallsDelegate() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let mockValidationDelegate = MockValidationFailureDelegate()
+
+        let element = AWXPaymentElement(
+            methodProvider: mockMethodProvider,
+            delegate: mockValidationDelegate
+        )
+
+        let testView = UIView()
+        element.notifyValidationFailed(
+            for: "card",
+            invalidInputView: testView
+        )
+
+        XCTAssertTrue(mockValidationDelegate.validationFailedCalled)
+        XCTAssertEqual(mockValidationDelegate.validationFailedPaymentMethod, "card")
+        XCTAssertIdentical(mockValidationDelegate.validationFailedView, testView)
+    }
+
+    func testNotifyValidationFailed_WhenDelegateDoesNotImplementMethod_DoesNotCrash() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        // mockViewController does NOT implement validationFailedFor
+        let element = AWXPaymentElement(
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        let testView = UIView()
+        // Should not crash when delegate doesn't implement the optional method
+        element.notifyValidationFailed(
+            for: "card",
+            invalidInputView: testView
+        )
+    }
+
+    func testNotifyValidationFailed_WhenDelegateIsNil_DoesNotCrash() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let element = AWXPaymentElement(
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController
+        )
+
+        element.delegate = nil
+
+        let testView = UIView()
+        // Should not crash when delegate is nil
+        element.notifyValidationFailed(
+            for: "card",
+            invalidInputView: testView
+        )
+    }
+
+    func testNotifyValidationFailed_PassesCorrectPaymentMethod() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let mockValidationDelegate = MockValidationFailureDelegate()
+
+        let element = AWXPaymentElement(
+            methodProvider: mockMethodProvider,
+            delegate: mockValidationDelegate
+        )
+
+        let testView = UIView()
+        element.notifyValidationFailed(
+            for: "grabpay",
+            invalidInputView: testView
+        )
+
+        XCTAssertEqual(mockValidationDelegate.validationFailedPaymentMethod, "grabpay")
+        XCTAssertIdentical(mockValidationDelegate.validationFailedView, testView)
     }
 }

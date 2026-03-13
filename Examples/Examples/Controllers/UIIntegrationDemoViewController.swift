@@ -50,9 +50,30 @@ class UIIntegrationDemoViewController: IntegrationDemoListViewController {
                 }
             ),
             ActionViewModel(
-                title: "Launch with Embedded Element",
+                title: "Embedded element",
                 action: { [weak self] in
-                    self?.launchEmbeddedElement()
+                    self?.launchEmbeddedElement(
+                        elementType: .paymentSheet,
+                        showsApplePayAsPrimaryButton: true
+                    )
+                }
+            ),
+            ActionViewModel(
+                title: "Embedded element (inline Apple Pay)",
+                action: { [weak self] in
+                    self?.launchEmbeddedElement(
+                        elementType: .paymentSheet,
+                        showsApplePayAsPrimaryButton: false
+                    )
+                }
+            ),
+            ActionViewModel(
+                title: "Embedded element (card only)",
+                action: { [weak self] in
+                    self?.launchEmbeddedElement(
+                        elementType: .addCard,
+                        showsApplePayAsPrimaryButton: true
+                    )
                 }
             ),
             ActionViewModel(
@@ -132,8 +153,12 @@ private extension UIIntegrationDemoViewController {
         navigationController?.present(nav, animated: true)
     }
 
-    func launchEmbeddedElement() {
-        let controller = EmbeddedIntegrationDemoViewController()
+    func launchEmbeddedElement(elementType: AWXPaymentElement.ElementType,
+                               showsApplePayAsPrimaryButton: Bool) {
+        let controller = EmbeddedIntegrationDemoViewController(
+            elementType: elementType,
+            showsApplePayAsPrimaryButton: showsApplePayAsPrimaryButton
+        )
         navigationController?.pushViewController(controller, animated: true)
     }
 }
