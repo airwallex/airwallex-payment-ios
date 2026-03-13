@@ -9,7 +9,7 @@
 import UIKit
 #if canImport(AirwallexPayment)
 import AirwallexCore
-@_spi(AWX) import AirwallexPayment
+import AirwallexPayment
 #endif
     
 class PaymentMethodTabSectionController: SectionController {
@@ -20,16 +20,29 @@ class PaymentMethodTabSectionController: SectionController {
     
     private var selectedMethod: String
     private let methodProvider: PaymentMethodProvider
-    
+    private let paymentUIContext: PaymentSheetUIContext
     private var methodTypes: [AWXPaymentMethodType]
-    private let imageLoader: ImageLoader
-    
+
     init(methodProvider: PaymentMethodProvider,
-         imageLoader: ImageLoader) {
+         paymentUIContext: PaymentSheetUIContext) {
         self.methodProvider = methodProvider
-        self.methodTypes = methodProvider.methods.filter { $0.name != AWXApplePayKey }
+        self.paymentUIContext = paymentUIContext
+        self.methodTypes = Self.filteredMethods(
+            from: methodProvider,
+            excludeApplePay: paymentUIContext.showsApplePayAsPrimaryButton
+        )
         self.selectedMethod = methodProvider.selectedMethod?.name ?? ""
-        self.imageLoader = imageLoader
+    }
+
+    /// Returns payment methods, filtering out Apple Pay when it's prioritized (shown at top)
+    private static func filteredMethods(
+        from provider: PaymentMethodProvider,
+        excludeApplePay: Bool
+    ) -> [AWXPaymentMethodType] {
+        if excludeApplePay {
+            return provider.methods.filter { $0.name != AWXApplePayKey }
+        }
+        return provider.methods
     }
     
     // MARK: - SectionController
@@ -38,9 +51,7 @@ class PaymentMethodTabSectionController: SectionController {
     let section = PaymentSectionType.methodList
     
     var items: [String] {
-        methodTypes
-            .filter { $0.name != AWXApplePayKey }
-            .map { $0.name }
+        methodTypes.map { $0.name }
     }
     
     func bind(context: CollectionViewContext<PaymentSectionType, String>) {
@@ -54,11 +65,11 @@ class PaymentMethodTabSectionController: SectionController {
             return cell
         }
         let viewModel = PaymentMethodCellViewModel(
-            itemIdentifier: methodType.name,
-            name: methodType.displayName,
+            name: methodType.name,
+            displayName: methodType.displayName,
             imageURL: methodType.resources.logoURL,
             isSelected: methodType.name == selectedMethod,
-            imageLoader: imageLoader,
+            imageLoader: paymentUIContext.imageLoader,
             cardBrands: []
         )
         cell.setup(viewModel)
@@ -74,7 +85,7 @@ class PaymentMethodTabSectionController: SectionController {
         let group = NSCollectionLayoutGroup.vertical(layoutSize: layoutSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = .init(horizontal: 16).bottom(8)
+        section.contentInsets = .init(horizontal: paymentUIContext.isEmbedded ? 0 : 16).bottom(8)
         section.interGroupSpacing = 8
         return section
     }
@@ -100,7 +111,10 @@ class PaymentMethodTabSectionController: SectionController {
     }
     
     func updateItemsIfNecessary() {
-        methodTypes = methodProvider.methods.filter { $0.name != AWXApplePayKey }
+        methodTypes = Self.filteredMethods(
+            from: methodProvider,
+            excludeApplePay: paymentUIContext.showsApplePayAsPrimaryButton
+        )
         selectedMethod = methodProvider.selectedMethod?.name ?? ""
     }
 }

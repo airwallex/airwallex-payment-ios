@@ -79,3 +79,10 @@ Located in `Examples/`. Configure API keys in `Examples/Keys/Keys.json`.
 ## Swift Code Style
 
 Before writing Swift code, read `.swiftlint.yml` and follow its rules.
+
+## Git Conventions
+
+### PR Title
+Use format: `[TICKET-ID] Short description`
+
+Extract the ticket ID from the branch name. Example: branch `APAM-470-card-element` → title `[APAM-470] Add elementType configuration for embedded payment element`

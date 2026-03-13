@@ -16,7 +16,7 @@ enum PaymentSheetScreen {
     static let closeButton = app.navigationBars.firstMatch.buttons["close"]
     static let applePayButton = app.cells["applePayButton"].firstMatch
     static let checkoutButton = app.cells["checkoutButton"].buttons.firstMatch
-    
+
     static func validate() {
         XCTAssertTrue(title.exists)
     }
@@ -41,5 +41,3 @@ enum PaymentSheetScreen {
         XCTAssertTrue(title.waitForExistence(timeout: timeout))
     }
 }
-
-

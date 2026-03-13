@@ -8,7 +8,7 @@
 
 import Foundation
 
-@_spi(AWX) public struct ErrorMessage: Error, RawRepresentable, LocalizedError {
+package struct ErrorMessage: Error, RawRepresentable, LocalizedError {
     public let rawValue: String
     public init(rawValue: String) {
         self.rawValue = rawValue
@@ -19,16 +19,16 @@ import Foundation
     }
 }
 
-@_spi(AWX) public extension String {
+package extension String {
     func asError() -> ErrorMessage {
         ErrorMessage(rawValue: self)
     }
 }
 
-@_spi(AWX) public func debugLog(_ message: String? = nil,
-                                file: String = #file,
-                                functionName: String = #function,
-                                line: Int = #line) {
+package func debugLog(_ message: String? = nil,
+                      file: String = #file,
+                      functionName: String = #function,
+                      line: Int = #line) {
     let fileName = file.split(separator: "/").map { String($0) }.last ?? file
     var fullMessage = """
         ----Airwallex SDK----\(Date())---

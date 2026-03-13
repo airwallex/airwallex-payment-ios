@@ -9,7 +9,7 @@
 import UIKit
 #if canImport(AirwallexPayment)
 import AirwallexCore
-@_spi(AWX) import AirwallexPayment
+import AirwallexPayment
 #endif
     
 // MARK: - Item Identifiers
@@ -26,7 +26,7 @@ private extension String {
     static let selectedConsent = "selectedConsent"
 }
     
-class CardPaymentConsentSectionController: SectionController {
+class CardPaymentConsentSectionController: PaymentSectionController {
     typealias SectionItem = CompoundItem<PaymentSectionType, String>
     static let subType = "consent"
     
@@ -41,26 +41,26 @@ class CardPaymentConsentSectionController: SectionController {
     private var session: AWXSession {
         methodProvider.session
     }
-    
+
     let methodProvider: PaymentMethodProvider
-    
+    let paymentUIContext: PaymentSheetUIContext
+
     private let addNewCardAction: () -> Void
     
-    private var paymentSessionHandler: PaymentSessionHandler?
-    
+    private var paymentSessionHandler: PaymentSessionHandlerProtocol?
+
     private var selectedConsent: AWXPaymentConsent?
     private var cvcConfigurer: InfoCollectorTextFieldViewModel?
     var mode: Mode {
         selectedConsent == nil ? .consentList : .consentPayment
     }
-    private let layout: AWXUIContext.PaymentLayout
     
     private lazy var viewModelForAccordionKey = PaymentMethodCellViewModel(
-        itemIdentifier: .accordionKey,
-        name: methodType.displayName,
+        name: methodType.name,
+        displayName: methodType.displayName,
         imageURL: methodType.resources.logoURL,
         isSelected: true,
-        imageLoader: imageLoader,
+        imageLoader: paymentUIContext.imageLoader,
         cardBrands: []
     )
     
@@ -82,23 +82,20 @@ class CardPaymentConsentSectionController: SectionController {
     )
     
     private let methodType: AWXPaymentMethodType
-    private let imageLoader: ImageLoader
-    
+
     init(methodType: AWXPaymentMethodType,
          methodProvider: PaymentMethodProvider,
-         layout: AWXUIContext.PaymentLayout,
-         imageLoader: ImageLoader,
+         paymentUIContext: PaymentSheetUIContext,
          addNewCardAction: @escaping () -> Void) {
         self.methodType = methodType
-        self.imageLoader = imageLoader
         self.methodProvider = methodProvider
+        self.paymentUIContext = paymentUIContext
         self.addNewCardAction = addNewCardAction
         self.consents = methodProvider.consents.filter { $0.paymentMethod != nil }
         if consents.count == 1,
            let consent = consents.first {
             self.selectedConsent = consent
         }
-        self.layout = layout
     }
     
     // MARK: - SectionController
@@ -109,7 +106,7 @@ class CardPaymentConsentSectionController: SectionController {
     
     var items: [String] {
         var items = [String]()
-        if layout == .accordion {
+        if paymentUIContext.layout == .accordion {
             items.append(.accordionKey)
         }
     
@@ -202,7 +199,7 @@ class CardPaymentConsentSectionController: SectionController {
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(32)
         )
-        
+
         switch mode {
         case .consentList:
             let listItem = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -212,9 +209,10 @@ class CardPaymentConsentSectionController: SectionController {
             )
             let section = NSCollectionLayoutSection(group: group)
             section.interGroupSpacing = 16
-            switch layout {
+            switch paymentUIContext.layout {
             case .accordion:
-                section.contentInsets = .init(top: 16, leading: 40, bottom: 24, trailing: 40)
+                let sectionHorizontal: CGFloat = paymentUIContext.isEmbedded ? 24 : 40
+                section.contentInsets = .init(top: 16, leading: sectionHorizontal, bottom: 24, trailing: sectionHorizontal)
                 // Layout for decoration - rounded corner
                 let elementKind = AccordionSectionController.backgroundElementKind
                 context.register(
@@ -222,17 +220,19 @@ class CardPaymentConsentSectionController: SectionController {
                     forDecorationViewOfKind: elementKind
                 )
                 let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: elementKind)
-                sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
+                sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(
+                    horizontal: paymentUIContext.isEmbedded ? 0 : 16
+                )
                 section.decorationItems = [sectionBackgroundDecoration]
             case .tab:
-                section.contentInsets = .init(horizontal: 16)
+                section.contentInsets = .init(horizontal: paymentUIContext.isEmbedded ? 0 : 16)
             }
             return section
         case .consentPayment:
             let items: [NSCollectionLayoutItem] = (1..<items.count).map { _ in
                 NSCollectionLayoutItem(layoutSize: itemSize)
             }
-            
+
             let innerGroup = NSCollectionLayoutGroup.vertical(
                 layoutSize: NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),
@@ -241,13 +241,13 @@ class CardPaymentConsentSectionController: SectionController {
                 subitems: items
             )
             innerGroup.interItemSpacing = .fixed(16)
-            
+
             let buttonSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(52)
+                heightDimension: .estimated(52)
             )
             let buttonItem = NSCollectionLayoutItem(layoutSize: buttonSize)
-            
+
             let outerGroup = NSCollectionLayoutGroup.vertical(
                 layoutSize: NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),
@@ -256,11 +256,12 @@ class CardPaymentConsentSectionController: SectionController {
                 subitems: [innerGroup, buttonItem]
             )
             outerGroup.interItemSpacing = .fixed(24)
-            
+
             let section = NSCollectionLayoutSection(group: outerGroup)
-            switch layout {
+            switch paymentUIContext.layout {
             case .accordion:
-                section.contentInsets = .init(top: 16, leading: 40, bottom: 32, trailing: 40)
+                let sectionHorizontal: CGFloat = paymentUIContext.isEmbedded ? 24 : 40
+                section.contentInsets = .init(top: 16, leading: sectionHorizontal, bottom: 24, trailing: sectionHorizontal)
                 // Layout for decoration - rounded corner
                 let elementKind = AccordionSectionController.backgroundElementKind
                 context.register(
@@ -268,10 +269,12 @@ class CardPaymentConsentSectionController: SectionController {
                     forDecorationViewOfKind: elementKind
                 )
                 let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: elementKind)
-                sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
+                sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(
+                    horizontal: paymentUIContext.isEmbedded ? 0 : 16
+                )
                 section.decorationItems = [sectionBackgroundDecoration]
             case .tab:
-                section.contentInsets = .init(horizontal: 16)
+                section.contentInsets = .init(horizontal: paymentUIContext.isEmbedded ? 0 : 16)
             }
             return section
         }
@@ -294,9 +297,8 @@ class CardPaymentConsentSectionController: SectionController {
     
         // item is consent ID
         let consentId = item
-        guard let consent = consents.first(where: { $0.id == consentId }),
-              context.viewController != nil else {
-            assert(false, "view controller not found")
+        guard let consent = consents.first(where: { $0.id == consentId }) else {
+            assert(false, "consent not found")
             return
         }
         AnalyticsLogger.log(
@@ -309,8 +311,12 @@ class CardPaymentConsentSectionController: SectionController {
         )
     
         selectedConsent = consent
-        context.performUpdates(section, forceReload: true)
-    
+        context.performUpdates(
+            section,
+            forceReload: true,
+            animatingDifferences: paymentUIContext.isEmbedded
+        )
+
         RiskLogger.log(.showConsent, screen: .consent)
     }
     
@@ -370,7 +376,11 @@ class CardPaymentConsentSectionController: SectionController {
                     guard let self else { return }
                     self.selectedConsent = nil
                     self.cvcConfigurer = nil
-                    self.context.performUpdates(section, forceReload: true, animatingDifferences: false)
+                    self.context.performUpdates(
+                        section,
+                        forceReload: true,
+                        animatingDifferences: paymentUIContext.isEmbedded
+                    )
                 }
             )
         } else {
@@ -406,18 +416,17 @@ private extension CardPaymentConsentSectionController {
         )
         let deleteAction = UIAlertAction(
             title: NSLocalizedString("Remove", bundle: .paymentSheet, comment: "consent section - alert confirm button to remove a consent"),
-            style: .destructive) { [weak self] _ in
-                guard let self else { return }
-                self.context.viewController?.startLoading()
+            style: .destructive) { [self] _ in
                 Task {
+                    context.startLoading(for: section)
                     do {
-                        try await self.methodProvider.disable(consent: consent)
+                        try await methodProvider.disable(consent: consent)
                         debugLog("remove consent successfully. ID: \(consent.id)")
                     } catch {
-                        self.context.viewController?.showAlert(message: error.localizedDescription)
+                        UIViewController.topMost?.showAlert(message: error.localizedDescription)
                         debugLog("removing consent failed. ID: \(consent.id)")
                     }
-                    self.context.viewController?.stopLoading()
+                    context.stopLoading()
                 }
         }
         alert.addAction(deleteAction)
@@ -426,7 +435,7 @@ private extension CardPaymentConsentSectionController {
             style: .cancel
         )
         alert.addAction(cancelAction)
-        context.viewController?.present(alert, animated: true)
+        UIViewController.topMost?.present(alert, animated: true)
     }
     
     func showAlertForDeleteMITConsent(_ consent: AWXPaymentConsent) {
@@ -449,18 +458,14 @@ private extension CardPaymentConsentSectionController {
                 style: .cancel
             )
             alert.addAction(cancelAction)
-            context.viewController?.present(alert, animated: true)
+            UIViewController.topMost?.present(alert, animated: true)
         } catch {
             AnalyticsLogger.log(errorName: "JWT decoding error", errorMessage: error.localizedDescription)
         }
     }
-    
+
     func checkout(consent: AWXPaymentConsent) {
         context.endEditing()
-        guard let viewController = context.viewController else {
-            assert(false, "view controller not found")
-            return
-        }
         AnalyticsLogger.log(
             action: .tapPayButton,
             extraInfo: [
@@ -469,34 +474,44 @@ private extension CardPaymentConsentSectionController {
                 .consentId: consent.id
             ]
         )
+
+        // Validation phase
         if let cvcConfigurer {
             cvcConfigurer.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
             do {
                 try cvcConfigurer.validate()
                 consent.paymentMethod?.card?.cvc = cvcConfigurer.text
             } catch {
-                context.viewController?.showAlert(message: error.localizedDescription)
+                handleValidationFailure(error)
                 return
             }
         }
-        if mode == .consentPayment {
-            RiskLogger.log(.clickPaymentButton, screen: .consent)
-        }
-        do {
-            paymentSessionHandler = PaymentSessionHandler(
-                session: session,
-                viewController: viewController,
-                paymentResultDelegate: AWXUIContext.shared.delegate,
-                dismissAction: { completion in
-                    AWXUIContext.shared.dismissAction?(completion)
-                    // clear dismissAction block here so the user cancel detection
-                    // in AWXPaymentViewController.deinit() can work as expected
-                    AWXUIContext.shared.dismissAction = nil
-                }
-            )
-            try paymentSessionHandler?.confirmConsentPayment(with: consent)
-        } catch {
-            context.viewController?.showAlert(message: error.localizedDescription)
-        }
+
+        // Confirm payment phase
+        confirmConsentPayment(consent: consent)
+    }
+
+    func handleValidationFailure(_ error: Error) {
+        let message = error.localizedDescription
+        AnalyticsLogger.log(
+            action: .cardPaymentValidation,
+            extraInfo: [
+                .message: message,
+                .subtype: Self.subType
+            ]
+        )
+        debugLog("Payment failed. Intent ID: \(session.paymentIntentId() ?? ""). Reason: \(message)")
+    }
+
+    func confirmConsentPayment(consent: AWXPaymentConsent) {
+        RiskLogger.log(.clickPaymentButton, screen: .consent)
+
+        paymentSessionHandler = paymentUIContext.paymentSessionHandlerFactory.createHandler(
+            session: session,
+            methodType: nil,
+            paymentUIContext: paymentUIContext
+        )
+        prepareForEmbeddedCheckout(paymentMethod: AWXCardKey, handler: paymentSessionHandler)
+        paymentSessionHandler?.confirmConsentPayment(with: consent)
     }
 }

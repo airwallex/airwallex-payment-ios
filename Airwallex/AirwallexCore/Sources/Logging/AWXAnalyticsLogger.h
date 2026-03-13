@@ -17,7 +17,6 @@ NS_SWIFT_NAME(AnalyticsLogger)
 
 /// Defaults to `false`, will print all events to console if set to true
 @property (nonatomic, assign) BOOL verbose;
-@property (nonatomic, strong, nullable) AWXSession *session;
 
 + (instancetype)shared;
 
@@ -41,6 +40,10 @@ NS_SWIFT_NAME(AnalyticsLogger)
 - (void)logActionWithName:(NSString *)actionName;
 
 - (void)logActionWithName:(NSString *)actionName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo;
+
+- (void)bindSession:(AWXSession *)session additionalInfo:(NSDictionary<NSString *, id> *_Nullable)info;
+
+- (void)bindExtraCommonData:(NSDictionary<NSString *, id> *)extraCommonData;
 
 @end
 

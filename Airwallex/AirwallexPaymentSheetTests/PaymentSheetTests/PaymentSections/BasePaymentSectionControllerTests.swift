@@ -6,10 +6,10 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
+import AirwallexCore
+@testable import AirwallexPaymentSheet
 import UIKit
 import XCTest
-@testable import AirwallexPaymentSheet
-import AirwallexCore
 
 @MainActor class BasePaymentSectionControllerTests: XCTestCase {
     var mockShippingInfo: AWXPlaceDetails!
@@ -40,7 +40,6 @@ import AirwallexCore
         mockMethodProvider.session.billing = shipping
 
         mockManager = CollectionViewManager(
-            viewController: mockViewController,
             sectionProvider: mockSectionProvider
         )
         let collectionView = mockManager.collectionView

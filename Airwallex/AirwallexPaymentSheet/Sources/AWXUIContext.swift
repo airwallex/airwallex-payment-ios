@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 #if canImport(AirwallexPayment)
 import AirwallexCore
-@_spi(AWX) import AirwallexPayment
+import AirwallexPayment
 #endif
 
 /// The main UI context for Airwallex payment flows.
@@ -29,8 +29,7 @@ import AirwallexCore
 /// ```
 @MainActor
 @objc public class AWXUIContext: NSObject {
-    private static let subtypeDropin = "dropin"
-    private static let subtypeElement = "component"
+    private static let launchType = "hpp"
     @objc public enum LaunchStyle: Int {
         case push
         case present
@@ -42,7 +41,7 @@ import AirwallexCore
         case accordion
         /// Display payment methods in a tabbed layout.
         case tab
-        
+
         public var displayName: String {
             switch self {
             case .accordion:
@@ -93,12 +92,6 @@ import AirwallexCore
             "payment_validation_failure"
         }
     }
-    
-    weak var delegate: AWXPaymentResultDelegate?
-    
-    /// One-time dismiss action, will be set every time `launchPayment(from:style:)` is called
-    /// and consumed in `PaymentSessionHandler` after payment success/failure/cancellation.
-    var dismissAction: PaymentSessionHandler.DismissActionBlock?
     
     @objc public static let shared = AWXUIContext()
     private override init() {}
@@ -153,6 +146,18 @@ import AirwallexCore
             }
             session.paymentMethods = methodNames
         }
+
+        // bind session level info
+        AnalyticsLogger.bindSession(
+            session: session,
+            extraInfo: [
+                .launchType: Self.launchType,
+                .layout: layout.displayName
+            ]
+        )
+
+        AnalyticsLogger.log(action: .paymentLaunched)
+
         launchPayment(
             from: hostingVC,
             session: session,
@@ -160,14 +165,6 @@ import AirwallexCore
             paymentResultDelegate: paymentResultDelegate,
             launchStyle: launchStyle,
             layout: layout
-        )
-        
-        AnalyticsLogger.log(
-            action: .paymentLaunched,
-            extraInfo: [
-                .subtype: Self.subtypeDropin,
-                .expressCheckout: session.isExpressCheckout
-            ]
         )
     }
     // MARK: - Launch by Payment Method
@@ -251,20 +248,28 @@ import AirwallexCore
             name: name,
             supportedCardBrands: supportedBrands
         )
+
+        // bind session level info
+        AnalyticsLogger.bindSession(
+            session: session,
+            extraInfo: [
+                .launchType: Self.launchType,
+            ]
+        )
+
+        AnalyticsLogger.log(
+            action: .paymentLaunched,
+            extraInfo: [
+                .paymentMethod: name
+            ]
+        )
+
         launchPayment(
             from: hostingVC,
             session: session,
             paymentMethodProvider: methodProvider,
             paymentResultDelegate: paymentResultDelegate,
             launchStyle: launchStyle
-        )
-        AnalyticsLogger.log(
-            action: .paymentLaunched,
-            extraInfo: [
-                .subtype: Self.subtypeElement,
-                .paymentMethod: name,
-                .expressCheckout: session.isExpressCheckout
-            ]
         )
     }
 }
@@ -300,11 +305,7 @@ private extension AWXUIContext {
                 return
             }
         }
-        
-        // update logger.session for UI integration
-        AnalyticsLogger.shared().session = session
-        AWXUIContext.shared.delegate = paymentResultDelegate
-        
+
         // Risk event
         RiskLogger.log(.transactionInitiated)
         
@@ -317,12 +318,13 @@ private extension AWXUIContext {
                 )
                 return
             }
+            let paymentUIContext = PaymentSheetUIContext(delegate: paymentResultDelegate)
+            paymentUIContext.layout = layout
             let paymentVC = PaymentViewController(
                 methodProvider: paymentMethodProvider,
-                layout: layout
+                paymentUIContext: paymentUIContext
             )
-            nav.pushViewController(paymentVC, animated: true)
-            AWXUIContext.shared.dismissAction = { [weak paymentVC, weak nav] completion in
+            paymentUIContext.dismissAction = { [weak paymentVC, weak nav] completion in
                 guard let paymentVC, let nav else {
                     completion()
                     return
@@ -341,10 +343,13 @@ private extension AWXUIContext {
                 }
                 nav.popToViewController(targetVC, animated: true)
             }
+            nav.pushViewController(paymentVC, animated: true)
         case .present:
+            let paymentUIContext = PaymentSheetUIContext(delegate: paymentResultDelegate)
+            paymentUIContext.layout = layout
             let paymentVC = PaymentViewController(
                 methodProvider: paymentMethodProvider,
-                layout: layout
+                paymentUIContext: paymentUIContext
             )
             let nav = UINavigationController(rootViewController: paymentVC)
             if #unavailable(iOS 26) {
@@ -352,7 +357,7 @@ private extension AWXUIContext {
                 appearance.configureWithDefaultBackground()
                 appearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial) // Apply blur
                 appearance.shadowColor = UIColor.awxColor(.borderDecorative)
-                
+
                 nav.navigationBar.standardAppearance = appearance
                 nav.navigationBar.scrollEdgeAppearance = appearance
                 nav.navigationBar.compactAppearance = appearance
@@ -361,8 +366,7 @@ private extension AWXUIContext {
                     nav.navigationBar.compactScrollEdgeAppearance = appearance
                 }
             }
-            hostingVC.present(nav, animated: true)
-            AWXUIContext.shared.dismissAction = { [weak nav] completion in
+            paymentUIContext.dismissAction = { [weak nav] completion in
                 guard let nav else {
                     completion()
                     return
@@ -371,6 +375,7 @@ private extension AWXUIContext {
                     completion()
                 }
             }
+            hostingVC.present(nav, animated: true)
         }
     }
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-@_spi(AWX) public extension Array {
+package extension Array {
     subscript(safe index: Index) -> Element? {
         return indices.contains(index) ? self[index] : nil
     }

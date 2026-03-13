@@ -6,11 +6,11 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
+import AirwallexCore
+@testable import AirwallexPayment
+@testable import AirwallexPaymentSheet
 import UIKit
 import XCTest
-@testable import AirwallexPaymentSheet
-@testable @_spi(AWX) import AirwallexPayment
-import AirwallexCore
 
 class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
 
@@ -61,7 +61,7 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         mockViewController.view.layoutIfNeeded()
         guard let sectionController = getSchemaPaymentSectionController() else { return }
         XCTAssertEqual(sectionController.section, .schemaPayment("online_banking"))
-        XCTAssertEqual(sectionController.layout, .tab)
+        XCTAssertEqual(sectionController.paymentUIContext.layout, .tab)
         try? await Task.sleep(nanoseconds: 500_000_000)
         XCTAssert(sectionController.items.contains("shopper_name"))
         XCTAssert(sectionController.items.contains("shopper_email"))
@@ -76,7 +76,7 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         mockViewController.view.layoutIfNeeded()
         guard let sectionController = getSchemaPaymentSectionController() else { return }
         XCTAssertEqual(sectionController.section, .schemaPayment("online_banking"))
-        XCTAssertEqual(sectionController.layout, .accordion)
+        XCTAssertEqual(sectionController.paymentUIContext.layout, .accordion)
         try? await Task.sleep(nanoseconds: 100_000)
         XCTAssert(sectionController.items.contains(.accordionKey))
         mockViewController.view.layoutIfNeeded()
@@ -120,22 +120,20 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         XCTAssertNotNil(bankCell.viewModel?.bank)
     }
     
-    func testBankSelection() async {
+    func testBankSelectionValidation() async {
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
         guard let sectionController = getSchemaPaymentSectionController() else { return }
         try? await Task.sleep(nanoseconds: 1000_000_000)
         mockViewController.view.layoutIfNeeded()
-        
+
         guard let bankCell = sectionController.context.cellForItem(sectionController.sectionItem(.bankName)) as? BankSelectionCell else {
             XCTFail()
             return
         }
         XCTAssertNotNil(bankCell.viewModel?.bank)
-        bankCell.viewModel?.handleUserInteraction()
-        XCTAssert(mockViewController.presentedViewControllerSpy is AWXPaymentFormViewController)
-        
-        // checkout validation
+
+        // Checkout validation - when bank is nil, inline error should be shown
         XCTAssertNil(bankCell.viewModel?.errorHint)
         bankCell.viewModel?.bank = nil
         guard let checkoutCell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
@@ -168,6 +166,105 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         }
         checkoutCell.viewModel?.checkoutAction()
         XCTAssertNotNil(nameCell.viewModel?.errorHint)
+    }
+
+    // MARK: - Checkout Tests
+
+    func testCheckout_ValidInputs_CallsConfirmRedirectPayment() async {
+        let mockFactory = mockSectionProvider.configureMockHandlerFactory()
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let sectionController = getSchemaPaymentSectionController() else { return }
+        try? await Task.sleep(nanoseconds: 500_000_000)
+        mockViewController.view.layoutIfNeeded()
+
+        guard let checkoutCell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
+            XCTFail()
+            return
+        }
+
+        checkoutCell.viewModel?.checkoutAction()
+
+        // Wait for async task to complete
+        try? await Task.sleep(nanoseconds: 100_000_000)
+
+        XCTAssertTrue(mockFactory.createHandlerCalled)
+        XCTAssertTrue(mockFactory.mockHandler.confirmRedirectPaymentCalled)
+        XCTAssertEqual(mockFactory.mockHandler.confirmRedirectPaymentMethod?.type, "online_banking")
+    }
+
+    func testCheckout_Embedded_SetsShowIndicatorFalse() async {
+        let mockFactory = mockSectionProvider.configureMockHandlerFactory()
+        mockSectionProvider.simulateEmbeddedMode()
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let sectionController = getSchemaPaymentSectionController() else { return }
+        try? await Task.sleep(nanoseconds: 500_000_000)
+        mockViewController.view.layoutIfNeeded()
+
+        guard let checkoutCell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
+            XCTFail()
+            return
+        }
+
+        checkoutCell.viewModel?.checkoutAction()
+
+        // Wait for async task to complete
+        try? await Task.sleep(nanoseconds: 100_000_000)
+
+        XCTAssertFalse(mockFactory.mockHandler.showIndicator)
+    }
+
+    func testCheckout_Embedded_InvalidInput_NotifiesDelegateOfValidationFailure() async {
+        let mockDelegate = MockValidationFailureDelegate()
+        mockSectionProvider.simulateEmbeddedMode(delegate: mockDelegate)
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let sectionController = getSchemaPaymentSectionController() else { return }
+        try? await Task.sleep(nanoseconds: 500_000_000)
+        mockViewController.view.layoutIfNeeded()
+
+        // Clear a required field to trigger validation failure
+        guard let nameCell = sectionController.context.cellForItem(sectionController.sectionItem("shopper_name")) as? InfoCollectorCell else {
+            XCTFail()
+            return
+        }
+        nameCell.viewModel?.text = nil
+
+        guard let checkoutCell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
+            XCTFail()
+            return
+        }
+
+        checkoutCell.viewModel?.checkoutAction()
+
+        XCTAssertTrue(mockDelegate.validationFailedCalled)
+        XCTAssertNotNil(mockDelegate.validationFailedView)
+    }
+
+    func testCheckout_NonEmbedded_KeepsShowIndicatorTrue() async {
+        let mockFactory = mockSectionProvider.configureMockHandlerFactory()
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let sectionController = getSchemaPaymentSectionController() else { return }
+        try? await Task.sleep(nanoseconds: 500_000_000)
+        mockViewController.view.layoutIfNeeded()
+
+        guard let checkoutCell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {
+            XCTFail()
+            return
+        }
+
+        checkoutCell.viewModel?.checkoutAction()
+
+        // Wait for async task to complete
+        try? await Task.sleep(nanoseconds: 100_000_000)
+
+        XCTAssertTrue(mockFactory.mockHandler.showIndicator)
     }
 }
 

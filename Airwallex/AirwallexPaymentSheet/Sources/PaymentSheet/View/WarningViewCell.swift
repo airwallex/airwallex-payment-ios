@@ -8,7 +8,7 @@
 
 import UIKit
 #if canImport(AirwallexPayment)
-@_spi(AWX) import AirwallexPayment
+import AirwallexPayment
 #endif
 
 protocol WarningViewCellConfiguring {

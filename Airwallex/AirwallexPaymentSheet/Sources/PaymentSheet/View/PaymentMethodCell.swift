@@ -13,9 +13,22 @@ import AirwallexCore
 #endif
 
 struct PaymentMethodCellViewModel: CellViewModelIdentifiable, CardBrandViewConfiguring {
-    let itemIdentifier: String
+    var itemIdentifier: String {
+        return name
+    }
     let name: String
+    let displayName: String
     let imageURL: URL?
+    var placeholder: UIImage? {
+        switch name {
+        case AWXCardKey:
+            UIImage(named: "cardplaceholder", in: .paymentSheet)
+        case AWXApplePayKey:
+            UIImage(named: "applepaymark", in: .paymentSheet)
+        default:
+            nil
+        }
+    }
     let isSelected: Bool
     let imageLoader: ImageLoader
     let cardBrands: [AWXBrandType]
@@ -64,9 +77,9 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         if let URL = viewModel.imageURL {
             logo.loadImage(URL, imageLoader: viewModel.imageLoader)
         } else {
-            logo.image = nil
+            logo.image = viewModel.placeholder
         }
-        label.text = viewModel.name
+        label.text = viewModel.displayName
         label.font = viewModel.isSelected ? .awxFont(.caption2, weight: .bold) : .awxFont(.caption2)
         label.textColor = viewModel.isSelected ? .awxColor(.textLink) : .awxColor(.textPrimary)
         roundedBG.layer.borderColor = viewModel.isSelected ? .awxCGColor(.borderInteractive) : .awxCGColor(.borderDecorative)

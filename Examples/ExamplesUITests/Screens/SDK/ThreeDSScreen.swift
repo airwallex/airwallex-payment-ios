@@ -15,8 +15,8 @@ enum ThreeDSScreen {
     static let textField = app.webViews.firstMatch.textFields.firstMatch
     static let submitButton = app.webViews.firstMatch.buttons["Submit"]
     static let closeButton = app.buttons["close"]
-    static let activityIndicator = app.webViews.activityIndicators.firstMatch
-    
+    static let activityIndicator = app.webViews.firstMatch.activityIndicators.firstMatch
+
     static func waitForExistence(_ timeout: TimeInterval = .longLongTimeout) {
         XCTAssertTrue(title.waitForExistence(timeout: timeout))
         XCTAssertTrue(textField.waitForExistence(timeout: timeout))

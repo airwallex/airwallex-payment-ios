@@ -403,7 +403,7 @@ class ApplePayProviderTests: XCTestCase {
         let mockPayment = MockPKPayment()
         
         // Simulate slow network response (3 seconds)
-        MockURLProtocol.mockSlowResponse(delay: 500_000_000)
+        MockURLProtocol.mockSlowResponse(delay: 1_000_000_000)
         
         // Start the payment confirmation
         async let foo = provider.confirmIntent(payment: mockPayment)

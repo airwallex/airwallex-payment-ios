@@ -6,10 +6,10 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
+import AirwallexCore
+@testable import AirwallexPayment
 import UIKit
 import XCTest
-@testable @_spi(AWX) import AirwallexPayment
-import AirwallexCore
 
 class EventsTests: XCTestCase {
    
@@ -24,7 +24,6 @@ class EventsTests: XCTestCase {
         XCTAssertNotNil(value)
         XCTAssertEqual(value, field.rawValue)
     }
-    
     
     enum MockError: ErrorLoggable {
         case foo
@@ -53,12 +52,107 @@ class EventsTests: XCTestCase {
             XCTFail()
             return
         }
-        
+
         let expected = [
-            "value":"mock_value",
-            AnalyticEvent.Fields.message.rawValue : error.localizedDescription,
+            "value": "mock_value",
+            AnalyticEvent.Fields.message.rawValue: error.localizedDescription,
             AnalyticEvent.Fields.eventType.rawValue: error.eventType,
         ]
         XCTAssertEqual(info, expected)
+    }
+
+    // MARK: - buildSessionLevelInfo Tests
+
+    func testBuildSessionLevelInfoWithDefaults() {
+        let session = AWXOneOffSession()
+        let paymentIntent = AWXPaymentIntent()
+        paymentIntent.id = "test_intent_id"
+        session.paymentIntent = paymentIntent
+
+        let info = AnalyticsLogger.buildSessionLevelInfo(session: session, extraInfo: nil)
+
+        XCTAssertEqual(info["expressCheckout"] as? Bool, false)
+        XCTAssertEqual(info["transactionMode"] as? String, "oneoff")
+        XCTAssertEqual(info.count, 2)
+    }
+
+    func testBuildSessionLevelInfoWithRecurringSession() {
+        let session = AWXRecurringSession()
+
+        let info = AnalyticsLogger.buildSessionLevelInfo(session: session, extraInfo: nil)
+
+        XCTAssertEqual(info["expressCheckout"] as? Bool, false)
+        XCTAssertEqual(info["transactionMode"] as? String, "recurring")
+        XCTAssertEqual(info["legacyConsentFlow"] as? Bool, true)
+    }
+
+    func testBuildSessionLevelInfoWithRecurringWithIntentSession() {
+        let session = AWXRecurringWithIntentSession()
+        let paymentIntent = AWXPaymentIntent()
+        paymentIntent.id = "test_intent_id"
+        paymentIntent.amount = NSDecimalNumber(value: 100)
+        session.paymentIntent = paymentIntent
+
+        let info = AnalyticsLogger.buildSessionLevelInfo(session: session, extraInfo: nil)
+
+        XCTAssertEqual(info["transactionMode"] as? String, "recurring")
+        XCTAssertNil(info["legacyConsentFlow"])
+    }
+
+    func testBuildSessionLevelInfoWithRecurringSessionZeroAmount() {
+        let paymentIntent = AWXPaymentIntent()
+        paymentIntent.id = "test_intent_id"
+        paymentIntent.amount = NSDecimalNumber.zero
+        paymentIntent.currency = "AUD"
+        let session = Session(
+            paymentIntent: paymentIntent,
+            countryCode: "AU",
+            paymentConsentOptions: PaymentConsentOptions(nextTriggeredBy: .customerType)
+        )
+
+        let info = AnalyticsLogger.buildSessionLevelInfo(session: session, extraInfo: nil)
+
+        XCTAssertEqual(info["transactionMode"] as? String, "recurring")
+        XCTAssertEqual(info["legacyConsentFlow"] as? Bool, true)
+    }
+
+    func testBuildSessionLevelInfoWithExtraInfo() {
+        let session = AWXOneOffSession()
+        let paymentIntent = AWXPaymentIntent()
+        paymentIntent.id = "test_intent_id"
+        session.paymentIntent = paymentIntent
+
+        let extraInfo: [AnalyticEvent.Fields: Any] = [
+            .launchType: "dropin",
+            .paymentMethod: AWXCardKey
+        ]
+
+        let info = AnalyticsLogger.buildSessionLevelInfo(session: session, extraInfo: extraInfo)
+
+        XCTAssertEqual(info["expressCheckout"] as? Bool, false)
+        XCTAssertEqual(info["transactionMode"] as? String, "oneoff")
+        XCTAssertEqual(info["launchType"] as? String, "dropin")
+        XCTAssertEqual(info["paymentMethod"] as? String, AWXCardKey)
+        XCTAssertEqual(info.count, 4)
+    }
+
+    func testBuildSessionLevelInfoExtraInfoOverridesDefaults() {
+        let session = AWXOneOffSession()
+        let paymentIntent = AWXPaymentIntent()
+        paymentIntent.id = "test_intent_id"
+        session.paymentIntent = paymentIntent
+
+        let extraInfo: [AnalyticEvent.Fields: Any] = [
+            .layout: "tab",
+            .expressCheckout: true
+        ]
+
+        let info = AnalyticsLogger.buildSessionLevelInfo(session: session, extraInfo: extraInfo)
+
+        // extraInfo should override default values
+        XCTAssertEqual(info["layout"] as? String, "tab")
+        XCTAssertEqual(info["expressCheckout"] as? Bool, true)
+        XCTAssertEqual(info["transactionMode"] as? String, "oneoff")
+        XCTAssertEqual(info.count, 3)
     }
 }

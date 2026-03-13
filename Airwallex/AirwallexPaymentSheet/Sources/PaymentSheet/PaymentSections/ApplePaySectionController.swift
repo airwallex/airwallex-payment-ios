@@ -9,34 +9,69 @@
 import Foundation
 #if canImport(AirwallexPayment)
 import AirwallexCore
-@_spi(AWX) import AirwallexPayment
+import AirwallexPayment
 #endif
     
 // MARK: - Item Identifiers
 private extension String {
+    static let accordionKey = "accordionKey"
+    static let applePayReminder = "applePayReminder"
     static let applePayButton = "applePayButton"
 }
     
-class ApplePaySectionController: SectionController {
+class ApplePaySectionController: PaymentSectionController {
     typealias SectionItem = CompoundItem<PaymentSectionType, String>
+
+    /// Layout type for Apple Pay section.
+    enum LayoutType {
+        /// Standalone Apple Pay button at top (prioritized)
+        case prioritized
+        /// Selected from tab list - reminder + button, no decoration
+        case tab
+        /// Selected in accordion - accordion key + reminder + button, with decoration
+        case accordion
+    }
+
     private let session: AWXSession
     private let methodType: AWXPaymentMethodType
-    private var paymentSessionHandler: PaymentSessionHandler?
+    private var paymentSessionHandler: PaymentSessionHandlerProtocol?
     private let methodProvider: PaymentMethodProvider
-    
+    let paymentUIContext: PaymentSheetUIContext
+
     init(session: AWXSession,
          methodType: AWXPaymentMethodType,
-         methodProvider: PaymentMethodProvider) {
+         methodProvider: PaymentMethodProvider,
+         paymentUIContext: PaymentSheetUIContext) {
         assert(methodType.name == AWXApplePayKey)
         self.session = session
         self.methodType = methodType
         self.methodProvider = methodProvider
+        self.paymentUIContext = paymentUIContext
     }
-    
+
     let section = PaymentSectionType.applePay
-    
+
+    private var layoutType: LayoutType {
+        if paymentUIContext.showsApplePayAsPrimaryButton {
+            return .prioritized
+        }
+        switch paymentUIContext.layout {
+        case .tab:
+            return .tab
+        case .accordion:
+            return .accordion
+        }
+    }
+
     var items: [String] {
-        [.applePayButton]
+        switch layoutType {
+        case .prioritized:
+            return [.applePayButton]
+        case .tab:
+            return [.applePayReminder, .applePayButton]
+        case .accordion:
+            return [.accordionKey, .applePayReminder, .applePayButton]
+        }
     }
     
     private(set) var context: CollectionViewContext<PaymentSectionType, String>!
@@ -46,32 +81,50 @@ class ApplePaySectionController: SectionController {
     }
     
     func cell(for sectionItem: SectionItem, at indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = context.dequeueReusableCell(ApplePayCell.self, for: sectionItem, indexPath: indexPath)
-        let viewModel = ApplePayViewModel { [weak self] in
-            guard let self, let viewController = self.context.viewController else { return }
-            AnalyticsLogger.log(action: .tapPayButton, extraInfo: [.paymentMethod: methodType.name])
-            do {
-                self.paymentSessionHandler = PaymentSessionHandler(
-                    session: self.session,
-                    viewController: viewController,
-                    paymentResultDelegate: AWXUIContext.shared.delegate,
-                    methodType: methodType,
-                    dismissAction: { completion in
-                        AWXUIContext.shared.dismissAction?(completion)
-                        // clear dismissAction block here so the user cancel detection
-                        // in AWXPaymentViewController.deinit() can work as expected
-                        AWXUIContext.shared.dismissAction = nil
-                    }
-                )
-                try self.paymentSessionHandler?.confirmApplePay(cancelPaymentOnDismiss: false)
-            } catch {
-                self.context.viewController?.showAlert(message: error.localizedDescription)
+
+        switch sectionItem.item {
+        case .accordionKey:
+            let cell = context.dequeueReusableCell(AccordionSelectedMethodCell.self, for: sectionItem, indexPath: indexPath)
+            let viewModel = PaymentMethodCellViewModel(
+                name: methodType.name,
+                displayName: methodType.displayName,
+                imageURL: methodType.resources.logoURL,
+                isSelected: true,
+                imageLoader: paymentUIContext.imageLoader,
+                cardBrands: []
+            )
+            cell.setup(viewModel)
+            return cell
+        case .applePayReminder:
+            let cell = context.dequeueReusableCell(PaymentReminderCell.self, for: sectionItem, indexPath: indexPath)
+            cell.setup(.applePay)
+            return cell
+        case .applePayButton:
+            let cell = context.dequeueReusableCell(ApplePayCell.self, for: sectionItem, indexPath: indexPath)
+            let viewModel = ApplePayViewModel { [weak self] in
+                guard let self else { return }
+                checkout()
             }
+            cell.setup(viewModel)
+            return cell
+        default:
+            assert(false, "unexpected item: \(sectionItem)")
+            return UICollectionViewCell()
         }
-        cell.setup(viewModel)
-        return cell
     }
-    
+
+    func checkout() {
+        AnalyticsLogger.log(action: .tapPayButton, extraInfo: [.paymentMethod: methodType.name])
+
+        paymentSessionHandler = paymentUIContext.paymentSessionHandlerFactory.createHandler(
+            session: session,
+            methodType: methodType,
+            paymentUIContext: paymentUIContext
+        )
+        prepareForEmbeddedCheckout(paymentMethod: AWXApplePayKey, handler: paymentSessionHandler)
+        paymentSessionHandler?.confirmApplePay(cancelPaymentOnDismiss: paymentUIContext.isEmbedded)
+    }
+
     func collectionView(didSelectItem sectionItem: SectionItem, at indexPath: IndexPath) {
         context.endEditing()
     }
@@ -86,19 +139,31 @@ class ApplePaySectionController: SectionController {
     }
     
     func layout(environment: any NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+        switch layoutType {
+        case .prioritized:
+            return layoutForPrioritized()
+        case .tab:
+            return layoutForTab()
+        case .accordion:
+            return layoutForAccordion()
+        }
+    }
+
+    /// Layout for prioritized Apple Pay (button only, with separator footer if other methods exist)
+    private func layoutForPrioritized() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .fractionalHeight(1)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
+
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(48)
         )
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        let section = NSCollectionLayoutSection(group: group)
-        var contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+        let layoutSection = NSCollectionLayoutSection(group: group)
+        var contentInsets = NSDirectionalEdgeInsets(horizontal: paymentUIContext.isEmbedded ? 0 : 16)
         if methodProvider.methods.contains(where: { $0.name != AWXApplePayKey }) {
             contentInsets.bottom = 16
             let headerSize = NSCollectionLayoutSize(
@@ -110,10 +175,55 @@ class ApplePaySectionController: SectionController {
                 elementKind: UICollectionView.elementKindSectionFooter,
                 alignment: .bottom
             )
-            section.boundarySupplementaryItems = [header]
+            layoutSection.boundarySupplementaryItems = [header]
         }
-        section.contentInsets = contentInsets
-        return section
+        layoutSection.contentInsets = contentInsets
+        return layoutSection
+    }
+
+    /// Layout for Apple Pay selected from tab list (reminder + button, no decoration)
+    private func layoutForTab() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44))
+        let reminderItem = NSCollectionLayoutItem(layoutSize: itemSize)
+        let buttonSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(48))
+        let buttonItem = NSCollectionLayoutItem(layoutSize: buttonSize)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100))
+        let paymentGroup = NSCollectionLayoutGroup.vertical(
+            layoutSize: groupSize,
+            subitems: [reminderItem, buttonItem]
+        )
+        paymentGroup.interItemSpacing = .fixed(24)
+        let layoutSection = NSCollectionLayoutSection(group: paymentGroup)
+        let sectionHorizontal: CGFloat = paymentUIContext.isEmbedded ? 0 : 16
+        layoutSection.contentInsets = .init(horizontal: sectionHorizontal)
+        return layoutSection
+    }
+
+    /// Layout for Apple Pay selected in accordion (header + reminder + button, with decoration)
+    private func layoutForAccordion() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44))
+        let accordionKeyItem = NSCollectionLayoutItem(layoutSize: itemSize)
+        let reminderItem = NSCollectionLayoutItem(layoutSize: itemSize)
+        let buttonSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(48))
+        let buttonItem = NSCollectionLayoutItem(layoutSize: buttonSize)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100))
+        let paymentGroup = NSCollectionLayoutGroup.vertical(
+            layoutSize: groupSize,
+            subitems: [accordionKeyItem, reminderItem, buttonItem]
+        )
+        paymentGroup.interItemSpacing = .fixed(24)
+        let layoutSection = NSCollectionLayoutSection(group: paymentGroup)
+        let sectionHorizontal: CGFloat = paymentUIContext.isEmbedded ? 24 : 40
+        layoutSection.contentInsets = .init(top: 16, leading: sectionHorizontal, bottom: 24, trailing: sectionHorizontal)
+
+        // Layout for decoration - rounded corner
+        context.register(RoundedCornerDecorationView.self, forDecorationViewOfKind: AccordionSectionController.backgroundElementKind)
+        let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: AccordionSectionController.backgroundElementKind)
+        sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(
+            horizontal: paymentUIContext.isEmbedded ? 0 : 16
+        )
+        layoutSection.decorationItems = [sectionBackgroundDecoration]
+        return layoutSection
     }
     
     func sectionWillDisplay() {

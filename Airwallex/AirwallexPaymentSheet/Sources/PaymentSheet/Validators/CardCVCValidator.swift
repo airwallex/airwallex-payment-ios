@@ -9,7 +9,7 @@
 import Foundation
 #if canImport(AirwallexPayment)
 import AirwallexCore
-@_spi(AWX) import AirwallexPayment
+import AirwallexPayment
 #endif
 
 struct CardCVCValidator: UserInputValidator, UserInputFormatter {
