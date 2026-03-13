@@ -139,7 +139,6 @@ extension WebViewController: WKUIDelegate {
         guard navigationAction.targetFrame == nil else { return nil }
 
         let popupWebView = WKWebView(frame: .zero, configuration: configuration)
-        popupWebView.customUserAgent = "Airwallex-iOS-SDK" + " GOOGLE_PAY_SUPPORTED"
 
         let popupViewController = WebViewController(webView: popupWebView)
         popupViewController.isPopupWebView = true

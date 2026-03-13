@@ -444,9 +444,9 @@ private extension NewCardPaymentSectionController {
     
     func triggerCountrySelection() {
         context.endEditing()
-        let controller = AWXCountryListViewController(nibName: nil, bundle: nil)
+        let controller = CountryListViewController()
         controller.delegate = self
-        controller.country = viewModelForBillingAddress?.selectedCountry ?? viewModelForCountryCode?.country
+        controller.selectedCountry = viewModelForBillingAddress?.selectedCountry ?? viewModelForCountryCode?.country
         let nav = UINavigationController(rootViewController: controller)
         UIViewController.topMost?.present(nav, animated: true)
     }
@@ -604,8 +604,8 @@ private extension NewCardPaymentSectionController {
     }
 }
     
-extension NewCardPaymentSectionController: AWXCountryListViewControllerDelegate {
-    func countryListViewController(_ controller: AWXCountryListViewController, didSelect country: AWXCountry) {
+extension NewCardPaymentSectionController: CountryListViewControllerDelegate {
+    func countryListViewController(_ controller: CountryListViewController, didSelect country: AWXCountry) {
         controller.dismiss(animated: true)
         assert(viewModelForBillingAddress != nil || viewModelForCountryCode != nil, "one of the viewmodel should exist")
         if let viewModelForBillingAddress {

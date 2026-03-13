@@ -173,8 +173,6 @@ extension IntegrationDemoListViewController: PaymentIntentProvider {
     }
 }
 
-// MARK: - Session & Requests
-
 extension IntegrationDemoListViewController {
     
     func generateClientSecretForRecurringPayment() async throws -> String {
