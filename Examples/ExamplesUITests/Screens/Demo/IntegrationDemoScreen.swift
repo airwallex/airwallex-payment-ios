@@ -14,7 +14,7 @@ enum UIIntegrationDemoScreen {
     static let title = app.staticTexts["Integrate with Airwallex UI"]
     static let buttonForDefaultPaymentList: XCUIElement = app.buttons["Launch default payments list"]
     static let buttonForEmbeddedElement1: XCUIElement = app.buttons["Embedded element"]
-    static let buttonForEmbeddedElement2: XCUIElement = app.buttons["Embedded element (inline apple pay)"]
+    static let buttonForEmbeddedElement2: XCUIElement = app.buttons["Embedded element (inline Apple Pay)"]
     static let buttonForEmbeddedElement3: XCUIElement = app.buttons["Embedded element (card only)"]
     static let settingsButton = app.buttons["gear"]
     static let backButton = app.buttons["Back"]
