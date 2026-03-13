@@ -59,7 +59,7 @@ class UIIntegrationDemoViewController: IntegrationDemoListViewController {
                 }
             ),
             ActionViewModel(
-                title: "Embedded element (inline apple pay)",
+                title: "Embedded element (inline Apple Pay)",
                 action: { [weak self] in
                     self?.launchEmbeddedElement(
                         elementType: .paymentSheet,
