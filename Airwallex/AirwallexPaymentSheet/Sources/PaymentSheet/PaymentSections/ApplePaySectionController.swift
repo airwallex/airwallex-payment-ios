@@ -101,7 +101,8 @@ class ApplePaySectionController: PaymentSectionController {
             return cell
         case .applePayButton:
             let cell = context.dequeueReusableCell(ApplePayCell.self, for: sectionItem, indexPath: indexPath)
-            let viewModel = ApplePayViewModel { [weak self] in
+            let type: PKPaymentButtonType = session.shouldShowPayAsCta ? .plain : .subscribe
+            let viewModel = ApplePayViewModel(buttonType: type) { [weak self] in
                 guard let self else { return }
                 checkout()
             }

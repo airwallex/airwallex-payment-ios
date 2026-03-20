@@ -10,27 +10,24 @@ import PassKit
 import UIKit
 
 struct ApplePayViewModel {
+    var buttonType: PKPaymentButtonType
     var onPaymentButtonTapped: () -> Void
 }
 
 class ApplePayCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupPaymentButton()
-    }
-    
-    private func setupPaymentButton() {
+
+    private func setupPaymentButton(_ type: PKPaymentButtonType) {
         contentView.subviews.forEach { view in
             view.removeFromSuperview()
         }
 
         let view = if #available(iOS 26, *) {
-            PKPaymentButton(type: .plain, style: .automatic, disableCardArt: true)
+            PKPaymentButton(type: type, style: .automatic, disableCardArt: true)
         } else if #available(iOS 14, *) {
-            PKPaymentButton(paymentButtonType: .plain, paymentButtonStyle: .automatic)
+            PKPaymentButton(paymentButtonType: type, paymentButtonStyle: .automatic)
         } else {
             PKPaymentButton(
-                paymentButtonType: .plain,
+                paymentButtonType: type,
                 paymentButtonStyle: traitCollection.userInterfaceStyle == .dark ? .white : .black
             )
         }
@@ -39,10 +36,10 @@ class ApplePayCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         
         contentView.addSubview(view)
         let constraints = [
-            view.topAnchor.constraint(equalTo: topAnchor),
-            view.leadingAnchor.constraint(equalTo: leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: trailingAnchor),
-            view.bottomAnchor.constraint(equalTo: bottomAnchor),
+            view.topAnchor.constraint(equalTo: contentView.topAnchor),
+            view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ]
         NSLayoutConstraint.activate(constraints)
     }
@@ -50,18 +47,17 @@ class ApplePayCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     var viewModel: ApplePayViewModel?
     
     func setup(_ viewModel: ApplePayViewModel) {
+        if self.viewModel?.buttonType != viewModel.buttonType {
+            setupPaymentButton(viewModel.buttonType)
+        }
         self.viewModel = viewModel
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         if #available(iOS 14, *) { return }
         if self.traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            setupPaymentButton()
+            setupPaymentButton(viewModel?.buttonType ?? .plain)
         }
     }
     
