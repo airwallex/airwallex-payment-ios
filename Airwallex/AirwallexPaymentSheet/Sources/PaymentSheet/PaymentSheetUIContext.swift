@@ -58,8 +58,13 @@ class PaymentSheetUIContext: PaymentUIContextProviding {
     /// When true, section controllers should use zero horizontal insets.
     var isEmbedded: Bool { paymentElement != nil }
 
+    /// Configuration for the Apple Pay button.
+    var applePayButtonConfiguration = AWXPaymentElement.ApplePayButton()
+
     /// Whether Apple Pay pinned at top.
-    var showsApplePayAsPrimaryButton: Bool = true
+    var showsApplePayAsPrimaryButton: Bool {
+        applePayButtonConfiguration.showsAsPrimaryButton
+    }
 
     /// The current payment method name being processed (for delegate callbacks).
     var currentPaymentMethod: String?

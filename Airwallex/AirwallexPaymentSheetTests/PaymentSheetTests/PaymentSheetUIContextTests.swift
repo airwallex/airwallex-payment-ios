@@ -9,6 +9,7 @@
 import AirwallexCore
 @testable import AirwallexPayment
 @testable import AirwallexPaymentSheet
+import PassKit
 import UIKit
 import XCTest
 
@@ -102,8 +103,17 @@ class PaymentSheetUIContextTests: XCTestCase {
 
     func testShowsApplePayAsPrimaryButton_CanBeChanged() {
         XCTAssertTrue(sut.showsApplePayAsPrimaryButton)
-        sut.showsApplePayAsPrimaryButton = false
+        sut.applePayButtonConfiguration.showsAsPrimaryButton = false
         XCTAssertFalse(sut.showsApplePayAsPrimaryButton)
+    }
+
+    func testApplePayButtonConfiguration_DefaultButtonType_IsNil() {
+        XCTAssertNil(sut.applePayButtonConfiguration.buttonType)
+    }
+
+    func testApplePayButtonConfiguration_CanSetButtonType() {
+        sut.applePayButtonConfiguration.buttonType = .checkout
+        XCTAssertEqual(sut.applePayButtonConfiguration.buttonType, .checkout)
     }
 
     func testCurrentPaymentMethod_CanBeSet() {

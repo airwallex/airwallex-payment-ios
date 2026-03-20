@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PassKit
 #if canImport(AirwallexPayment)
 import AirwallexCore
 import AirwallexPayment
@@ -101,8 +102,10 @@ class ApplePaySectionController: PaymentSectionController {
             return cell
         case .applePayButton:
             let cell = context.dequeueReusableCell(ApplePayCell.self, for: sectionItem, indexPath: indexPath)
-            let type: PKPaymentButtonType = session.shouldShowPayAsCta ? .plain : .subscribe
-            let viewModel = ApplePayViewModel(buttonType: type) { [weak self] in
+            let type: PKPaymentButtonType = paymentUIContext.applePayButtonConfiguration.buttonType
+                ?? (session.shouldShowPayAsCta ? .plain : .subscribe)
+            let disableCardArt = paymentUIContext.applePayButtonConfiguration.disableCardArt
+            let viewModel = ApplePayViewModel(buttonType: type, disableCardArt: disableCardArt) { [weak self] in
                 guard let self else { return }
                 checkout()
             }

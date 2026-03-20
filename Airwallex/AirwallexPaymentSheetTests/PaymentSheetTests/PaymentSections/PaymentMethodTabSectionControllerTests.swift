@@ -181,7 +181,7 @@ class PaymentMethodTabSectionControllerTests: BasePaymentSectionControllerTests 
         applePayMethod.name = AWXApplePayKey
 
         mockMethodProvider.methods.insert(applePayMethod, at: 0)
-        mockSectionProvider.paymentUIContext.showsApplePayAsPrimaryButton = true
+        mockSectionProvider.paymentUIContext.applePayButtonConfiguration.showsAsPrimaryButton = true
 
         mockManager.performUpdates()
         mockManager.collectionView.layoutIfNeeded()
@@ -205,7 +205,7 @@ class PaymentMethodTabSectionControllerTests: BasePaymentSectionControllerTests 
 
         mockMethodProvider.methods.insert(applePayMethod, at: 0)
         mockMethodProvider.isApplePaySelectable = true
-        mockSectionProvider.paymentUIContext.showsApplePayAsPrimaryButton = false
+        mockSectionProvider.paymentUIContext.applePayButtonConfiguration.showsAsPrimaryButton = false
 
         mockManager.performUpdates()
         mockManager.collectionView.layoutIfNeeded()

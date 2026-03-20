@@ -11,18 +11,19 @@ import UIKit
 
 struct ApplePayViewModel {
     var buttonType: PKPaymentButtonType
+    var disableCardArt: Bool = true
     var onPaymentButtonTapped: () -> Void
 }
 
 class ApplePayCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
 
-    private func setupPaymentButton(_ type: PKPaymentButtonType) {
+    private func setupPaymentButton(_ type: PKPaymentButtonType, disableCardArt: Bool = true) {
         contentView.subviews.forEach { view in
             view.removeFromSuperview()
         }
 
         let view = if #available(iOS 26, *) {
-            PKPaymentButton(type: type, style: .automatic, disableCardArt: true)
+            PKPaymentButton(type: type, style: .automatic, disableCardArt: disableCardArt)
         } else if #available(iOS 14, *) {
             PKPaymentButton(paymentButtonType: type, paymentButtonStyle: .automatic)
         } else {
@@ -47,8 +48,9 @@ class ApplePayCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     var viewModel: ApplePayViewModel?
     
     func setup(_ viewModel: ApplePayViewModel) {
-        if self.viewModel?.buttonType != viewModel.buttonType {
-            setupPaymentButton(viewModel.buttonType)
+        if self.viewModel?.buttonType != viewModel.buttonType
+            || self.viewModel?.disableCardArt != viewModel.disableCardArt {
+            setupPaymentButton(viewModel.buttonType, disableCardArt: viewModel.disableCardArt)
         }
         self.viewModel = viewModel
     }
