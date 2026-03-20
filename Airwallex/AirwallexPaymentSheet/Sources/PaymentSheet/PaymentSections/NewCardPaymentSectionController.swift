@@ -37,7 +37,7 @@ class NewCardPaymentSectionController: NSObject, PaymentSectionController {
     private var methodType: AWXPaymentMethodType
 
     private var paymentSessionHandler: PaymentSessionHandlerProtocol?
-    private var session: AWXSession {
+    var session: AWXSession {
         methodProvider.session
     }
     private let methodProvider: PaymentMethodProvider
@@ -160,7 +160,7 @@ class NewCardPaymentSectionController: NSObject, PaymentSectionController {
         case .checkoutButton:
             let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: sectionItem, indexPath: indexPath)
             let viewModel = CheckoutButtonCellViewModel(
-                shouldShowPayAsCta: session.shouldShowPayAsCta,
+                title: checkoutButtonTitle,
                 checkoutAction: checkout
             )
             cell.setup(viewModel)

@@ -37,8 +37,8 @@ class CardPaymentConsentSectionController: PaymentSectionController {
         case consentPayment
     }
     private var consents: [AWXPaymentConsent]
-    
-    private var session: AWXSession {
+
+    var session: AWXSession {
         methodProvider.session
     }
 
@@ -144,7 +144,7 @@ class CardPaymentConsentSectionController: PaymentSectionController {
         case .checkoutButton:
             let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: sectionItem, indexPath: indexPath)
             let viewModel = CheckoutButtonCellViewModel(
-                shouldShowPayAsCta: session.shouldShowPayAsCta
+                title: checkoutButtonTitle
             ) { [weak self] in
                 guard let self, let selectedConsent else {
                     assert(false, "selected consent not found")

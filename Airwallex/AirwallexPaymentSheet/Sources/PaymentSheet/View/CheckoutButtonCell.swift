@@ -13,7 +13,7 @@ import AirwallexPayment
 #endif
 
 struct CheckoutButtonCellViewModel {
-    let shouldShowPayAsCta: Bool
+    let title: String
     let checkoutAction: () -> Void
 }
 
@@ -57,8 +57,7 @@ class CheckoutButtonCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
     func setup(_ viewModel: CheckoutButtonCellViewModel) {
         self.viewModel = viewModel
-        let title = viewModel.shouldShowPayAsCta ? NSLocalizedString("Pay", bundle: .paymentSheet, comment: "checkout button title for one-off payment") : NSLocalizedString("Confirm", bundle: .paymentSheet, comment: "checkout button title for recurring payment")
-        button.setTitle(title, for: .normal)
+        button.setTitle(viewModel.title, for: .normal)
     }
     
     @objc func onButtonTapped() {

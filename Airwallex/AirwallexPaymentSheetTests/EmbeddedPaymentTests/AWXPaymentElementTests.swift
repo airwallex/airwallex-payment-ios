@@ -123,6 +123,35 @@ final class AWXPaymentElementTests: XCTestCase {
         XCTAssertTrue(configuration.applePayButton.disableCardArt)
     }
 
+    func testConfiguration_DefaultCheckoutButtonTitle_IsNil() {
+        let configuration = AWXPaymentElement.Configuration()
+        XCTAssertNil(configuration.checkoutButton.title)
+    }
+
+    func testConfiguration_CanSetCheckoutButtonTitle() {
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.checkoutButton.title = "Subscribe"
+        XCTAssertEqual(configuration.checkoutButton.title, "Subscribe")
+    }
+
+    func testCreate_AppliesCheckoutButtonConfiguration() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.checkoutButton.title = "Subscribe"
+
+        let element = AWXPaymentElement(
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController,
+            configuration: configuration
+        )
+
+        XCTAssertEqual(element.paymentUIContext.checkoutButtonConfiguration.title, "Subscribe")
+    }
+
     func testConfiguration_DefaultAppearance_HasDefaultColorBrand() {
         let configuration = AWXPaymentElement.Configuration()
         let lightTraitCollection = UITraitCollection(userInterfaceStyle: .light)

@@ -56,6 +56,16 @@ extension AWXPaymentElement {
         public var disableCardArt: Bool = true
     }
 
+    /// Configuration for the checkout button title.
+    @objc(AWXPaymentElementCheckoutButton)
+    @objcMembers
+    public class CheckoutButton: NSObject {
+        /// Custom title for the checkout button.
+        /// When `nil` (default), the SDK automatically selects based on session type:
+        /// "Pay" for one-off payments, "Confirm" for recurring.
+        public var title: String?
+    }
+
     /// Configuration options for the embedded payment element.
     ///
     /// Use this class to customize the appearance and behavior of the payment element.
@@ -96,6 +106,9 @@ extension AWXPaymentElement {
 
         /// Configuration for the Apple Pay button appearance and behavior.
         public var applePayButton = ApplePayButton()
+
+        /// Configuration for the checkout button title.
+        public var checkoutButton = CheckoutButton()
 
         /// Appearance configuration for customizing the visual style.
         public var appearance: Appearance = Appearance()

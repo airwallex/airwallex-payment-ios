@@ -33,7 +33,7 @@ class ApplePaySectionController: PaymentSectionController {
         case accordion
     }
 
-    private let session: AWXSession
+    let session: AWXSession
     private let methodType: AWXPaymentMethodType
     private var paymentSessionHandler: PaymentSessionHandlerProtocol?
     private let methodProvider: PaymentMethodProvider

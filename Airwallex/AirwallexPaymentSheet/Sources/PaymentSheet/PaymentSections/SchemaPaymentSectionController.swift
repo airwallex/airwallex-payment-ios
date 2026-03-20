@@ -23,7 +23,7 @@ private extension String {
 /// This section controlelr is for schema payment
 class SchemaPaymentSectionController: NSObject, PaymentSectionController {
     typealias SectionItem = CompoundItem<PaymentSectionType, String>
-    private var session: AWXSession {
+    var session: AWXSession {
         methodProvider.session
     }
     private var paymentSessionHandler: PaymentSessionHandlerProtocol?
@@ -125,7 +125,7 @@ class SchemaPaymentSectionController: NSObject, PaymentSectionController {
         case .checkoutButton:
             let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: sectionItem, indexPath: indexPath)
             let viewModel = CheckoutButtonCellViewModel(
-                shouldShowPayAsCta: session.shouldShowPayAsCta,
+                title: checkoutButtonTitle,
                 checkoutAction: checkout
             )
             cell.setup(viewModel)

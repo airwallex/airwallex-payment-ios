@@ -182,6 +182,7 @@ public class AWXPaymentElement: NSObject {
         // Configure payment UI context
         self.paymentUIContext.layout = configuration.layout
         self.paymentUIContext.applePayButtonConfiguration = configuration.applePayButton
+        self.paymentUIContext.checkoutButtonConfiguration = configuration.checkoutButton
         self.paymentUIContext.paymentElement = self
         // AWXPaymentElement implements AWXPaymentResultDelegate to bridge to AWXPaymentElementDelegate
         self.paymentUIContext.delegate = self

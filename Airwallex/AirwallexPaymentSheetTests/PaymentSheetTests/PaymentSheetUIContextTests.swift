@@ -116,6 +116,15 @@ class PaymentSheetUIContextTests: XCTestCase {
         XCTAssertEqual(sut.applePayButtonConfiguration.buttonType, .checkout)
     }
 
+    func testCheckoutButtonConfiguration_DefaultTitle_IsNil() {
+        XCTAssertNil(sut.checkoutButtonConfiguration.title)
+    }
+
+    func testCheckoutButtonConfiguration_CanSetCustomTitle() {
+        sut.checkoutButtonConfiguration.title = "Subscribe"
+        XCTAssertEqual(sut.checkoutButtonConfiguration.title, "Subscribe")
+    }
+
     func testCurrentPaymentMethod_CanBeSet() {
         XCTAssertNil(sut.currentPaymentMethod)
         sut.currentPaymentMethod = "card"
@@ -288,5 +297,74 @@ class PaymentSectionControllerProtocolTests: BasePaymentSectionControllerTests {
         XCTAssertTrue(processingDelegate.processingStateChangedCalled)
         XCTAssertEqual(processingDelegate.processingStatePaymentMethod, "card")
         XCTAssertEqual(processingDelegate.processingStateIsProcessing, true)
+    }
+
+    // MARK: - checkoutButtonTitle
+
+    func testCheckoutButtonTitle_OneOffSession_DefaultsPay() {
+        // Default mock session is one-off with amount > 0 (shouldShowPayAsCta == true)
+        mockMethodProvider.session.requiredBillingContactFields = []
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let anySectionController = mockManager.sectionControllers[.cardPaymentNew],
+              let sectionController = anySectionController.embededSectionController as? NewCardPaymentSectionController else {
+            XCTFail()
+            return
+        }
+
+        XCTAssertEqual(sectionController.checkoutButtonTitle, "Pay")
+    }
+
+    func testCheckoutButtonTitle_RecurringSession_DefaultsConfirm() {
+        let session = AWXRecurringSession()
+        session.countryCode = "AU"
+        session.setCustomerId("customer_id")
+        mockMethodProvider.session = session
+        mockMethodProvider.session.requiredBillingContactFields = []
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let anySectionController = mockManager.sectionControllers[.cardPaymentNew],
+              let sectionController = anySectionController.embededSectionController as? NewCardPaymentSectionController else {
+            XCTFail()
+            return
+        }
+
+        XCTAssertEqual(sectionController.checkoutButtonTitle, "Confirm")
+    }
+
+    func testCheckoutButtonTitle_CustomTitle_OverridesDefault() {
+        mockMethodProvider.session.requiredBillingContactFields = []
+        mockSectionProvider.paymentUIContext.checkoutButtonConfiguration.title = "Subscribe"
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let anySectionController = mockManager.sectionControllers[.cardPaymentNew],
+              let sectionController = anySectionController.embededSectionController as? NewCardPaymentSectionController else {
+            XCTFail()
+            return
+        }
+
+        XCTAssertEqual(sectionController.checkoutButtonTitle, "Subscribe")
+    }
+
+    func testCheckoutButtonTitle_CustomTitle_OverridesRecurringDefault() {
+        let session = AWXRecurringSession()
+        session.countryCode = "AU"
+        session.setCustomerId("customer_id")
+        mockMethodProvider.session = session
+        mockMethodProvider.session.requiredBillingContactFields = []
+        mockSectionProvider.paymentUIContext.checkoutButtonConfiguration.title = "Donate"
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let anySectionController = mockManager.sectionControllers[.cardPaymentNew],
+              let sectionController = anySectionController.embededSectionController as? NewCardPaymentSectionController else {
+            XCTFail()
+            return
+        }
+
+        XCTAssertEqual(sectionController.checkoutButtonTitle, "Donate")
     }
 }

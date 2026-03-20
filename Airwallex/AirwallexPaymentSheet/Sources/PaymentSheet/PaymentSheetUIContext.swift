@@ -61,6 +61,9 @@ class PaymentSheetUIContext: PaymentUIContextProviding {
     /// Configuration for the Apple Pay button.
     var applePayButtonConfiguration = AWXPaymentElement.ApplePayButton()
 
+    /// Configuration for the checkout button.
+    var checkoutButtonConfiguration = AWXPaymentElement.CheckoutButton()
+
     /// Whether Apple Pay pinned at top.
     var showsApplePayAsPrimaryButton: Bool {
         applePayButtonConfiguration.showsAsPrimaryButton
@@ -87,6 +90,7 @@ class PaymentSheetUIContext: PaymentUIContextProviding {
 @MainActor
 protocol PaymentSectionController: SectionController where SectionType == PaymentSectionType, ItemType == String {
     var paymentUIContext: PaymentSheetUIContext { get }
+    var session: AWXSession { get }
 }
 
 extension PaymentSectionController {
@@ -101,6 +105,15 @@ extension PaymentSectionController {
     /// - Parameters:
     ///   - paymentMethod: The name of the payment method being processed.
     ///   - handler: The payment session handler (to disable its loading indicator).
+    /// The checkout button title, using the custom title from configuration if set,
+    /// or falling back to the session-based default ("Pay" or "Confirm").
+    var checkoutButtonTitle: String {
+        paymentUIContext.checkoutButtonConfiguration.title
+            ?? (session.shouldShowPayAsCta
+                ? NSLocalizedString("Pay", bundle: .paymentSheet, comment: "checkout button title for one-off payment")
+                : NSLocalizedString("Confirm", bundle: .paymentSheet, comment: "checkout button title for recurring payment"))
+    }
+
     func prepareForEmbeddedCheckout(paymentMethod: String, handler: PaymentSessionHandlerProtocol?) {
         guard paymentUIContext.isEmbedded else { return }
 
