@@ -34,7 +34,7 @@ import AirwallexPayment
         case push
         case present
     }
-    
+
     /// Defines the layout style for payment method selection.
     @objc public enum PaymentLayout: Int, CaseIterable {
         /// Display payment methods in an expandable accordion layout.
@@ -51,23 +51,23 @@ import AirwallexPayment
             }
         }
     }
-    
+
     public enum LaunchError: ErrorLoggable {
         case invalidCardBrand(String)
         case invalidViewHierarchy(String)
         case invalidMethodFilter(String)
         case invalidClientSecret(String)
         case invalidSession(underlyingError: Error)
-        
+
         // CustomNSError - for objc
         public static var errorDomain: String {
             AWXSDKErrorDomain
         }
-        
+
         public var errorUserInfo: [String: Any] {
             [NSLocalizedDescriptionKey: errorDescription]
         }
-        
+
         // LocalizedError - for error.localizedDescription
         var errorDescription: String {
             switch self {
@@ -87,19 +87,19 @@ import AirwallexPayment
         public var eventName: String {
             "ui_launch_error"
         }
-        
+
         public var eventType: String? {
             "payment_validation_failure"
         }
     }
-    
+
     @objc public static let shared = AWXUIContext()
     private override init() {}
 }
 
 @objc public extension AWXUIContext {
-    // MARK: Launch Payment Sheet
-    
+    // MARK: - Launch Payment Sheet
+
     /// Launches the Airwallex payment sheet.
     /// - Parameters:
     ///   - hostingVC: The view controller that launch the payment sheet and also acts as the `AWXPaymentResultDelegate`.
@@ -121,7 +121,7 @@ import AirwallexPayment
             layout: layout
         )
     }
-    
+
     /// Launches the Airwallex payment sheet.
     /// - Parameters:
     ///   - hostingVC: The view controller that launch the payment sheet
@@ -147,28 +147,20 @@ import AirwallexPayment
             session.paymentMethods = methodNames
         }
 
-        // bind session level info
-        AnalyticsLogger.bindSession(
-            session: session,
-            extraInfo: [
-                .launchType: Self.launchType,
-                .layout: layout.displayName
-            ]
-        )
+        let configuration = Configuration()
+        configuration.launchStyle = launchStyle
+        configuration.layout = layout
 
-        AnalyticsLogger.log(action: .paymentLaunched)
-
-        launchPayment(
+        performLaunch(
             from: hostingVC,
             session: session,
-            paymentMethodProvider: PaymentSheetMethodProvider(session: session),
             paymentResultDelegate: paymentResultDelegate,
-            launchStyle: launchStyle,
-            layout: layout
+            configuration: configuration
         )
     }
+
     // MARK: - Launch by Payment Method
-    
+
     /// Launches the Airwallex card payment flow.
     /// - Parameters:
     ///   - hostingVC: The view controller that presents the payment sheet and acts as the `AWXPaymentResultDelegate`.
@@ -208,7 +200,7 @@ import AirwallexPayment
             launchStyle: launchStyle
         )
     }
-    
+
     /// Launches the Airwallex payment sheet for a specified payment method.
     /// - Parameters:
     ///   - name: The name of the payment method.
@@ -224,104 +216,165 @@ import AirwallexPayment
                                          paymentResultDelegate: AWXPaymentResultDelegate,
                                          supportedBrands: [AWXCardBrand]? = AWXCardBrand.allAvailable,
                                          launchStyle: LaunchStyle = .push) {
-        let name = name.trimmed
-        
-        if name == AWXCardKey {
-            guard let supportedBrands,
-                  !supportedBrands.isEmpty else {
-                handleLaunchFailure(
-                    paymentResultDelegate,
-                    LaunchError.invalidCardBrand("supportedBrands should not be empty for card payment")
-                )
-                return
-            }
-            guard Set(supportedBrands).isSubset(of: AWXCardBrand.allAvailable) else {
-                handleLaunchFailure(
-                    paymentResultDelegate,
-                    LaunchError.invalidCardBrand("make sure you only include card brands defined in AWXCardBrand")
-                )
-                return
-            }
+        let configuration = Configuration()
+        configuration.elementType = .component
+        configuration.paymentMethodName = name
+        if let supportedBrands {
+            configuration.supportedCardBrands = supportedBrands
         }
-        let methodProvider = SinglePaymentMethodProvider(
-            session: session,
-            name: name,
-            supportedCardBrands: supportedBrands
-        )
+        configuration.launchStyle = launchStyle
 
-        // bind session level info
-        AnalyticsLogger.bindSession(
-            session: session,
-            extraInfo: [
-                .launchType: Self.launchType,
-            ]
-        )
-
-        AnalyticsLogger.log(
-            action: .paymentLaunched,
-            extraInfo: [
-                .paymentMethod: name
-            ]
-        )
-
-        launchPayment(
+        performLaunch(
             from: hostingVC,
             session: session,
-            paymentMethodProvider: methodProvider,
             paymentResultDelegate: paymentResultDelegate,
-            launchStyle: launchStyle
+            configuration: configuration
         )
     }
 }
 
-private extension AWXUIContext {
-    
+@objc public extension AWXUIContext {
+
+    // MARK: - Launch with Configuration
+
+    /// Launches the Airwallex payment UI using a configuration object.
+    /// - Parameters:
+    ///   - hostingVC: The view controller that launches the payment UI and also acts as the `AWXPaymentResultDelegate`.
+    ///   - session: The current payment session.
+    ///   - configuration: Configuration for the payment flow. Defaults to a new `Configuration` instance.
+    @MainActor static func launchPayment(from hostingVC: UIViewController & AWXPaymentResultDelegate,
+                                         session: AWXSession,
+                                         configuration: Configuration = Configuration()) {
+        launchPayment(
+            from: hostingVC,
+            session: session,
+            paymentResultDelegate: hostingVC,
+            configuration: configuration
+        )
+    }
+
+    /// Launches the Airwallex payment UI using a configuration object.
+    /// - Parameters:
+    ///   - hostingVC: The view controller that launches the payment UI.
+    ///   - session: The current payment session.
+    ///   - paymentResultDelegate: The delegate responsible for handling the payment result.
+    ///   - configuration: Configuration for the payment flow. Defaults to a new `Configuration` instance.
     @MainActor static func launchPayment(from hostingVC: UIViewController,
                                          session: AWXSession,
-                                         paymentMethodProvider: PaymentMethodProvider,
                                          paymentResultDelegate: AWXPaymentResultDelegate,
-                                         launchStyle: LaunchStyle,
-                                         layout: PaymentLayout = .tab) {
+                                         configuration: Configuration = Configuration()) {
+        performLaunch(
+            from: hostingVC,
+            session: session,
+            paymentResultDelegate: paymentResultDelegate,
+            configuration: configuration
+        )
+    }
+}
+
+// MARK: - Private
+
+private extension AWXUIContext {
+    
+    static func performLaunch(from hostingVC: UIViewController,
+                              session: AWXSession,
+                              paymentResultDelegate: AWXPaymentResultDelegate,
+                              configuration: Configuration) {
+        let elementType = resolvedElementType(for: configuration)
+        
+        logLaunchAnalytics(
+            session: session,
+            configuration: configuration,
+            elementType: elementType
+        )
+
+        do {
+            let methodProvider = try makeMethodProvider(
+                session: session,
+                configuration: configuration,
+                elementType: elementType
+            )
+            try validateSession(session)
+            RiskLogger.log(.transactionInitiated)
+            try presentPaymentUI(
+                from: hostingVC,
+                methodProvider: methodProvider,
+                paymentResultDelegate: paymentResultDelegate,
+                configuration: configuration
+            )
+        } catch let error as LaunchError {
+            handleLaunchFailure(paymentResultDelegate, error)
+        } catch {
+            handleLaunchFailure(paymentResultDelegate, .invalidSession(underlyingError: error))
+        }
+    }
+    static func resolvedElementType(for configuration: Configuration) -> ElementType {
+        guard configuration.elementType == .component,
+              let name = configuration.paymentMethodName?.trimmed,
+              !name.isEmpty else {
+            return .paymentSheet
+        }
+        return .component
+    }
+
+    static func makeMethodProvider(session: AWXSession,
+                                   configuration: Configuration,
+                                   elementType: ElementType) throws -> PaymentMethodProvider {
+        switch elementType {
+        case .component:
+            let name = configuration.paymentMethodName!.trimmed
+            if name == AWXCardKey {
+                guard !configuration.supportedCardBrands.isEmpty else {
+                    throw LaunchError.invalidCardBrand("supportedBrands should not be empty for card payment")
+                }
+                guard Set(configuration.supportedCardBrands).isSubset(of: AWXCardBrand.allAvailable) else {
+                    throw LaunchError.invalidCardBrand("make sure you only include card brands defined in AWXCardBrand")
+                }
+            }
+            return SinglePaymentMethodProvider(
+                session: session,
+                name: name,
+                supportedCardBrands: configuration.supportedCardBrands
+            )
+        case .paymentSheet:
+            return PaymentSheetMethodProvider(session: session)
+        }
+    }
+
+    static func validateSession(_ session: AWXSession) throws {
         do {
             try session.validate()
         } catch {
-            handleLaunchFailure(
-                paymentResultDelegate,
-                LaunchError.invalidSession(underlyingError: error)
-            )
-            return
+            throw LaunchError.invalidSession(underlyingError: error)
         }
-        
-        if let session = session as? Session {
+
+        if session is Session {
             // client secret will be updated on `AWXAPIClientConfiguration.shared()`
             // when `session.ensurePaymentIntent()` called
         } else {
             guard let secret = AWXAPIClientConfiguration.shared().clientSecret,
                   !secret.isEmpty else {
-                handleLaunchFailure(
-                    paymentResultDelegate,
-                    LaunchError.invalidClientSecret("please update client secret on AWXAPIClientConfiguration.shared()")
-                )
-                return
+                throw LaunchError.invalidClientSecret("please update client secret on AWXAPIClientConfiguration.shared()")
             }
         }
+    }
 
-        // Risk event
-        RiskLogger.log(.transactionInitiated)
-        
-        switch launchStyle {
+    @MainActor static func presentPaymentUI(from hostingVC: UIViewController,
+                                            methodProvider: PaymentMethodProvider,
+                                            paymentResultDelegate: AWXPaymentResultDelegate,
+                                            configuration: Configuration) throws {
+        let paymentUIContext = PaymentSheetUIContext(delegate: paymentResultDelegate)
+        paymentUIContext.layout = configuration.layout
+        paymentUIContext.applePayButtonConfiguration = configuration.applePayButton
+        paymentUIContext.checkoutButtonConfiguration = configuration.checkoutButton
+
+        switch configuration.launchStyle {
         case .push:
             guard let nav = hostingVC.navigationController else {
-                handleLaunchFailure(
-                    paymentResultDelegate,
-                    LaunchError.invalidViewHierarchy("hosting view controller is not embeded in navigation controller")
-                )
-                return
+                throw LaunchError.invalidViewHierarchy("hosting view controller is not embeded in navigation controller")
             }
-            let paymentUIContext = PaymentSheetUIContext(delegate: paymentResultDelegate)
-            paymentUIContext.layout = layout
             let paymentVC = PaymentViewController(
-                methodProvider: paymentMethodProvider,
+                methodProvider: methodProvider,
                 paymentUIContext: paymentUIContext
             )
             paymentUIContext.dismissAction = { [weak paymentVC, weak nav] completion in
@@ -345,10 +398,8 @@ private extension AWXUIContext {
             }
             nav.pushViewController(paymentVC, animated: true)
         case .present:
-            let paymentUIContext = PaymentSheetUIContext(delegate: paymentResultDelegate)
-            paymentUIContext.layout = layout
             let paymentVC = PaymentViewController(
-                methodProvider: paymentMethodProvider,
+                methodProvider: methodProvider,
                 paymentUIContext: paymentUIContext
             )
             let nav = UINavigationController(rootViewController: paymentVC)
@@ -378,7 +429,37 @@ private extension AWXUIContext {
             hostingVC.present(nav, animated: true)
         }
     }
-    
+
+    static func logLaunchAnalytics(session: AWXSession,
+                                   configuration: Configuration,
+                                   elementType: ElementType) {
+        switch elementType {
+        case .component:
+            let name = configuration.paymentMethodName!.trimmed
+            AnalyticsLogger.bindSession(
+                session: session,
+                extraInfo: [
+                    .launchType: Self.launchType,
+                ]
+            )
+            AnalyticsLogger.log(
+                action: .paymentLaunched,
+                extraInfo: [
+                    .paymentMethod: name
+                ]
+            )
+        case .paymentSheet:
+            AnalyticsLogger.bindSession(
+                session: session,
+                extraInfo: [
+                    .launchType: Self.launchType,
+                    .layout: configuration.layout.displayName
+                ]
+            )
+            AnalyticsLogger.log(action: .paymentLaunched)
+        }
+    }
+
     static func handleLaunchFailure(_ paymentResultDelegate: AWXPaymentResultDelegate,
                                     _ error: LaunchError) {
         paymentResultDelegate.paymentViewController(nil, didCompleteWith: .failure, error: error)

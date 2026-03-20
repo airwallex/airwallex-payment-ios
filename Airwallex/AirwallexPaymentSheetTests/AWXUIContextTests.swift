@@ -233,4 +233,106 @@ import XCTest
         XCTAssertNil(mockOneoffSession.paymentMethods)
         XCTAssertFalse(mockOneoffSession.hidePaymentConsents)
     }
+    
+    // MARK: - Configuration-based API Tests
+    
+    func testLaunchWithDefaultConfiguration() {
+        let configuration = AWXUIContext.Configuration()
+        configuration.launchStyle = .present
+        
+        AWXUIContext.launchPayment(
+            from: mockViewController,
+            session: mockOneoffSession,
+            configuration: configuration
+        )
+        
+        XCTAssertNil(mockViewController.error, "unexpected error: \(String(describing: mockViewController.error))")
+    }
+    
+    func testLaunchWithComponentCardEmptyBrands() {
+        let configuration = AWXUIContext.Configuration()
+        configuration.elementType = .component
+        configuration.paymentMethodName = AWXCardKey
+        configuration.supportedCardBrands = []
+        configuration.launchStyle = .present
+        
+        AWXUIContext.launchPayment(
+            from: mockViewController,
+            session: mockOneoffSession,
+            configuration: configuration
+        )
+        
+        guard let error = mockViewController.error,
+              case AWXUIContext.LaunchError.invalidCardBrand = error else {
+            XCTFail("Expected AWXUIContext.LaunchError.invalidCardBrand, but got \(String(describing: mockViewController.error))")
+            return
+        }
+    }
+    
+    func testLaunchWithComponentCardInvalidBrands() {
+        let configuration = AWXUIContext.Configuration()
+        configuration.elementType = .component
+        configuration.paymentMethodName = AWXCardKey
+        configuration.supportedCardBrands = [AWXCardBrand(rawValue: "invalid_brand")]
+        configuration.launchStyle = .present
+        
+        AWXUIContext.launchPayment(
+            from: mockViewController,
+            session: mockOneoffSession,
+            configuration: configuration
+        )
+        
+        guard let error = mockViewController.error,
+              case AWXUIContext.LaunchError.invalidCardBrand = error else {
+            XCTFail("Expected AWXUIContext.LaunchError.invalidCardBrand, but got \(String(describing: mockViewController.error))")
+            return
+        }
+    }
+    
+    func testLaunchWithComponentNilNameFallsBackToPaymentSheet() {
+        let configuration = AWXUIContext.Configuration()
+        configuration.elementType = .component
+        configuration.paymentMethodName = nil
+        configuration.launchStyle = .present
+        
+        AWXUIContext.launchPayment(
+            from: mockViewController,
+            session: mockOneoffSession,
+            configuration: configuration
+        )
+        
+        XCTAssertNil(mockViewController.error, "unexpected error: \(String(describing: mockViewController.error))")
+    }
+    
+    func testLaunchWithPushStyleWithoutNavController() {
+        let configuration = AWXUIContext.Configuration()
+        configuration.launchStyle = .push
+        
+        AWXUIContext.launchPayment(
+            from: mockViewController,
+            session: mockOneoffSession,
+            configuration: configuration
+        )
+        
+        guard let error = mockViewController.error,
+              case AWXUIContext.LaunchError.invalidViewHierarchy = error else {
+            XCTFail("Expected AWXUIContext.LaunchError.invalidViewHierarchy, but got \(String(describing: mockViewController.error))")
+            return
+        }
+    }
+    
+    func testLaunchWithComponentNonCardMethod() {
+        let configuration = AWXUIContext.Configuration()
+        configuration.elementType = .component
+        configuration.paymentMethodName = AWXApplePayKey
+        configuration.launchStyle = .present
+        
+        AWXUIContext.launchPayment(
+            from: mockViewController,
+            session: mockOneoffSession,
+            configuration: configuration
+        )
+        
+        XCTAssertNil(mockViewController.error, "unexpected error: \(String(describing: mockViewController.error))")
+    }
 }
