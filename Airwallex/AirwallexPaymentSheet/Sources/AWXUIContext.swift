@@ -217,8 +217,12 @@ import AirwallexPayment
                                          supportedBrands: [AWXCardBrand]? = AWXCardBrand.allAvailable,
                                          launchStyle: LaunchStyle = .push) {
         let configuration = Configuration()
-        configuration.elementType = .component
-        configuration.paymentMethodName = name
+        if name == AWXCardKey {
+            configuration.elementType = .addCard
+        } else {
+            configuration.elementType = .component
+            configuration.paymentMethodName = name
+        }
         if let supportedBrands {
             configuration.supportedCardBrands = supportedBrands
         }
@@ -245,7 +249,7 @@ import AirwallexPayment
     @MainActor static func launchPayment(from hostingVC: UIViewController & AWXPaymentResultDelegate,
                                          session: AWXSession,
                                          configuration: Configuration = Configuration()) {
-        launchPayment(
+        performLaunch(
             from: hostingVC,
             session: session,
             paymentResultDelegate: hostingVC,
@@ -309,35 +313,50 @@ private extension AWXUIContext {
         }
     }
     static func resolvedElementType(for configuration: Configuration) -> ElementType {
-        guard configuration.elementType == .component,
-              let name = configuration.paymentMethodName?.trimmed,
-              !name.isEmpty else {
-            return .paymentSheet
+        switch configuration.elementType {
+        case .paymentSheet, .addCard:
+            return configuration.elementType
+        case .component:
+            guard let name = configuration.paymentMethodName?.trimmed,
+                  !name.isEmpty else {
+                return .paymentSheet
+            }
+            return .component
         }
-        return .component
     }
 
     static func makeMethodProvider(session: AWXSession,
                                    configuration: Configuration,
                                    elementType: ElementType) throws -> PaymentMethodProvider {
         switch elementType {
+        case .paymentSheet:
+            return PaymentSheetMethodProvider(session: session)
+        case .addCard:
+            try validateCardBrands(configuration.supportedCardBrands)
+            return SinglePaymentMethodProvider(
+                session: session,
+                name: AWXCardKey,
+                supportedCardBrands: configuration.supportedCardBrands
+            )
         case .component:
             let name = configuration.paymentMethodName!.trimmed
             if name == AWXCardKey {
-                guard !configuration.supportedCardBrands.isEmpty else {
-                    throw LaunchError.invalidCardBrand("supportedBrands should not be empty for card payment")
-                }
-                guard Set(configuration.supportedCardBrands).isSubset(of: AWXCardBrand.allAvailable) else {
-                    throw LaunchError.invalidCardBrand("make sure you only include card brands defined in AWXCardBrand")
-                }
+                try validateCardBrands(configuration.supportedCardBrands)
             }
             return SinglePaymentMethodProvider(
                 session: session,
                 name: name,
                 supportedCardBrands: configuration.supportedCardBrands
             )
-        case .paymentSheet:
-            return PaymentSheetMethodProvider(session: session)
+        }
+    }
+
+    static func validateCardBrands(_ brands: [AWXCardBrand]) throws {
+        guard !brands.isEmpty else {
+            throw LaunchError.invalidCardBrand("supportedBrands should not be empty for card payment")
+        }
+        guard Set(brands).isSubset(of: AWXCardBrand.allAvailable) else {
+            throw LaunchError.invalidCardBrand("make sure you only include card brands defined in AWXCardBrand")
         }
     }
 
@@ -434,8 +453,22 @@ private extension AWXUIContext {
                                    configuration: Configuration,
                                    elementType: ElementType) {
         switch elementType {
-        case .component:
-            let name = configuration.paymentMethodName!.trimmed
+        case .paymentSheet:
+            AnalyticsLogger.bindSession(
+                session: session,
+                extraInfo: [
+                    .launchType: Self.launchType,
+                    .layout: configuration.layout.displayName
+                ]
+            )
+            AnalyticsLogger.log(action: .paymentLaunched)
+        case .addCard, .component:
+            let name: String = if elementType == .addCard {
+                AWXCardKey
+            } else {
+                configuration.paymentMethodName?.trimmed ?? "unknown"
+            }
+            assert(name != "unknown", "configuration.paymentMethodName is required")
             AnalyticsLogger.bindSession(
                 session: session,
                 extraInfo: [
@@ -448,15 +481,6 @@ private extension AWXUIContext {
                     .paymentMethod: name
                 ]
             )
-        case .paymentSheet:
-            AnalyticsLogger.bindSession(
-                session: session,
-                extraInfo: [
-                    .launchType: Self.launchType,
-                    .layout: configuration.layout.displayName
-                ]
-            )
-            AnalyticsLogger.log(action: .paymentLaunched)
         }
     }
 

@@ -16,8 +16,10 @@ extension AWXUIContext {
     /// The type of payment flow to display.
     @objc(AWXUIContextElementType)
     public enum ElementType: Int {
-        /// Display all available payment methods (default)
+        /// Display all available payment methods (default).
         case paymentSheet
+        /// Display card paymenelementTypet element only (for adding new cards).
+        case addCard
         /// Display a single payment method component.
         /// Requires `paymentMethodName` to be set on the configuration.
         case component
