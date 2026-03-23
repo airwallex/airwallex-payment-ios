@@ -46,10 +46,10 @@ extension AWXUIContext {
 
         /// Configuration for the Apple Pay button (buttonType, disableCardArt).
         /// Note: showsAsPrimaryButton has no effect in sheet context.
-        public var applePayButton = AWXPaymentElement.ApplePayButton()
+        public var applePayButton = AWXPaymentElement.Configuration.ApplePayButton()
 
         /// Configuration for the checkout button title.
-        public var checkoutButton = AWXPaymentElement.CheckoutButton()
+        public var checkoutButton = AWXPaymentElement.Configuration.CheckoutButton()
 
         /// Supported card brands. Only applies when paymentMethodName is "card".
         public var supportedCardBrands: [AWXCardBrand] = AWXCardBrand.allAvailable

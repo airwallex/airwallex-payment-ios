@@ -59,10 +59,10 @@ class PaymentSheetUIContext: PaymentUIContextProviding {
     var isEmbedded: Bool { paymentElement != nil }
 
     /// Configuration for the Apple Pay button.
-    var applePayButtonConfiguration = AWXPaymentElement.ApplePayButton()
+    var applePayButtonConfiguration = AWXPaymentElement.Configuration.ApplePayButton()
 
     /// Configuration for the checkout button.
-    var checkoutButtonConfiguration = AWXPaymentElement.CheckoutButton()
+    var checkoutButtonConfiguration = AWXPaymentElement.Configuration.CheckoutButton()
 
     /// Whether Apple Pay pinned at top.
     var showsApplePayAsPrimaryButton: Bool {
