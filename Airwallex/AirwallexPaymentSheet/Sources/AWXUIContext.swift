@@ -148,6 +148,7 @@ import AirwallexPayment
         }
 
         let configuration = Configuration()
+        configuration.isCreatedByLegacyAPI = true
         configuration.launchStyle = launchStyle
         configuration.layout = layout
 
@@ -217,6 +218,7 @@ import AirwallexPayment
                                          supportedBrands: [AWXCardBrand]? = AWXCardBrand.allAvailable,
                                          launchStyle: LaunchStyle = .push) {
         let configuration = Configuration()
+        configuration.isCreatedByLegacyAPI = true
         if name == AWXCardKey {
             configuration.elementType = .addCard
         } else {
@@ -382,6 +384,10 @@ private extension AWXUIContext {
                                             methodProvider: PaymentMethodProvider,
                                             paymentResultDelegate: AWXPaymentResultDelegate,
                                             configuration: Configuration) throws {
+        if !configuration.isCreatedByLegacyAPI {
+            AWXTheme.shared().tintColor = configuration.appearance.tintColor
+        }
+
         let paymentUIContext = PaymentSheetUIContext(delegate: paymentResultDelegate)
         paymentUIContext.layout = configuration.layout
         paymentUIContext.applePayButtonConfiguration = configuration.applePayButton

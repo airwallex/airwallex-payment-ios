@@ -53,7 +53,18 @@ extension AWXUIContext {
         /// Configuration for the checkout button title.
         public var checkoutButton = AWXPaymentElement.Configuration.CheckoutButton()
 
+        /// Appearance configuration for customizing the visual style.
+        ///
+        /// Use this to customize the tint color used throughout the payment UI.
+        /// When launched with a configuration, `appearance.tintColor` overrides `AWXTheme.shared().tintColor`.
+        public var appearance = AWXPaymentElement.Configuration.Appearance()
+
         /// Supported card brands. Only applies when paymentMethodName is "card".
         public var supportedCardBrands: [AWXCardBrand] = AWXCardBrand.allAvailable
+
+        /// Internal flag indicating this configuration was created internally by a legacy API.
+        /// When `true`, `appearance.tintColor` is NOT applied to `AWXTheme.shared().tintColor`,
+        /// preserving backward compatibility for callers who set `AWXTheme.shared().tintColor` directly.
+        var isCreatedByLegacyAPI = false
     }
 }

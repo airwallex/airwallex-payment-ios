@@ -39,9 +39,10 @@ import XCTest
         AWXAPIClientConfiguration.shared().clientSecret = mockClientSecret
     }
     
-    override class func tearDown() {
-        super.tearDown()
+    override func tearDown() {
         AWXAPIClientConfiguration.shared().clientSecret = nil
+        AWXTheme.shared().tintColor = nil
+        super.tearDown()
     }
     
     func testLaunchPaymentViewHierarchyAssertion() {
@@ -326,13 +327,85 @@ import XCTest
         configuration.elementType = .component
         configuration.paymentMethodName = AWXApplePayKey
         configuration.launchStyle = .present
-        
+
         AWXUIContext.launchPayment(
             from: mockViewController,
             session: mockOneoffSession,
             configuration: configuration
         )
-        
+
         XCTAssertNil(mockViewController.error, "unexpected error: \(String(describing: mockViewController.error))")
+    }
+
+    // MARK: - Appearance Configuration Tests
+
+    func testConfiguration_DefaultAppearance_HasDefaultTintColor() {
+        let configuration = AWXUIContext.Configuration()
+        let lightTraitCollection = UITraitCollection(userInterfaceStyle: .light)
+        let darkTraitCollection = UITraitCollection(userInterfaceStyle: .dark)
+        XCTAssertEqual(
+            configuration.appearance.tintColor.resolvedColor(with: lightTraitCollection),
+            UIColor.awxColor(.theme).resolvedColor(with: lightTraitCollection)
+        )
+        XCTAssertEqual(
+            configuration.appearance.tintColor.resolvedColor(with: darkTraitCollection),
+            UIColor.awxColor(.theme).resolvedColor(with: darkTraitCollection)
+        )
+    }
+
+    func testConfiguration_CanSetCustomTintColor() {
+        let configuration = AWXUIContext.Configuration()
+        configuration.appearance.tintColor = .systemRed
+        XCTAssertEqual(configuration.appearance.tintColor, .systemRed)
+    }
+
+    func testConfiguration_IsCreatedByLegacyAPI_DefaultsToFalse() {
+        let configuration = AWXUIContext.Configuration()
+        XCTAssertFalse(configuration.isCreatedByLegacyAPI)
+    }
+
+    func testLaunchWithConfiguration_AppliesTintColorToTheme() {
+        let customColor = UIColor.systemGreen
+        let configuration = AWXUIContext.Configuration()
+        configuration.appearance.tintColor = customColor
+        configuration.launchStyle = .present
+
+        AWXUIContext.launchPayment(
+            from: mockViewController,
+            session: mockOneoffSession,
+            configuration: configuration
+        )
+
+        XCTAssertNil(mockViewController.error, "unexpected error: \(String(describing: mockViewController.error))")
+        XCTAssertEqual(AWXTheme.shared().tintColor, customColor)
+    }
+
+    func testLegacyLaunch_DoesNotOverrideThemeTintColor() {
+        let customColor = UIColor.systemOrange
+        AWXTheme.shared().tintColor = customColor
+
+        AWXUIContext.launchPayment(
+            from: mockViewController,
+            session: mockOneoffSession,
+            filterBy: [AWXApplePayKey],
+            launchStyle: .present
+        )
+
+        XCTAssertNil(mockViewController.error, "unexpected error: \(String(describing: mockViewController.error))")
+        XCTAssertEqual(AWXTheme.shared().tintColor, customColor, "Legacy API should not override AWXTheme.shared().tintColor")
+    }
+
+    func testLegacyCardLaunch_DoesNotOverrideThemeTintColor() {
+        let customColor = UIColor.systemOrange
+        AWXTheme.shared().tintColor = customColor
+
+        AWXUIContext.launchCardPayment(
+            from: mockViewController,
+            session: mockOneoffSession,
+            launchStyle: .present
+        )
+
+        XCTAssertNil(mockViewController.error, "unexpected error: \(String(describing: mockViewController.error))")
+        XCTAssertEqual(AWXTheme.shared().tintColor, customColor, "Legacy card API should not override AWXTheme.shared().tintColor")
     }
 }
