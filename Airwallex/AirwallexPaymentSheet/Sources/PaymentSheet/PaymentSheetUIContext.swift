@@ -58,8 +58,16 @@ class PaymentSheetUIContext: PaymentUIContextProviding {
     /// When true, section controllers should use zero horizontal insets.
     var isEmbedded: Bool { paymentElement != nil }
 
+    /// Configuration for the Apple Pay button.
+    var applePayButtonConfiguration = AWXPaymentElement.Configuration.ApplePayButton()
+
+    /// Configuration for the checkout button.
+    var checkoutButtonConfiguration = AWXPaymentElement.Configuration.CheckoutButton()
+
     /// Whether Apple Pay pinned at top.
-    var showsApplePayAsPrimaryButton: Bool = true
+    var showsApplePayAsPrimaryButton: Bool {
+        applePayButtonConfiguration.showsAsPrimaryButton
+    }
 
     /// The current payment method name being processed (for delegate callbacks).
     var currentPaymentMethod: String?
@@ -82,6 +90,7 @@ class PaymentSheetUIContext: PaymentUIContextProviding {
 @MainActor
 protocol PaymentSectionController: SectionController where SectionType == PaymentSectionType, ItemType == String {
     var paymentUIContext: PaymentSheetUIContext { get }
+    var session: AWXSession { get }
 }
 
 extension PaymentSectionController {
@@ -96,6 +105,15 @@ extension PaymentSectionController {
     /// - Parameters:
     ///   - paymentMethod: The name of the payment method being processed.
     ///   - handler: The payment session handler (to disable its loading indicator).
+    /// The checkout button title, using the custom title from configuration if set,
+    /// or falling back to the session-based default ("Pay" or "Confirm").
+    var checkoutButtonTitle: String {
+        paymentUIContext.checkoutButtonConfiguration.title
+            ?? (session.shouldShowPayAsCta
+                ? NSLocalizedString("Pay", bundle: .paymentSheet, comment: "checkout button title for one-off payment")
+                : NSLocalizedString("Confirm", bundle: .paymentSheet, comment: "checkout button title for recurring payment"))
+    }
+
     func prepareForEmbeddedCheckout(paymentMethod: String, handler: PaymentSessionHandlerProtocol?) {
         guard paymentUIContext.isEmbedded else { return }
 

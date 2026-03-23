@@ -9,6 +9,7 @@
 import AirwallexCore
 @testable import AirwallexPayment
 @testable import AirwallexPaymentSheet
+import PassKit
 import XCTest
 
 @MainActor
@@ -97,13 +98,58 @@ final class AWXPaymentElementTests: XCTestCase {
 
     func testConfiguration_DefaultShowsApplePayAsPrimaryButton_IsTrue() {
         let configuration = AWXPaymentElement.Configuration()
-        XCTAssertTrue(configuration.showsApplePayAsPrimaryButton)
+        XCTAssertTrue(configuration.applePayButton.showsAsPrimaryButton)
     }
 
     func testConfiguration_CanSetShowsApplePayAsPrimaryButtonToFalse() {
         let configuration = AWXPaymentElement.Configuration()
-        configuration.showsApplePayAsPrimaryButton = false
-        XCTAssertFalse(configuration.showsApplePayAsPrimaryButton)
+        configuration.applePayButton.showsAsPrimaryButton = false
+        XCTAssertFalse(configuration.applePayButton.showsAsPrimaryButton)
+    }
+
+    func testConfiguration_DefaultApplePayButtonType_IsNil() {
+        let configuration = AWXPaymentElement.Configuration()
+        XCTAssertNil(configuration.applePayButton.buttonType)
+    }
+
+    func testConfiguration_CanSetApplePayButtonType() {
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.applePayButton.buttonType = .buy
+        XCTAssertEqual(configuration.applePayButton.buttonType, .buy)
+    }
+
+    func testConfiguration_DefaultDisableCardArt_IsTrue() {
+        let configuration = AWXPaymentElement.Configuration()
+        XCTAssertTrue(configuration.applePayButton.disableCardArt)
+    }
+
+    func testConfiguration_DefaultCheckoutButtonTitle_IsNil() {
+        let configuration = AWXPaymentElement.Configuration()
+        XCTAssertNil(configuration.checkoutButton.title)
+    }
+
+    func testConfiguration_CanSetCheckoutButtonTitle() {
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.checkoutButton.title = "Subscribe"
+        XCTAssertEqual(configuration.checkoutButton.title, "Subscribe")
+    }
+
+    func testCreate_AppliesCheckoutButtonConfiguration() {
+        let cardMethod = AWXPaymentMethodType()
+        cardMethod.name = AWXCardKey
+        mockMethodProvider.methods = [cardMethod]
+        mockMethodProvider.selectedMethod = cardMethod
+
+        let configuration = AWXPaymentElement.Configuration()
+        configuration.checkoutButton.title = "Subscribe"
+
+        let element = AWXPaymentElement(
+            methodProvider: mockMethodProvider,
+            delegate: mockViewController,
+            configuration: configuration
+        )
+
+        XCTAssertEqual(element.paymentUIContext.checkoutButtonConfiguration.title, "Subscribe")
     }
 
     func testConfiguration_DefaultAppearance_HasDefaultColorBrand() {
@@ -608,7 +654,7 @@ final class AWXPaymentElementTests: XCTestCase {
 
         let configuration = AWXPaymentElement.Configuration()
         configuration.layout = .tab
-        configuration.showsApplePayAsPrimaryButton = false
+        configuration.applePayButton.showsAsPrimaryButton = false
 
         let element = AWXPaymentElement(
             methodProvider: mockMethodProvider,
@@ -692,7 +738,7 @@ final class AWXPaymentElementTests: XCTestCase {
 
         let configuration = AWXPaymentElement.Configuration()
         configuration.layout = .accordion
-        configuration.showsApplePayAsPrimaryButton = false  // Apple Pay integrated in accordion
+        configuration.applePayButton.showsAsPrimaryButton = false  // Apple Pay integrated in accordion
 
         let element = AWXPaymentElement(
             methodProvider: mockMethodProvider,
@@ -723,7 +769,7 @@ final class AWXPaymentElementTests: XCTestCase {
 
         let configuration = AWXPaymentElement.Configuration()
         configuration.layout = .accordion
-        configuration.showsApplePayAsPrimaryButton = false  // Apple Pay integrated in accordion
+        configuration.applePayButton.showsAsPrimaryButton = false  // Apple Pay integrated in accordion
 
         let element = AWXPaymentElement(
             methodProvider: mockMethodProvider,
@@ -990,7 +1036,7 @@ final class AWXPaymentElementTests: XCTestCase {
 
         let configuration = AWXPaymentElement.Configuration()
         configuration.layout = .tab
-        configuration.showsApplePayAsPrimaryButton = false
+        configuration.applePayButton.showsAsPrimaryButton = false
 
         let element = AWXPaymentElement(
             methodProvider: mockMethodProvider,

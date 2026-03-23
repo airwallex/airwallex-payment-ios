@@ -108,7 +108,7 @@ public class AWXPaymentElement: NSObject {
         case .paymentSheet:
             return PaymentSheetMethodProvider(
                 session: session,
-                isApplePaySelectable: !configuration.showsApplePayAsPrimaryButton
+                isApplePaySelectable: !configuration.applePayButton.showsAsPrimaryButton
             )
         case .addCard:
             guard !configuration.supportedCardBrands.isEmpty else {
@@ -147,7 +147,7 @@ public class AWXPaymentElement: NSObject {
              .paymentMethod: AWXCardKey]
         } else {
             [.launchType: launchType,
-             .showsApplePayAsPrimaryButton: configuration.showsApplePayAsPrimaryButton,
+             .showsApplePayAsPrimaryButton: configuration.applePayButton.showsAsPrimaryButton,
              .layout: configuration.layout.displayName]
         }
         AnalyticsLogger.bindSession(session: session, extraInfo: extraInfo)
@@ -181,7 +181,8 @@ public class AWXPaymentElement: NSObject {
 
         // Configure payment UI context
         self.paymentUIContext.layout = configuration.layout
-        self.paymentUIContext.showsApplePayAsPrimaryButton = configuration.showsApplePayAsPrimaryButton
+        self.paymentUIContext.applePayButtonConfiguration = configuration.applePayButton
+        self.paymentUIContext.checkoutButtonConfiguration = configuration.checkoutButton
         self.paymentUIContext.paymentElement = self
         // AWXPaymentElement implements AWXPaymentResultDelegate to bridge to AWXPaymentElementDelegate
         self.paymentUIContext.delegate = self

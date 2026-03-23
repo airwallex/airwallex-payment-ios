@@ -8,6 +8,7 @@
 
 import AirwallexCore
 @testable import AirwallexPaymentSheet
+import PassKit
 import UIKit
 import XCTest
 
@@ -63,7 +64,7 @@ import XCTest
     func testAccordionLayout_Items() {
         mockSectionProvider.layout = .accordion
         mockSectionProvider.simulateEmbeddedMode()
-        mockSectionProvider.paymentUIContext.showsApplePayAsPrimaryButton = false  // Apple Pay integrated in accordion
+        mockSectionProvider.paymentUIContext.applePayButtonConfiguration.showsAsPrimaryButton = false  // Apple Pay integrated in accordion
         mockMethodProvider.selectedMethod = mockMethodProvider.methods.first
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
@@ -79,7 +80,7 @@ import XCTest
     func testAccordionLayout_Cells() {
         mockSectionProvider.layout = .accordion
         mockSectionProvider.simulateEmbeddedMode()
-        mockSectionProvider.paymentUIContext.showsApplePayAsPrimaryButton = false  // Apple Pay integrated in accordion
+        mockSectionProvider.paymentUIContext.applePayButtonConfiguration.showsAsPrimaryButton = false  // Apple Pay integrated in accordion
         mockMethodProvider.selectedMethod = mockMethodProvider.methods.first
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
@@ -153,7 +154,7 @@ import XCTest
         // Apple Pay is selected from the tab list and should show reminder + button
         mockSectionProvider.layout = .tab
         mockSectionProvider.simulateEmbeddedMode()
-        mockSectionProvider.paymentUIContext.showsApplePayAsPrimaryButton = false
+        mockSectionProvider.paymentUIContext.applePayButtonConfiguration.showsAsPrimaryButton = false
         mockMethodProvider.selectedMethod = mockMethodProvider.methods.first
         mockManager.performUpdates()
         mockViewController.view.layoutIfNeeded()
@@ -165,6 +166,66 @@ import XCTest
 
         // Tab layout type should show reminder + button (no accordion key)
         XCTAssertEqual(controller.items, [.applePayReminder, .applePayButton])
+    }
+
+    // MARK: - Custom Button Type Tests
+
+    func testCustomButtonType_UsedWhenSet() {
+        mockSectionProvider.paymentUIContext.applePayButtonConfiguration.buttonType = .buy
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let controller = mockManager.sectionControllers[PaymentSectionType.applePay] else {
+            XCTFail("apple pay section controller not initialized")
+            return
+        }
+        let sectionItem = controller.sectionItem(.applePayButton)
+        guard let indexPath = mockManager.diffableDataSource.indexPath(for: sectionItem),
+              let cell = mockManager.collectionView.cellForItem(at: indexPath) as? ApplePayCell else {
+            XCTFail("apple pay cell not found")
+            return
+        }
+        XCTAssertEqual(cell.viewModel?.buttonType, .buy)
+    }
+
+    func testDefaultButtonType_PlainForOneOff() {
+        // Default session is one-off (shouldShowPayAsCta = true)
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let controller = mockManager.sectionControllers[PaymentSectionType.applePay] else {
+            XCTFail("apple pay section controller not initialized")
+            return
+        }
+        let sectionItem = controller.sectionItem(.applePayButton)
+        guard let indexPath = mockManager.diffableDataSource.indexPath(for: sectionItem),
+              let cell = mockManager.collectionView.cellForItem(at: indexPath) as? ApplePayCell else {
+            XCTFail("apple pay cell not found")
+            return
+        }
+        XCTAssertEqual(cell.viewModel?.buttonType, .plain)
+    }
+
+    func testDefaultButtonType_SubscribeForRecurring() {
+        // Use a recurring session where shouldShowPayAsCta is false
+        let recurringSession = AWXRecurringSession()
+        recurringSession.countryCode = "AU"
+        recurringSession.setCustomerId("customer_id")
+        mockMethodProvider.session = recurringSession
+        mockManager.performUpdates()
+        mockViewController.view.layoutIfNeeded()
+
+        guard let controller = mockManager.sectionControllers[PaymentSectionType.applePay] else {
+            XCTFail("apple pay section controller not initialized")
+            return
+        }
+        let sectionItem = controller.sectionItem(.applePayButton)
+        guard let indexPath = mockManager.diffableDataSource.indexPath(for: sectionItem),
+              let cell = mockManager.collectionView.cellForItem(at: indexPath) as? ApplePayCell else {
+            XCTFail("apple pay cell not found")
+            return
+        }
+        XCTAssertEqual(cell.viewModel?.buttonType, .subscribe)
     }
 
     // MARK: - Checkout Tests
