@@ -41,16 +41,16 @@ Table of contents
   - [Optional Setup](#optional-setup)
     - [WeChat Pay](#wechat-pay)
     - [Apple Pay](#apple-pay)
-  - [UI Integration - HPP](#ui-integration---hpp)
+  - [UI Integration - HPP (Hosted Payment Page)](#ui-integration---hpp-hosted-payment-page)
     - [Launch Payment Sheet (Recommended)](#launch-payment-sheet-recommended)
     - [Launch Card Payment Directly](#launch-card-payment-directly)
     - [Launch Payment Method by Name](#launch-payment-method-by-name)
-    - [Customize Theme Color (optional)](#customize-theme-color-optional)
+    - [Configuration Options](#configuration-options)
     - [Handle Payment Result](#handle-payment-result)
   - [UI Integration - Embedded](#ui-integration---embedded)
     - [Create Embedded Payment Sheet](#create-embedded-payment-sheet)
     - [Create Embedded Card Element](#create-embedded-card-element)
-    - [Configuration Options](#configuration-options)
+    - [Configuration Options](#configuration-options-1)
     - [Handle Payment Element Events](#handle-payment-element-events)
   - [Low-level API Integration](#low-level-api-integration)
     - [Create PaymentSessionHandler](#create-paymentsessionhandler)
@@ -346,7 +346,7 @@ let session = Session(
 > Coupon is also not supported at this stage.
 
 
-### UI Integration - HPP
+### UI Integration - HPP (Hosted Payment Page)
 
 #### Launch Payment Sheet (Recommended)
 > [!NOTE]
@@ -356,16 +356,18 @@ Make sure you add dependency for `Airwallex` or `AirwallexPaymentSheet`.
 Upon checkout, use [AWXUIContext](https://airwallex.github.io/airwallex-payment-ios/6.3.2/documentation/airwallex/awxuicontext) to present the payment flow where the user will be able to select the payment method.
 
 ``` swift
+let configuration = AWXUIContext.Configuration()
+configuration.layout = .tab // or .accordion
+configuration.launchStyle = .push // or .present
+
 AWXUIContext.launchPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
     session: "The session created above",
-    filterBy: "An optional array of payment method names used to filter the payment methods returned by the server",
-    launchStyle: ".push/.present",
-    layout: ".tab/.accordion"
+    configuration: configuration
 )
 ```
 
-We provide `tab` and `accordian` styles for our payment sheet:
+We provide `tab` and `accordion` styles for our payment sheet:
 <p align="left">
 <img src="Screenshots/hpp_tab.png" width="200">
 <img src="Screenshots/hpp_accordion.png" width="200">
@@ -374,43 +376,60 @@ We provide `tab` and `accordian` styles for our payment sheet:
 ---
 #### Launch Card Payment Directly
 ```swift
-AWXUIContext.launchCardPayment(
+let configuration = AWXUIContext.Configuration()
+configuration.elementType = .addCard
+configuration.supportedCardBrands = [.visa, .mastercard, .unionPay]
+
+AWXUIContext.launchPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
     session: "The session created above",
-    supportedBrands: "accepted card brands, should not be empty"
+    configuration: configuration
 )
 ```
 
 > [!Tip]
-> If you want to show card payment only but still want to be able to pay with saved cards, you can launch
-> payment sheet by passing `[AWXCardKey]` as parameter of `filterBy:`
+> If you want to show card payment only but still want to be able to pay with saved cards, you can use
+> `session.paymentMethods` to filter by passing `[AWXCardKey]`:
 ``` swift
+let session = Session(...)
+session.paymentMethods = [AWXCardKey]
+
 AWXUIContext.launchPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
-    session: "The session created above",
-    filterBy: [AWXCardKey]
+    session: session,
+    configuration: AWXUIContext.Configuration()
 )
 ```
+
 ---
 #### Launch Payment Method by Name
 ```swift
+let configuration = AWXUIContext.Configuration()
+configuration.elementType = .component
+configuration.paymentMethodName = "payment method name"
+
 AWXUIContext.launchPayment(
-    name: "payment method name",
     from: "hosting view controller",
     session: "The session created above",
-    paymentResultDelegate: "object handles AWXPaymentResultDelegate"
+    paymentResultDelegate: "object handles AWXPaymentResultDelegate",
+    configuration: configuration
 )
 ```
 > [!TIP]
-> Available payment method names can be found in [Airwallex API doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Config/_api_v1_pa_config_payment_method_types/get)  
-> 
+> Available payment method names can be found in [Airwallex API doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Config/_api_v1_pa_config_payment_method_types/get)
+>
 ---
-#### Customize Theme Color (optional)
+#### Configuration Options
 
-You can customize theme color of the payment sheet
-``` swift
-AWXTheme.shared().tintColor = .red
-```
+| Property | Description | Default |
+|----------|-------------|---------|
+| `elementType` | `.paymentSheet` (all methods), `.addCard` (card only), or `.component` (single method) | `.paymentSheet` |
+| `paymentMethodName` | Payment method name (required for `.component`) | `nil` |
+| `layout` | `.tab` or `.accordion` (only applies to `.paymentSheet`) | `.tab` |
+| `launchStyle` | `.push` or `.present` | `.push` |
+| `supportedCardBrands` | Accepted card brands (only applies to `.addCard`) | All available brands |
+| `applePayButton` | Customize Apple Pay button appearance (e.g. `buttonType`, `disableCardArt`) | — |
+| `checkoutButton` | Customize checkout button (e.g. `title`) | — |
 
 #### Handle Payment Result
 
@@ -439,7 +458,6 @@ Make sure you add dependency for `Airwallex` or `AirwallexPaymentSheet`.
 
 <p align="left">
 <img src="Screenshots/embedded_tab.png" width="200">
-<img src="Screenshots/embedded_accordion.png" width="200">
 <img src="Screenshots/embedded_accordion_inline_applepay.png" width="200">
 </p>
 
@@ -498,8 +516,9 @@ containerView.addSubview(paymentView)
 |----------|-------------|---------|
 | `elementType` | `.paymentSheet` (all payment methods) or `.addCard` (card only) | `.paymentSheet` |
 | `layout` | `.tab` or `.accordion` (only applies to `.paymentSheet`) | `.tab` |
-| `showsApplePayAsPrimaryButton` | Show Apple Pay as a prominent button at the top | `true` |
 | `supportedCardBrands` | Accepted card brands (only applies to `.addCard`) | All available brands |
+| `applePayButton` | Customize Apple Pay button appearance (e.g. `showsAsPrimaryButton`, `buttonType`, `disableCardArt`) | — |
+| `checkoutButton` | Customize checkout button (e.g. `title`) | — |
 | `appearance.tintColor` | Primary brand color used throughout the payment element | SDK default |
 
 ---
