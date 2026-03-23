@@ -116,9 +116,9 @@ Airwallex iOS SDK 支持通过 Swift Package Manager 集成。要将其集成到
 
 | 集成方式| 包含的组件 | IPA 包增加的大小 |
 |-----------------|----------------------|------------------:|
-| Low-Level API 集成| AirwallexCore <br> AirwallexPayment | 428 MB  |
-| UI 集成| AirwallexCore  <br> AirwallexPayment <br> AirwallexPaymentSheet | 1.2 MB |
-| 全部组件 | AirwallexCore  <br> AirwallexPayment  <br> AirwallexPaymentSheet  <br> AirwallexWeChatPay | 1.4 MB |
+| Low-Level API 集成| AirwallexCore <br> AirwallexPayment | ~0.4 MB  |
+| UI 集成| AirwallexCore  <br> AirwallexPayment <br> AirwallexPaymentSheet | 1.3 MB |
+| 全部组件 | AirwallexCore  <br> AirwallexPayment  <br> AirwallexPaymentSheet  <br> AirwallexWeChatPay | 1.5 MB |
 
 > 上述 IPA 体积的增长是通过 Swift Package Manager (SPM) 使用不同方式集成 Airwallex SDK 后根据 App Thinning Size Report 中的 App size compressed 计算得到的。
 
