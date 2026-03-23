@@ -1143,10 +1143,13 @@ class PaymentSessionHandlerTests: XCTestCase {
         billing.lastName = "Doe"
         billing.address = mockAddress
 
+        let expectation = expectation(description: "payment completed")
+        mockPaymentResultDelegate.didCompleteExpectation = expectation
+
         handler.startCardPayment(with: card, billing: billing)
         XCTAssertEqual(handler.paymentMethodName, AWXCardKey)
 
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        await fulfillment(of: [expectation], timeout: 1.0)
         XCTAssertEqual(handler.paymentMethodName, "unknown")
     }
 
@@ -1168,10 +1171,13 @@ class PaymentSessionHandlerTests: XCTestCase {
         mockFactory.mockApplePayProvider = mockApplePayProvider
         handler.providerFactory = mockFactory
 
+        let expectation = expectation(description: "payment canceled")
+        mockPaymentResultDelegate.didCompleteExpectation = expectation
+
         handler.startApplePay()
         XCTAssertEqual(handler.paymentMethodName, AWXApplePayKey)
 
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        await fulfillment(of: [expectation], timeout: 1.0)
         XCTAssertEqual(handler.paymentMethodName, "unknown")
     }
 
@@ -1199,10 +1205,14 @@ class PaymentSessionHandlerTests: XCTestCase {
         billing.address = mockAddress
 
         XCTAssertEqual(handler.paymentMethodName, "unknown")
+
+        let expectation = expectation(description: "payment completed")
+        mockPaymentResultDelegate.didCompleteExpectation = expectation
+
         handler.startCardPayment(with: card, billing: billing)
         XCTAssertEqual(handler.paymentMethodName, AWXCardKey)
 
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        await fulfillment(of: [expectation], timeout: 1.0)
         XCTAssertEqual(handler.paymentMethodName, "unknown")
     }
 }
