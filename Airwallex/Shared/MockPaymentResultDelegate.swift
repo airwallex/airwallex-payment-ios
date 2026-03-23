@@ -11,6 +11,7 @@ import AirwallexCore
 import AirwallexPaymentSheet
 #endif
 import UIKit
+import XCTest
 
 class MockPaymentResultDelegate: UIViewController, AWXPaymentResultDelegate {
     var status: AirwallexPaymentStatus?
@@ -19,11 +20,13 @@ class MockPaymentResultDelegate: UIViewController, AWXPaymentResultDelegate {
     var consentId: String?
     var presentedViewControllerSpy: UIViewController?
     var paymentMethod: String?
+    var didCompleteExpectation: XCTestExpectation?
 
     func paymentViewController(_ controller: UIViewController?, didCompleteWith status: AirwallexPaymentStatus, error: (any Error)?) {
         self.status = status
         self.viewController = controller
         self.error = error
+        didCompleteExpectation?.fulfill()
     }
 
     func paymentViewController(_ controller: UIViewController?, didCompleteWithPaymentConsentId paymentConsentId: String) {

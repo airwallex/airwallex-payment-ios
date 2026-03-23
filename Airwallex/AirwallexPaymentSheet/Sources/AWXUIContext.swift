@@ -247,10 +247,10 @@ import AirwallexPayment
     /// - Parameters:
     ///   - hostingVC: The view controller that launches the payment UI and also acts as the `AWXPaymentResultDelegate`.
     ///   - session: The current payment session.
-    ///   - configuration: Configuration for the payment flow. Defaults to a new `Configuration` instance.
+    ///   - configuration: Configuration for the payment flow.
     @MainActor static func launchPayment(from hostingVC: UIViewController & AWXPaymentResultDelegate,
                                          session: AWXSession,
-                                         configuration: Configuration = Configuration()) {
+                                         configuration: Configuration) {
         performLaunch(
             from: hostingVC,
             session: session,
@@ -264,11 +264,11 @@ import AirwallexPayment
     ///   - hostingVC: The view controller that launches the payment UI.
     ///   - session: The current payment session.
     ///   - paymentResultDelegate: The delegate responsible for handling the payment result.
-    ///   - configuration: Configuration for the payment flow. Defaults to a new `Configuration` instance.
+    ///   - configuration: Configuration for the payment flow.
     @MainActor static func launchPayment(from hostingVC: UIViewController,
                                          session: AWXSession,
                                          paymentResultDelegate: AWXPaymentResultDelegate,
-                                         configuration: Configuration = Configuration()) {
+                                         configuration: Configuration) {
         performLaunch(
             from: hostingVC,
             session: session,
