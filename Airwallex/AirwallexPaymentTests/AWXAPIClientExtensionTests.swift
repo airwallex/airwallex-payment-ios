@@ -7,7 +7,7 @@
 //
 
 import AirwallexCore
-@testable @_spi(AWX) import AirwallexPayment
+@testable import AirwallexPayment
 import Foundation
 import XCTest
 
@@ -75,7 +75,7 @@ class AWXAPIClientExtensionTests: XCTestCase {
         
         // Send the request and test for success
         do {
-            let _ : MockAWXResponse = try await mockApiClient.sendRequest(request)
+            let _: MockAWXResponse = try await mockApiClient.sendRequest(request)
             XCTFail("Request should failed to parse response")
         } catch {
             XCTAssertEqual((error as NSError).domain, AWXSDKErrorDomain)

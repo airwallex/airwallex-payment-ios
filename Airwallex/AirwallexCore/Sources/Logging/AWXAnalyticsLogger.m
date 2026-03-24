@@ -18,11 +18,14 @@
 
 @property (nonatomic, strong, readonly) Tracker *tracker;
 
+@property (nonatomic, strong, nullable) AWXSession *session;
+@property (nonatomic, strong, null_resettable) NSDictionary *sessionInfo;
+
 @end
 
 @interface NSMutableDictionary (extension)
 
-- (void)addInfoFromPaymentSession:(AWXSession *)session;
++ (instancetype)dictionaryWithSession:(AWXSession *)session extraInfo:(NSDictionary *)info;
 
 @end
 
@@ -47,14 +50,24 @@
     return self;
 }
 
+- (NSDictionary *)sessionInfo {
+    if (!_sessionInfo) {
+        return @{};
+    } else {
+        return _sessionInfo;
+    }
+}
+
 - (void)logPageViewWithName:(NSString *)pageName {
     [self logPageViewWithName:pageName additionalInfo:@{}];
 }
 
 - (void)logPageViewWithName:(NSString *)pageName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo {
-    NSMutableDictionary *extraInfo = additionalInfo.mutableCopy;
+    NSMutableDictionary *extraInfo = [NSMutableDictionary dictionaryWithSession:self.session extraInfo:self.sessionInfo];
+    if ([additionalInfo isKindOfClass:[NSDictionary class]]) {
+        [extraInfo setValuesForKeysWithDictionary:additionalInfo];
+    }
     extraInfo[@"eventType"] = @"page_view";
-    [extraInfo addInfoFromPaymentSession:self.session];
     [_tracker infoWithEventName:pageName extraInfo:extraInfo];
     if (self.verbose) {
         [self log:@"page_view: %@, extraInfo: %@", pageName, extraInfo];
@@ -66,9 +79,11 @@
 }
 
 - (void)logPaymentMethodViewWithName:(NSString *)name additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo {
-    NSMutableDictionary *extraInfo = additionalInfo.mutableCopy;
+    NSMutableDictionary *extraInfo = [NSMutableDictionary dictionaryWithSession:self.session extraInfo:self.sessionInfo];
+    if ([additionalInfo isKindOfClass:[NSDictionary class]]) {
+        [extraInfo setValuesForKeysWithDictionary:additionalInfo];
+    }
     extraInfo[@"eventType"] = @"payment_method_view";
-    [extraInfo addInfoFromPaymentSession:self.session];
     [_tracker infoWithEventName:name extraInfo:extraInfo];
     if (self.verbose) {
         [self log:@"payment_view: %@, extraInfo: %@", name, extraInfo];
@@ -76,8 +91,10 @@
 }
 
 - (void)logErrorWithName:(NSString *)eventName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo {
-    NSMutableDictionary *extraInfo = additionalInfo.mutableCopy;
-    [extraInfo addInfoFromPaymentSession:self.session];
+    NSMutableDictionary *extraInfo = [NSMutableDictionary dictionaryWithSession:self.session extraInfo:self.sessionInfo];
+    if ([additionalInfo isKindOfClass:[NSDictionary class]]) {
+        [extraInfo setValuesForKeysWithDictionary:additionalInfo];
+    }
     [_tracker errorWithEventName:eventName extraInfo:extraInfo];
 }
 
@@ -85,7 +102,11 @@
                      url:(NSURL *)url
                 response:(AWXAPIErrorResponse *)errorResponse
           additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo {
-    NSMutableDictionary *extraInfo = @{@"eventType": @"pa_api_request"}.mutableCopy;
+    NSMutableDictionary *extraInfo = [NSMutableDictionary dictionaryWithSession:self.session extraInfo:self.sessionInfo];
+    if ([additionalInfo isKindOfClass:[NSDictionary class]]) {
+        [extraInfo setValuesForKeysWithDictionary:additionalInfo];
+    }
+    extraInfo[@"eventType"] = @"pa_api_request";
     if (url.absoluteString.length > 0) {
         extraInfo[@"url"] = url.absoluteString;
     }
@@ -95,41 +116,45 @@
     if (errorResponse.message.length > 0) {
         extraInfo[@"message"] = errorResponse.message;
     }
-    if (additionalInfo) {
-        for (NSString *key in additionalInfo) {
-            extraInfo[key] = additionalInfo[key];
-        }
-    }
-    [extraInfo addInfoFromPaymentSession:self.session];
     [_tracker errorWithEventName:eventName extraInfo:extraInfo];
 }
 
 - (void)logError:(NSError *)error withEventName:(NSString *)eventName {
-    NSMutableDictionary *extraInfo = @{@"code": [@(error.code) stringValue]}.mutableCopy;
+    NSMutableDictionary *extraInfo = [NSMutableDictionary dictionaryWithSession:self.session extraInfo:self.sessionInfo];
+    extraInfo[@"code"] = [@(error.code) stringValue];
     if (error.localizedDescription.length > 0) {
         extraInfo[@"message"] = error.localizedDescription;
     }
-    [extraInfo addInfoFromPaymentSession:self.session];
     [_tracker errorWithEventName:eventName extraInfo:extraInfo];
 }
 
 - (void)logActionWithName:(NSString *)actionName {
-    NSMutableDictionary *extraInfo = @{@"eventType": @"action"}.mutableCopy;
-    [extraInfo addInfoFromPaymentSession:self.session];
+    [self logActionWithName:actionName additionalInfo:@{}];
+}
+
+- (void)logActionWithName:(NSString *)actionName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo {
+    NSMutableDictionary *extraInfo = [NSMutableDictionary dictionaryWithSession:self.session extraInfo:self.sessionInfo];
+    if ([additionalInfo isKindOfClass:[NSDictionary class]]) {
+        [extraInfo setValuesForKeysWithDictionary:additionalInfo];
+    }
+    extraInfo[@"eventType"] = @"action";
     [_tracker infoWithEventName:actionName extraInfo:extraInfo];
     if (self.verbose) {
         [self log:@"action_name: %@, extraInfo: %@", actionName, extraInfo];
     }
 }
 
-- (void)logActionWithName:(NSString *)actionName additionalInfo:(NSDictionary<NSString *, id> *)additionalInfo {
-    NSMutableDictionary *extraInfo = additionalInfo.mutableCopy;
-    extraInfo[@"eventType"] = @"action";
-    [extraInfo addInfoFromPaymentSession:self.session];
-    [_tracker infoWithEventName:actionName extraInfo:extraInfo];
-    if (self.verbose) {
-        [self log:@"action_name: %@, extraInfo: %@", actionName, extraInfo];
+- (void)bindSession:(AWXSession *)session additionalInfo:(NSDictionary<NSString *, id> *)info {
+    self.session = session;
+    self.sessionInfo = info;
+}
+
+- (void)bindExtraCommonData:(NSDictionary<NSString *, id> *)extraCommonData {
+    NSMutableDictionary *info = [self.tracker.extraCommonData mutableCopy];
+    for (NSString *key in extraCommonData) {
+        info[key] = extraCommonData[key];
     }
+    self.tracker.extraCommonData = info;
 }
 
 #pragma mark - Private methods
@@ -150,6 +175,7 @@
     if (accountId != nil) {
         [data setObject:accountId forKey:@"accountId"];
     }
+    data[@"framework"] = @"native";
 
     return data;
 }
@@ -169,13 +195,12 @@
 
 @implementation NSMutableDictionary (extension)
 
-- (void)addInfoFromPaymentSession:(AWXSession *)session {
++ (instancetype)dictionaryWithSession:(AWXSession *)session extraInfo:(NSDictionary *)info {
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:info];
     if (session.paymentIntentId) {
-        self[@"paymentIntentId"] = session.paymentIntentId;
+        dictionary[@"paymentIntentId"] = session.paymentIntentId;
     }
-    if (session.transactionMode) {
-        self[@"transactionMode"] = session.transactionMode;
-    }
+    return dictionary;
 }
 
 @end

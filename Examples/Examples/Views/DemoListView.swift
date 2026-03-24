@@ -21,14 +21,14 @@ class DemoListView: UIView {
         return view
     }()
     
-    private lazy var scrollView: UIScrollView = {
+    private(set) lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.keyboardDismissMode = .interactive
         return view
     }()
     
-    private lazy var topStack: UIStackView = {
+    private(set) lazy var topStack: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.spacing = 16
@@ -44,7 +44,7 @@ class DemoListView: UIView {
         return view
     }()
     
-    private lazy var separator: UIView = {
+    private(set) lazy var separator: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .awxColor(.borderDecorative)

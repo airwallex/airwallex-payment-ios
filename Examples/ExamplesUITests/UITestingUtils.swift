@@ -25,6 +25,17 @@ enum TestCards {
     static let unionPay = "6252470144444939"
 }
 
+enum PaymentStatus {
+    case success
+    case failure
+    case cancel
+}
+
+enum Layout {
+    case accordion
+    case tab
+}
+
 @MainActor
 extension XCTestCase {
     
@@ -46,7 +57,7 @@ extension XCTestCase {
         UIIntegrationDemoScreen.ensureCheckoutMode(checkoutMode)
         UIIntegrationDemoScreen.openSettings()
         SettingsScreen.validate()
-        SettingsScreen.ensureEnvironment(.demo)
+        SettingsScreen.ensureEnvironment(env)
         SettingsScreen.ensureLayoutMode(useTabLayout: useTabLayout)
         if let nextTriggerByCustomer {
             SettingsScreen.ensureNextTriggerByCustomer(nextTriggerByCustomer)
@@ -61,8 +72,33 @@ extension XCTestCase {
 }
 
 extension XCUIElement {
-    
+
+    /// Scrolls the element into the center of the screen (away from edges/home indicator)
+    /// then taps it. This avoids issues where elements near the bottom edge are obscured
+    /// by the home indicator bar.
     func robustTap() {
+        scrollIntoView()
         tap()
+    }
+
+    /// Swipes the element into a safe area of the screen if it's near the bottom edge
+    /// where it could be obscured by the home indicator bar.
+    private func scrollIntoView() {
+        guard exists else { return }
+        let app = XCUIApplication()
+        let window = app.windows.firstMatch
+
+        let elementFrame = frame
+        let windowFrame = window.frame
+        guard !windowFrame.isEmpty else { return }
+
+        // If the element's bottom edge is within 80pt of the screen bottom,
+        // it may be obscured by the home indicator. Swipe up to bring it into view.
+        let bottomMargin: CGFloat = 80
+        if elementFrame.maxY > windowFrame.maxY - bottomMargin {
+            let startCoord = window.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.7))
+            let endCoord = window.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.3))
+            startCoord.press(forDuration: 0.05, thenDragTo: endCoord)
+        }
     }
 }

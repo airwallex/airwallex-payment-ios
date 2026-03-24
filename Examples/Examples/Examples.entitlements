@@ -8,6 +8,7 @@
 	<array>
 		<string>merchant.demo.com.airwallex.paymentacceptance</string>
 		<string>merchant.prod.com.airwallex.paymentacceptance</string>
+		<string>merchant.staging.com.airwallex.paymentacceptance</string>
 	</array>
 </dict>
 </plist>

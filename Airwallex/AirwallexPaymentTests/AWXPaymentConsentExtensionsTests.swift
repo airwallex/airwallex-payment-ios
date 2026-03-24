@@ -6,9 +6,9 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import XCTest
 import AirwallexCore
-@_spi(AWX) @testable import AirwallexPayment
+@testable import AirwallexPayment
+import XCTest
 
 class AWXPaymentConsentExtensionsTests: XCTestCase {
     

@@ -9,6 +9,7 @@
 #import "AWXAnalyticsLogger.h"
 #import "AWXAPIClient.h"
 #import "AWXAPIResponse.h"
+#import "AWXSession.h"
 #import <AirTracker/AirTracker-Swift.h>
 #import <OCMock/OCMock.h>
 #import <XCTest/XCTest.h>
@@ -40,7 +41,7 @@
     OCMStub([mockBundle mainBundle]).andReturn(mockBundle);
 
     [AWXAnalyticsLogger shared];
-    NSDictionary *dict = @{@"accountId": @"5a1d6022-2fbb-4a5e-a428-d3ae8a26a123", @"merchantAppVersion": @"test_app", @"merchantAppName": @"test_app"};
+    NSDictionary *dict = @{@"accountId": @"5a1d6022-2fbb-4a5e-a428-d3ae8a26a123", @"merchantAppVersion": @"test_app", @"merchantAppName": @"test_app", @"framework": @"native"};
     OCMVerify(times(1), [_tracker setExtraCommonData:dict]);
 }
 
@@ -96,6 +97,175 @@
     [logger logActionWithName:actionName additionalInfo:@{@"method": @"card"}];
     NSDictionary *dict = @{@"eventType": @"action", @"method": @"card"};
     OCMVerify(times(1), [_tracker infoWithEventName:actionName extraInfo:dict]);
+}
+
+- (void)testBindSession {
+    AWXAnalyticsLogger *logger = [AWXAnalyticsLogger new];
+
+    id mockSession = OCMClassMock([AWXSession class]);
+    OCMStub([mockSession paymentIntentId]).andReturn(@"test_intent_id");
+
+    NSDictionary *additionalInfo = @{
+        @"launchType": @"dropin",
+        @"layout": @"tab",
+        @"transactionMode": @"oneoff"
+    };
+
+    [logger bindSession:mockSession additionalInfo:additionalInfo];
+
+    // Verify that subsequent logs include session info
+    NSString *actionName = @"test_action";
+    [logger logActionWithName:actionName];
+
+    NSDictionary *expectedDict = @{
+        @"eventType": @"action",
+        @"paymentIntentId": @"test_intent_id",
+        @"launchType": @"dropin",
+        @"layout": @"tab",
+        @"transactionMode": @"oneoff"
+    };
+    OCMVerify(times(1), [_tracker infoWithEventName:actionName extraInfo:expectedDict]);
+}
+
+- (void)testBindSessionWithNilPaymentIntentId {
+    AWXAnalyticsLogger *logger = [AWXAnalyticsLogger new];
+
+    id mockSession = OCMClassMock([AWXSession class]);
+    OCMStub([mockSession paymentIntentId]).andReturn(nil);
+
+    NSDictionary *additionalInfo = @{@"launchType": @"component"};
+
+    [logger bindSession:mockSession additionalInfo:additionalInfo];
+
+    NSString *actionName = @"test_action";
+    [logger logActionWithName:actionName];
+
+    // Without payment intent id, only additional info should be included
+    NSDictionary *expectedDict = @{
+        @"eventType": @"action",
+        @"launchType": @"component"
+    };
+    OCMVerify(times(1), [_tracker infoWithEventName:actionName extraInfo:expectedDict]);
+}
+
+- (void)testBindExtraCommonData {
+    AWXAnalyticsLogger *logger = [AWXAnalyticsLogger new];
+
+    NSDictionary *initialData = @{@"existingKey": @"existingValue"};
+    OCMStub([_tracker extraCommonData]).andReturn(initialData);
+
+    NSDictionary *newData = @{@"newKey": @"newValue", @"anotherKey": @"anotherValue"};
+    [logger bindExtraCommonData:newData];
+
+    NSDictionary *expectedData = @{
+        @"existingKey": @"existingValue",
+        @"newKey": @"newValue",
+        @"anotherKey": @"anotherValue"
+    };
+    OCMVerify(times(1), [_tracker setExtraCommonData:expectedData]);
+}
+
+- (void)testLogPageViewWithBoundSession {
+    AWXAnalyticsLogger *logger = [AWXAnalyticsLogger new];
+
+    id mockSession = OCMClassMock([AWXSession class]);
+    OCMStub([mockSession paymentIntentId]).andReturn(@"intent_123");
+
+    NSDictionary *sessionInfo = @{@"expressCheckout": @YES};
+    [logger bindSession:mockSession additionalInfo:sessionInfo];
+
+    NSString *pageName = @"payment_method_list";
+    [logger logPageViewWithName:pageName];
+
+    NSDictionary *expectedDict = @{
+        @"eventType": @"page_view",
+        @"paymentIntentId": @"intent_123",
+        @"expressCheckout": @YES
+    };
+    OCMVerify(times(1), [_tracker infoWithEventName:pageName extraInfo:expectedDict]);
+}
+
+- (void)testLogPaymentMethodViewWithBoundSession {
+    AWXAnalyticsLogger *logger = [AWXAnalyticsLogger new];
+
+    id mockSession = OCMClassMock([AWXSession class]);
+    OCMStub([mockSession paymentIntentId]).andReturn(@"intent_456");
+
+    NSDictionary *sessionInfo = @{@"layout": @"accordion"};
+    [logger bindSession:mockSession additionalInfo:sessionInfo];
+
+    [logger logPaymentMethodViewWithName:AWXCardKey];
+
+    NSDictionary *expectedDict = @{
+        @"eventType": @"payment_method_view",
+        @"paymentIntentId": @"intent_456",
+        @"layout": @"accordion"
+    };
+    OCMVerify(times(1), [_tracker infoWithEventName:AWXCardKey extraInfo:expectedDict]);
+}
+
+- (void)testLogErrorWithBoundSession {
+    AWXAnalyticsLogger *logger = [AWXAnalyticsLogger new];
+
+    id mockSession = OCMClassMock([AWXSession class]);
+    OCMStub([mockSession paymentIntentId]).andReturn(@"intent_789");
+
+    NSDictionary *sessionInfo = @{@"transactionMode": @"recurring"};
+    [logger bindSession:mockSession additionalInfo:sessionInfo];
+
+    NSError *error = [[NSError alloc] initWithDomain:@"test" code:100 userInfo:@{NSLocalizedDescriptionKey: @"Test error"}];
+    [logger logError:error withEventName:@"payment_failed"];
+
+    // Verify error is logged with session info
+    OCMVerify(times(1), [_tracker errorWithEventName:@"payment_failed"
+                                           extraInfo:[OCMArg checkWithBlock:^BOOL(NSDictionary *extraInfo) {
+                                               return [extraInfo[@"paymentIntentId"] isEqualToString:@"intent_789"] &&
+                                                      [extraInfo[@"transactionMode"] isEqualToString:@"recurring"] &&
+                                                      [extraInfo[@"code"] isEqualToString:@"100"];
+                                           }]]);
+}
+
+- (void)testLogWithoutBoundSession {
+    AWXAnalyticsLogger *logger = [AWXAnalyticsLogger new];
+
+    // Don't bind any session - sessionInfo should default to empty dict
+    NSString *actionName = @"test_action";
+    [logger logActionWithName:actionName];
+
+    // Verify logging works without a bound session
+    OCMVerify(times(1), [_tracker infoWithEventName:actionName extraInfo:@{@"eventType": @"action"}]);
+}
+
+- (void)testBindSessionResetsAdditionalInfo {
+    AWXAnalyticsLogger *logger = [AWXAnalyticsLogger new];
+
+    id mockSession = OCMClassMock([AWXSession class]);
+    OCMStub([mockSession paymentIntentId]).andReturn(@"intent_123");
+
+    // First bind with some additional info
+    NSDictionary *initialInfo = @{@"launchType": @"dropin", @"layout": @"tab"};
+    [logger bindSession:mockSession additionalInfo:initialInfo];
+
+    [logger logActionWithName:@"action1"];
+    NSDictionary *expectedDict1 = @{
+        @"eventType": @"action",
+        @"paymentIntentId": @"intent_123",
+        @"launchType": @"dropin",
+        @"layout": @"tab"
+    };
+    OCMVerify(times(1), [_tracker infoWithEventName:@"action1" extraInfo:expectedDict1]);
+
+    // Rebind with different additional info - should replace previous info
+    NSDictionary *newInfo = @{@"launchType": @"component"};
+    [logger bindSession:mockSession additionalInfo:newInfo];
+
+    [logger logActionWithName:@"action2"];
+    NSDictionary *expectedDict2 = @{
+        @"eventType": @"action",
+        @"paymentIntentId": @"intent_123",
+        @"launchType": @"component"
+    };
+    OCMVerify(times(1), [_tracker infoWithEventName:@"action2" extraInfo:expectedDict2]);
 }
 
 @end

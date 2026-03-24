@@ -6,7 +6,7 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-@testable @_spi(AWX) import AirwallexPayment
+@testable import AirwallexPayment
 import Foundation
 
 class MockURLProtocol: URLProtocol {

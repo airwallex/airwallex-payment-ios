@@ -75,6 +75,10 @@ class TopView: UIView {
         actionButton.setTitle(viewModel.actionTitle, for: .normal)
         actionButton.isHidden = viewModel.actionIcon == nil && viewModel.actionTitle == nil
     }
+
+    func setActionButtonHidden(_ hidden: Bool) {
+        actionButton.isHidden = hidden
+    }
 }
 
 private extension TopView {

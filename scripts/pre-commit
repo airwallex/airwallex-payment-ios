@@ -29,8 +29,25 @@ echo "$STAGED_SWIFT_FILES" | xargs swiftlint lint --strict --quiet
 
 if [ $? -ne 0 ]; then
   echo ""
-  echo "SwiftLint found violations. Please fix them before committing."
-  exit 1
+  echo "SwiftLint found violations. Attempting auto-fix..."
+
+  # Try to auto-fix the issues
+  echo "$STAGED_SWIFT_FILES" | xargs swiftlint --fix --quiet
+
+  # Re-stage the fixed files
+  echo "$STAGED_SWIFT_FILES" | xargs git add
+
+  # Retry lint
+  echo "Retrying SwiftLint after auto-fix..."
+  echo "$STAGED_SWIFT_FILES" | xargs swiftlint lint --strict --quiet
+
+  if [ $? -ne 0 ]; then
+    echo ""
+    echo "SwiftLint still found violations after auto-fix. Please fix them manually before committing."
+    exit 1
+  fi
+
+  echo "SwiftLint auto-fix succeeded. Files have been re-staged."
 fi
 
 echo "SwiftLint passed"
