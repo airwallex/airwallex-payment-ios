@@ -22,16 +22,28 @@ class ApplePayCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
             view.removeFromSuperview()
         }
 
-        let view = if #available(iOS 26, *) {
-            PKPaymentButton(type: type, style: .automatic, disableCardArt: disableCardArt)
+        let view: PKPaymentButton
+        #if compiler(>=6.2)
+        if #available(iOS 26, *) {
+            view = PKPaymentButton(type: type, style: .automatic, disableCardArt: disableCardArt)
         } else if #available(iOS 14, *) {
-            PKPaymentButton(paymentButtonType: type, paymentButtonStyle: .automatic)
+            view = PKPaymentButton(paymentButtonType: type, paymentButtonStyle: .automatic)
         } else {
-            PKPaymentButton(
+            view = PKPaymentButton(
                 paymentButtonType: type,
                 paymentButtonStyle: traitCollection.userInterfaceStyle == .dark ? .white : .black
             )
         }
+        #else
+        if #available(iOS 14, *) {
+            view = PKPaymentButton(paymentButtonType: type, paymentButtonStyle: .automatic)
+        } else {
+            view = PKPaymentButton(
+                paymentButtonType: type,
+                paymentButtonStyle: traitCollection.userInterfaceStyle == .dark ? .white : .black
+            )
+        }
+        #endif
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(onPaymentButtonTapped), for: .touchUpInside)
         

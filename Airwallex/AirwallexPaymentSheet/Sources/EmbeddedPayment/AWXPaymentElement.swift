@@ -398,7 +398,7 @@ extension AWXPaymentElement: CollectionViewSectionProvider {
 
 // MARK: - AWXPaymentResultDelegate
 
-extension AWXPaymentElement: @MainActor AWXPaymentResultDelegate {
+extension AWXPaymentElement: AWXPaymentResultDelegate {
     public func paymentViewController(
         _ controller: UIViewController?,
         didCompleteWith status: AirwallexPaymentStatus,
