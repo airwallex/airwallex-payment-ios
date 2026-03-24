@@ -450,7 +450,6 @@ func paymentViewController(_ controller: UIViewController?, didCompleteWithPayme
 
 <p align="left">
 <img src="Screenshots/embedded_tab.png" width="200">
-<img src="Screenshots/embedded_accordion.png" width="200">
 <img src="Screenshots/embedded_accordion_inline_applepay.png" width="200">
 </p>
 
