@@ -10,7 +10,7 @@ import AirwallexRisk
 import UIKit
 #if canImport(AirwallexPayment)
 import AirwallexCore
-@_spi(AWX) import AirwallexPayment
+import AirwallexPayment
 #endif
     
 // MARK: - Item Identifiers
@@ -30,27 +30,28 @@ private extension String {
     static let billingFieldCountryCode = "billingFieldCountryCode"
 }
     
-class NewCardPaymentSectionController: NSObject, SectionController {
+class NewCardPaymentSectionController: NSObject, PaymentSectionController {
     typealias SectionItem = CompoundItem<PaymentSectionType, String>
     static let subType = "card"
     
     private var methodType: AWXPaymentMethodType
-    
-    private var paymentSessionHandler: PaymentSessionHandler?
-    private var session: AWXSession {
+
+    private var paymentSessionHandler: PaymentSessionHandlerProtocol?
+    var session: AWXSession {
         methodProvider.session
     }
     private let methodProvider: PaymentMethodProvider
+    let paymentUIContext: PaymentSheetUIContext
     private let switchToConsentPaymentAction: () -> Void
     private var shouldSaveCard = false
     private var shouldReuseShippingAddress: Bool
     
     private lazy var viewModelForAccordionKey = PaymentMethodCellViewModel(
-        itemIdentifier: .accordionKey,
-        name: methodType.displayName,
+        name: methodType.name,
+        displayName: methodType.displayName,
         imageURL: methodType.resources.logoURL,
         isSelected: true,
-        imageLoader: imageLoader,
+        imageLoader: paymentUIContext.imageLoader,
         cardBrands: []
     )
     
@@ -76,22 +77,17 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     private(set) var viewModelForPhoneNumber: InfoCollectorCellViewModel<String>?
     private(set) var viewModelForCountryCode: CountrySelectionCellViewModel?
     private(set) var viewModelForBillingAddress: BillingInfoCellViewModel?
-    
-    private let layout: AWXUIContext.PaymentLayout
-    private let imageLoader: ImageLoader
-    
+
     init(cardPaymentMethod: AWXPaymentMethodType,
          methodProvider: PaymentMethodProvider,
-         layout: AWXUIContext.PaymentLayout,
-         imageLoader: ImageLoader,
+         paymentUIContext: PaymentSheetUIContext,
          switchToConsentPaymentAction: @escaping () -> Void) {
         assert(cardPaymentMethod.name == AWXCardKey, "invalid method")
         self.methodType = cardPaymentMethod
         self.methodProvider = methodProvider
+        self.paymentUIContext = paymentUIContext
         self.switchToConsentPaymentAction = switchToConsentPaymentAction
         self.shouldReuseShippingAddress = methodProvider.session.billing?.address?.isComplete ?? false
-        self.layout = layout
-        self.imageLoader = imageLoader
         super.init()
         createViewModelForRequiredFields()
         if let session = session as? Session {
@@ -108,7 +104,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
     
     var items: [String] {
         var items = [String]()
-        if layout == .accordion {
+        if paymentUIContext.layout == .accordion {
             items.append(.accordionKey)
         }
     
@@ -164,7 +160,7 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         case .checkoutButton:
             let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: sectionItem, indexPath: indexPath)
             let viewModel = CheckoutButtonCellViewModel(
-                shouldShowPayAsCta: !(session is AWXRecurringSession),
+                title: checkoutButtonTitle,
                 checkoutAction: checkout
             )
             cell.setup(viewModel)
@@ -247,12 +243,13 @@ class NewCardPaymentSectionController: NSObject, SectionController {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 16
-        switch layout {
+        switch paymentUIContext.layout {
         case .tab:
-            section.contentInsets = .init(horizontal: 16)
+            section.contentInsets = .init(horizontal: paymentUIContext.isEmbedded ? 0 : 16)
         case .accordion:
-            section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 40, bottom: 32, trailing: 40)
-            
+            let sectionHorizontal: CGFloat = paymentUIContext.isEmbedded ? 24 : 40
+            section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: sectionHorizontal, bottom: 24, trailing: sectionHorizontal)
+
             // Layout for decoration - rounded corner
             let elementKind = AccordionSectionController.backgroundElementKind
             context.register(
@@ -260,7 +257,9 @@ class NewCardPaymentSectionController: NSObject, SectionController {
                 forDecorationViewOfKind: elementKind
             )
             let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: elementKind)
-            sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
+            sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(
+                horizontal: paymentUIContext.isEmbedded ? 0 : 16
+            )
             section.decorationItems = [sectionBackgroundDecoration]
         }
         return section
@@ -299,84 +298,118 @@ private extension NewCardPaymentSectionController {
                 .subtype: Self.subType
             ]
         )
-        
+
+        // Validation phase
         do {
-            // validate card info
-            let forCardValidation: [ViewModelValidatable?] = [
-                viewModelForCardInfo,
-                viewModelForCardholderName
-            ]
-            for viewModel in forCardValidation {
-                try viewModel?.validate()
-            }
-            
-            let card = viewModelForCardInfo.cardFromCollectedInfo()
-            if let name = viewModelForCardholderName?.text?.trimmed {
-                card.name = name
-            }
-            
-            // validate billing info
-            let forBillingValidation: [ViewModelValidatable?] = [
-                viewModelForEmail,
-                viewModelForPhoneNumber,
-                viewModelForBillingAddress,
-                viewModelForCountryCode
-            ]
-            for viewModel in forBillingValidation {
-                try viewModel?.validate()
-            }
-            
-            // create billing info from required fields and session.billing
-            let billingInfo = createBillingInfo()
-            
-            RiskLogger.log(.clickPaymentButton, screen: .createCard)
-            debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
-            
-            do {
-                paymentSessionHandler = PaymentSessionHandler(
-                    session: session,
-                    viewController: context.viewController!,
-                    paymentResultDelegate: AWXUIContext.shared.delegate,
-                    methodType: methodType,
-                    dismissAction: { completion in
-                        AWXUIContext.shared.dismissAction?(completion)
-                        // clear dismissAction block here so the user cancel detection
-                        // in AWXPaymentViewController.deinit() can work as expected
-                        AWXUIContext.shared.dismissAction = nil
-                    }
-                )
-                try paymentSessionHandler?.confirmCardPayment(
-                    with: card,
-                    billing: billingInfo,
-                    saveCard: shouldSaveCard
-                )
-            } catch {
-                context.viewController?.showAlert(message: error.localizedDescription)
-            }
+            try validateForCheckout()
         } catch {
-            viewModelForCardInfo.updateValidStatusForCheckout()
-            viewModelForBillingAddress?.updateValidStatusForCheckout()
-            let otherViewModels: [InfoCollectorTextFieldViewModel?] = [
-                viewModelForCardholderName,
-                viewModelForEmail,
-                viewModelForPhoneNumber,
-                viewModelForCountryCode
-            ]
-            for viewModel in otherViewModels {
-                viewModel?.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
-            }
-            let message = error.localizedDescription
-            context.viewController?.showAlert(message: message)
-            
-            AnalyticsLogger.log(
-                action: .cardPaymentValidation,
-                extraInfo: [
-                    .message: message,
-                    .subtype: Self.subType
-                ]
-            )
-            debugLog("Payment failed. Intent ID: \(session.paymentIntentId() ?? ""). Reason: \(message)")
+            handleValidationFailure(error)
+            return
         }
+
+        // Confirm payment phase
+        RiskLogger.log(.clickPaymentButton, screen: .createCard)
+        debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
+
+        let card = viewModelForCardInfo.cardFromCollectedInfo()
+        if let name = viewModelForCardholderName?.text?.trimmed {
+            card.name = name
+        }
+        let billingInfo = createBillingInfo()
+        confirmCardPayment(card: card, billing: billingInfo)
+    }
+
+    func validateForCheckout() throws {
+        // validate card info
+        let forCardValidation: [ViewModelValidatable?] = [
+            viewModelForCardInfo,
+            viewModelForCardholderName
+        ]
+        for viewModel in forCardValidation {
+            try viewModel?.validate()
+        }
+
+        // validate billing info
+        let forBillingValidation: [ViewModelValidatable?] = [
+            viewModelForEmail,
+            viewModelForPhoneNumber,
+            viewModelForBillingAddress,
+            viewModelForCountryCode
+        ]
+        for viewModel in forBillingValidation {
+            try viewModel?.validate()
+        }
+    }
+
+    func handleValidationFailure(_ error: Error) {
+        viewModelForCardInfo.updateValidStatusForCheckout()
+        viewModelForBillingAddress?.updateValidStatusForCheckout()
+        let otherViewModels: [InfoCollectorTextFieldViewModel?] = [
+            viewModelForCardholderName,
+            viewModelForEmail,
+            viewModelForPhoneNumber,
+            viewModelForCountryCode
+        ]
+        for viewModel in otherViewModels {
+            viewModel?.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
+        }
+
+        scrollToFirstInvalidField()
+
+        let message = error.localizedDescription
+
+        AnalyticsLogger.log(
+            action: .cardPaymentValidation,
+            extraInfo: [
+                .message: message,
+                .subtype: Self.subType
+            ]
+        )
+        debugLog("Payment failed. Intent ID: \(session.paymentIntentId() ?? ""). Reason: \(message)")
+    }
+
+    func scrollToFirstInvalidField() {
+        // Check view models in the same order as validateForCheckout
+        let validatableItems: [(viewModel: (any ViewModelValidatable)?, itemIdentifier: String)] = [
+            (viewModelForCardInfo, .cardInfo),
+            (viewModelForCardholderName, .cardholderName),
+            (viewModelForEmail, .billingFieldEmail),
+            (viewModelForPhoneNumber, .billingFieldPhone),
+            (viewModelForBillingAddress, .billingFieldAddress),
+            (viewModelForCountryCode, .billingFieldCountryCode)
+        ]
+        for entry in validatableItems {
+            guard let viewModel = entry.viewModel else { continue }
+            do {
+                try viewModel.validate()
+            } catch {
+                let item = sectionItem(entry.itemIdentifier)
+                if paymentUIContext.isEmbedded {
+                    if let view = context.cellForItem(item) {
+                        paymentUIContext.paymentElement?.notifyValidationFailed(
+                            for: methodType.name,
+                            invalidInputView: view
+                        )
+                    }
+                } else {
+                    context.ensureVisible(for: item)
+                }
+            }
+        }
+    }
+
+    func confirmCardPayment(card: AWXCard, billing: AWXPlaceDetails) {
+        paymentSessionHandler = paymentUIContext.paymentSessionHandlerFactory.createHandler(
+            session: session,
+            methodType: methodType,
+            paymentUIContext: paymentUIContext
+        )
+        prepareForEmbeddedCheckout(paymentMethod: AWXCardKey, handler: paymentSessionHandler)
+        paymentSessionHandler?.confirmCardPayment(
+            with: card,
+            billing: billing,
+            saveCard: shouldSaveCard
+        )
     }
     
     func createBillingInfo() -> AWXPlaceDetails {
@@ -411,11 +444,11 @@ private extension NewCardPaymentSectionController {
     
     func triggerCountrySelection() {
         context.endEditing()
-        let controller = AWXCountryListViewController(nibName: nil, bundle: nil)
+        let controller = CountryListViewController()
         controller.delegate = self
-        controller.country = viewModelForBillingAddress?.selectedCountry ?? viewModelForCountryCode?.country
+        controller.selectedCountry = viewModelForBillingAddress?.selectedCountry ?? viewModelForCountryCode?.country
         let nav = UINavigationController(rootViewController: controller)
-        context.viewController?.present(nav, animated: true)
+        UIViewController.topMost?.present(nav, animated: true)
     }
     
     func toggleReuseShippingAddress() {
@@ -571,8 +604,8 @@ private extension NewCardPaymentSectionController {
     }
 }
     
-extension NewCardPaymentSectionController: AWXCountryListViewControllerDelegate {
-    func countryListViewController(_ controller: AWXCountryListViewController, didSelect country: AWXCountry) {
+extension NewCardPaymentSectionController: CountryListViewControllerDelegate {
+    func countryListViewController(_ controller: CountryListViewController, didSelect country: AWXCountry) {
         controller.dismiss(animated: true)
         assert(viewModelForBillingAddress != nil || viewModelForCountryCode != nil, "one of the viewmodel should exist")
         if let viewModelForBillingAddress {

@@ -8,7 +8,7 @@
 
 import Foundation
 #if canImport(AirwallexPayment)
-@_spi(AWX) import AirwallexPayment
+import AirwallexPayment
 #endif
 
 struct PrefixPhoneNumberValidator: UserInputValidator {

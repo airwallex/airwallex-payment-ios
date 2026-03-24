@@ -10,7 +10,7 @@ import Combine
 import Foundation
 #if canImport(AirwallexPayment)
 import AirwallexCore
-@_spi(AWX) import AirwallexPayment
+import AirwallexPayment
 #endif
     
 class AccordionSectionController: SectionController {
@@ -24,19 +24,19 @@ class AccordionSectionController: SectionController {
     }
     
     private var methodProvider: PaymentMethodProvider
+    private let paymentUIContext: PaymentSheetUIContext
     private var viewModels = [PaymentMethodCellViewModel]()
-    private let imageLoader: ImageLoader
     let position: Position
     private let separatorUpdatePublisher = PassthroughSubject<Void, Never>()
     private var cancellables = Set<AnyCancellable>()
-    
+
     init(position: Position,
          methodProvider: PaymentMethodProvider,
-         imageLoader: ImageLoader) {
+         paymentUIContext: PaymentSheetUIContext) {
         self.position = position
         self.section = PaymentSectionType.accordion(position)
         self.methodProvider = methodProvider
-        self.imageLoader = imageLoader
+        self.paymentUIContext = paymentUIContext
         updateItemsIfNecessary()
         separatorUpdatePublisher
             .throttle(for: .milliseconds(1), scheduler: RunLoop.main, latest: true)
@@ -88,14 +88,15 @@ class AccordionSectionController: SectionController {
         // Layout for item
         let layoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(60))
         let item = NSCollectionLayoutItem(layoutSize: layoutSize, supplementaryItems: [separator])
-        
+
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
+        let horizontalInset: CGFloat = paymentUIContext.isEmbedded ? 0 : 16
+        section.contentInsets = NSDirectionalEdgeInsets(horizontal: horizontalInset)
         // Layout for decoration - rounded corner
         context.register(RoundedCornerDecorationView.self, forDecorationViewOfKind: Self.backgroundElementKind)
         let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: Self.backgroundElementKind)
-        sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
+        sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(horizontal: horizontalInset)
         section.decorationItems = [sectionBackgroundDecoration]
         return section
     }
@@ -124,13 +125,16 @@ class AccordionSectionController: SectionController {
             return
         }
         
-        viewModels = methodProvider.methodsForAccordionPosition(position).map { methodType in
+        viewModels = methodProvider.methodsForAccordionPosition(
+            position,
+            excludeApplePay: paymentUIContext.showsApplePayAsPrimaryButton
+        ).map { methodType in
             PaymentMethodCellViewModel(
-                itemIdentifier: methodType.name,
-                name: methodType.displayName,
+                name: methodType.name,
+                displayName: methodType.displayName,
                 imageURL: methodType.resources.logoURL,
                 isSelected: false,
-                imageLoader: imageLoader,
+                imageLoader: paymentUIContext.imageLoader,
                 cardBrands: methodType.cardSchemes.map { $0.brandType }
             )
         }
@@ -159,19 +163,22 @@ class AccordionSectionController: SectionController {
         }
     }
 }
-    
+
 extension PaymentMethodProvider {
-    func methodsForAccordionPosition(_ position: AccordionSectionController.Position) -> [AWXPaymentMethodType] {
+    func methodsForAccordionPosition(
+        _ position: AccordionSectionController.Position,
+        excludeApplePay: Bool = true
+    ) -> [AWXPaymentMethodType] {
         guard let selectedMethod,
               let index = methods.firstIndex(where: { $0.name == selectedMethod.name }) else {
             switch position {
             case .top:
-                return methods
+                return methods.filter { !excludeApplePay || $0.name != AWXApplePayKey }
             case .bottom:
                 return []
             }
         }
         let methodSlice = (position == .top) ? methods[..<index] : methods[(index+1)...]
-        return Array(methodSlice.filter { $0.name != AWXApplePayKey })
+        return Array(methodSlice.filter { !excludeApplePay || $0.name != AWXApplePayKey })
     }
 }

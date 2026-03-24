@@ -84,7 +84,7 @@ class WebViewController: UIViewController {
         webViewDidCloseHandled = true
         // when dismissed or popped by user
         // force status sync (to dismiss GPay mask in original webView)
-        webView.evaluateJavaScript("window.close()") { object, error in
+        webView.evaluateJavaScript("window.close()") { _, error in
             if let error {
                 print(error)
             }
@@ -139,7 +139,6 @@ extension WebViewController: WKUIDelegate {
         guard navigationAction.targetFrame == nil else { return nil }
 
         let popupWebView = WKWebView(frame: .zero, configuration: configuration)
-        popupWebView.customUserAgent = "Airwallex-iOS-SDK" + " GOOGLE_PAY_SUPPORTED"
 
         let popupViewController = WebViewController(webView: popupWebView)
         popupViewController.isPopupWebView = true

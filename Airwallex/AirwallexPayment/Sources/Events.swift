@@ -12,9 +12,9 @@ import Foundation
 import AirwallexCore
 #endif
 
-@_spi(AWX) public enum AnalyticEvent {
+package enum AnalyticEvent {
     
-    @_spi(AWX) public enum Fields: String {
+    package enum Fields: String {
         case subtype
         case intentId
         case paymentMethod
@@ -26,16 +26,21 @@ import AirwallexCore
         case eventType
         case supportedNetworks
         case expressCheckout // boolean value
+        case launchType // dropin, component, embedded_element, api
+        case layout // tab, accordion, none
+        case transactionMode // oneoff, recurring
+        case showsApplePayAsPrimaryButton // boolean value
+        case legacyConsentFlow // true
     }
     
-    @_spi(AWX) public enum PageView: String {
+    package enum PageView: String {
         case paymentMethodList = "payment_method_list"
         case applePaySheet = "apple_pay_sheet"
     }
     
-    @_spi(AWX) public struct PaymentMethodView: RawRepresentable {
-        @_spi(AWX) public static let applePay = PaymentMethodView(rawValue: AWXApplePayKey)
-        @_spi(AWX) public static let card = PaymentMethodView(rawValue: AWXCardKey)
+    package struct PaymentMethodView: RawRepresentable {
+        package static let applePay = PaymentMethodView(rawValue: AWXApplePayKey)
+        package static let card = PaymentMethodView(rawValue: AWXCardKey)
         
         public let rawValue: String
         public init(rawValue: String) {
@@ -43,7 +48,7 @@ import AirwallexCore
         }
     }
     
-    @_spi(AWX) public enum Action: String {
+    package enum Action: String {
         case selectPayment = "select_payment"
         case tapPayButton = "tap_pay_button"
         case cardPaymentValidation = "card_payment_validation"
@@ -67,7 +72,7 @@ extension ErrorLoggable {
     var eventType: String? { return nil }
 }
 
-@_spi(AWX) public extension AnalyticsLogger {
+package extension AnalyticsLogger {
     static func log(pageView name: AnalyticEvent.PageView, extraInfo: [AnalyticEvent.Fields: Any]? = nil) {
         guard !ProcessInfo.isRunningUnitTest else { return }
         let (name, additionalInfo) = processEventInfo(event: name, extraInfo: extraInfo)
@@ -138,10 +143,38 @@ extension ErrorLoggable {
         }
         return (error.eventName, dict)
     }
+
+    static func buildSessionLevelInfo(
+        session: AWXSession,
+        extraInfo: [AnalyticEvent.Fields: Any]?
+    ) -> [String: Any] {
+        var dictionary: [AnalyticEvent.Fields: Any] = [
+            .expressCheckout: session.isExpressCheckout,
+            .transactionMode: session.transactionMode()
+        ]
+        if session.transactionMode() == AWXPaymentTransactionModeRecurring,
+           session is AWXRecurringSession || session.amount() == 0 {
+            dictionary[.legacyConsentFlow] = true
+        }
+        if let extraInfo {
+            dictionary.merge(extraInfo, uniquingKeysWith: { _, new in new })
+        }
+        return dictionary.reduce(into: [String: Any]()) { partialResult, keyValuePair in
+            partialResult[keyValuePair.key.rawValue] = keyValuePair.value
+        }
+    }
+
+    static func bindSession(
+        session: AWXSession,
+        extraInfo: [AnalyticEvent.Fields: Any]? = nil
+    ) {
+        let processedInfo = buildSessionLevelInfo(session: session, extraInfo: extraInfo)
+        AnalyticsLogger.shared().bindSession(session, additionalInfo: processedInfo)
+    }
 }
 
-@_spi(AWX) public enum RiskEvent: String {
-    @_spi(AWX) public enum Page: String {
+package enum RiskEvent: String {
+    package enum Page: String {
         case consent = "page_consent"
         case createCard = "page_create_card"
         case applePay = "page_apple_pay"
@@ -158,14 +191,12 @@ extension ErrorLoggable {
     case clickPaymentButton = "click_payment_button"
 }
 
-@_spi(AWX) public enum RiskLogger {
-    @_spi(AWX) public
-    static func log(_ event: RiskEvent, screen: RiskEvent.Page?) {
+package enum RiskLogger {
+    package static func log(_ event: RiskEvent, screen: RiskEvent.Page?) {
         guard !ProcessInfo.isRunningUnitTest else { return }
         Risk.log(event: event.rawValue, screen: screen?.rawValue)
     }
-    @_spi(AWX) public
-    static func log(_ event: Risk.Events, screen: RiskEvent.Page? = nil) {
+    package static func log(_ event: Risk.Events, screen: RiskEvent.Page? = nil) {
         guard !ProcessInfo.isRunningUnitTest else { return }
         Risk.log(event: event, screen: screen?.rawValue)
     }

@@ -10,7 +10,7 @@
 import AirwallexCore
 #endif
 
-@_spi(AWX) public extension AWXPaymentConsent {
+package extension AWXPaymentConsent {
     
     var isCITConsent: Bool {
         nextTriggeredBy == FormatNextTriggerByType(.customerType)

@@ -16,7 +16,7 @@
 @import AirwallexCore;
 #endif
 
-@interface MockViewController ()<AWXPaymentResultDelegate, PaymentIntentProvider>
+@interface MockViewController ()<AWXPaymentResultDelegate, AWXPaymentElementDelegate, PaymentIntentProvider>
 
 @end
 
@@ -76,6 +76,13 @@
         PaymentSessionHandler *handler = [[PaymentSessionHandler alloc] initWithSession:session viewController:self methodType:nil];
         handler.showIndicator = false;
     } while (0);
+
+    AWXPaymentElementConfiguration *config = [[AWXPaymentElementConfiguration alloc] init];
+    [AWXPaymentElement createWithSession:session
+                                delegate:self
+                           configuration:config
+                       completionHandler:^(AWXPaymentElement *_Nullable element, NSError *_Nullable error){
+                       }];
 }
 
 // AWXPaymentResultDelegate
@@ -84,6 +91,11 @@
 }
 
 - (void)paymentViewController:(UIViewController *)controller didCompleteWithPaymentConsentId:(NSString *)paymentConsentId {
+}
+
+// AWXPaymentElementDelegate
+
+- (void)paymentElement:(AWXPaymentElement *)element didCompleteForPaymentMethod:(NSString *)paymentMethod withStatus:(AirwallexPaymentStatus)status error:(NSError *_Nullable)error {
 }
 
 // PaymentIntentProvider

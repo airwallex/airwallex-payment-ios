@@ -6,10 +6,10 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
+import AirwallexPayment
+@testable import AirwallexPaymentSheet
 import UIKit
 import XCTest
-@testable import AirwallexPaymentSheet
-@_spi(AWX) import AirwallexPayment
 
 class InfoCollectorTextFieldViewModelTests: XCTestCase {
 
@@ -84,7 +84,7 @@ class InfoCollectorTextFieldViewModelTests: XCTestCase {
         // setup
         let errorMessage = "error"
         let viewModel = InfoCollectorTextFieldViewModel(
-            customInputValidator: BlockValidator { input in
+            customInputValidator: BlockValidator { _ in
                 throw errorMessage.asError()
             },
             reconfigureHandler: mockReconfigureHandler
@@ -118,7 +118,7 @@ class InfoCollectorTextFieldViewModelTests: XCTestCase {
         
         XCTAssertFalse(shouldChange)
         XCTAssertEqual(textField.attributedText?.string, "456")
-        let _ = viewModel.textField(
+        _ = viewModel.textField(
             textField,
             shouldChangeCharactersIn: NSRange(location: 3, length: 0),
             replacementString: "789abc"

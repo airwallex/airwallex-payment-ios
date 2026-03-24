@@ -42,7 +42,7 @@ final class ApplePayTests: XCTestCase {
         PaymentSheetScreen.waitForExistence(.animationTimeout)
         XCTAssertTrue(PaymentSheetScreen.applePayButton.exists)
         PaymentSheetScreen.applePayButton.robustTap()
-        ApplePaymentSheet.waitForExistence(.animationTimeout)
+        ApplePaymentSheet.waitForExistence()
         ApplePaymentSheet.cancelPayment()
         PaymentSheetScreen.validate()
         PaymentSheetScreen.cancelPayment()

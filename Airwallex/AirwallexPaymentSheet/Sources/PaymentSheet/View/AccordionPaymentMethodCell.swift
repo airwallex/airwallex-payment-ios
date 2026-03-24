@@ -63,16 +63,14 @@ class AccordionPaymentMethodCell: UICollectionViewCell, ViewConfigurable, ViewRe
                 placeholder: nil
             )
         } else {
-            logo.image = nil
+            logo.image = viewModel.placeholder
         }
         if viewModel.isSelected {
             icon.image = UIImage(systemName: "largecircle.fill.circle")?
                 .withTintColor(.awxColor(.borderInteractive), renderingMode: .alwaysOriginal)
-            label.textColor = .awxColor(.textLink)
         } else {
             icon.image = UIImage(systemName: "circle")?
                 .withTintColor(.awxColor(.borderDecorative), renderingMode: .alwaysOriginal)
-            label.textColor = .awxColor(.textPrimary)
         }
     }
     

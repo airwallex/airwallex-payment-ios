@@ -6,10 +6,10 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import UIKit
 import AirwallexCore
+@testable import AirwallexPayment
+import UIKit
 import XCTest
-@testable @_spi(AWX) import AirwallexPayment
 
 class AWXCardValidatorExtensionTests: XCTestCase {
     

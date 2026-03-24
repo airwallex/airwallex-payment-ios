@@ -7,7 +7,7 @@
 //
 
 import AirwallexCore
-@testable @_spi(AWX) import AirwallexPayment
+@testable import AirwallexPayment
 import Foundation
 
 class MockApplePayProvider: AWXDefaultProvider, ApplePayProviderProtocol {

@@ -13,13 +13,13 @@ The Airwallex iOS SDK is a flexible tool that enables you to integrate payment m
 We support the following localizations: English, Chinese Simplified, Chinese Traditional, French, German, Japanese, Korean, Portuguese Portugal, Portuguese Brazil, Russian, Spanish, Thai
 
 <p align="left">
-<img src="https://github.com/user-attachments/assets/babf2af3-d59b-49fc-8b86-26e85df28a0c" width="200" hspace="10">
-<img src="https://github.com/user-attachments/assets/d228ed51-2405-4322-be08-b1946801e076" width="200" hspace="10">
-<img src="https://github.com/user-attachments/assets/c86b7f3f-d2bc-4326-b82e-145f52d35c72" width="200" hspace="10">
-<img src="https://github.com/user-attachments/assets/938e6101-edb2-4fcf-89fa-07936e4af5a9" width="200" hspace="10">
-<img src="https://github.com/user-attachments/assets/5556a6af-882d-4474-915e-2c9d5953aaa8" width="200" hspace="10">
-<img src="https://github.com/user-attachments/assets/eb6f0b38-d88b-4c27-b843-9948bc25c5a0" width="200" hspace="10">
-<img src="https://github.com/user-attachments/assets/1de983a9-b062-4108-82f5-917e0fc0fb57" width="200" hspace="10">
+<img src="Screenshots/hpp_tab.png" width="200" hspace="10">
+<img src="Screenshots/hpp_accordion.png" width="200" hspace="10">
+<img src="Screenshots/apple_pay.png" width="200" hspace="10">
+<img src="Screenshots/card_payment_with_billing.png" width="200" hspace="10">
+<img src="Screenshots/3ds_authentication.png" width="200" hspace="10">
+<img src="Screenshots/online_banking.png" width="200" hspace="10">
+<img src="Screenshots/redirect_payment.png" width="200" hspace="10">
 </p>
 
 Table of contents
@@ -41,18 +41,24 @@ Table of contents
   - [Optional Setup](#optional-setup)
     - [WeChat Pay](#wechat-pay)
     - [Apple Pay](#apple-pay)
-  - [UI Integration](#ui-integration)
+  - [UI Integration - HPP (Hosted Payment Page)](#ui-integration---hpp-hosted-payment-page)
     - [Launch Payment Sheet (Recommended)](#launch-payment-sheet-recommended)
     - [Launch Card Payment Directly](#launch-card-payment-directly)
     - [Launch Payment Method by Name](#launch-payment-method-by-name)
-    - [Customize Theme Color (optional)](#customize-theme-color-optional)
+    - [Configuration Options](#configuration-options)
+    - [Handle Payment Result](#handle-payment-result)
+  - [UI Integration - Embedded](#ui-integration---embedded)
+    - [Create Embedded Payment Sheet](#create-embedded-payment-sheet)
+    - [Create Embedded Card Element](#create-embedded-card-element)
+    - [Configuration Options](#configuration-options-1)
+    - [Handle Payment Element Events](#handle-payment-element-events)
   - [Low-level API Integration](#low-level-api-integration)
     - [Create PaymentSessionHandler](#create-paymentsessionhandler)
     - [Pay with card](#pay-with-card)
     - [Pay with saved card (consent)](#pay-with-saved-card-consent)
     - [Pay with Apple Pay](#pay-with-apple-pay)
     - [Pay with Redirect](#pay-with-redirect)
-  - [Handle Payment Result](#handle-payment-result)
+    - [Handle Payment Result](#handle-payment-result-1)
 - [Contributing](#contributing)
 <!--te-->
 
@@ -113,9 +119,9 @@ You can add `Airwallex` for a comprehensive integration that includes everything
 
 | Integration Style| Components Included | IPA Size Increase |
 |-----------------|----------------------|------------------:|
-| Low-Level API Integration | AirwallexCore <br> AirwallexPayment | 428KB  |
-| UI Integration | AirwallexCore  <br> AirwallexPayment <br> AirwallexPaymentSheet | 1.2 MB |
-| Full Integration | AirwallexCore  <br> AirwallexPayment  <br> AirwallexPaymentSheet  <br> AirwallexWeChatPay | 1.4 MB |
+| Low-Level API Integration | AirwallexCore <br> AirwallexPayment | ~0.4 MB  |
+| UI Integration | AirwallexCore  <br> AirwallexPayment <br> AirwallexPaymentSheet | 1.3 MB |
+| Full Integration | AirwallexCore  <br> AirwallexPayment  <br> AirwallexPaymentSheet  <br> AirwallexWeChatPay | 1.5 MB |
 
 > The above size increase (compressed) was calculated based on Xcode’s App Thinning Size Report for a minimal iOS project integrating AirwallexSDK via Swift Package Manager (SPM).
 #### CocoaPods
@@ -340,7 +346,7 @@ let session = Session(
 > Coupon is also not supported at this stage.
 
 
-### UI Integration
+### UI Integration - HPP (Hosted Payment Page)
 
 #### Launch Payment Sheet (Recommended)
 > [!NOTE]
@@ -350,60 +356,216 @@ Make sure you add dependency for `Airwallex` or `AirwallexPaymentSheet`.
 Upon checkout, use [AWXUIContext](https://airwallex.github.io/airwallex-payment-ios/6.3.2/documentation/airwallex/awxuicontext) to present the payment flow where the user will be able to select the payment method.
 
 ``` swift
+let configuration = AWXUIContext.Configuration()
+configuration.layout = .tab // or .accordion
+configuration.launchStyle = .push // or .present
+
 AWXUIContext.launchPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
     session: "The session created above",
-    filterBy: "An optional array of payment method names used to filter the payment methods returned by the server",
-    launchStyle: ".push/.present",
-    layout: ".tab/.accordion"
+    configuration: configuration
 )
 ```
 
-We provide `tab` and `accordian` styles for our payment sheet:
+We provide `tab` and `accordion` styles for our payment sheet:
 <p align="left">
-<img src="https://github.com/user-attachments/assets/babf2af3-d59b-49fc-8b86-26e85df28a0c" width="200">
-<img src="https://github.com/user-attachments/assets/d228ed51-2405-4322-be08-b1946801e076" width="200">
+<img src="Screenshots/hpp_tab.png" width="200">
+<img src="Screenshots/hpp_accordion.png" width="200">
 </p>
 
 ---
 #### Launch Card Payment Directly
 ```swift
-AWXUIContext.launchCardPayment(
+let configuration = AWXUIContext.Configuration()
+configuration.elementType = .addCard
+configuration.supportedCardBrands = [.visa, .mastercard, .unionPay]
+
+AWXUIContext.launchPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
     session: "The session created above",
-    supportedBrands: "accepted card brands, should not be empty"
+    configuration: configuration
 )
 ```
 
 > [!Tip]
-> If you want to show card payment only but still want to be able to pay with saved cards, you can launch
-> payment sheet by passing `[AWXCardKey]` as parameter of `filterBy:`
+> If you want to show card payment only but still want to be able to pay with saved cards, you can use
+> `session.paymentMethods` to filter by passing `[AWXCardKey]`:
 ``` swift
+let session = Session(...)
+session.paymentMethods = [AWXCardKey]
+
 AWXUIContext.launchPayment(
     from: "hosting view controller which also handles AWXPaymentResultDelegate",
-    session: "The session created above",
-    filterBy: [AWXCardKey]
+    session: session,
+    configuration: AWXUIContext.Configuration()
 )
 ```
+
 ---
 #### Launch Payment Method by Name
 ```swift
+let configuration = AWXUIContext.Configuration()
+configuration.elementType = .component
+configuration.paymentMethodName = "payment method name"
+
 AWXUIContext.launchPayment(
-    name: "payment method name",
     from: "hosting view controller",
     session: "The session created above",
-    paymentResultDelegate: "object handles AWXPaymentResultDelegate"
+    paymentResultDelegate: "object handles AWXPaymentResultDelegate",
+    configuration: configuration
 )
 ```
 > [!TIP]
-> Available payment method names can be found in [Airwallex API doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Config/_api_v1_pa_config_payment_method_types/get)  
-> 
+> Available payment method names can be found in [Airwallex API doc](https://www.airwallex.com/docs/api#/Payment_Acceptance/Config/_api_v1_pa_config_payment_method_types/get)
+>
 ---
-#### Customize Theme Color (optional)
+#### Configuration Options
 
-You can customize theme color of the payment sheet
+| Property | Description | Default |
+|----------|-------------|---------|
+| `elementType` | `.paymentSheet` (all methods), `.addCard` (card only), or `.component` (single method) | `.paymentSheet` |
+| `paymentMethodName` | Payment method name (required for `.component`) | `nil` |
+| `layout` | `.tab` or `.accordion` (only applies to `.paymentSheet`) | `.tab` |
+| `launchStyle` | `.push` or `.present` | `.push` |
+| `supportedCardBrands` | Accepted card brands (only applies to `.addCard`) | All available brands |
+| `applePayButton` | Customize Apple Pay button appearance (e.g. `buttonType`, `disableCardArt`) | — |
+| `checkoutButton` | Customize checkout button (e.g. `title`) | — |
+
+#### Handle Payment Result
+
+Handle the payment result in the callback of `AWXPaymentResultDelegate`.
 ``` swift
-AWXTheme.shared().tintColor = .red
+func paymentViewController(_ controller: UIViewController?, didCompleteWith status: AirwallexPaymentStatus, error: Error?) {
+    // call back for status success/in progress/ failure / cancel
+}
+```
+
+> [!TIP]
+> If the payment consent is created during payment process, you can implement this optional function to get the ID of this payment consent for any further usage.
+```swift
+func paymentViewController(_ controller: UIViewController?, didCompleteWithPaymentConsentId paymentConsentId: String) {
+    // To do anything with this ID.
+}
+```
+
+### UI Integration - Embedded
+
+`AWXPaymentElement` provides a flexible way to embed payment UI directly into your own view hierarchy.
+Unlike `AWXUIContext.launchPayment()` which presents a full payment sheet as a view controller,
+`AWXPaymentElement` returns a `UIView` that you can place anywhere in your layout.
+
+Make sure you add dependency for `Airwallex` or `AirwallexPaymentSheet`.
+
+<p align="left">
+<img src="Screenshots/embedded_tab.png" width="200">
+<img src="Screenshots/embedded_accordion_inline_applepay.png" width="200">
+</p>
+
+> [!NOTE]
+> - The embedded view requires Auto Layout constraints for proper sizing.
+> - The view's height updates automatically based on content.
+> - Keyboard handling is the host app's responsibility.
+
+---
+#### Create Embedded Payment Sheet
+
+Display a list of available payment methods inside your own view hierarchy.
+
+``` swift
+let configuration = AWXPaymentElement.Configuration()
+configuration.layout = .tab // or .accordion
+
+let element = try await AWXPaymentElement.create(
+    session: session,
+    delegate: self, // AWXPaymentElementDelegate
+    configuration: configuration
+)
+
+// Add the element's view to your view hierarchy
+let paymentView = element.view
+paymentView.translatesAutoresizingMaskIntoConstraints = false
+containerView.addSubview(paymentView)
+```
+
+---
+#### Create Embedded Card Element
+
+Display only the card payment form for adding new cards.
+
+``` swift
+let configuration = AWXPaymentElement.Configuration()
+configuration.elementType = .addCard
+configuration.supportedCardBrands = [.visa, .mastercard, .unionPay] // defaults to all available brands
+
+let element = try await AWXPaymentElement.create(
+    session: session,
+    delegate: self, // AWXPaymentElementDelegate
+    configuration: configuration
+)
+
+// Add the element's view to your view hierarchy
+let paymentView = element.view
+paymentView.translatesAutoresizingMaskIntoConstraints = false
+containerView.addSubview(paymentView)
+```
+
+---
+#### Configuration Options
+
+| Property | Description | Default |
+|----------|-------------|---------|
+| `elementType` | `.paymentSheet` (all payment methods) or `.addCard` (card only) | `.paymentSheet` |
+| `layout` | `.tab` or `.accordion` (only applies to `.paymentSheet`) | `.tab` |
+| `supportedCardBrands` | Accepted card brands (only applies to `.addCard`) | All available brands |
+| `applePayButton` | Customize Apple Pay button appearance (e.g. `showsAsPrimaryButton`, `buttonType`, `disableCardArt`) | — |
+| `checkoutButton` | Customize checkout button (e.g. `title`) | — |
+| `appearance.tintColor` | Primary brand color used throughout the payment element | SDK default |
+
+---
+#### Handle Payment Element Events
+
+Implement `AWXPaymentElementDelegate` to receive payment lifecycle callbacks from the embedded element.
+
+``` swift
+extension YourViewController: AWXPaymentElementDelegate {
+    // Required - called when payment completes
+    func paymentElement(
+        _ element: AWXPaymentElement,
+        didCompleteFor paymentMethod: String,
+        with status: AirwallexPaymentStatus,
+        error: Error?
+    ) {
+        // call back for status success/in progress/ failure / cancel
+    }
+
+    // Optional - show/hide your own loading indicator
+    func paymentElement(
+        _ element: AWXPaymentElement,
+        onProcessingStateChangedFor paymentMethod: String,
+        isProcessing: Bool
+    ) {
+        // Show or hide loading indicator
+    }
+
+    // Optional - called when a payment consent is created
+    func paymentElement(
+        _ element: AWXPaymentElement,
+        didCompleteFor paymentMethod: String,
+        withPaymentConsentId paymentConsentId: String
+    ) {
+        // Store consent ID for future use
+    }
+
+    // Optional - scroll invalid input field into view
+    func paymentElement(
+        _ element: AWXPaymentElement,
+        validationFailedFor paymentMethod: String,
+        invalidInputView: UIView
+    ) {
+        let rect = invalidInputView.convert(invalidInputView.bounds, to: scrollView)
+        scrollView.scrollRectToVisible(rect, animated: true)
+    }
+}
 ```
 
 ### Low-level API Integration
@@ -465,9 +627,9 @@ paymentSessionHandler.startRedirectPayment(
 )
 ```
 
-### Handle Payment Result
+#### Handle Payment Result
 
-Regardless of what kind of integration style you choose, you need to handle the payment result in the callback of `AWXPaymentResultDelegate`.
+Handle the payment result in the callback of `AWXPaymentResultDelegate`.
 ``` swift
 func paymentViewController(_ controller: UIViewController?, didCompleteWith status: AirwallexPaymentStatus, error: Error?) {
     // call back for status success/in progress/ failure / cancel

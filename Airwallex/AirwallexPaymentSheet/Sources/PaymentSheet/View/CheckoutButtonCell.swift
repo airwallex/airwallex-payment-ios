@@ -9,11 +9,11 @@
 import UIKit
 #if canImport(AirwallexPayment)
 import AirwallexCore
-@_spi(AWX) import AirwallexPayment
+import AirwallexPayment
 #endif
 
 struct CheckoutButtonCellViewModel {
-    let shouldShowPayAsCta: Bool
+    let title: String
     let checkoutAction: () -> Void
 }
 
@@ -24,6 +24,8 @@ class CheckoutButtonCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.setTitle("Pay", for: .normal)
         view.addTarget(self, action: #selector(onButtonTapped), for: .touchUpInside)
+        view.addTarget(self, action: #selector(onButtonTouchDown), for: .touchDown)
+        view.addTarget(self, action: #selector(onButtonTouchUp), for: [.touchUpInside, .touchUpOutside, .touchCancel])
         
         view.setTitleColor(.awxColor(.textInverse), for: .normal)
         view.titleLabel?.font = .awxFont(.headline1, weight: .bold)
@@ -55,11 +57,22 @@ class CheckoutButtonCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     
     func setup(_ viewModel: CheckoutButtonCellViewModel) {
         self.viewModel = viewModel
-        let title = viewModel.shouldShowPayAsCta ? NSLocalizedString("Pay", bundle: .paymentSheet, comment: "checkout button title for one-off payment") : NSLocalizedString("Confirm", bundle: .paymentSheet, comment: "checkout button title for recurring payment")
-        button.setTitle(title, for: .normal)
+        button.setTitle(viewModel.title, for: .normal)
     }
     
     @objc func onButtonTapped() {
         viewModel?.checkoutAction()
+    }
+
+    @objc private func onButtonTouchDown() {
+        UIView.animate(withDuration: 0.1) {
+            self.button.alpha = 0.9
+        }
+    }
+
+    @objc private func onButtonTouchUp() {
+        UIView.animate(withDuration: 0.3) {
+            self.button.alpha = 1.0
+        }
     }
 }

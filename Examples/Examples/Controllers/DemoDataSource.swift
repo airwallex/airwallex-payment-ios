@@ -78,7 +78,7 @@ struct DemoDataSource {
     private static var applePayMerchantId: String {
         switch ExamplesKeys.environment {
         case .stagingMode:
-            ""
+            "merchant.staging.com.airwallex.paymentacceptance"
         case .demoMode:
             "merchant.demo.com.airwallex.paymentacceptance"
         case .productionMode:

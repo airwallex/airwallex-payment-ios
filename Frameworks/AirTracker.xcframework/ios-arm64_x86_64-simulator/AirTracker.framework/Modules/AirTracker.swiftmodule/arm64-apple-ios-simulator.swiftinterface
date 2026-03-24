@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.9.2 (swiftlang-5.9.2.2.56 clang-1500.1.0.2.5)
-// swift-module-flags: -target arm64-apple-ios13.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name AirTracker
-// swift-module-flags-ignorable: -enable-bare-slash-regex
+// swift-compiler-version: Apple Swift version 6.2.3 effective-5.10 (swiftlang-6.2.3.3.21 clang-1700.6.3.2)
+// swift-module-flags: -target arm64-apple-ios13.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name AirTracker
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2.3
 @_exported import AirTracker
 import Foundation
 import Swift
@@ -9,6 +9,24 @@ import UIKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
+@objc public class Config : ObjectiveC.NSObject {
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc public init(appName: Swift.String, appVersion: Swift.String?, environment: AirTracker.Environment)
+  #endif
+  @objc deinit
+}
+@objc public enum Environment : Swift.Int {
+  case staging
+  case demo
+  case prod
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init?(rawValue: Swift.Int)
+  #endif
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
 @_hasMissingDesignatedInitializers @objc public class Tracker : ObjectiveC.NSObject {
   @objc public var extraCommonData: [Swift.String : Any] {
     @objc get
@@ -18,20 +36,6 @@ import _SwiftConcurrencyShims
   @objc public func info(eventName: Swift.String, extraInfo: [Swift.String : Any])
   @objc public func error(eventName: Swift.String, extraInfo: [Swift.String : Any])
   @objc deinit
-}
-@objc public class Config : ObjectiveC.NSObject {
-  @objc public init(appName: Swift.String, appVersion: Swift.String?, environment: AirTracker.Environment)
-  @objc deinit
-}
-@objc public enum Environment : Swift.Int {
-  case staging
-  case demo
-  case prod
-  public init?(rawValue: Swift.Int)
-  public typealias RawValue = Swift.Int
-  public var rawValue: Swift.Int {
-    get
-  }
 }
 extension AirTracker.Environment : Swift.Equatable {}
 extension AirTracker.Environment : Swift.Hashable {}

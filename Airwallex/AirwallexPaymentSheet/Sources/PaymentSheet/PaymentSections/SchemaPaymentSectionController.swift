@@ -9,7 +9,7 @@
 import UIKit
 #if canImport(AirwallexPayment)
 import AirwallexCore
-@_spi(AWX) import AirwallexPayment
+import AirwallexPayment
 #endif
     
 // MARK: - Item Identifiers
@@ -21,13 +21,14 @@ private extension String {
 }
     
 /// This section controlelr is for schema payment
-class SchemaPaymentSectionController: NSObject, SectionController {
+class SchemaPaymentSectionController: NSObject, PaymentSectionController {
     typealias SectionItem = CompoundItem<PaymentSectionType, String>
-    private var session: AWXSession {
+    var session: AWXSession {
         methodProvider.session
     }
-    private var paymentSessionHandler: PaymentSessionHandler?
+    private var paymentSessionHandler: PaymentSessionHandlerProtocol?
     private var methodProvider: PaymentMethodProvider
+    let paymentUIContext: PaymentSheetUIContext
     
     // data from method details API
     private var schema: AWXSchema?
@@ -37,22 +38,18 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     
     private var uiFieldViewModels = [InfoCollectorTextFieldViewModel]()
     private let name: String
-    private let imageLoader: ImageLoader
-    
-    let layout: AWXUIContext.PaymentLayout
+
     private let methodType: AWXPaymentMethodType
-    
+
     init(methodType: AWXPaymentMethodType,
          methodProvider: PaymentMethodProvider,
-         layout: AWXUIContext.PaymentLayout,
-         imageLoader: ImageLoader) {
+         paymentUIContext: PaymentSheetUIContext) {
         assert(methodType.name != AWXCardKey && methodType.name != AWXApplePayKey && methodType.hasSchema)
         self.methodType = methodType
         self.name = methodType.name
         self.section = PaymentSectionType.schemaPayment(name)
         self.methodProvider = methodProvider
-        self.layout = layout
-        self.imageLoader = imageLoader
+        self.paymentUIContext = paymentUIContext
     }
     
     // MARK: - SectionController
@@ -64,7 +61,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
     var items: [String] {
         var items = [String]()
     
-        if layout == .accordion {
+        if paymentUIContext.layout == .accordion {
             items.append(.accordionKey)
         }
     
@@ -91,16 +88,19 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         let paymentGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: paymentGroup)
         section.interGroupSpacing = 24
-        switch layout {
+        switch paymentUIContext.layout {
         case .tab:
-            section.contentInsets = .init(horizontal: 16)
+            section.contentInsets = .init(horizontal: paymentUIContext.isEmbedded ? 0 : 16)
         case .accordion:
-            section.contentInsets = .init(top: 16, leading: 40, bottom: 32, trailing: 40)
-            
+            let sectionHorizontal: CGFloat = paymentUIContext.isEmbedded ? 24 : 40
+            section.contentInsets = .init(top: 16, leading: sectionHorizontal, bottom: 24, trailing: sectionHorizontal)
+
             // Layout for decoration - rounded corner
             context.register(RoundedCornerDecorationView.self, forDecorationViewOfKind: AccordionSectionController.backgroundElementKind)
             let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: AccordionSectionController.backgroundElementKind)
-            sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(horizontal: 16)
+            sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(
+                horizontal: paymentUIContext.isEmbedded ? 0 : 16
+            )
             section.decorationItems = [sectionBackgroundDecoration]
         }
         return section
@@ -113,11 +113,11 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         case .accordionKey:
             let cell = context.dequeueReusableCell(AccordionSelectedMethodCell.self, for: sectionItem, indexPath: indexPath)
             let viewModel = PaymentMethodCellViewModel(
-                itemIdentifier: item,
-                name: methodType.displayName,
+                name: methodType.name,
+                displayName: methodType.displayName,
                 imageURL: methodType.resources.logoURL,
                 isSelected: true,
-                imageLoader: imageLoader,
+                imageLoader: paymentUIContext.imageLoader,
                 cardBrands: []
             )
             cell.setup(viewModel)
@@ -125,13 +125,15 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         case .checkoutButton:
             let cell = context.dequeueReusableCell(CheckoutButtonCell.self, for: sectionItem, indexPath: indexPath)
             let viewModel = CheckoutButtonCellViewModel(
-                shouldShowPayAsCta: !(session is AWXRecurringSession),
+                title: checkoutButtonTitle,
                 checkoutAction: checkout
             )
             cell.setup(viewModel)
             return cell
         case .redirectReminder:
-            return context.dequeueReusableCell(SchemaPaymentReminderCell.self, for: sectionItem, indexPath: indexPath)
+            let cell = context.dequeueReusableCell(PaymentReminderCell.self, for: sectionItem, indexPath: indexPath)
+            cell.setup(.schema)
+            return cell
         case .bankName:
             let cell = context.dequeueReusableCell(BankSelectionCell.self, for: sectionItem, indexPath: indexPath)
             assert(bankSelectionViewModel != nil)
@@ -164,9 +166,9 @@ class SchemaPaymentSectionController: NSObject, SectionController {
         task = Task {
             do {
                 // block user from checkout when paymentmethod type is loading
-                context.viewController?.startLoading()
+                context.startLoading(for: section)
                 defer {
-                    context.viewController?.stopLoading()
+                    context.stopLoading()
                 }
                 //  request method details from server
                 let response = try await methodProvider.getPaymentMethodTypeDetails(name: name)
@@ -266,7 +268,7 @@ class SchemaPaymentSectionController: NSObject, SectionController {
                 schema = nil
                 bankList = nil
                 task = nil
-                context.viewController?.showAlert(message: error.localizedDescription)
+                UIViewController.topMost?.showAlert(message: error.localizedDescription)
                 debugLog("Failed to get schema for selected method. Error: \(error.localizedDescription)")
             }
         }
@@ -288,98 +290,104 @@ private extension SchemaPaymentSectionController {
             updateItemsIfNecessary()
             return
         }
-        
+
+        // Validation phase
         do {
             // validate bank selection
             try bankSelectionViewModel?.validate()
-            
             // validate uiFields
             for viewModel in uiFieldViewModels {
-                do {
-                    try viewModel.validate()
-                } catch {
-                    context.scroll(to: sectionItem(viewModel.fieldName), position: .bottom, animated: true)
-                    throw error
-                }
+                try viewModel.validate()
             }
-            
-            let paymentMethod = AWXPaymentMethod()
-            paymentMethod.type = name
-            
-            // update bank selection
-            if let bankSelectionViewModel {
-                paymentMethod.appendAdditionalParams([bankSelectionViewModel.fieldName: bankSelectionViewModel.bank?.name ?? ""])
-            }
-            
-            //  update from UI fields
-            let inputContents = uiFieldViewModels.reduce(into: [String: String]()) { partialResult, viewModel in
-                partialResult[viewModel.fieldName] = viewModel.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-            }
-            paymentMethod.appendAdditionalParams(inputContents)
-            
-            // update hidden fields
-            paymentMethod.appendAdditionalParams(schema.parametersForHiddenFields(countryCode: session.countryCode))
-            
-            paymentSessionHandler = PaymentSessionHandler(
-                session: session,
-                viewController: context.viewController!,
-                paymentResultDelegate: AWXUIContext.shared.delegate,
-                methodType: methodProvider.method(named: name),
-                dismissAction: { completion in
-                    AWXUIContext.shared.dismissAction?(completion)
-                    // clear dismissAction block here so the user cancel detection
-                    // in AWXPaymentViewController.deinit() can work as expected
-                    AWXUIContext.shared.dismissAction = nil
-                }
-            )
-            
-            Task { @MainActor in
-                do {
-                    try await paymentSessionHandler?.confirmRedirectPayment(with: paymentMethod)
-                    debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
-                } catch {
-                    context.viewController?.showAlert(message: error.localizedDescription)
-                    for viewModel in uiFieldViewModels {
-                        viewModel.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
-                    }
-                }
-            }
-            
         } catch {
-            context.viewController?.showAlert(message: error.localizedDescription)
-            for viewModel in uiFieldViewModels {
-                viewModel.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
+            for viewModel in [bankSelectionViewModel] + uiFieldViewModels {
+                viewModel?.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
+            }
+            scrollToFirstInvalidField()
+            return
+        }
+
+        // Confirm payment phase
+        let paymentMethod = buildPaymentMethod(schema: schema)
+        confirmRedirectPayment(paymentMethod: paymentMethod)
+    }
+
+    func scrollToFirstInvalidField() {
+        // Build list of (viewModel, itemIdentifier) pairs in validation order
+        var validatableItems: [(viewModel: InfoCollectorTextFieldViewModel, itemIdentifier: String)] = []
+        if let bankSelectionViewModel {
+            validatableItems.append((bankSelectionViewModel, bankSelectionViewModel.itemIdentifier))
+        }
+        for viewModel in uiFieldViewModels {
+            validatableItems.append((viewModel, viewModel.fieldName))
+        }
+        for entry in validatableItems {
+            do {
+                try entry.viewModel.validate()
+            } catch {
+                let item = sectionItem(entry.itemIdentifier)
+                if paymentUIContext.isEmbedded {
+                    if let view = context.cellForItem(item) {
+                        paymentUIContext.paymentElement?.notifyValidationFailed(
+                            for: methodType.name,
+                            invalidInputView: view
+                        )
+                    }
+                } else {
+                    context.ensureVisible(for: item)
+                }
+                return
             }
         }
     }
-    
+
+    func buildPaymentMethod(schema: AWXSchema) -> AWXPaymentMethod {
+        let paymentMethod = AWXPaymentMethod()
+        paymentMethod.type = name
+
+        // update bank selection
+        if let bankSelectionViewModel {
+            paymentMethod.appendAdditionalParams([bankSelectionViewModel.fieldName: bankSelectionViewModel.bank?.name ?? ""])
+        }
+
+        // update from UI fields
+        let inputContents = uiFieldViewModels.reduce(into: [String: String]()) { partialResult, viewModel in
+            partialResult[viewModel.fieldName] = viewModel.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        paymentMethod.appendAdditionalParams(inputContents)
+
+        // update hidden fields
+        paymentMethod.appendAdditionalParams(schema.parametersForHiddenFields(countryCode: session.countryCode))
+
+        return paymentMethod
+    }
+
+    func confirmRedirectPayment(paymentMethod: AWXPaymentMethod) {
+        paymentSessionHandler = paymentUIContext.paymentSessionHandlerFactory.createHandler(
+            session: session,
+            methodType: methodProvider.method(named: name),
+            paymentUIContext: paymentUIContext
+        )
+        prepareForEmbeddedCheckout(paymentMethod: name, handler: paymentSessionHandler)
+        Task { [weak self] in
+            guard let self else { return }
+            await paymentSessionHandler?.confirmRedirectPayment(with: paymentMethod)
+            debugLog("Start payment. Intent ID: \(session.paymentIntentId() ?? "")")
+        }
+    }
+
     func handleBankSelection() {
         context.endEditing()
-        guard let bankList = bankList else { return }
-        let formMapping = AWXFormMapping()
-        formMapping.title = NSLocalizedString("Select your Bank", bundle: .paymentSheet, comment: "schema section - title of Bank Selection form")
-        formMapping.forms = bankList.map { bank in
-            let form = AWXForm.init(key: bank.name, type: .listCell, title: bank.displayName, logo: bank.resources.logoURL)
-            return form
+        guard let bankList else { return }
+        let controller = BankListViewController(
+            banks: bankList,
+            imageLoader: paymentUIContext.imageLoader
+        ) { [weak self] bank in
+            guard let self else { return }
+            self.bankSelectionViewModel?.bank = bank
+            AnalyticsLogger.log(action: .selectBank, extraInfo: [.bankName: bank.name])
         }
-        // this pseudoMethod is only used to satisfy AWXPaymentFormViewController and will never be used
-        let pseudoMethod = AWXPaymentMethod()
-        let controller = AWXPaymentFormViewController()
-        controller.delegate = self
-        controller.viewModel = AWXPaymentFormViewModel(session: session, paymentMethod: pseudoMethod, formMapping: formMapping)
-        controller.paymentMethod = pseudoMethod
-        controller.formMapping = formMapping
-        controller.modalPresentationStyle = .overFullScreen
-        controller.modalTransitionStyle = .crossDissolve
-        context.viewController?.present(controller, animated: false)
-    }
-}
-    
-extension SchemaPaymentSectionController: AWXPaymentFormViewControllerDelegate {
-    func paymentFormViewController(_ paymentFormViewController: AWXPaymentFormViewController, didSelectOption optionKey: String) {
-        guard let bank = bankList?.first(where: { $0.name == optionKey }) else { return }
-        bankSelectionViewModel?.bank = bank
-        AnalyticsLogger.log(action: .selectBank, extraInfo: [.bankName: optionKey])
-        paymentFormViewController.dismiss(animated: true)
+        
+        UIViewController.topMost?.present(controller, animated: true)
     }
 }

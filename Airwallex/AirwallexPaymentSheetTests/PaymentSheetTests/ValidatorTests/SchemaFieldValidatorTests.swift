@@ -6,11 +6,11 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
+import AirwallexCore
+import AirwallexPayment
+@testable import AirwallexPaymentSheet
 import UIKit
 import XCTest
-import AirwallexCore
-@_spi(AWX) import AirwallexPayment
-@testable import AirwallexPaymentSheet
 
 class SchemaFieldValidatorTests: XCTestCase {
     

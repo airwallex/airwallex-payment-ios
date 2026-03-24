@@ -6,9 +6,9 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import Foundation
 import AirwallexCore
-@testable @_spi(AWX) import AirwallexPayment
+@testable import AirwallexPayment
+import Foundation
 
 class MockProviderFactory: ProviderFactoryProtocol {
     
