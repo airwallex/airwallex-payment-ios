@@ -12,15 +12,23 @@ The Airwallex iOS SDK is a flexible tool that enables you to integrate payment m
 
 We support the following localizations: English, Chinese Simplified, Chinese Traditional, French, German, Japanese, Korean, Portuguese Portugal, Portuguese Brazil, Russian, Spanish, Thai
 
+## Supported Payment Methods
+
+| Category | Methods | Notes |
+|----------|---------|-------|
+| Cards | Visa, Mastercard, UnionPay, Discover, JCB, Diners Club, Amex | PCI-DSS compliance is required when using Low-level API Integration|
+| Apple Pay | Apple Pay | [Setup](#apple-pay) |
+| E-Wallets | Alipay, AlipayHK, DANA, GCash, Kakao Pay, Touch 'n Go, WeChat Pay, and [more](https://www.airwallex.com/docs/payments__payment-methods__payment-methods-overview) | |
+
 ## Integration Options
 
 Choose the integration option that best suits your needs:
 
-| Option | Description | Payment Sheet | Card Only |
+| Option | Description | Multiple payment methods | Single payment method |
 |--------|-------------|--------------------------|------------------------|
-| [UI Integration - Hosted Payment Page (HPP)](#ui-integration---hpp-hosted-payment-page) | Launch a complete, SDK-managed payment flow with prebuilt screens for payment method selection, card input, and checkout. Supports customizable theming and dark mode. **Recommended for most use cases.** | <img src="Screenshots/hpp_tab.png" width="300" alt="HPP - Multiple payment methods"> | <img src="Screenshots/card_payment_with_billing.png" width="300" alt="HPP - Single payment method"> |
+| [UI Integration - Hosted Payment Page (HPP)](#ui-integration---hpp-hosted-payment-page) | Launch a complete, SDK-managed payment flow with prebuilt screens for payment method selection, card input, and checkout. Supports customizable theming and dark mode. **Recommended for most use cases.** | <img src="Screenshots/hpp_tab.png" width="300" alt="HPP - Multiple payment methods"> | <img src="Screenshots/hpp-card.png" width="300" alt="HPP - Single payment method"> |
 | [UI Integration - Embedded Element](#ui-integration---embedded) | Embed Airwallex's `AWXPaymentElement` directly into your own view hierarchy using UIKit. You retain full control over the host layout and navigation while leveraging the SDK's payment UI components. | <img src="Screenshots/embedded_tab.png" width="300" alt="Embedded - Multiple payment methods"> | <img src="Screenshots/embedded_card.png" width="300" alt="Embedded - Single payment method"> |
-| [Low-level API Integration](#low-level-api-integration) | Build a fully custom payment UI using the SDK's core APIs. Gives you direct access to payment method retrieval, card tokenization, payment confirmation, and consent management. | Your custom UI | Your custom UI |
+| [Low-level API Integration](#low-level-api-integration) | Build a fully custom payment UI using the SDK's core APIs. Gives you direct access to payment method retrieval, card tokenization, payment confirmation, and consent management. | <img src="Screenshots/api-method-list.png" width="300" alt="API - Multiple payment methods"> | <img src="Screenshots/api-applepay.png" width="300" alt="API - Single payment method"> |
 
 Table of contents
 =================
@@ -28,6 +36,7 @@ Table of contents
 <!--ts-->
 - [Airwallex iOS SDK](#airwallex-ios-sdk)
   - [Overview](#overview)
+  - [Supported Payment Methods](#supported-payment-methods)
   - [Integration Options](#integration-options)
 - [Table of contents](#table-of-contents)
   - [Getting Started](#getting-started)
@@ -125,7 +134,7 @@ You can add `Airwallex` for a comprehensive integration that includes everything
 
 | Integration Style| Components Included | IPA Size Increase |
 |-----------------|----------------------|------------------:|
-| Low-Level API Integration | AirwallexCore <br> AirwallexPayment | ~0.4 MB  |
+| Low-Level API Integration | AirwallexCore <br> AirwallexPayment | 0.4 MB  |
 | UI Integration | AirwallexCore  <br> AirwallexPayment <br> AirwallexPaymentSheet | 1.3 MB |
 | Full Integration | AirwallexCore  <br> AirwallexPayment  <br> AirwallexPaymentSheet  <br> AirwallexWeChatPay | 1.5 MB |
 
