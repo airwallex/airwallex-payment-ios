@@ -92,18 +92,6 @@ __deprecated
 @end
 
 /**
- A customized view for option form
- */
-@interface AWXOptionView : AWXView
-
-- (instancetype)initWithKey:(NSString *)key
-                  formLabel:(NSString *)formLabelText
-                    logoURL:(NSURL *)logoURL
-           selectionHandler:(void (^)(AWXOptionView *option))handler;
-
-@end
-
-/**
  A common button type used for submission
  */
 @interface AWXActionButton : UIButton

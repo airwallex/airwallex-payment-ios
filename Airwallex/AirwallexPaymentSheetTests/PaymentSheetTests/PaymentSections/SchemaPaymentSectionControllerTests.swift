@@ -132,8 +132,9 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
             return
         }
         XCTAssertNotNil(bankCell.viewModel?.bank)
+        bankCell.viewModel?.handleUserInteraction()
 
-        // Checkout validation - when bank is nil, inline error should be shown
+        // checkout validation
         XCTAssertNil(bankCell.viewModel?.errorHint)
         bankCell.viewModel?.bank = nil
         guard let checkoutCell = sectionController.context.cellForItem(sectionController.sectionItem(.checkoutButton)) as? CheckoutButtonCell else {

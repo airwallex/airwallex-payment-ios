@@ -38,8 +38,7 @@ FOUNDATION_EXPORT const unsigned char AirwallexCoreVersionString[];
 #import "AWXPaymentConsent.h"
 #import "AWXPaymentConsentRequest.h"
 #import "AWXPaymentConsentResponse.h"
-#import "AWXPaymentFormViewController.h"
-#import "AWXPaymentFormViewModel.h"
+
 #import "AWXPaymentIntent+Summary.h"
 #import "AWXPaymentIntent.h"
 #import "AWXPaymentIntentRequest.h"

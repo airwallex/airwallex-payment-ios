@@ -378,31 +378,16 @@ private extension SchemaPaymentSectionController {
 
     func handleBankSelection() {
         context.endEditing()
-        guard let bankList = bankList else { return }
-        let formMapping = AWXFormMapping()
-        formMapping.title = NSLocalizedString("Select your Bank", bundle: .paymentSheet, comment: "schema section - title of Bank Selection form")
-        formMapping.forms = bankList.map { bank in
-            let form = AWXForm.init(key: bank.name, type: .listCell, title: bank.displayName, logo: bank.resources.logoURL)
-            return form
+        guard let bankList else { return }
+        let controller = BankListViewController(
+            banks: bankList,
+            imageLoader: paymentUIContext.imageLoader
+        ) { [weak self] bank in
+            guard let self else { return }
+            self.bankSelectionViewModel?.bank = bank
+            AnalyticsLogger.log(action: .selectBank, extraInfo: [.bankName: bank.name])
         }
-        // this pseudoMethod is only used to satisfy AWXPaymentFormViewController and will never be used
-        let pseudoMethod = AWXPaymentMethod()
-        let controller = AWXPaymentFormViewController()
-        controller.delegate = self
-        controller.viewModel = AWXPaymentFormViewModel(session: session, paymentMethod: pseudoMethod, formMapping: formMapping)
-        controller.paymentMethod = pseudoMethod
-        controller.formMapping = formMapping
-        controller.modalPresentationStyle = .overFullScreen
-        controller.modalTransitionStyle = .crossDissolve
-        UIViewController.topMost?.present(controller, animated: false)
-    }
-}
-    
-extension SchemaPaymentSectionController: AWXPaymentFormViewControllerDelegate {
-    func paymentFormViewController(_ paymentFormViewController: AWXPaymentFormViewController, didSelectOption optionKey: String) {
-        guard let bank = bankList?.first(where: { $0.name == optionKey }) else { return }
-        bankSelectionViewModel?.bank = bank
-        AnalyticsLogger.log(action: .selectBank, extraInfo: [.bankName: optionKey])
-        paymentFormViewController.dismiss(animated: true)
+        
+        UIViewController.topMost?.present(controller, animated: true)
     }
 }
