@@ -17,6 +17,10 @@ sed -i '' 's/\(AIRWALLEX_VERSION (@"\)[^"]*/\1'"$VERSION"'/g' ./Airwallex/Airwal
 sed -i '' 's/\(s.version *= *"\)[^"]*/\1'"$VERSION"'/g' ./Airwallex.podspec
 sed -i '' 's/\(AIRWALLEX_VERSION *= *\).*/\1'"$VERSION"'/g' ./Airwallex/Airwallex.xcconfig
 
+echo "Updating CocoaPods version in README files."
+sed -i '' 's/\(pod '\''Airwallex'\'', '\''~> \)[^'\'']*/\1'"$VERSION"'/g' ./README.md
+sed -i '' 's/\(pod '\''Airwallex'\'', '\''~> \)[^'\'']*/\1'"$VERSION"'/g' ./README_zh_CN.md
+
 echo "Updating documentation URLs in README files."
 # Update documentation URLs in README.md and README_zh_CN.md
 sed -i '' 's|github\.io/airwallex-payment-ios/[^/]*/|github.io/airwallex-payment-ios/'"$VERSION"'/|g' ./README.md
