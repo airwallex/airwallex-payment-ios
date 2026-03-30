@@ -14,6 +14,26 @@ import Foundation
 import PassKit
 import UIKit
 
+/// Abstracts `PKPaymentAuthorizationController` for testability.
+protocol PaymentAuthorizationControlling: AnyObject {
+    var delegate: PKPaymentAuthorizationControllerDelegate? { get set }
+    func present() async -> Bool
+    func dismiss() async
+}
+
+extension PKPaymentAuthorizationController: PaymentAuthorizationControlling {}
+
+/// Factory for creating `PaymentAuthorizationControlling` instances.
+protocol PaymentAuthorizationControllerFactory {
+    func makeController(paymentRequest: PKPaymentRequest) -> PaymentAuthorizationControlling
+}
+
+struct DefaultPaymentAuthorizationControllerFactory: PaymentAuthorizationControllerFactory {
+    func makeController(paymentRequest: PKPaymentRequest) -> PaymentAuthorizationControlling {
+        PKPaymentAuthorizationController(paymentRequest: paymentRequest)
+    }
+}
+
 /// `ApplePayProvider` is a Swift implementation of the Apple Pay payment provider.
 /// It handles payment method with Apple Pay, providing a more Swift-idiomatic interface
 /// while preserving all functionality of the Objective-C AWXApplePayProvider.
@@ -66,14 +86,15 @@ class ApplePayProvider: PaymentProvider {
         }
     }
     
-    private let paymentController: PKPaymentAuthorizationController.Type
-    
+    private let controllerFactory: PaymentAuthorizationControllerFactory
+    private var currentController: PaymentAuthorizationControlling?
+
     init(delegate: any AWXProviderDelegate,
          session: Session,
          methodType: AWXPaymentMethodType?,
          apiClient: AWXAPIClient = AWXAPIClient(configuration: .shared()),
-         paymentController: PKPaymentAuthorizationController.Type = PKPaymentAuthorizationController.self) {
-        self.paymentController = paymentController
+         controllerFactory: PaymentAuthorizationControllerFactory = DefaultPaymentAuthorizationControllerFactory()) {
+        self.controllerFactory = controllerFactory
         super.init(
             delegate: delegate,
             session: session,
@@ -106,9 +127,10 @@ class ApplePayProvider: PaymentProvider {
             delegate?.provider(self, didCompleteWith: .failure, error: error)
             return
         }
-        let controller = paymentController.init(paymentRequest: request)
+        let controller = controllerFactory.makeController(paymentRequest: request)
         controller.delegate = self
-        
+        currentController = controller
+
         Task { @MainActor in
             delegate?.providerDidStartRequest(self)
             let presented = await controller.present()
@@ -146,6 +168,44 @@ class ApplePayProvider: PaymentProvider {
         }
     }
     
+    func handleControllerDidFinish() {
+        Task { @MainActor in
+            await currentController?.dismiss()
+            currentController = nil
+            switch paymentState {
+            case .notPresented:
+                debugLog("Apple pay sheet did finished at not presented status")
+                self.delegate?.providerDidEndRequest(self)
+                handlePresentationFail()
+            case .notStarted:
+                debugLog("Apple pay sheet did finished at not started status (cancelled)")
+                self.delegate?.providerDidEndRequest(self)
+                if cancelPaymentOnDismiss {
+                    delegate?.provider(self, didCompleteWith: .cancel, error: nil)
+                }
+            case .pending:
+                debugLog("Apple pay sheet did finished at pending status (confirming payment intent)")
+                // If UI disappears during the interaction with our API, we pass the state to the upper level
+                // so in progress UI can be handled before we get the confirmed or failed intent
+                delegate?.provider(self, didCompleteWith: .inProgress, error: nil)
+                didDismissWhilePending = true
+            case .complete:
+                debugLog("Apple pay sheet did finished at complete status")
+                guard let confirmIntentResponse else {
+                    assert(false, "should never happen")
+                    delegate?.provider(self, didCompleteWith: .failure, error: nil)
+                    return
+                }
+                switch confirmIntentResponse {
+                case .success(let response):
+                    complete(with: response, error: nil)
+                case .failure(let error):
+                    complete(with: nil, error: error)
+                }
+            }
+        }
+    }
+
     @MainActor func confirmIntent(payment: PKPayment) async -> PKPaymentAuthorizationResult {
         debugLog()
         let method = AWXPaymentMethod()
@@ -201,39 +261,7 @@ extension ApplePayProvider: PKPaymentAuthorizationControllerDelegate {
     }
     
     func paymentAuthorizationControllerDidFinish(_ controller: PKPaymentAuthorizationController) {
-        Task { @MainActor in
-            await controller.dismiss()
-            switch paymentState {
-            case .notPresented:
-                debugLog("Apple pay sheet did finished at not presented status")
-                self.delegate?.providerDidEndRequest(self)
-                handlePresentationFail()
-            case .notStarted:
-                debugLog("Apple pay sheet did finished at not started status (cancelled)")
-                self.delegate?.providerDidEndRequest(self)
-                if cancelPaymentOnDismiss {
-                    delegate?.provider(self, didCompleteWith: .cancel, error: nil)
-                }
-            case .pending:
-                debugLog("Apple pay sheet did finished at pending status (confirming payment intent)")
-                // If UI disappears during the interaction with our API, we pass the state to the upper level
-                // so in progress UI can be handled before we get the confirmed or failed intent
-                delegate?.provider(self, didCompleteWith: .inProgress, error: nil)
-                didDismissWhilePending = true
-            case .complete:
-                debugLog("Apple pay sheet did finished at complete status")
-                guard let confirmIntentResponse else {
-                    assert(false, "should never happen")
-                    delegate?.provider(self, didCompleteWith: .failure, error: nil)
-                    return
-                }
-                switch confirmIntentResponse {
-                case .success(let response):
-                    complete(with: response, error: nil)
-                case .failure(let error):
-                    complete(with: nil, error: error)
-                }
-            }
-        }
+        assert(controller === currentController)
+        handleControllerDidFinish()
     }
 }
