@@ -152,9 +152,11 @@ typedef enum {
     void (^dismissCompletionBlock)(void);
     switch (self.paymentState) {
     case NotPresented:
+        [self.delegate providerDidEndRequest:self];
         [self handlePresentationFail];
         break;
     case NotStarted:
+        [self.delegate providerDidEndRequest:self];
         if (self.isApplePayLaunchedDirectly) {
             dismissCompletionBlock = ^{
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -264,6 +266,7 @@ typedef enum {
 
     [AWXRisk logWithEvent:@"show_apple_pay" screen:@"page_apple_pay"];
 
+    [self.delegate providerDidStartRequest:self];
     __weak __typeof(self) weakSelf = self;
     [controller presentWithCompletion:^(BOOL success) {
         __strong __typeof(weakSelf) strongSelf = weakSelf;

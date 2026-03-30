@@ -110,12 +110,12 @@ class ApplePayProvider: PaymentProvider {
         controller.delegate = self
         
         Task { @MainActor in
+            delegate?.providerDidStartRequest(self)
             let presented = await controller.present()
             guard presented else {
                 handlePresentationFail()
                 return
             }
-            delegate?.providerDidStartRequest(self)
             
             // Log risk event
             RiskLogger.log(.showApplePay, screen: .applePay)

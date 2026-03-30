@@ -187,7 +187,7 @@ class ApplePayProviderTests: XCTestCase {
         
         // Verify delegate methods called with appropriate error
         await MainActor.run {
-            XCTAssertEqual(delegate.didStartRequest, 0)
+            XCTAssertEqual(delegate.didStartRequest, 1)
             XCTAssertEqual(delegate.didEndRequest, 0)
             XCTAssertNotNil(delegate.completionError)
             
