@@ -22,6 +22,9 @@
 #import "PKPaymentToken+Request.h"
 #import <AirwallexRisk/AirwallexRisk-Swift.h>
 #import <PassKit/PassKit.h>
+#import <objc/runtime.h>
+
+static void *kAWXApplePayProviderAssociatedObjectKey = &kAWXApplePayProviderAssociatedObjectKey;
 
 @interface AWXApplePayProvider ()<PKPaymentAuthorizationControllerDelegate>
 
@@ -37,8 +40,8 @@ typedef enum {
 @property (nonatomic) BOOL isApplePayLaunchedDirectly;
 @property (nonatomic) BOOL didDismissWhilePending;
 @property (nonatomic) BOOL didHandlePresentationFail;
-@property (nonatomic) BOOL didStartPayment;
 @property (nonatomic) PaymentState paymentState;
+@property (nonatomic, strong, nullable) PKPaymentAuthorizationController *authorizationController;
 
 @end
 
@@ -262,20 +265,26 @@ typedef enum {
         [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
         return;
     }
-    if (self.didStartPayment) {
+    if (self.authorizationController) {
         [self log:@"startPayment should only be called once; create a new instance of AWXApplePayProvider every time you present Apple Pay."];
         return;
     }
-    self.didStartPayment = YES;
 
-    PKPaymentAuthorizationController *controller = [[PKPaymentAuthorizationController alloc] initWithPaymentRequest:request];
-    controller.delegate = self;
+    self.authorizationController = [[PKPaymentAuthorizationController alloc] initWithPaymentRequest:request];
+    self.authorizationController.delegate = self;
+
+    // Retain self for the lifetime of the Apple Pay sheet.
+    // PKPaymentAuthorizationController's delegate is weak, so without this the provider
+    // could be deallocated if the caller releases it while the sheet is presented.
+    // Cleanup is automatic: setting self.authorizationController = nil deallocates the
+    // controller, which releases the associated object.
+    objc_setAssociatedObject(self.authorizationController, kAWXApplePayProviderAssociatedObjectKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
     [AWXRisk logWithEvent:@"show_apple_pay" screen:@"page_apple_pay"];
 
     [self.delegate providerDidStartRequest:self];
     __weak __typeof(self) weakSelf = self;
-    [controller presentWithCompletion:^(BOOL success) {
+    [self.authorizationController presentWithCompletion:^(BOOL success) {
         __strong __typeof(weakSelf) strongSelf = weakSelf;
         if (!success) {
             [strongSelf handlePresentationFail];
