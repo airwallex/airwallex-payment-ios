@@ -304,7 +304,8 @@ static NSString *NSStringFromPaymentState(PaymentState state) {
         return;
     }
 
-    self.authorizationController = [[PKPaymentAuthorizationController alloc] initWithPaymentRequest:request];
+    PKPaymentAuthorizationController *authorizationController = [[PKPaymentAuthorizationController alloc] initWithPaymentRequest:request];
+    self.authorizationController = authorizationController;
     self.authorizationController.delegate = self;
 
     // Retain self for the lifetime of the Apple Pay sheet.
@@ -312,7 +313,7 @@ static NSString *NSStringFromPaymentState(PaymentState state) {
     // could be deallocated if the caller releases it while the sheet is presented.
     // Cleanup is automatic: setting self.authorizationController = nil deallocates the
     // controller, which releases the associated object.
-    objc_setAssociatedObject(self.authorizationController, kAWXApplePayProviderAssociatedObjectKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(authorizationController, kAWXApplePayProviderAssociatedObjectKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
     [AWXRisk logWithEvent:@"show_apple_pay" screen:@"page_apple_pay"];
 
