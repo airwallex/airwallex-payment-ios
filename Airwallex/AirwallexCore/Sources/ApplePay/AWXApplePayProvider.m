@@ -37,6 +37,7 @@ typedef enum {
 @property (nonatomic) BOOL isApplePayLaunchedDirectly;
 @property (nonatomic) BOOL didDismissWhilePending;
 @property (nonatomic) BOOL didHandlePresentationFail;
+@property (nonatomic) BOOL didStartPayment;
 @property (nonatomic) PaymentState paymentState;
 
 @end
@@ -261,6 +262,12 @@ typedef enum {
         [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
         return;
     }
+    if (self.didStartPayment) {
+        [self log:@"startPayment should only be called once; create a new instance of AWXApplePayProvider every time you present Apple Pay."];
+        return;
+    }
+    self.didStartPayment = YES;
+
     PKPaymentAuthorizationController *controller = [[PKPaymentAuthorizationController alloc] initWithPaymentRequest:request];
     controller.delegate = self;
 

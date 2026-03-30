@@ -88,6 +88,7 @@ class ApplePayProvider: PaymentProvider {
     
     private let controllerFactory: PaymentAuthorizationControllerFactory
     private var currentController: PaymentAuthorizationControlling?
+    private var didStartPayment = false
 
     init(delegate: any AWXProviderDelegate,
          session: Session,
@@ -127,6 +128,11 @@ class ApplePayProvider: PaymentProvider {
             delegate?.provider(self, didCompleteWith: .failure, error: error)
             return
         }
+        guard !didStartPayment else {
+            debugLog("startPayment should only be called once; create a new instance of ApplePayProvider every time you present Apple Pay.")
+            return
+        }
+        didStartPayment = true
         let controller = controllerFactory.makeController(paymentRequest: request)
         controller.delegate = self
         currentController = controller
