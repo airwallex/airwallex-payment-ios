@@ -42,6 +42,7 @@ typedef enum {
 @property (nonatomic) BOOL didHandlePresentationFail;
 @property (nonatomic) PaymentState paymentState;
 @property (nonatomic, strong, nullable) PKPaymentAuthorizationController *authorizationController;
+@property (nonatomic, weak, nullable) UIWindow *presentationKeyWindow;
 
 @end
 
@@ -91,6 +92,10 @@ typedef enum {
 #pragma mark - PKPaymentAuthorizationControllerDelegate
 
 - (UIWindow *)presentationWindowForPaymentAuthorizationController:(PKPaymentAuthorizationController *)controller {
+    return self.presentationKeyWindow;
+}
+
++ (UIWindow *)findKeyWindow {
     if (@available(iOS 15.0, *)) {
         for (UIScene *scene in UIApplication.sharedApplication.connectedScenes) {
             if ([scene isKindOfClass:[UIWindowScene class]]) {
@@ -282,6 +287,7 @@ typedef enum {
 
     [AWXRisk logWithEvent:@"show_apple_pay" screen:@"page_apple_pay"];
 
+    self.presentationKeyWindow = [self.class findKeyWindow];
     [self.delegate providerDidStartRequest:self];
     __weak __typeof(self) weakSelf = self;
     [self.authorizationController presentWithCompletion:^(BOOL success) {

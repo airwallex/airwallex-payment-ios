@@ -89,6 +89,7 @@ class ApplePayProvider: PaymentProvider {
     
     private let controllerFactory: PaymentAuthorizationControllerFactory
     private var currentController: PaymentAuthorizationControlling?
+    private weak var presentationKeyWindow: UIWindow?
 
     init(delegate: any AWXProviderDelegate,
          session: Session,
@@ -144,6 +145,7 @@ class ApplePayProvider: PaymentProvider {
         )
 
         Task { @MainActor in
+            presentationKeyWindow = Self.findKeyWindow()
             delegate?.providerDidStartRequest(self)
             let presented = await controller.present()
             guard presented else {
@@ -266,6 +268,10 @@ class ApplePayProvider: PaymentProvider {
 extension ApplePayProvider: PKPaymentAuthorizationControllerDelegate {
 
     func presentationWindow(for controller: PKPaymentAuthorizationController) -> UIWindow? {
+        presentationKeyWindow
+    }
+
+    @MainActor static func findKeyWindow() -> UIWindow? {
         if #available(iOS 15.0, *) {
             return UIApplication.shared.connectedScenes
                 .compactMap { $0 as? UIWindowScene }
