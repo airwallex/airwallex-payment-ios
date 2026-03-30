@@ -300,7 +300,7 @@ static NSString *NSStringFromPaymentState(PaymentState state) {
         return;
     }
     if (self.authorizationController) {
-        [self log:@"startPayment should only be called once; create a new instance of AWXApplePayProvider every time you present Apple Pay."];
+        NSAssert(NO, @"startPayment should only be called once; create a new instance of AWXApplePayProvider every time you present Apple Pay.");
         return;
     }
 

@@ -432,31 +432,6 @@
     XCTAssertEqual(delegate.lastStatus, AirwallexPaymentStatusCancel);
 }
 
-- (void)testHandleFlowCanOnlyBeCalledOnce {
-    AWXOneOffSession *session = [self makeSession];
-    session.applePayOptions = [[AWXApplePayOptions alloc] initWithMerchantIdentifier:@"merchantIdentifier"];
-
-    AWXProviderDelegateSpy *delegate = [AWXProviderDelegateSpy new];
-
-    id controllerMock = OCMClassMock([PKPaymentAuthorizationController class]);
-    OCMStub([controllerMock alloc]).andReturn(controllerMock);
-    OCMStub([controllerMock initWithPaymentRequest:[OCMArg any]]).andReturn(controllerMock);
-    OCMStub([controllerMock presentWithCompletion:([OCMArg invokeBlockWithArgs:@YES, nil])]);
-
-    AWXApplePayProvider *provider = [[AWXApplePayProvider alloc] initWithDelegate:delegate session:session];
-
-    // First call should proceed normally
-    [provider handleFlow];
-
-    OCMVerify(times(1), [controllerMock initWithPaymentRequest:[OCMArg any]]);
-
-    // Second call should be ignored — no additional controller creation
-    [provider handleFlow];
-
-    // Still only one controller creation
-    OCMVerify(times(1), [controllerMock initWithPaymentRequest:[OCMArg any]]);
-}
-
 - (AWXOneOffSession *)makeSession {
     AWXOneOffSession *session = [AWXOneOffSession new];
     session.countryCode = @"AU";

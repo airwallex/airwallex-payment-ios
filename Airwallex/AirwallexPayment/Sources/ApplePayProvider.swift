@@ -139,9 +139,9 @@ class ApplePayProvider: PaymentProvider {
             delegate?.provider(self, didCompleteWith: .failure, error: error)
             return
         }
-        debugLog("start apple pay: \(self)")
+        debugLog("start apple pay")
         guard currentController == nil else {
-            debugLog("startPayment should only be called once; create a new instance of ApplePayProvider every time you present Apple Pay.: \(self)")
+            assert(false, "startPayment should only be called once; create a new instance of ApplePayProvider every time you present Apple Pay.")
             return
         }
         let controller = controllerFactory.makeController(paymentRequest: request)
@@ -165,7 +165,7 @@ class ApplePayProvider: PaymentProvider {
             
             // Log risk event
             RiskLogger.log(.showApplePay, screen: .applePay)
-            debugLog("Show apple pay: \(self)")
+            debugLog("Show apple pay")
             paymentState = .notStarted
             AnalyticsLogger.log(
                 pageView: .applePaySheet,
@@ -204,23 +204,23 @@ class ApplePayProvider: PaymentProvider {
             AnalyticsLogger.log(action: .applePayFinished, extraInfo: extraEventInfo)
             switch paymentState {
             case .notPresented:
-                debugLog("Apple pay sheet did finished at not presented status: \(self)")
+                debugLog("Apple pay sheet did finished at not presented status")
                 self.delegate?.providerDidEndRequest(self)
                 handlePresentationFail()
             case .notStarted:
-                debugLog("Apple pay sheet did finished at not started status (cancelled): \(self)")
+                debugLog("Apple pay sheet did finished at not started status (cancelled)")
                 self.delegate?.providerDidEndRequest(self)
                 if cancelPaymentOnDismiss {
                     delegate?.provider(self, didCompleteWith: .cancel, error: nil)
                 }
             case .pending:
-                debugLog("Apple pay sheet did finished at pending status (confirming payment intent): \(self)")
+                debugLog("Apple pay sheet did finished at pending status (confirming payment intent)")
                 // If UI disappears during the interaction with our API, we pass the state to the upper level
                 // so in progress UI can be handled before we get the confirmed or failed intent
                 delegate?.provider(self, didCompleteWith: .inProgress, error: nil)
                 didDismissWhilePending = true
             case .complete:
-                debugLog("Apple pay sheet did finished at complete status: \(self)")
+                debugLog("Apple pay sheet did finished at complete status")
                 guard let confirmIntentResponse else {
                     assert(false, "should never happen")
                     delegate?.provider(self, didCompleteWith: .failure, error: nil)
@@ -237,7 +237,7 @@ class ApplePayProvider: PaymentProvider {
     }
 
     @MainActor func confirmIntent(payment: PKPayment) async -> PKPaymentAuthorizationResult {
-        debugLog("\(self)")
+        debugLog()
         AnalyticsLogger.log(action: .applePayAuthorized, extraInfo: extraEventInfo)
         let method = AWXPaymentMethod()
         method.type = AWXApplePayKey

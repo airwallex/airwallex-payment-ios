@@ -363,38 +363,6 @@ class ApplePayProviderTests: XCTestCase {
         }
     }
 
-    // MARK: - didStartPayment Tests
-
-    func testStartPaymentCanOnlyBeCalledOnce() async {
-        let delegate = await MockProviderDelegate()
-
-        let methodType = AWXPaymentMethodType()
-        methodType.name = AWXApplePayKey
-
-        mockFactory.shouldSucceedPresentation = true
-
-        let provider = ApplePayProvider(
-            delegate: delegate,
-            session: mockSession,
-            methodType: methodType,
-            controllerFactory: mockFactory
-        )
-
-        // First call should succeed
-        try? provider.startPayment()
-        try? await Task.sleep(nanoseconds: 500_000_000)
-
-        let firstController = mockFactory.lastController
-        XCTAssertNotNil(firstController)
-        XCTAssertEqual(provider.paymentState, .notStarted)
-
-        // Second call should be ignored — no new controller created
-        try? provider.startPayment()
-        try? await Task.sleep(nanoseconds: 500_000_000)
-
-        XCTAssertTrue(mockFactory.lastController === firstController)
-    }
-
     // MARK: - presentationWindow Tests
 
     func testStartPaymentFailsWhenViewControllerInitializationFails() async {
