@@ -43,8 +43,23 @@ typedef enum {
 @property (nonatomic) PaymentState paymentState;
 @property (nonatomic, strong, nullable) PKPaymentAuthorizationController *authorizationController;
 @property (nonatomic, weak, nullable) UIWindow *presentationKeyWindow;
+@property (nonatomic, copy) NSString *providerId;
+@property (nonatomic, strong) NSDate *startTime;
 
 @end
+
+static NSString *NSStringFromPaymentState(PaymentState state) {
+    switch (state) {
+    case NotPresented:
+        return @"notPresented";
+    case NotStarted:
+        return @"notStarted";
+    case Pending:
+        return @"pending";
+    case Complete:
+        return @"complete";
+    }
+}
 
 @implementation AWXApplePayProvider
 
@@ -60,7 +75,20 @@ typedef enum {
     } else {
         self = [self initWithDelegate:delegate session:session];
     }
+    if (self) {
+        _providerId = [NSUUID UUID].UUIDString;
+        _startTime = [NSDate date];
+    }
     return self;
+}
+
+- (NSDictionary<NSString *, id> *)extraEventInfo {
+    return @{
+        @"providerId": self.providerId ?: @"",
+        @"duration": @([[NSDate date] timeIntervalSinceDate:self.startTime]),
+        @"status": NSStringFromPaymentState(self.paymentState),
+        @"supportedNetworks": self.session.applePayOptions.supportedNetworks ?: @[],
+    };
 }
 
 #pragma mark - Launch Apple Pay flow
@@ -85,6 +113,7 @@ typedef enum {
 }
 
 - (void)handleFlow {
+    self.startTime = [NSDate date];
     self.paymentState = NotPresented;
     [self handleFlowForSession:self.session];
 }
@@ -119,6 +148,7 @@ typedef enum {
 - (void)paymentAuthorizationController:(PKPaymentAuthorizationController *)controller
                    didAuthorizePayment:(PKPayment *)payment
                                handler:(void (^)(PKPaymentAuthorizationResult *_Nonnull))completion {
+    [[AWXAnalyticsLogger shared] logActionWithName:@"apple_pay_authorized" additionalInfo:self.extraEventInfo];
     AWXPaymentMethod *method = [AWXPaymentMethod new];
     method.type = AWXApplePayKey;
     method.customerId = self.session.customerId;
@@ -158,6 +188,7 @@ typedef enum {
 }
 
 - (void)paymentAuthorizationControllerDidFinish:(nonnull PKPaymentAuthorizationController *)controller {
+    [[AWXAnalyticsLogger shared] logActionWithName:@"apple_pay_finished" additionalInfo:self.extraEventInfo];
     void (^dismissCompletionBlock)(void);
     switch (self.paymentState) {
     case NotPresented:
@@ -261,11 +292,9 @@ typedef enum {
         NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                              code:-1
                                          userInfo:@{NSLocalizedDescriptionKey: description}];
-        [[AWXAnalyticsLogger shared] logErrorWithName:@"apple_pay_sheet"
-                                       additionalInfo:@{
-                                           @"message": description,
-                                           @"supportedNetworks": session.applePayOptions.supportedNetworks ?: @[]
-                                       }];
+        NSMutableDictionary *info = [self.extraEventInfo mutableCopy];
+        info[@"message"] = description;
+        [[AWXAnalyticsLogger shared] logErrorWithName:@"apple_pay_sheet" additionalInfo:info];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
         [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
         return;
@@ -298,10 +327,7 @@ typedef enum {
         }
 
         strongSelf.paymentState = NotStarted;
-        [[AWXAnalyticsLogger shared] logPageViewWithName:@"apple_pay_sheet"
-                                          additionalInfo:@{
-                                              @"supportedNetworks": session.applePayOptions.supportedNetworks ?: @[]
-                                          }];
+        [[AWXAnalyticsLogger shared] logPageViewWithName:@"apple_pay_sheet" additionalInfo:strongSelf.extraEventInfo];
         [self log:@"Show apple pay"];
     }];
 }
@@ -337,6 +363,7 @@ typedef enum {
     self.paymentState = Complete;
 
     if (self.didDismissWhilePending) {
+        [[AWXAnalyticsLogger shared] logActionWithName:@"apple_pay_finished" additionalInfo:self.extraEventInfo];
         [self completeWithResponse:response error:error];
     } else {
         PKPaymentAuthorizationStatus status;
@@ -364,11 +391,9 @@ typedef enum {
         NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                              code:-1
                                          userInfo:@{NSLocalizedDescriptionKey: message}];
-        [[AWXAnalyticsLogger shared] logErrorWithName:@"apple_pay_sheet"
-                                       additionalInfo:@{
-                                           @"message": message,
-                                           @"supportedNetworks": self.session.applePayOptions.supportedNetworks ?: @[]
-                                       }];
+        NSMutableDictionary *info = [self.extraEventInfo mutableCopy];
+        info[@"message"] = message;
+        [[AWXAnalyticsLogger shared] logErrorWithName:@"apple_pay_sheet" additionalInfo:info];
         [[self delegate] provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:error];
         [self log:@"Delegate: %@, provider:didCompleteWithStatus:error:  %lu  %@", self.delegate.class, AirwallexPaymentStatusFailure, error.localizedDescription];
     }

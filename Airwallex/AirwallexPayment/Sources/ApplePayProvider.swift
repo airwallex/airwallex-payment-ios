@@ -90,6 +90,17 @@ class ApplePayProvider: PaymentProvider {
     private let controllerFactory: PaymentAuthorizationControllerFactory
     private var currentController: PaymentAuthorizationControlling?
     private weak var presentationKeyWindow: UIWindow?
+    private let providerId = UUID().uuidString
+    private var startTime = Date()
+
+    private var extraEventInfo: [AnalyticEvent.Fields: Any] {
+        [
+            .providerId: providerId,
+            .duration: Date().timeIntervalSince(startTime),
+            .status: "\(paymentState)",
+            .supportedNetworks: unifiedSession.applePayOptions?.supportedNetworks ?? [],
+        ]
+    }
 
     init(delegate: any AWXProviderDelegate,
          session: Session,
@@ -107,6 +118,7 @@ class ApplePayProvider: PaymentProvider {
     
     /// Launch Apple Pay sheet to confirm the payment intent
     func startPayment(cancelPaymentOnDismiss: Bool = true) throws {
+        startTime = Date()
         try AWXApplePayProvider.validate(paymentMethodType: paymentMethodType, session: unifiedSession)
         paymentState = .notPresented
         didHandlePresentationFail = false
@@ -122,9 +134,7 @@ class ApplePayProvider: PaymentProvider {
             AnalyticsLogger.log(
                 errorName: "apple_pay_sheet",
                 errorMessage: error.rawValue,
-                extraInfo: [
-                    .supportedNetworks: request.supportedNetworks
-                ]
+                extraInfo: extraEventInfo
             )
             delegate?.provider(self, didCompleteWith: .failure, error: error)
             return
@@ -159,9 +169,7 @@ class ApplePayProvider: PaymentProvider {
             paymentState = .notStarted
             AnalyticsLogger.log(
                 pageView: .applePaySheet,
-                extraInfo: [
-                    .supportedNetworks: unifiedSession.applePayOptions?.supportedNetworks ?? []
-                ]
+                extraInfo: extraEventInfo
             )
         }
     }
@@ -174,9 +182,7 @@ class ApplePayProvider: PaymentProvider {
             AnalyticsLogger.log(
                 errorName: "apple_pay_sheet",
                 errorMessage: error.rawValue,
-                extraInfo: [
-                    .supportedNetworks: unifiedSession.applePayOptions?.supportedNetworks ?? []
-                ]
+                extraInfo: extraEventInfo
             )
             delegate?.provider(self, didCompleteWith: .failure, error: error)
 
@@ -195,6 +201,7 @@ class ApplePayProvider: PaymentProvider {
         Task { @MainActor in
             await currentController?.dismiss()
             currentController = nil
+            AnalyticsLogger.log(action: .applePayFinished, extraInfo: extraEventInfo)
             switch paymentState {
             case .notPresented:
                 debugLog("Apple pay sheet did finished at not presented status: \(self)")
@@ -231,6 +238,7 @@ class ApplePayProvider: PaymentProvider {
 
     @MainActor func confirmIntent(payment: PKPayment) async -> PKPaymentAuthorizationResult {
         debugLog("\(self)")
+        AnalyticsLogger.log(action: .applePayAuthorized, extraInfo: extraEventInfo)
         let method = AWXPaymentMethod()
         method.type = AWXApplePayKey
         method.customerId = unifiedSession.customerId()
@@ -249,6 +257,7 @@ class ApplePayProvider: PaymentProvider {
             confirmIntentResponse = Result.success(response)
             paymentState = .complete
             if didDismissWhilePending {
+                AnalyticsLogger.log(action: .applePayFinished, extraInfo: extraEventInfo)
                 complete(with: response, error: nil)
             }
             return PKPaymentAuthorizationResult(status: .success, errors: nil)
@@ -256,6 +265,7 @@ class ApplePayProvider: PaymentProvider {
             confirmIntentResponse = Result.failure(error)
             paymentState = .complete
             if didDismissWhilePending {
+                AnalyticsLogger.log(action: .applePayFinished, extraInfo: extraEventInfo)
                 complete(with: nil, error: error)
             }
             return PKPaymentAuthorizationResult(status: .failure, errors: [error])
