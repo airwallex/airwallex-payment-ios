@@ -7,5 +7,4 @@ framework module AirTracker {
 
 module AirTracker.Swift {
   header "AirTracker-Swift.h"
-  requires objc
 }
