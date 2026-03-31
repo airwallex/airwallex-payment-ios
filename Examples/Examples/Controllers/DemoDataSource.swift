@@ -88,16 +88,16 @@ struct DemoDataSource {
     
     static var shippingAddress: AWXPlaceDetails {
         let shipping: [String: Any] = [
-            "first_name": "Jason",
-            "last_name": "Wang",
-            "phone_number": "13800000000",
-            "email": "abc@123.com",
+            "first_name": "John",
+            "last_name": "Doe",
+            "phone_number": "+1 1234567890",
+            "email": "john.doe@example.com",
             "address": [
-                "country_code": "CN",
-                "state": "Shanghai",
-                "city": "Shanghai",
-                "street": "Pudong District",
-                "postcode": "100000"
+                "country_code": "US",
+                "state": "CA",
+                "city": "San Francisco",
+                "street": "1460 Mission St.#02W101",
+                "postcode": "94103"
             ]
         ]
         return AWXPlaceDetails.decode(fromJSON: shipping) as! AWXPlaceDetails
