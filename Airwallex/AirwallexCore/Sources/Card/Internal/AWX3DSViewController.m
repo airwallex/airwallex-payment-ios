@@ -74,7 +74,7 @@
     [self dismissViewControllerAnimated:YES
                              completion:^{
                                  if (self.webHandler) {
-                                     self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"3DS has been cancelled!"}]);
+                                     self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:AWXSDKErrorCodeUserCancelled userInfo:@{NSLocalizedDescriptionKey: @"3DS has been cancelled by user."}]);
                                  }
                              }];
 }

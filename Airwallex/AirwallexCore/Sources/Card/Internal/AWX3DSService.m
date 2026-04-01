@@ -71,6 +71,8 @@
                                                                                         __strong __typeof(weakSelf) strongSelf = weakSelf;
                                                                                         if (payload) {
                                                                                             [strongSelf confirmWithAcsResponse:payload];
+                                                                                        } else if ([error.domain isEqualToString:AWXSDKErrorDomain] && error.code == AWXSDKErrorCodeUserCancelled) {
+                                                                                            [strongSelf.delegate threeDSServiceDidCancel:strongSelf];
                                                                                         } else {
                                                                                             [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:error];
                                                                                         }

@@ -14,6 +14,7 @@
 #import "AWXPaymentMethod.h"
 
 NSErrorDomain const AWXSDKErrorDomain = @"com.airwallex.error";
+NSInteger const AWXSDKErrorCodeUserCancelled = 3072;
 
 NSString *const AWXThreatMatrixOrganizationID = @"w2txo5aa";
 NSString *const AWXThreatMatrixFingerprintServer = @"imgs.signifyd.com";
