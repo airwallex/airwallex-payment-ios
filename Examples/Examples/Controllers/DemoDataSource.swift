@@ -90,7 +90,7 @@ struct DemoDataSource {
         let shipping: [String: Any] = [
             "first_name": "John",
             "last_name": "Doe",
-            "phone_number": "+1 1234567890",
+            "phone_number": "+1234567890",
             "email": "john.doe@example.com",
             "address": [
                 "country_code": "US",
