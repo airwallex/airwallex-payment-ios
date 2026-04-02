@@ -69,11 +69,7 @@
                                                                                          stage:stage
                                                                                     webHandler:^(NSString *_Nullable payload, NSError *_Nullable error) {
                                                                                         __strong __typeof(weakSelf) strongSelf = weakSelf;
-                                                                                        if (payload) {
-                                                                                            [strongSelf confirmWithAcsResponse:payload];
-                                                                                        } else {
-                                                                                            [strongSelf.delegate threeDSService:strongSelf didFinishWithResponse:nil error:error];
-                                                                                        }
+                                                                                        [strongSelf handleWebResponsePayload:payload error:error];
                                                                                     }];
 
     if ([stage isEqualToString:AWXThreeDSWatingDeviceDataCollection]) {
@@ -83,6 +79,16 @@
         [self.delegate threeDSService:self.delegate shouldPresentViewController:navigationController];
     } else {
         [self.delegate threeDSService:self didFinishWithResponse:nil error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Invalid stage."}]];
+    }
+}
+
+- (void)handleWebResponsePayload:(nullable NSString *)payload error:(nullable NSError *)error {
+    if (payload) {
+        [self confirmWithAcsResponse:payload];
+    } else if ([error.domain isEqualToString:AWXSDKErrorDomain] && error.code == AWXSDKErrorCodeUserCancelled) {
+        [self.delegate threeDSServiceDidCancel:self];
+    } else {
+        [self.delegate threeDSService:self didFinishWithResponse:nil error:error];
     }
 }
 

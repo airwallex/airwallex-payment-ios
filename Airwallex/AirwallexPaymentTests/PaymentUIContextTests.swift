@@ -13,9 +13,4 @@ import XCTest
 
 @MainActor
 final class PaymentUIContextTests: XCTestCase {
-
-    func testCompletePaymentSession_DoesNotCrash() async {
-        let context = PaymentUIContext()
-        await context.completePaymentSession()
-    }
 }

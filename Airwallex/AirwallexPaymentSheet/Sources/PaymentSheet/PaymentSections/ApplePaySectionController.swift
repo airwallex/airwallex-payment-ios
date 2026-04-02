@@ -126,7 +126,7 @@ class ApplePaySectionController: PaymentSectionController {
             paymentUIContext: paymentUIContext
         )
         prepareForEmbeddedCheckout(paymentMethod: AWXApplePayKey, handler: paymentSessionHandler)
-        paymentSessionHandler?.confirmApplePay(cancelPaymentOnDismiss: paymentUIContext.isEmbedded)
+        paymentSessionHandler?.confirmApplePay()
     }
 
     func collectionView(didSelectItem sectionItem: SectionItem, at indexPath: IndexPath) {
