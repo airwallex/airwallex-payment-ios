@@ -76,6 +76,14 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)present3DSFlowWithNextAction:(AWXConfirmPaymentNextAction *)nextAction;
 
+/**
+ Handle the web response from the 3DS webview.
+
+ @param payload The response payload if available.
+ @param error The error if the webview failed or was cancelled.
+ */
+- (void)handleWebResponsePayload:(nullable NSString *)payload error:(nullable NSError *)error;
+
 + (instancetype)allocWithZone:(struct _NSZone *)zone NS_UNAVAILABLE;
 
 @end
