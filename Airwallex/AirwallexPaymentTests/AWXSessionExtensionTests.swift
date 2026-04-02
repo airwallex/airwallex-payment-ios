@@ -247,6 +247,36 @@ class AWXSessionExtensionTests: XCTestCase {
         XCTAssertThrowsError(try session.validate())
     }
     
+    func testValidateOneOffSessionWithEmptyCustomerId() {
+        mockPaymentIntent.customerId = ""
+        let session = AWXOneOffSession()
+        session.countryCode = "AU"
+        session.paymentIntent = mockPaymentIntent
+
+        XCTAssertThrowsError(try session.validate()) { error in
+            guard case AWXSession.ValidationError.invalidCustomerId(_) = error else {
+                XCTFail("Expected invalidCustomerId error, got: \(error.localizedDescription)")
+                return
+            }
+        }
+    }
+
+    func testValidateSessionWithEmptyCustomerId() {
+        mockPaymentIntent.customerId = ""
+        let session = Session(
+            paymentIntent: mockPaymentIntent,
+            countryCode: "AU",
+            returnURL: AWXThreeDSReturnURL
+        )
+
+        XCTAssertThrowsError(try session.validate()) { error in
+            guard case AWXSession.ValidationError.invalidCustomerId(_) = error else {
+                XCTFail("Expected invalidCustomerId error, got: \(error.localizedDescription)")
+                return
+            }
+        }
+    }
+
     func testValidateSessionAmount() {
         mockPaymentIntent.amount = NSDecimalNumber(0)
         let session = Session(

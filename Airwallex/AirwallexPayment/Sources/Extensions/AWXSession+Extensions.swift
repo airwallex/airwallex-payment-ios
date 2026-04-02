@@ -116,6 +116,13 @@ public extension AWXSession {
                 }
             }
         }
+        if let customerId = customerId() {
+            guard !customerId.isEmpty else {
+                throw ValidationError.invalidCustomerId(
+                    "Customer ID should never be empty string"
+                )
+            }
+        }
     }
     
     private func validate(paymentIntent: AWXPaymentIntent?) throws {
