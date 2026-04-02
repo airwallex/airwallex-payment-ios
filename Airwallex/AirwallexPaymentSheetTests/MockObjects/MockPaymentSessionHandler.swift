@@ -29,7 +29,6 @@ class MockPaymentSessionHandler: PaymentSessionHandlerProtocol {
     var confirmConsentPaymentConsent: AWXPaymentConsent?
 
     var confirmApplePayCalled = false
-    var confirmApplePayCancelOnDismiss: Bool?
 
     var confirmRedirectPaymentCalled = false
     var confirmRedirectPaymentMethod: AWXPaymentMethod?
@@ -48,9 +47,8 @@ class MockPaymentSessionHandler: PaymentSessionHandlerProtocol {
         confirmConsentPaymentConsent = consent
     }
 
-    func confirmApplePay(cancelPaymentOnDismiss: Bool) {
+    func confirmApplePay() {
         confirmApplePayCalled = true
-        confirmApplePayCancelOnDismiss = cancelPaymentOnDismiss
     }
 
     func confirmRedirectPayment(with paymentMethod: AWXPaymentMethod) async {
@@ -69,7 +67,6 @@ class MockPaymentSessionHandler: PaymentSessionHandlerProtocol {
         confirmConsentPaymentCalled = false
         confirmConsentPaymentConsent = nil
         confirmApplePayCalled = false
-        confirmApplePayCancelOnDismiss = nil
         confirmRedirectPaymentCalled = false
         confirmRedirectPaymentMethod = nil
     }

@@ -245,7 +245,6 @@ import XCTest
 
         XCTAssertTrue(mockFactory.createHandlerCalled)
         XCTAssertTrue(mockFactory.mockHandler.confirmApplePayCalled)
-        XCTAssertEqual(mockFactory.mockHandler.confirmApplePayCancelOnDismiss, false)
     }
 
     func testCheckout_Embedded_CallsConfirmApplePayWithCancelOnDismissTrue() {
@@ -263,7 +262,6 @@ import XCTest
         applePayController.checkout()
 
         XCTAssertTrue(mockFactory.mockHandler.confirmApplePayCalled)
-        XCTAssertEqual(mockFactory.mockHandler.confirmApplePayCancelOnDismiss, true)
     }
 
     func testCheckout_Embedded_SetsShowIndicatorFalse() {
