@@ -134,6 +134,33 @@
     XCTAssertNotNil(parameters[@"payment_method"]);
 }
 
+- (void)testConfirmRequestWithCustomerId {
+    AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
+    request.intentId = @"int_123456";
+    request.customerId = @"cus_abc123";
+
+    NSDictionary *parameters = request.parameters;
+    XCTAssertEqualObjects(parameters[@"customer_id"], @"cus_abc123");
+}
+
+- (void)testConfirmRequestWithNilCustomerId {
+    AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
+    request.intentId = @"int_123456";
+    request.customerId = nil;
+
+    NSDictionary *parameters = request.parameters;
+    XCTAssertNil(parameters[@"customer_id"]);
+}
+
+- (void)testConfirmRequestWithEmptyCustomerId {
+    AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
+    request.intentId = @"int_123456";
+    request.customerId = @"";
+
+    NSDictionary *parameters = request.parameters;
+    XCTAssertNil(parameters[@"customer_id"]);
+}
+
 - (void)testConfirmRequestPath {
     // Test the path method of AWXConfirmPaymentIntentRequest
     AWXConfirmPaymentIntentRequest *request = [AWXConfirmPaymentIntentRequest new];
