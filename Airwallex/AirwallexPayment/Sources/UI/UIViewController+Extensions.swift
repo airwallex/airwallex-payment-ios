@@ -8,6 +8,15 @@
 
 import UIKit
 
+package extension UIApplication {
+    var keyWindow: UIWindow? {
+        connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+            .first { $0.isKeyWindow }
+    }
+}
+
 package extension UIViewController {
     func startLoading() {
         view.startLoading()
@@ -24,14 +33,7 @@ package extension UIViewController {
 
 package extension UIViewController {
     static var topMost: UIViewController? {
-        let windowScene = UIApplication.shared.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene
-        let keyWindow: UIWindow?
-        if #available(iOS 15.0, *) {
-            keyWindow = windowScene?.keyWindow
-        } else {
-            keyWindow = windowScene?.windows.first(where: { $0.isKeyWindow })
-        }
-        let rootVC = keyWindow?.rootViewController
+        let rootVC = UIApplication.shared.keyWindow?.rootViewController
 
         return UIViewController.topMost(from: rootVC)
     }
