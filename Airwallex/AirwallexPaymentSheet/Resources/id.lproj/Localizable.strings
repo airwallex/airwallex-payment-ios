@@ -1,0 +1,145 @@
+/* add card section - section title
+consent section - add a new card */
+"Add new" = "Tambah baru";
+
+"Apple Pay" = "Apple Pay";
+
+/* title for bank selection */
+"Bank" = "Bank";
+
+/* Billing Address - title */
+"Billing Address" = "Alamat Penagihan";
+
+/* add card section - billing info */
+"Billing country or region" = "Negara atau wilayah penagihan";
+
+/* consent section - alert cancel button to delete a consent */
+"Cancel" = "Batal";
+
+"Card" = "Kartu";
+
+/* Card Info Cell - title */
+"Card Information" = "Informasi Kartu";
+
+/* user input validation */
+"Card\U2019s expiration date is invalid" = "Tanggal kedaluwarsa kartu tidak valid";
+
+/* consent section - unselect consent and go back to consent list */
+"Change" = "Ubah";
+
+/* consent section - choose a saved card */
+"Choose a card" = "Pilih kartu";
+
+/* billing city placeholder */
+"City" = "Kota";
+
+/* close button for alert */
+"Close" = "Tutup";
+
+/* checkout button title for recurring payment */
+"Confirm" = "Konfirmasi";
+
+/* consent section - cvc field placeholder
+user input - cvc placeholder */
+"CVC" = "CVC";
+
+/* add card section - billing field */
+"Email" = "Email";
+
+/* user input validation */
+"Expiry date is required" = "Tanggal kedaluwarsa wajib diisi";
+
+/* add card section - UnionPay warning message */
+"For UnionPay, only credit cards can be saved. Click \U201CPay\U201D to proceed with a one time payment or use another card if you would like to save it for future use." = "Untuk UnionPay, hanya kartu kredit yang dapat disimpan. Klik \U201CBayar\U201D untuk melanjutkan dengan pembayaran satu kali atau gunakan kartu lain jika Anda ingin menyimpannya untuk penggunaan di masa mendatang.";
+
+/* user input validation */
+"Invalid email" = "Email tidak valid";
+
+/* user input validation */
+"Invalid phone number" = "Nomor telepon tidak valid";
+
+/* schema section - invalid schema data */
+"Invalid schema" = "Skema tidak valid";
+
+/* user input validation */
+"Invalid state" = "Provinsi tidak valid";
+
+/* add card section - button to switch to consent list */
+"Keep using saved cards" = "Tetap gunakan kartu tersimpan";
+
+/* add card section - billing field */
+"Name on card" = "Nama pada kartu";
+
+/* payment section separator */
+"Or pay with" = "Atau bayar dengan";
+
+/* checkout button title for one-off payment */
+"Pay" = "Bayar";
+
+/* title for payment sheet */
+"Payment Methods" = "Metode Pembayaran";
+
+/* add card section - billing field */
+"Phone number" = "Nomor telepon";
+
+/* user input validation */
+"Please enter your city" = "Masukkan kota Anda";
+
+/* country selection view error hint
+user input validation */
+"Please enter your country" = "Masukkan negara Anda";
+
+/* user input validation */
+"Please enter your first name" = "Masukkan nama depan Anda";
+
+/* user input validation */
+"Please enter your last name" = "Masukkan nama belakang Anda";
+
+/* user input validation */
+"Please enter your name on card" = "Masukkan nama pada kartu";
+
+/* user input validation */
+"Please enter your street" = "Masukkan jalan Anda";
+
+/* user input validation - bank selection view error hint */
+"Please select a bank" = "Pilih bank";
+
+/* billing postal code placeholder */
+"Postal code" = "Kode pos";
+
+/* consent section - alert confirm button to remove a consent */
+"Remove" = "Hapus";
+
+/* consent section - alert title for delete a consent */
+"Remove %@?" = "Hapus %@?";
+
+/* Billing Address - reuse toggle */
+"Same as shipping address" = "Sama dengan alamat pengiriman";
+
+/* add card section - toggle for card saving */
+"Save my card for future payments" = "Simpan kartu saya untuk pembayaran di masa mendatang";
+
+/* schema section - title of Bank Selection form */
+"Select your Bank" = "Pilih Bank Anda";
+
+/* bank selection placeholder
+country selection view placeholder */
+"Select..." = "Pilih...";
+
+/* billing state placeholder */
+"State" = "Provinsi";
+
+/* billing street placeholder */
+"Street" = "Jalan";
+
+/* consent section - alert message for delete a consent */
+"This option will be permanently removed from your saved payment methods." = "Opsi ini akan dihapus secara permanen dari metode pembayaran tersimpan Anda.";
+
+/* alert message for delete MIT consent */
+"This card is used for other payments you\U2019ve set up with %@. Please contact %@ to update the payment method for these payments before removing this card." = "Kartu ini digunakan untuk pembayaran lain yang telah Anda atur dengan %@. Silakan hubungi %@ untuk memperbarui metode pembayaran untuk pembayaran tersebut sebelum menghapus kartu ini.";
+
+/* schema payment redirect reminder */
+"You will be redirected to complete your payment upon confirmation." = "Anda akan dialihkan untuk menyelesaikan pembayaran setelah konfirmasi.";
+
+/* Apple Pay section - instruction text */
+"Click the Apple Pay button below to securely complete your purchase." = "Klik tombol Apple Pay di bawah untuk menyelesaikan pembelian Anda dengan aman.";

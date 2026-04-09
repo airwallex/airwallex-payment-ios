@@ -1,0 +1,145 @@
+/* add card section - section title
+consent section - add a new card */
+"Add new" = "Nieuw toevoegen";
+
+"Apple Pay" = "Apple Pay";
+
+/* title for bank selection */
+"Bank" = "Bank";
+
+/* Billing Address - title */
+"Billing Address" = "Factuuradres";
+
+/* add card section - billing info */
+"Billing country or region" = "Factureringsland of -regio";
+
+/* consent section - alert cancel button to delete a consent */
+"Cancel" = "Annuleren";
+
+"Card" = "Kaart";
+
+/* Card Info Cell - title */
+"Card Information" = "Kaartgegevens";
+
+/* user input validation */
+"Card\U2019s expiration date is invalid" = "Vervaldatum van de kaart is ongeldig";
+
+/* consent section - unselect consent and go back to consent list */
+"Change" = "Wijzigen";
+
+/* consent section - choose a saved card */
+"Choose a card" = "Kies een kaart";
+
+/* billing city placeholder */
+"City" = "Stad";
+
+/* close button for alert */
+"Close" = "Sluiten";
+
+/* checkout button title for recurring payment */
+"Confirm" = "Bevestigen";
+
+/* consent section - cvc field placeholder
+user input - cvc placeholder */
+"CVC" = "CVC";
+
+/* add card section - billing field */
+"Email" = "E-mail";
+
+/* user input validation */
+"Expiry date is required" = "Vervaldatum is vereist";
+
+/* add card section - UnionPay warning message */
+"For UnionPay, only credit cards can be saved. Click \U201CPay\U201D to proceed with a one time payment or use another card if you would like to save it for future use." = "Voor UnionPay kunnen alleen creditcards worden opgeslagen. Klik op \U201CBetalen\U201D om door te gaan met een eenmalige betaling of gebruik een andere kaart als u deze wilt opslaan voor toekomstig gebruik.";
+
+/* user input validation */
+"Invalid email" = "Ongeldig e-mailadres";
+
+/* user input validation */
+"Invalid phone number" = "Ongeldig telefoonnummer";
+
+/* schema section - invalid schema data */
+"Invalid schema" = "Ongeldig schema";
+
+/* user input validation */
+"Invalid state" = "Ongeldige provincie";
+
+/* add card section - button to switch to consent list */
+"Keep using saved cards" = "Opgeslagen kaarten blijven gebruiken";
+
+/* add card section - billing field */
+"Name on card" = "Naam op kaart";
+
+/* payment section separator */
+"Or pay with" = "Of betaal met";
+
+/* checkout button title for one-off payment */
+"Pay" = "Betalen";
+
+/* title for payment sheet */
+"Payment Methods" = "Betaalmethoden";
+
+/* add card section - billing field */
+"Phone number" = "Telefoonnummer";
+
+/* user input validation */
+"Please enter your city" = "Voer uw stad in";
+
+/* country selection view error hint
+user input validation */
+"Please enter your country" = "Voer uw land in";
+
+/* user input validation */
+"Please enter your first name" = "Voer uw voornaam in";
+
+/* user input validation */
+"Please enter your last name" = "Voer uw achternaam in";
+
+/* user input validation */
+"Please enter your name on card" = "Voer de naam op de kaart in";
+
+/* user input validation */
+"Please enter your street" = "Voer uw straat in";
+
+/* user input validation - bank selection view error hint */
+"Please select a bank" = "Selecteer een bank";
+
+/* billing postal code placeholder */
+"Postal code" = "Postcode";
+
+/* consent section - alert confirm button to remove a consent */
+"Remove" = "Verwijderen";
+
+/* consent section - alert title for delete a consent */
+"Remove %@?" = "%@ verwijderen?";
+
+/* Billing Address - reuse toggle */
+"Same as shipping address" = "Hetzelfde als verzendadres";
+
+/* add card section - toggle for card saving */
+"Save my card for future payments" = "Mijn kaart opslaan voor toekomstige betalingen";
+
+/* schema section - title of Bank Selection form */
+"Select your Bank" = "Selecteer uw bank";
+
+/* bank selection placeholder
+country selection view placeholder */
+"Select..." = "Selecteer...";
+
+/* billing state placeholder */
+"State" = "Provincie";
+
+/* billing street placeholder */
+"Street" = "Straat";
+
+/* consent section - alert message for delete a consent */
+"This option will be permanently removed from your saved payment methods." = "Deze optie wordt permanent verwijderd uit uw opgeslagen betaalmethoden.";
+
+/* alert message for delete MIT consent */
+"This card is used for other payments you\U2019ve set up with %@. Please contact %@ to update the payment method for these payments before removing this card." = "Deze kaart wordt gebruikt voor andere betalingen die u hebt ingesteld met %@. Neem contact op met %@ om de betaalmethode voor deze betalingen bij te werken voordat u deze kaart verwijdert.";
+
+/* schema payment redirect reminder */
+"You will be redirected to complete your payment upon confirmation." = "U wordt doorgestuurd om uw betaling te voltooien na bevestiging.";
+
+/* Apple Pay section - instruction text */
+"Click the Apple Pay button below to securely complete your purchase." = "Klik op de Apple Pay-knop hieronder om uw aankoop veilig te voltooien.";

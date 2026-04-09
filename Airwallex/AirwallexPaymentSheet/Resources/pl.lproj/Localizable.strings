@@ -1,0 +1,145 @@
+/* add card section - section title
+consent section - add a new card */
+"Add new" = "Dodaj nową";
+
+"Apple Pay" = "Apple Pay";
+
+/* title for bank selection */
+"Bank" = "Bank";
+
+/* Billing Address - title */
+"Billing Address" = "Adres rozliczeniowy";
+
+/* add card section - billing info */
+"Billing country or region" = "Kraj lub region rozliczeniowy";
+
+/* consent section - alert cancel button to delete a consent */
+"Cancel" = "Anuluj";
+
+"Card" = "Karta";
+
+/* Card Info Cell - title */
+"Card Information" = "Dane karty";
+
+/* user input validation */
+"Card\U2019s expiration date is invalid" = "Data ważności karty jest nieprawidłowa";
+
+/* consent section - unselect consent and go back to consent list */
+"Change" = "Zmień";
+
+/* consent section - choose a saved card */
+"Choose a card" = "Wybierz kartę";
+
+/* billing city placeholder */
+"City" = "Miasto";
+
+/* close button for alert */
+"Close" = "Zamknij";
+
+/* checkout button title for recurring payment */
+"Confirm" = "Potwierdź";
+
+/* consent section - cvc field placeholder
+user input - cvc placeholder */
+"CVC" = "CVC";
+
+/* add card section - billing field */
+"Email" = "E-mail";
+
+/* user input validation */
+"Expiry date is required" = "Data ważności jest wymagana";
+
+/* add card section - UnionPay warning message */
+"For UnionPay, only credit cards can be saved. Click \U201CPay\U201D to proceed with a one time payment or use another card if you would like to save it for future use." = "W przypadku UnionPay można zapisać tylko karty kredytowe. Kliknij \U201CZapłać\U201D, aby kontynuować z jednorazową płatnością, lub użyj innej karty, jeśli chcesz ją zapisać do przyszłego użytku.";
+
+/* user input validation */
+"Invalid email" = "Nieprawidłowy adres e-mail";
+
+/* user input validation */
+"Invalid phone number" = "Nieprawidłowy numer telefonu";
+
+/* schema section - invalid schema data */
+"Invalid schema" = "Nieprawidłowy schemat";
+
+/* user input validation */
+"Invalid state" = "Nieprawidłowe województwo";
+
+/* add card section - button to switch to consent list */
+"Keep using saved cards" = "Kontynuuj używanie zapisanych kart";
+
+/* add card section - billing field */
+"Name on card" = "Imię i nazwisko na karcie";
+
+/* payment section separator */
+"Or pay with" = "Lub zapłać za pomocą";
+
+/* checkout button title for one-off payment */
+"Pay" = "Zapłać";
+
+/* title for payment sheet */
+"Payment Methods" = "Metody płatności";
+
+/* add card section - billing field */
+"Phone number" = "Numer telefonu";
+
+/* user input validation */
+"Please enter your city" = "Wprowadź swoje miasto";
+
+/* country selection view error hint
+user input validation */
+"Please enter your country" = "Wprowadź swój kraj";
+
+/* user input validation */
+"Please enter your first name" = "Wprowadź swoje imię";
+
+/* user input validation */
+"Please enter your last name" = "Wprowadź swoje nazwisko";
+
+/* user input validation */
+"Please enter your name on card" = "Wprowadź imię i nazwisko na karcie";
+
+/* user input validation */
+"Please enter your street" = "Wprowadź swoją ulicę";
+
+/* user input validation - bank selection view error hint */
+"Please select a bank" = "Wybierz bank";
+
+/* billing postal code placeholder */
+"Postal code" = "Kod pocztowy";
+
+/* consent section - alert confirm button to remove a consent */
+"Remove" = "Usuń";
+
+/* consent section - alert title for delete a consent */
+"Remove %@?" = "Usunąć %@?";
+
+/* Billing Address - reuse toggle */
+"Same as shipping address" = "Taki sam jak adres wysyłki";
+
+/* add card section - toggle for card saving */
+"Save my card for future payments" = "Zapisz moją kartę na przyszłe płatności";
+
+/* schema section - title of Bank Selection form */
+"Select your Bank" = "Wybierz swój bank";
+
+/* bank selection placeholder
+country selection view placeholder */
+"Select..." = "Wybierz...";
+
+/* billing state placeholder */
+"State" = "Województwo";
+
+/* billing street placeholder */
+"Street" = "Ulica";
+
+/* consent section - alert message for delete a consent */
+"This option will be permanently removed from your saved payment methods." = "Ta opcja zostanie trwale usunięta z zapisanych metod płatności.";
+
+/* alert message for delete MIT consent */
+"This card is used for other payments you\U2019ve set up with %@. Please contact %@ to update the payment method for these payments before removing this card." = "Ta karta jest używana do innych płatności skonfigurowanych z %@. Skontaktuj się z %@, aby zaktualizować metodę płatności dla tych płatności przed usunięciem tej karty.";
+
+/* schema payment redirect reminder */
+"You will be redirected to complete your payment upon confirmation." = "Po potwierdzeniu zostaniesz przekierowany w celu dokończenia płatności.";
+
+/* Apple Pay section - instruction text */
+"Click the Apple Pay button below to securely complete your purchase." = "Kliknij przycisk Apple Pay poniżej, aby bezpiecznie dokończyć zakup.";
