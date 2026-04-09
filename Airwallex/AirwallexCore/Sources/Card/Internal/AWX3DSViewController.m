@@ -103,11 +103,11 @@
     NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
     if (response.statusCode == 400) {
         if ([self.stage isEqualToString:AWXThreeDSWatingDeviceDataCollection]) {
-            self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Unknown issue."}]);
+            self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:AWXSDKErrorCodeInternalError userInfo:@{NSLocalizedDescriptionKey: @"Unknown issue."}]);
         } else {
             [self dismissViewControllerAnimated:YES
                                      completion:^{
-                                         self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Unknown issue."}]);
+                                         self.webHandler(nil, [NSError errorWithDomain:AWXSDKErrorDomain code:AWXSDKErrorCodeInternalError userInfo:@{NSLocalizedDescriptionKey: @"Unknown issue."}]);
                                      }];
         }
     }

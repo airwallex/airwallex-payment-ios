@@ -21,7 +21,7 @@
 }
 
 - (NSError *)error {
-    return [NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: self.message, NSLocalizedFailureReasonErrorKey: self.code}];
+    return [NSError errorWithDomain:AWXSDKErrorDomain code:AWXSDKErrorCodeInternalError userInfo:@{NSLocalizedDescriptionKey: self.message, NSLocalizedFailureReasonErrorKey: self.code}];
 }
 
 @end
