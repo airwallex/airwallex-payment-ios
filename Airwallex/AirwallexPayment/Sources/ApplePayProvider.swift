@@ -31,9 +31,6 @@ class ApplePayProvider: PaymentProvider {
         case complete
     }
     
-    /// Indicates whether Apple Pay was launched directly
-    private var cancelPaymentOnDismiss = false
-    
     /// Indicates whether a presentation failure has already been handled
     private var didHandlePresentationFail = false
     
@@ -83,12 +80,11 @@ class ApplePayProvider: PaymentProvider {
     }
     
     /// Launch Apple Pay sheet to confirm the payment intent
-    func startPayment(cancelPaymentOnDismiss: Bool = true) throws {
+    func startPayment() throws {
         try AWXApplePayProvider.validate(paymentMethodType: paymentMethodType, session: unifiedSession)
         paymentState = .notPresented
         didHandlePresentationFail = false
         didDismissWhilePending = false
-        self.cancelPaymentOnDismiss = cancelPaymentOnDismiss
         
         let request = try unifiedSession.makePaymentRequestOrError()
 
@@ -204,9 +200,7 @@ extension ApplePayProvider: PKPaymentAuthorizationControllerDelegate {
             case .notStarted:
                 debugLog("Apple pay sheet did finished at not started status (cancelled)")
                 self.delegate?.providerDidEndRequest(self)
-                if cancelPaymentOnDismiss {
-                    delegate?.provider(self, didCompleteWith: .cancel, error: nil)
-                }
+                delegate?.provider(self, didCompleteWith: .cancel, error: nil)
             case .pending:
                 debugLog("Apple pay sheet did finished at pending status (confirming payment intent)")
                 // If UI disappears during the interaction with our API, we pass the state to the upper level
