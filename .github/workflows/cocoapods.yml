@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Checkout project
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # 3.6.0
-        
+
       - name: Deploy to CocoaPods
         run: |
           set -eo pipefail
@@ -21,3 +21,11 @@ jobs:
           pod trunk push --allow-warnings
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+
+  repo-dispatch:
+    needs: cocoapods
+    if: ${{ github.event_name == 'release' && !github.event.release.prerelease }}
+    uses: ./.github/workflows/repo-dispatch-on-release.yml
+    with:
+      tag: ${{ github.event.release.tag_name }}
+    secrets: inherit
