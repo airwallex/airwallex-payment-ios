@@ -11,8 +11,29 @@ import AirwallexCore
 #endif
 import AirwallexRisk
 import Foundation
+import ObjectiveC
 import PassKit
 import UIKit
+
+/// Abstracts `PKPaymentAuthorizationController` for testability.
+protocol PaymentAuthorizationControlling: AnyObject {
+    var delegate: PKPaymentAuthorizationControllerDelegate? { get set }
+    func present() async -> Bool
+    func dismiss() async
+}
+
+extension PKPaymentAuthorizationController: PaymentAuthorizationControlling {}
+
+/// Factory for creating `PaymentAuthorizationControlling` instances.
+protocol PaymentAuthorizationControllerFactory {
+    func makeController(paymentRequest: PKPaymentRequest) -> PaymentAuthorizationControlling
+}
+
+struct DefaultPaymentAuthorizationControllerFactory: PaymentAuthorizationControllerFactory {
+    func makeController(paymentRequest: PKPaymentRequest) -> PaymentAuthorizationControlling {
+        PKPaymentAuthorizationController(paymentRequest: paymentRequest)
+    }
+}
 
 /// `ApplePayProvider` is a Swift implementation of the Apple Pay payment provider.
 /// It handles payment method with Apple Pay, providing a more Swift-idiomatic interface
@@ -63,14 +84,27 @@ class ApplePayProvider: PaymentProvider {
         }
     }
     
-    private let paymentController: PKPaymentAuthorizationController.Type
-    
+    private let controllerFactory: PaymentAuthorizationControllerFactory
+    private var currentController: PaymentAuthorizationControlling?
+    private weak var presentationKeyWindow: UIWindow?
+    private let providerId = UUID().uuidString
+    private var startTime = Date()
+
+    private var extraEventInfo: [AnalyticEvent.Fields: Any] {
+        [
+            .providerId: providerId,
+            .duration: Date().timeIntervalSince(startTime),
+            .status: "\(paymentState)",
+            .supportedNetworks: unifiedSession.applePayOptions?.supportedNetworks ?? [],
+        ]
+    }
+
     init(delegate: any AWXProviderDelegate,
          session: Session,
          methodType: AWXPaymentMethodType?,
          apiClient: AWXAPIClient = AWXAPIClient(configuration: .shared()),
-         paymentController: PKPaymentAuthorizationController.Type = PKPaymentAuthorizationController.self) {
-        self.paymentController = paymentController
+         controllerFactory: PaymentAuthorizationControllerFactory = DefaultPaymentAuthorizationControllerFactory()) {
+        self.controllerFactory = controllerFactory
         super.init(
             delegate: delegate,
             session: session,
@@ -81,6 +115,7 @@ class ApplePayProvider: PaymentProvider {
     
     /// Launch Apple Pay sheet to confirm the payment intent
     func startPayment() throws {
+        startTime = Date()
         try AWXApplePayProvider.validate(paymentMethodType: paymentMethodType, session: unifiedSession)
         paymentState = .notPresented
         didHandlePresentationFail = false
@@ -95,23 +130,34 @@ class ApplePayProvider: PaymentProvider {
             AnalyticsLogger.log(
                 errorName: "apple_pay_sheet",
                 errorMessage: error.rawValue,
-                extraInfo: [
-                    .supportedNetworks: request.supportedNetworks
-                ]
+                extraInfo: extraEventInfo
             )
             delegate?.provider(self, didCompleteWith: .failure, error: error)
             return
         }
-        let controller = paymentController.init(paymentRequest: request)
+        debugLog("start apple pay")
+        guard currentController == nil else {
+            assert(false, "startPayment should only be called once; create a new instance of ApplePayProvider every time you present Apple Pay.")
+            return
+        }
+        let controller = controllerFactory.makeController(paymentRequest: request)
         controller.delegate = self
-        
+        currentController = controller
+        objc_setAssociatedObject(
+            controller,
+            &kApplePayContextAssociatedObjectKey,
+            self,
+            .OBJC_ASSOCIATION_RETAIN_NONATOMIC
+        )
+
         Task { @MainActor in
+            presentationKeyWindow = Self.findKeyWindow()
+            delegate?.providerDidStartRequest(self)
             let presented = await controller.present()
             guard presented else {
                 handlePresentationFail()
                 return
             }
-            delegate?.providerDidStartRequest(self)
             
             // Log risk event
             RiskLogger.log(.showApplePay, screen: .applePay)
@@ -119,13 +165,11 @@ class ApplePayProvider: PaymentProvider {
             paymentState = .notStarted
             AnalyticsLogger.log(
                 pageView: .applePaySheet,
-                extraInfo: [
-                    .supportedNetworks: unifiedSession.applePayOptions?.supportedNetworks ?? []
-                ]
+                extraInfo: extraEventInfo
             )
         }
     }
-    
+
     /// Handle a failure to present the Apple Pay sheet
     private func handlePresentationFail() {
         if !didHandlePresentationFail {
@@ -134,64 +178,26 @@ class ApplePayProvider: PaymentProvider {
             AnalyticsLogger.log(
                 errorName: "apple_pay_sheet",
                 errorMessage: error.rawValue,
-                extraInfo: [
-                    .supportedNetworks: unifiedSession.applePayOptions?.supportedNetworks ?? []
-                ]
+                extraInfo: extraEventInfo
             )
             delegate?.provider(self, didCompleteWith: .failure, error: error)
+
+            if let currentController {
+                objc_setAssociatedObject(
+                    currentController as Any,
+                    &kApplePayContextAssociatedObjectKey,
+                    nil,
+                    .OBJC_ASSOCIATION_RETAIN_NONATOMIC
+                )
+            }
         }
     }
     
-    @MainActor func confirmIntent(payment: PKPayment) async -> PKPaymentAuthorizationResult {
-        debugLog()
-        let method = AWXPaymentMethod()
-        method.type = AWXApplePayKey
-        method.customerId = unifiedSession.customerId()
-        
-        let billingPayload = payment.billingContact?.payloadForRequest()
-        do {
-            let applePayParams = try payment.token.payloadForRequest(withBilling: billingPayload)
-            method.appendAdditionalParams(applePayParams)
-            paymentState = .pending
-            let request = try await createConfirmIntentRequest(
-                method: method,
-                consent: nil,
-                consentOptions: unifiedSession.paymentConsentOptions
-            )
-            let response: AWXConfirmPaymentIntentResponse = try await apiClient.sendRequest(request)
-            confirmIntentResponse = Result.success(response)
-            paymentState = .complete
-            if didDismissWhilePending {
-                complete(with: response, error: nil)
-            }
-            return PKPaymentAuthorizationResult(status: .success, errors: nil)
-        } catch {
-            confirmIntentResponse = Result.failure(error)
-            paymentState = .complete
-            if didDismissWhilePending {
-                complete(with: nil, error: error)
-            }
-            return PKPaymentAuthorizationResult(status: .failure, errors: [error])
-        }
-    }
-}
-
-// MARK: - PKPaymentAuthorizationControllerDelegate
-
-extension ApplePayProvider: PKPaymentAuthorizationControllerDelegate {
-
-    func presentationWindow(for controller: PKPaymentAuthorizationController) -> UIWindow? {
-        UIApplication.shared.keyWindow
-    }
-
-    func paymentAuthorizationController(_ controller: PKPaymentAuthorizationController,
-                                        didAuthorizePayment payment: PKPayment) async -> PKPaymentAuthorizationResult {
-        await confirmIntent(payment: payment)
-    }
-    
-    func paymentAuthorizationControllerDidFinish(_ controller: PKPaymentAuthorizationController) {
+    func handleControllerDidFinish() {
         Task { @MainActor in
-            await controller.dismiss()
+            await currentController?.dismiss()
+            currentController = nil
+            AnalyticsLogger.log(action: .applePayFinished, extraInfo: extraEventInfo)
             switch paymentState {
             case .notPresented:
                 debugLog("Apple pay sheet did finished at not presented status")
@@ -223,4 +229,72 @@ extension ApplePayProvider: PKPaymentAuthorizationControllerDelegate {
             }
         }
     }
+
+    @MainActor func confirmIntent(payment: PKPayment) async -> PKPaymentAuthorizationResult {
+        debugLog()
+        AnalyticsLogger.log(action: .applePayAuthorized, extraInfo: extraEventInfo)
+        let method = AWXPaymentMethod()
+        method.type = AWXApplePayKey
+        method.customerId = unifiedSession.customerId()
+        
+        let billingPayload = payment.billingContact?.payloadForRequest()
+        do {
+            let applePayParams = try payment.token.payloadForRequest(withBilling: billingPayload)
+            method.appendAdditionalParams(applePayParams)
+            paymentState = .pending
+            let request = try await createConfirmIntentRequest(
+                method: method,
+                consent: nil,
+                consentOptions: unifiedSession.paymentConsentOptions
+            )
+            let response: AWXConfirmPaymentIntentResponse = try await apiClient.sendRequest(request)
+            confirmIntentResponse = Result.success(response)
+            paymentState = .complete
+            if didDismissWhilePending {
+                AnalyticsLogger.log(action: .applePayFinished, extraInfo: extraEventInfo)
+                complete(with: response, error: nil)
+            }
+            return PKPaymentAuthorizationResult(status: .success, errors: nil)
+        } catch {
+            confirmIntentResponse = Result.failure(error)
+            paymentState = .complete
+            if didDismissWhilePending {
+                AnalyticsLogger.log(action: .applePayFinished, extraInfo: extraEventInfo)
+                complete(with: nil, error: error)
+            }
+            return PKPaymentAuthorizationResult(status: .failure, errors: [error])
+        }
+    }
 }
+
+// MARK: - PKPaymentAuthorizationControllerDelegate
+
+extension ApplePayProvider: PKPaymentAuthorizationControllerDelegate {
+
+    func presentationWindow(for controller: PKPaymentAuthorizationController) -> UIWindow? {
+        presentationKeyWindow
+    }
+
+    @MainActor static func findKeyWindow() -> UIWindow? {
+        if #available(iOS 15.0, *) {
+            return UIApplication.shared.connectedScenes
+                .compactMap { $0 as? UIWindowScene }
+                .flatMap { $0.windows }
+                .first { $0.isKeyWindow }
+        } else {
+            return UIApplication.shared.windows.first { $0.isKeyWindow }
+        }
+    }
+
+    func paymentAuthorizationController(_ controller: PKPaymentAuthorizationController,
+                                        didAuthorizePayment payment: PKPayment) async -> PKPaymentAuthorizationResult {
+        await confirmIntent(payment: payment)
+    }
+    
+    func paymentAuthorizationControllerDidFinish(_ controller: PKPaymentAuthorizationController) {
+        assert(controller === currentController)
+        handleControllerDidFinish()
+    }
+}
+
+private var kApplePayContextAssociatedObjectKey = 0
