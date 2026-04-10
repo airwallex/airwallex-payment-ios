@@ -144,7 +144,7 @@ Airwallex iOS SDK 支持通过 [CocoaPods](https://cocoapods.org/)集成。
 
 您可以通过添加 `Airwallex` 集成除微信支付外的所有组件。您也可以根据您的支付需求选择性的添加组件：
 ```ruby
-pod 'Airwallex', '~> 6.1.1'
+pod 'Airwallex', '~> 6.4.1'
 ```
 
 您也可以直接指定 `subspec` 来避免引入不需要的依赖：
@@ -363,7 +363,7 @@ let session = Session(
 > [!NOTE]
 > 通过UI集成您可以在您的app中使用我们预构建的 UI 收集支付详情、账单详情并确认支付。
 
-请确保您已经添加对 `Airwallex` 或 `AirwallexPaymentSheet` 的依赖。 在结账时使用 [AWXUIContext](https://airwallex.github.io/airwallex-payment-ios/6.4.0/documentation/airwallex/awxuicontext/) 启动支付流程，用户能够通过支付列表选择您支持的支付方式。
+请确保您已经添加对 `Airwallex` 或 `AirwallexPaymentSheet` 的依赖。 在结账时使用 [AWXUIContext](https://airwallex.github.io/airwallex-payment-ios/6.4.1/documentation/airwallex/awxuicontext/) 启动支付流程，用户能够通过支付列表选择您支持的支付方式。
 ``` swift
 let configuration = AWXUIContext.Configuration()
 configuration.layout = .tab // or .accordion
@@ -587,7 +587,7 @@ extension YourViewController: AWXPaymentElementDelegate {
 
 ---
 #### 创建 PaymentSessionHandler 
-[PaymentSessionHandler](https://airwallex.github.io/airwallex-payment-ios/6.4.0/documentation/airwallex/paymentsessionhandler/)是 API 集成的核心。
+[PaymentSessionHandler](https://airwallex.github.io/airwallex-payment-ios/6.4.1/documentation/airwallex/paymentsessionhandler/)是 API 集成的核心。
 
 ```swift
 let paymentSessionHandler = PaymentSessionHandler(
