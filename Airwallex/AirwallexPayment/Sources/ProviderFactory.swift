@@ -83,21 +83,12 @@ final class ProviderFactory: ProviderFactoryProtocol {
 }
 
 protocol ApplePayProviderProtocol: AWXDefaultProvider {
-    func startPayment(cancelPaymentOnDismiss: Bool) throws
+    func startPayment() throws
 }
 
 extension ApplePayProvider: ApplePayProviderProtocol {}
 
-extension AWXApplePayProvider: ApplePayProviderProtocol {
-    func startPayment(cancelPaymentOnDismiss: Bool) throws {
-        try validate()
-        if cancelPaymentOnDismiss {
-            startPayment()
-        } else {
-            handleFlow()
-        }
-    }
-}
+extension AWXApplePayProvider: ApplePayProviderProtocol {}
 
 protocol CardProviderProtocol: AWXDefaultProvider {
     

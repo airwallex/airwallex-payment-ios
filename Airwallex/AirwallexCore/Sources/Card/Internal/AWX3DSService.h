@@ -45,6 +45,13 @@ NS_ASSUME_NONNULL_BEGIN
     didFinishWithResponse:(nullable AWXConfirmPaymentIntentResponse *)response
                     error:(nullable NSError *)error;
 
+/**
+ This method is called when the user has cancelled the 3ds flow.
+
+ @param service The service handling 3ds flow.
+ */
+- (void)threeDSServiceDidCancel:(AWX3DSService *)service;
+
 @end
 
 @interface AWX3DSService : NSObject
@@ -68,6 +75,14 @@ NS_ASSUME_NONNULL_BEGIN
  Present the 3ds flow.
  */
 - (void)present3DSFlowWithNextAction:(AWXConfirmPaymentNextAction *)nextAction;
+
+/**
+ Handle the web response from the 3DS webview.
+
+ @param payload The response payload if available.
+ @param error The error if the webview failed or was cancelled.
+ */
+- (void)handleWebResponsePayload:(nullable NSString *)payload error:(nullable NSError *)error;
 
 + (instancetype)allocWithZone:(struct _NSZone *)zone NS_UNAVAILABLE;
 

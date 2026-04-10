@@ -340,7 +340,11 @@ extension IntegrationDemoListViewController: AWXPaymentResultDelegate {
             print("Payment in progress, you should check payment status from time to time from backend and show result to the payer")
             // Extract intent ID and start polling using paymentIntentId()
             if let intentId = session?.paymentIntentId() {
-                startPollingForPaymentIntent(intentId)
+                Task {
+                    startLoading()
+                    await startPollingForPaymentIntent(intentId)
+                    stopLoading()
+                }
             }
         case .failure:
             showAlert(message: error?.localizedDescription ?? "There was an error while processing your payment. Please try again.", title: "Payment failed")
@@ -358,7 +362,7 @@ extension IntegrationDemoListViewController: AWXPaymentResultDelegate {
 
 // MARK: - Payment Status Polling
 extension IntegrationDemoListViewController {
-    func startPollingForPaymentIntent(_ intentId: String) {
+    func startPollingForPaymentIntent(_ intentId: String, onComplete: (() -> Void)? = nil) async {
         paymentStatusPoller?.stop()
 
         let poller = PaymentStatusPoller(
@@ -367,42 +371,39 @@ extension IntegrationDemoListViewController {
         )
         paymentStatusPoller = poller
 
-        startLoading()
-
-        Task {
-            do {
-                let attempt = try await poller.getPaymentAttempt()
-                stopLoading()
+        do {
+            let attempt = try await poller.getPaymentAttempt()
+            showAlert(
+                message: attempt.description,
+                title: session?.paymentIntentId() ?? "",
+                action: onComplete
+            )
+        } catch let error as PaymentStatusPoller.PollingError {
+            switch error {
+            case .timeout(let lastAttempt):
                 showAlert(
-                    message: attempt.description,
-                    title: session?.paymentIntentId() ?? ""
+                    message: "Payment status \(lastAttempt?.status.rawValue ?? "unknown")",
+                    title: "Polling timeout",
+                    action: onComplete
                 )
-            } catch let error as PaymentStatusPoller.PollingError {
-                stopLoading()
-                switch error {
-                case .timeout(let lastAttempt):
-                    showAlert(
-                        message: "Payment status \(lastAttempt?.status.rawValue ?? "unknown")",
-                        title: "Polling timeout"
-                    )
-                case .apiError(let underlyingError):
-                    showAlert(
-                        message: "Error checking payment status: \(underlyingError.localizedDescription)",
-                        title: "Error"
-                    )
-                case .paymentAttemptNotFound:
-                    // Ignore payment attempt not found error
-                    // usually this is caused by LPM recurring transaction
-                    // which use legacy create/verify payemnt consent instead of confirm payment intent
-                    break
-                }
-            } catch {
-                stopLoading()
+            case .apiError(let underlyingError):
                 showAlert(
-                    message: "Error checking payment status: \(error.localizedDescription)",
-                    title: "Error"
+                    message: "Error checking payment status: \(underlyingError.localizedDescription)",
+                    title: "Error",
+                    action: onComplete
                 )
+            case .paymentAttemptNotFound:
+                // Ignore payment attempt not found error
+                // usually this is caused by LPM recurring transaction
+                // which use legacy create/verify payemnt consent instead of confirm payment intent
+                onComplete?()
             }
+        } catch {
+            showAlert(
+                message: "Error checking payment status: \(error.localizedDescription)",
+                title: "Error",
+                action: onComplete
+            )
         }
     }
 }

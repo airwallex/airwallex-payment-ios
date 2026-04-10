@@ -12,7 +12,6 @@ import Foundation
 
 class MockApplePayProvider: AWXDefaultProvider, ApplePayProviderProtocol {
     var startPaymentCalled = false
-    var cancelPaymentOnDismissValue = false
     var shouldSucceed = true
     var resultStatus: AirwallexPaymentStatus = .failure
 
@@ -26,9 +25,8 @@ class MockApplePayProvider: AWXDefaultProvider, ApplePayProviderProtocol {
         super.init(delegate: delegate, session: session, paymentMethodType: methodType)
     }
 
-    func startPayment(cancelPaymentOnDismiss: Bool) throws {
+    func startPayment() throws {
         startPaymentCalled = true
-        cancelPaymentOnDismissValue = cancelPaymentOnDismiss
 
         // Simulate the flow by calling delegate methods
         Task { @MainActor in

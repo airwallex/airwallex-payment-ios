@@ -280,9 +280,11 @@ class ApplePayProviderTests: XCTestCase {
         )
 
         XCTAssertEqual(provider.paymentState, .notPresented)
-
-        try? provider.startPayment(cancelPaymentOnDismiss: true)
-
+        
+        // Start payment to initialize controller
+        try? provider.startPayment()
+        
+        // Wait for async operations
         try? await Task.sleep(nanoseconds: 500_000_000)
 
         XCTAssertEqual(provider.paymentState, .notStarted)

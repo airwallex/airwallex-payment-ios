@@ -169,7 +169,7 @@ public class PaymentSessionHandler: NSObject {
     /// This method sets up and starts the Apple Pay payment flow.
     func startApplePay() {
         logPaymentLaunched(AWXApplePayKey)
-        confirmApplePay(cancelPaymentOnDismiss: true)
+        confirmApplePay()
     }
     
     /// Initiates a card payment transaction.
@@ -284,11 +284,7 @@ public class PaymentSessionHandler: NSObject {
 // for internal usage
 package extension PaymentSessionHandler {
     /// Initiates an Apple Pay transaction.
-    /// - Parameter cancelPaymentOnDismiss: Determines the behavior when the Apple Pay sheet is dismissed.
-    ///   - If `true`, the standard Apple Pay flow is followed, and the payment result delegate
-    ///     receives a cancellation callback if the user dismisses the sheet.
-    ///   - If `false`, dismissing the Apple Pay sheet does not trigger a cancellation callback,
-    func confirmApplePay(cancelPaymentOnDismiss: Bool) {
+    func confirmApplePay() {
         calledMethodName = AWXApplePayKey
         let provider = providerFactory.applePayProvider(
             delegate: self,
@@ -297,7 +293,7 @@ package extension PaymentSessionHandler {
         )
         actionProvider = provider
         do {
-            try provider.startPayment(cancelPaymentOnDismiss: cancelPaymentOnDismiss)
+            try provider.startPayment()
         } catch {
             handleFailure(error)
         }
@@ -479,22 +475,19 @@ extension PaymentSessionHandler: AWXProviderDelegate {
     }
     
     public func provider(_ provider: AWXDefaultProvider, didCompleteWith status: AirwallexPaymentStatus, error: (any Error)?) {
-        viewController.stopLoading()
         debugLog("Provider: \(type(of: provider)), stauts: \(status), error: \(error?.localizedDescription ?? "N/A")")
         if paymentUIContext.hasPaymentUI {
             if let methodType, methodType.name == AWXApplePayKey, status == .inProgress {
-                // Remain in PaymentViewController when the Apple Pay status is .inProgress for UI integration
+                // Remain in payment session when the Apple Pay status is .inProgress
                 // This status typically occurs when the user forcefully dismisses the PKPaymentAuthorizationController—
                 // for example, by backgrounding the app—after successfully authorizing the payment.
                 return
             }
         }
-        
-        Task {
-            await paymentUIContext.completePaymentSession()
-            paymentResultDelegate?.paymentViewController(viewController, didCompleteWith: status, error: error)
-            logPaymentComplete(status: status, error: error)
-        }
+        viewController.stopLoading()
+
+        paymentResultDelegate?.paymentViewController(viewController, didCompleteWith: status, error: error)
+        logPaymentComplete(status: status, error: error)
     }
     
     public func hostViewController() -> UIViewController {

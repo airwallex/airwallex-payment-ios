@@ -111,6 +111,7 @@ private extension PaymentSheetMethodProvider {
     
     func getAllConsents() async throws -> [AWXPaymentConsent] {
         guard let customerId = session.customerId(),
+              !customerId.isEmpty,
               !session.hidePaymentConsents,
               !(session is AWXRecurringSession) else {
             return []
