@@ -90,6 +90,11 @@ typedef NS_ENUM(NSUInteger, AWXTextFieldType) {
 
 FOUNDATION_EXPORT NSErrorDomain const AWXSDKErrorDomain;
 
+typedef NS_ENUM(NSInteger, AWXSDKErrorCode) {
+    AWXSDKErrorCodeInternalError = -1,
+    AWXSDKErrorCodeUserCancelled = NSUserCancelledError
+};
+
 FOUNDATION_EXPORT NSString *const AWXThreatMatrixOrganizationID;
 FOUNDATION_EXPORT NSString *const AWXThreatMatrixFingerprintServer;
 

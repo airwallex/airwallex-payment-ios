@@ -254,6 +254,22 @@ import XCTest
         }
     }
     
+    func testFetchPaymentConsentsWithEmptyCustomerId() async {
+        mockPaymentIntent.customerId = ""
+        mockOneOffSession.paymentIntent = mockPaymentIntent
+        MockURLProtocol.mockResponseMap = [
+            AWXGetPaymentMethodTypesRequest().path(): (mockMethodTypesData, mockSuccessResponse, nil),
+            AWXGetPaymentConsentsRequest().path(): (mockConsentsData, mockSuccessResponse, nil)
+        ]
+        do {
+            try await provider.getPaymentMethodTypes()
+        } catch {
+            XCTFail()
+        }
+
+        XCTAssertEqual(provider.consents.count, 0)
+    }
+
     func testChangeSelectedMethod() async {
         MockURLProtocol.mockResponseMap = [
             AWXGetPaymentMethodTypesRequest().path(): (mockMethodTypesData, mockSuccessResponse, nil),

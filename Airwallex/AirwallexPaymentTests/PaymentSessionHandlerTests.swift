@@ -831,7 +831,7 @@ class PaymentSessionHandlerTests: XCTestCase {
         // Verify the mock provider was used
         XCTAssertTrue(mockFactory.applePayProviderCalled)
         XCTAssertTrue(mockApplePayProvider.startPaymentCalled)
-        XCTAssertTrue(mockApplePayProvider.cancelPaymentOnDismissValue)
+        // cancelPaymentOnDismiss removed — cancel always propagates
     }
     // MARK: - Card Payment Happy Path Test
     

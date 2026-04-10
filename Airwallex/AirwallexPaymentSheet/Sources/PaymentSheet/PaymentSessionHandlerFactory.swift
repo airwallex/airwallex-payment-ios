@@ -31,8 +31,7 @@ protocol PaymentSessionHandlerProtocol: AnyObject {
     func confirmConsentPayment(with consent: AWXPaymentConsent)
 
     /// Initiates an Apple Pay transaction.
-    /// - Parameter cancelPaymentOnDismiss: Whether to trigger cancellation callback when dismissed.
-    func confirmApplePay(cancelPaymentOnDismiss: Bool)
+    func confirmApplePay()
 
     /// Initiates a schema-based redirect payment.
     /// - Parameter paymentMethod: The payment method with all required information.
