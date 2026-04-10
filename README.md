@@ -12,54 +12,67 @@ The Airwallex iOS SDK is a flexible tool that enables you to integrate payment m
 
 We support the following localizations: English, Chinese Simplified, Chinese Traditional, French, German, Japanese, Korean, Portuguese Portugal, Portuguese Brazil, Russian, Spanish, Thai
 
-<p align="left">
-<img src="Screenshots/hpp_tab.png" width="200" hspace="10">
-<img src="Screenshots/hpp_accordion.png" width="200" hspace="10">
-<img src="Screenshots/apple_pay.png" width="200" hspace="10">
-<img src="Screenshots/card_payment_with_billing.png" width="200" hspace="10">
-<img src="Screenshots/3ds_authentication.png" width="200" hspace="10">
-<img src="Screenshots/online_banking.png" width="200" hspace="10">
-<img src="Screenshots/redirect_payment.png" width="200" hspace="10">
-</p>
+## Supported Payment Methods
+
+| Category | Methods | Notes |
+|----------|---------|-------|
+| Cards | Visa, Mastercard, UnionPay, Discover, JCB, Diners Club, Amex | PCI-DSS compliance is required when using Low-level API Integration|
+| Apple Pay | Apple Pay | [Setup](#apple-pay) |
+| E-Wallets | Alipay, AlipayHK, DANA, GCash, Kakao Pay, Touch 'n Go, WeChat Pay, and [more](https://www.airwallex.com/docs/payments__payment-methods__payment-methods-overview) | |
+
+## Integration Options
+
+Choose the integration option that best suits your needs:
+
+| Option | Description | Multiple payment methods | Single payment method |
+|--------|-------------|--------------------------|------------------------|
+| [UI Integration - Hosted Payment Page (HPP)](#ui-integration---hpp-hosted-payment-page) | Launch a complete, SDK-managed payment flow with prebuilt screens for payment method selection, card input, and checkout. Supports customizable theming and dark mode. **Recommended for most use cases.** | <img src="Screenshots/hpp_tab.png" width="300" alt="HPP - Multiple payment methods"> | <img src="Screenshots/hpp_card.png" width="300" alt="HPP - Single payment method"> |
+| [UI Integration - Embedded Element](#ui-integration---embedded) | Embed Airwallex's `AWXPaymentElement` directly into your own view hierarchy using UIKit. You retain full control over the host layout and navigation while leveraging the SDK's payment UI components. | <img src="Screenshots/embedded_tab.png" width="300" alt="Embedded - Multiple payment methods"> | <img src="Screenshots/embedded_card.png" width="300" alt="Embedded - Single payment method"> |
+| [Low-level API Integration](#low-level-api-integration) | Build a fully custom payment UI using the SDK's core APIs. Gives you direct access to payment method retrieval, card tokenization, payment confirmation, and consent management. | <img src="Screenshots/api_method_list.png" width="300" alt="API - Multiple payment methods"> | <img src="Screenshots/api_applepay.png" width="300" alt="API - Single payment method"> |
 
 Table of contents
 =================
 
 <!--ts-->
-- [Getting Started](#getting-started)
-- [Requirements](#requirements)
-- [Examples](#examples)
-- [Integration](#integration)
-  - [Installation](#installation)
-    - [Swift Package Manager](#swift-package-manager)
-    - [CocoaPods](#cocoapods)
-  - [Required Setup](#required-setup)
-    - [Customer ID](#customer-id)
-    - [Payment Intent](#payment-intent)
-    - [Client Secret](#client-secret)
-    - [Payment session](#payment-session)
-  - [Optional Setup](#optional-setup)
-    - [WeChat Pay](#wechat-pay)
-    - [Apple Pay](#apple-pay)
-  - [UI Integration - HPP (Hosted Payment Page)](#ui-integration---hpp-hosted-payment-page)
-    - [Launch Payment Sheet (Recommended)](#launch-payment-sheet-recommended)
-    - [Launch Card Payment Directly](#launch-card-payment-directly)
-    - [Launch Payment Method by Name](#launch-payment-method-by-name)
-    - [Configuration Options](#configuration-options)
-    - [Handle Payment Result](#handle-payment-result)
-  - [UI Integration - Embedded](#ui-integration---embedded)
-    - [Create Embedded Payment Sheet](#create-embedded-payment-sheet)
-    - [Create Embedded Card Element](#create-embedded-card-element)
-    - [Configuration Options](#configuration-options-1)
-    - [Handle Payment Element Events](#handle-payment-element-events)
-  - [Low-level API Integration](#low-level-api-integration)
-    - [Create PaymentSessionHandler](#create-paymentsessionhandler)
-    - [Pay with card](#pay-with-card)
-    - [Pay with saved card (consent)](#pay-with-saved-card-consent)
-    - [Pay with Apple Pay](#pay-with-apple-pay)
-    - [Pay with Redirect](#pay-with-redirect)
-    - [Handle Payment Result](#handle-payment-result-1)
-- [Contributing](#contributing)
+- [Airwallex iOS SDK](#airwallex-ios-sdk)
+  - [Overview](#overview)
+  - [Supported Payment Methods](#supported-payment-methods)
+  - [Integration Options](#integration-options)
+- [Table of contents](#table-of-contents)
+  - [Getting Started](#getting-started)
+  - [Requirements](#requirements)
+  - [Examples](#examples)
+  - [Integration](#integration)
+    - [Installation](#installation)
+      - [Swift Package Manager](#swift-package-manager)
+      - [CocoaPods](#cocoapods)
+    - [Required Setup](#required-setup)
+      - [Customer ID](#customer-id)
+      - [Payment Intent](#payment-intent)
+      - [Client Secret](#client-secret)
+      - [Payment session](#payment-session)
+    - [Optional Setup](#optional-setup)
+      - [WeChat Pay](#wechat-pay)
+      - [Apple Pay](#apple-pay)
+    - [UI Integration - Hosted Payment Page (HPP)](#ui-integration---hosted-payment-page-hpp)
+      - [Launch Payment Sheet (Recommended)](#launch-payment-sheet-recommended)
+      - [Launch Card Payment Directly](#launch-card-payment-directly)
+      - [Launch Payment Method by Name](#launch-payment-method-by-name)
+      - [Configuration Options](#configuration-options)
+      - [Handle Payment Result](#handle-payment-result)
+    - [UI Integration - Embedded](#ui-integration---embedded)
+      - [Create Embedded Payment Sheet](#create-embedded-payment-sheet)
+      - [Create Embedded Card Element](#create-embedded-card-element)
+      - [Configuration Options](#configuration-options-1)
+      - [Handle Payment Element Events](#handle-payment-element-events)
+    - [Low-level API Integration](#low-level-api-integration)
+      - [Create PaymentSessionHandler](#create-paymentsessionhandler)
+      - [Pay with card](#pay-with-card)
+      - [Pay with saved card (consent)](#pay-with-saved-card-consent)
+      - [Pay with Apple Pay](#pay-with-apple-pay)
+      - [Pay with Redirect](#pay-with-redirect)
+      - [Handle Payment Result](#handle-payment-result-1)
+  - [Contributing](#contributing)
 <!--te-->
 
 ## Getting Started
@@ -72,6 +85,8 @@ Follow our [integration guide](#integration) and explore the [example project](#
 - Xcode 15.4+ (For older Xcode versions, refer to release 5.4.3)
 
 ## Examples
+
+<img src="Screenshots/demo.gif" width="300" alt="Demo">
 
 The Examples can be run on the latest Xcode. To run the example app, you should follow these steps.
 
@@ -119,7 +134,7 @@ You can add `Airwallex` for a comprehensive integration that includes everything
 
 | Integration Style| Components Included | IPA Size Increase |
 |-----------------|----------------------|------------------:|
-| Low-Level API Integration | AirwallexCore <br> AirwallexPayment | ~0.4 MB  |
+| Low-Level API Integration | AirwallexCore <br> AirwallexPayment | 0.4 MB  |
 | UI Integration | AirwallexCore  <br> AirwallexPayment <br> AirwallexPaymentSheet | 1.3 MB |
 | Full Integration | AirwallexCore  <br> AirwallexPayment  <br> AirwallexPaymentSheet  <br> AirwallexWeChatPay | 1.5 MB |
 
@@ -130,7 +145,7 @@ Airwallex for iOS is available via [CocoaPods](https://cocoapods.org/).
 
 You can add `Airwallex` for a comprehensive integration that includes everything except WeChat Pay:
 ```ruby
-pod 'Airwallex', '~> 6.1.1'
+pod 'Airwallex', '~> 6.4.1'
 ```
 
 Alternatively, you can selectively add specific products to your project for a more modular setup, depending on your payment needs:
@@ -346,14 +361,14 @@ let session = Session(
 > Coupon is also not supported at this stage.
 
 
-### UI Integration - HPP (Hosted Payment Page)
+### UI Integration - Hosted Payment Page (HPP)
 
 #### Launch Payment Sheet (Recommended)
 > [!NOTE]
 > This is **recommended usage**, it builds a complete user flow on top of your app with our prebuilt UI to collect payment details, billing details, and confirming the payment.
 
 Make sure you add dependency for `Airwallex` or `AirwallexPaymentSheet`.
-Upon checkout, use [AWXUIContext](https://airwallex.github.io/airwallex-payment-ios/6.4.0/documentation/airwallex/awxuicontext) to present the payment flow where the user will be able to select the payment method.
+Upon checkout, use [AWXUIContext](https://airwallex.github.io/airwallex-payment-ios/6.4.1/documentation/airwallex/awxuicontext) to present the payment flow where the user will be able to select the payment method.
 
 ``` swift
 let configuration = AWXUIContext.Configuration()
@@ -455,6 +470,8 @@ Unlike `AWXUIContext.launchPayment()` which presents a full payment sheet as a v
 `AWXPaymentElement` returns a `UIView` that you can place anywhere in your layout.
 
 Make sure you add dependency for `Airwallex` or `AirwallexPaymentSheet`.
+
+We provide tab and accordion styles for our embedded payment sheet:
 
 <p align="left">
 <img src="Screenshots/embedded_tab.png" width="200">
@@ -579,7 +596,7 @@ You can build your own entirely custom UI on top of our low-level APIs.
 > you may find [Airwallex API Docs](https://www.airwallex.com/docs/api#/Payment_Acceptance) useful if you are using this integration style
 ---
 #### Create PaymentSessionHandler 
-[PaymentSessionHandler](https://airwallex.github.io/airwallex-payment-ios/6.4.0/documentation/airwallex/paymentsessionhandler) is at the center of the API integration.
+[PaymentSessionHandler](https://airwallex.github.io/airwallex-payment-ios/6.4.1/documentation/airwallex/paymentsessionhandler) is at the center of the API integration.
 ```swift
 let paymentSessionHandler = PaymentSessionHandler(
     session: "The session created above", 

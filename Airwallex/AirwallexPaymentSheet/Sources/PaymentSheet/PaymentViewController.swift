@@ -31,28 +31,33 @@ class PaymentViewController: AWXViewController {
 
     let paymentUIContext: PaymentSheetUIContext
 
+    /// The merchant's result delegate, stored separately because paymentUIContext.delegate is set to self.
+    private weak var paymentResultDelegate: AWXPaymentResultDelegate?
+
     init(methodProvider: PaymentMethodProvider,
          paymentUIContext: PaymentSheetUIContext) {
         self.methodProvider = methodProvider
         self.paymentUIContext = paymentUIContext
+        self.paymentResultDelegate = paymentUIContext.delegate
         self.layout = paymentUIContext.layout
         super.init(nibName: nil, bundle: nil)
         self.session = methodProvider.session
         self.paymentUIContext.viewController = self
+        self.paymentUIContext.delegate = self
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     deinit {
-        Task { @MainActor [paymentUIContext] in
+        Task { @MainActor [paymentUIContext, paymentResultDelegate] in
             if paymentUIContext.dismissAction != nil {
                 await paymentUIContext.completePaymentSession()
                 // this fallback logic handles user cancel payment by navigation stack interactions
                 // e.g. screen edge pan gesture
                 AnalyticsLogger.log(action: .paymentCanceled)
-                paymentUIContext.delegate?.paymentViewController(nil, didCompleteWith: .cancel, error: nil)
+                paymentResultDelegate?.paymentViewController(nil, didCompleteWith: .cancel, error: nil)
             }
         }
     }
@@ -141,8 +146,10 @@ class PaymentViewController: AWXViewController {
     }
     
     @objc func onCloseButtonTapped() {
-        dismiss(animated: true) {
-            self.paymentUIContext.delegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
+        Task {
+            await paymentUIContext.completePaymentSession()
+            AnalyticsLogger.log(action: .paymentCanceled)
+            paymentResultDelegate?.paymentViewController(self, didCompleteWith: .cancel, error: nil)
         }
     }
     
@@ -163,7 +170,7 @@ class PaymentViewController: AWXViewController {
                     }
                     Task {
                         await self.paymentUIContext.completePaymentSession()
-                        self.paymentUIContext.delegate?.paymentViewController(self, didCompleteWith: .failure, error: error)
+                        self.paymentResultDelegate?.paymentViewController(self, didCompleteWith: .failure, error: error)
                     }
                 }
             }
@@ -172,6 +179,30 @@ class PaymentViewController: AWXViewController {
     
     override func activeScrollView() -> UIScrollView {
         return collectionViewManager.collectionView
+    }
+}
+
+extension PaymentViewController: AWXPaymentResultDelegate {
+    public func paymentViewController(
+        _ controller: UIViewController?,
+        didCompleteWith status: AirwallexPaymentStatus,
+        error: (any Error)?
+    ) {
+        if status == .cancel {
+            // Stay in payment flow (e.g. 3DS cancel, Apple Pay cancel)
+            return
+        }
+        Task {
+            await paymentUIContext.completePaymentSession()
+            paymentResultDelegate?.paymentViewController(self, didCompleteWith: status, error: error)
+        }
+    }
+
+    public func paymentViewController(
+        _ controller: UIViewController?,
+        didCompleteWithPaymentConsentId paymentConsentId: String
+    ) {
+        paymentResultDelegate?.paymentViewController?(self, didCompleteWithPaymentConsentId: paymentConsentId)
     }
 }
 

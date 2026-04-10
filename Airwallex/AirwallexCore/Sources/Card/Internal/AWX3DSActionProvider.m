@@ -62,4 +62,8 @@
     [self completeWithResponse:response error:error];
 }
 
+- (void)threeDSServiceDidCancel:(AWX3DSService *)service {
+    [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
+}
+
 @end

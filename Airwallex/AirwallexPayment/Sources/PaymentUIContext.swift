@@ -25,5 +25,4 @@ class PaymentUIContext: PaymentUIContextProviding {
         self.delegate = delegate
     }
 
-    func completePaymentSession() async {}
 }

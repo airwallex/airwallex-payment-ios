@@ -175,11 +175,15 @@ extension EmbeddedIntegrationDemoViewController: AWXPaymentElementDelegate {
                 action: action
             )
         case .inProgress:
-            print("Payment in progress for \(paymentMethod), you should check payment status from time to time from backend and show result to the payer")
-            showAlert(
-                message: "Payment in progress",
-                action: action
-            )
+            if let intentId = session?.paymentIntentId() {
+                Task {
+                    startLoading()
+                    await startPollingForPaymentIntent(intentId) { [weak self] in
+                        self?.navigationController?.popViewController(animated: true)
+                    }
+                    stopLoading()
+                }
+            }
         case .failure:
             showAlert(
                 message: error?.localizedDescription ?? "There was an error while processing your payment. Please try again.",

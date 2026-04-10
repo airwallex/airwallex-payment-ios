@@ -29,7 +29,7 @@
 - (nullable NSDictionary *)parameters {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"request_id"] = self.requestId;
-    if (self.customerId) {
+    if (self.customerId.length > 0) {
         parameters[@"customer_id"] = self.customerId;
     }
 

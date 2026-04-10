@@ -99,6 +99,6 @@ final class CardGuestUserCheckoutTests: XCTestCase {
         )
         ThreeDSScreen.waitForExistence(.longLongTimeout)
         ThreeDSScreen.cancelThreeDS()
-        UIIntegrationDemoScreen.verifyAlertForPaymentStatus(.failure)
+        PaymentSheetScreen.validate()
     }
 }

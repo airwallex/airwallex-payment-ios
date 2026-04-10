@@ -36,7 +36,7 @@ class CardProvider: PaymentProvider {
             method.card = card
             method.customerId = unifiedSession.customerId()
 
-            let consentOptions = if saveCard && unifiedSession.customerId() != nil {
+            let consentOptions = if saveCard, let customerId = unifiedSession.customerId(), !customerId.isEmpty {
                 PaymentConsentOptions(nextTriggeredBy: .customerType)
             } else {
                 unifiedSession.paymentConsentOptions

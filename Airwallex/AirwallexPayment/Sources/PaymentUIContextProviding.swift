@@ -18,5 +18,4 @@ package protocol PaymentUIContextProviding: AnyObject {
 /// Whether the payment is running within a UI context (payment sheet or embedded element).
     /// Used to decide whether to keep the payment UI alive on intermediate statuses like `.inProgress`.
     var hasPaymentUI: Bool { get }
-    func completePaymentSession() async
 }

@@ -11,7 +11,7 @@
 @implementation AWXDefaultActionProvider
 
 - (void)handleNextAction:(AWXConfirmPaymentNextAction *)nextAction {
-    [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:[NSError errorWithDomain:AWXSDKErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Unknown next action type."}]];
+    [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusFailure error:[NSError errorWithDomain:AWXSDKErrorDomain code:AWXSDKErrorCodeInternalError userInfo:@{NSLocalizedDescriptionKey: @"Unknown next action type."}]];
 }
 
 @end

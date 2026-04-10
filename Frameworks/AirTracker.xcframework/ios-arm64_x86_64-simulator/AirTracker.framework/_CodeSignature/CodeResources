@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/AirTracker-Swift.h</key>
 		<data>
-		ybY6nttT3w3TgBUx1x/gtYPxC3Q=
+		52Ni6lUIRD5SdF/ziOyJ5T6U9SY=
 		</data>
 		<key>Headers/AirTracker.h</key>
 		<data>
@@ -14,51 +14,51 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		zJttNeSzzNUAoaz+DbH1iFv6m7M=
+		E+v1zFOMbxqHRVE9nACQonWijEA=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		iVQO744aWoeYIjWkwPnm0oDCqVo=
+		qRQ4c4AbhmAdZNSgodYEmidnU5w=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		lnooTT7Zy7JIL9OX9QvfETRf9ls=
+		Rk6nwJqHd8wjnuKyZPZ3Df2MDWE=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		Lpdy0VGxIVA9hmsNPQl25SiGWkM=
+		DsKBgZQhvqxgXXdZcQyoAVLsTBg=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		lnooTT7Zy7JIL9OX9QvfETRf9ls=
+		Rk6nwJqHd8wjnuKyZPZ3Df2MDWE=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		fn70FvwWwVN85rhCBESSEfYqqQI=
+		Fyk5ZOCuKeDcVY01fh3Kb4hjy6M=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		iVQO744aWoeYIjWkwPnm0oDCqVo=
+		qRQ4c4AbhmAdZNSgodYEmidnU5w=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		/u5ADtdHadQeAZiLzirlg+ntBVQ=
+		5AdpgZd8mjNaWPGaFIo0WYWrW8Q=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		TOpF8+x8mZzoFL/8btHX8MO0okw=
+		/LvaBA8c/tkUjs2LGvekMjirLWQ=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		/u5ADtdHadQeAZiLzirlg+ntBVQ=
+		5AdpgZd8mjNaWPGaFIo0WYWrW8Q=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		1A398rTKLWoQFPDB/CV3GuWPZHs=
+		y4Nb5Xy6mYcDv/NPPnBn39dwoqo=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
-		timtJNvSeXrKjfB8WDBRZlr6JRg=
+		lvl92f3I+FzSL/SnfFicf+9LDSA=
 		</data>
 		<key>PrivacyInfo.xcprivacy</key>
 		<data>
@@ -69,21 +69,13 @@
 	<dict>
 		<key>Headers/AirTracker-Swift.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ybY6nttT3w3TgBUx1x/gtYPxC3Q=
-			</data>
 			<key>hash2</key>
 			<data>
-			pu0HTnDU6pP6L7CNiUuIiSyrnFJfnuekeRox7iVRGHs=
+			JKbUP/u76IhPH7J0IRBg/T9WNjMRvbYNSNNeyzI0Upk=
 			</data>
 		</dict>
 		<key>Headers/AirTracker.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			5yZaIILW8cRrSBe5/uBy2HUC1IQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			9SBZ9MoeJLgESRCczd+BBlNsWfQyb69+TAWjuZnQGVg=
@@ -91,131 +83,83 @@
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			iVQO744aWoeYIjWkwPnm0oDCqVo=
-			</data>
 			<key>hash2</key>
 			<data>
-			14IXC/PwQ2NJS2+RJqZIFo2gMZ/3NMJjvnQVzgRnehQ=
+			9jfOY/3pV0S4x6NHHX176EmYmA07vWZVOJS8gSan594=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			lnooTT7Zy7JIL9OX9QvfETRf9ls=
-			</data>
 			<key>hash2</key>
 			<data>
-			uYbb4lVuIZeE3rwtmntM00gWkT+fGH3R87rWlFK0/dk=
+			NkyrE1cQP4xHhQURy7Bljg/B2d0IzlwnrweOHPU/PHM=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Lpdy0VGxIVA9hmsNPQl25SiGWkM=
-			</data>
 			<key>hash2</key>
 			<data>
-			GC7wCzR2TOvstVs8kmR0TpC4zw4goywwCDO0/i7UNqk=
+			2uqSVT3PC2MEgeH8cgdY7TpZ6VKcJ62QLPwXmB6RZjA=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			lnooTT7Zy7JIL9OX9QvfETRf9ls=
-			</data>
 			<key>hash2</key>
 			<data>
-			uYbb4lVuIZeE3rwtmntM00gWkT+fGH3R87rWlFK0/dk=
+			NkyrE1cQP4xHhQURy7Bljg/B2d0IzlwnrweOHPU/PHM=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			fn70FvwWwVN85rhCBESSEfYqqQI=
-			</data>
 			<key>hash2</key>
 			<data>
-			OsT0vrfcbtAoJ3GQ4rG8dGu6bLD8eye3r8cizF+J2nU=
+			H/Ub9sFrJwQZR+OCKDe7gGKCRD1qV0f6UEDiy3krLyc=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			iVQO744aWoeYIjWkwPnm0oDCqVo=
-			</data>
 			<key>hash2</key>
 			<data>
-			14IXC/PwQ2NJS2+RJqZIFo2gMZ/3NMJjvnQVzgRnehQ=
+			9jfOY/3pV0S4x6NHHX176EmYmA07vWZVOJS8gSan594=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			/u5ADtdHadQeAZiLzirlg+ntBVQ=
-			</data>
 			<key>hash2</key>
 			<data>
-			Y6pUAH4cqvc14+DqPTdahVtdkzbE5J28wUO4HW5/IQA=
+			ToHrDDlwf6Iyx/NTXiJtzTVOiD30/swG+KSN2b++R6c=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			TOpF8+x8mZzoFL/8btHX8MO0okw=
-			</data>
 			<key>hash2</key>
 			<data>
-			yUSPnOL1pcAU04iboLV4ymDze0pn7mtzy/Ns5qvsNcA=
+			E1HvBC1Ge5qdbwK5OguIYvWlXV1w75lZvpLRKpIqaCM=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			/u5ADtdHadQeAZiLzirlg+ntBVQ=
-			</data>
 			<key>hash2</key>
 			<data>
-			Y6pUAH4cqvc14+DqPTdahVtdkzbE5J28wUO4HW5/IQA=
+			ToHrDDlwf6Iyx/NTXiJtzTVOiD30/swG+KSN2b++R6c=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			1A398rTKLWoQFPDB/CV3GuWPZHs=
-			</data>
 			<key>hash2</key>
 			<data>
-			NY4Xw1OdhsvI1v2jQXCfsLMGIbV7V1mjoYdkJafyiGs=
+			lvm3+gq2fYuiaqgp7baoKMu9AJwkQt0SBv9au11GLZA=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			timtJNvSeXrKjfB8WDBRZlr6JRg=
-			</data>
 			<key>hash2</key>
 			<data>
-			Z/iF4v36IqKvpNida3rrugaJEmUM1xWaKKaz+NZO4eY=
+			+V+iNQ6QxLlSLU7Z7tfWnhXcDO7KFRdvotfYKxVnKII=
 			</data>
 		</dict>
 		<key>PrivacyInfo.xcprivacy</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			9BqOp2p4G/s1C3dQZoLm3Z9hKrY=
-			</data>
 			<key>hash2</key>
 			<data>
 			wAFPqyuxlVtPPmlxAMqhiHfoJb6dTLfbURjpr0UEfsI=
