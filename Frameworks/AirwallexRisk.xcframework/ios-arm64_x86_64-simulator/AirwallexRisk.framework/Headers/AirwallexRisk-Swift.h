@@ -332,6 +332,7 @@ typedef SWIFT_ENUM(NSInteger, AirwallexRiskEnvironment, open) {
   AirwallexRiskEnvironmentProduction = 0,
   AirwallexRiskEnvironmentDemo = 1,
   AirwallexRiskEnvironmentStaging = 2,
+  AirwallexRiskEnvironmentPreview = 3,
 };
 
 SWIFT_CLASS_NAMED("Risk")
@@ -763,6 +764,7 @@ typedef SWIFT_ENUM(NSInteger, AirwallexRiskEnvironment, open) {
   AirwallexRiskEnvironmentProduction = 0,
   AirwallexRiskEnvironmentDemo = 1,
   AirwallexRiskEnvironmentStaging = 2,
+  AirwallexRiskEnvironmentPreview = 3,
 };
 
 SWIFT_CLASS_NAMED("Risk")
