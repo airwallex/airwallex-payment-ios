@@ -188,6 +188,8 @@
         return EnvironmentStaging;
     case AirwallexSDKProductionMode:
         return EnvironmentProd;
+    case AirwallexSDKPreviewMode:
+        return EnvironmentPreview;
     }
 }
 

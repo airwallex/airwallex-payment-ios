@@ -17,6 +17,8 @@ extension AirwallexSDKMode {
             return "Staging"
         case .productionMode:
             return "Production"
+        case .previewMode:
+            return "Preview"
         }
     }
 }

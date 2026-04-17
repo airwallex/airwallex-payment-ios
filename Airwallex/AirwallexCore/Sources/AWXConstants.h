@@ -43,7 +43,8 @@ typedef NS_OPTIONS(NSUInteger, AWXRequiredBillingContactFields) {
 typedef NS_CLOSED_ENUM(NSInteger, AirwallexSDKMode) {
     AirwallexSDKDemoMode,
     AirwallexSDKStagingMode,
-    AirwallexSDKProductionMode
+    AirwallexSDKProductionMode,
+    AirwallexSDKPreviewMode
 };
 
 typedef NS_CLOSED_ENUM(NSUInteger, AirwallexPaymentStatus) {

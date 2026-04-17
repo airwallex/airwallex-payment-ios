@@ -188,6 +188,7 @@
     XCTAssertEqual([AWXAPIClientConfiguration riskEnvironmentForMode:AirwallexSDKProductionMode], AirwallexRiskEnvironmentProduction);
     XCTAssertEqual([AWXAPIClientConfiguration riskEnvironmentForMode:AirwallexSDKDemoMode], AirwallexRiskEnvironmentDemo);
     XCTAssertEqual([AWXAPIClientConfiguration riskEnvironmentForMode:AirwallexSDKStagingMode], AirwallexRiskEnvironmentStaging);
+    XCTAssertEqual([AWXAPIClientConfiguration riskEnvironmentForMode:AirwallexSDKPreviewMode], AirwallexRiskEnvironmentPreview);
 }
 
 @end
