@@ -149,6 +149,24 @@
     XCTAssertTrue(Airwallex.mode == AirwallexSDKStagingMode);
 }
 
+- (void)testDefaultBaseURL {
+    AirwallexSDKMode originalMode = Airwallex.mode;
+
+    [Airwallex setMode:AirwallexSDKDemoMode];
+    XCTAssertEqualObjects(Airwallex.defaultBaseURL.absoluteString, @"https://api-demo.airwallex.com/");
+
+    [Airwallex setMode:AirwallexSDKStagingMode];
+    XCTAssertEqualObjects(Airwallex.defaultBaseURL.absoluteString, @"https://api-staging.airwallex.com/");
+
+    [Airwallex setMode:AirwallexSDKProductionMode];
+    XCTAssertEqualObjects(Airwallex.defaultBaseURL.absoluteString, @"https://api.airwallex.com/");
+
+    [Airwallex setMode:AirwallexSDKPreviewMode];
+    XCTAssertEqualObjects(Airwallex.defaultBaseURL.absoluteString, @"https://api.sandbox.airwallex.com/");
+
+    [Airwallex setMode:originalMode];
+}
+
 - (void)testSetClientSecret {
     [[AWXAPIClientConfiguration sharedConfiguration] setClientSecret:@""];
     XCTAssertTrue([[AWXAPIClientConfiguration sharedConfiguration].clientSecret isEqualToString:@""]);
@@ -188,6 +206,7 @@
     XCTAssertEqual([AWXAPIClientConfiguration riskEnvironmentForMode:AirwallexSDKProductionMode], AirwallexRiskEnvironmentProduction);
     XCTAssertEqual([AWXAPIClientConfiguration riskEnvironmentForMode:AirwallexSDKDemoMode], AirwallexRiskEnvironmentDemo);
     XCTAssertEqual([AWXAPIClientConfiguration riskEnvironmentForMode:AirwallexSDKStagingMode], AirwallexRiskEnvironmentStaging);
+    XCTAssertEqual([AWXAPIClientConfiguration riskEnvironmentForMode:AirwallexSDKPreviewMode], AirwallexRiskEnvironmentPreview);
 }
 
 @end

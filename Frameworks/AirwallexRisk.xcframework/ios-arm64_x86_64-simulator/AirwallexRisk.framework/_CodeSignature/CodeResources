@@ -6,11 +6,11 @@
 	<dict>
 		<key>Headers/AirwallexRisk-Swift.h</key>
 		<data>
-		gYv3GXGSarkrhYnZUKcYNSc5eAo=
+		DfolXh76crGQrYTd56paxZneVyg=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		W9v75WIOaH9icJRzi5v2W6NNQyE=
+		g/pPTpKDCvIVX3aJ3CLCMpnbEyw=
 		</data>
 		<key>Modules/AirwallexRisk.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -18,19 +18,19 @@
 		</data>
 		<key>Modules/AirwallexRisk.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		0uf7laQmfs2NA2kZtkyLlezgRQk=
+		DgiDwJKYyV7+2CBdGtZ5GlxJP+c=
 		</data>
 		<key>Modules/AirwallexRisk.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		fdeTq5czvjkRo3h5W4jvgMn3Upg=
+		3cFIk2hJ2HTDEYwiK9/p1pRRZ/8=
 		</data>
 		<key>Modules/AirwallexRisk.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		0uf7laQmfs2NA2kZtkyLlezgRQk=
+		DgiDwJKYyV7+2CBdGtZ5GlxJP+c=
 		</data>
 		<key>Modules/AirwallexRisk.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		AZ62I8A7Pvvx3W6V9xHoxfgC3v0=
+		NXI87k4Rb0RxJZIfWHCmIVaojws=
 		</data>
 		<key>Modules/AirwallexRisk.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -38,19 +38,19 @@
 		</data>
 		<key>Modules/AirwallexRisk.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		0kuGo6+nA7IXR40pth238T4IWhw=
+		H9hEvr4bMG85JfRqE+0kUALrQSY=
 		</data>
 		<key>Modules/AirwallexRisk.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		RM1r+dABAxcVOnMH5Ni+qFcXRhU=
+		N2tHKaPrTeojzZBSzHwQUgyZJJ0=
 		</data>
 		<key>Modules/AirwallexRisk.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		0kuGo6+nA7IXR40pth238T4IWhw=
+		H9hEvr4bMG85JfRqE+0kUALrQSY=
 		</data>
 		<key>Modules/AirwallexRisk.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		X/pdtIMuo1b64B0CRxz4uczWzmA=
+		TqtkC+tiDZup8S/MaZNzSXHw5tk=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -59,7 +59,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			QkqSLelybS/NIlq1kT4ojWUsLQI3xqjgL15X8hY+/3A=
+			sO9D2LwzZCUe3FtIx3OQpaPrulN7hh+0Wqsvev6odjo=
 			</data>
 		</dict>
 		<key>Modules/AirwallexRisk.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
@@ -73,28 +73,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			4S5ojsHcjPZ7bpmluLo9AsOLI7FGPftYNKu5LGOq2AU=
+			jpukbBn91Ru8uCb53unS74HdDNovxBJv9c9MsT7zveU=
 			</data>
 		</dict>
 		<key>Modules/AirwallexRisk.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			cTs6KJ3g54FCfgWA0VqLmauqJj6NHL2sVF5tbnRv6uI=
+			fZLD57oY5hWR6f0ZtkL9FgWEFa6SumNGLEaLr+g5tPc=
 			</data>
 		</dict>
 		<key>Modules/AirwallexRisk.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4S5ojsHcjPZ7bpmluLo9AsOLI7FGPftYNKu5LGOq2AU=
+			jpukbBn91Ru8uCb53unS74HdDNovxBJv9c9MsT7zveU=
 			</data>
 		</dict>
 		<key>Modules/AirwallexRisk.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			JoI047Bntn0Xl8BgUEeVvfIu4dAyE51u6ntwIIYZIi8=
+			JN7SLjdMjQAWF6j5L7F2ozr4QXs2CBbpqGxanscMx5M=
 			</data>
 		</dict>
 		<key>Modules/AirwallexRisk.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -108,28 +108,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			WyePX9eTY2YrnP0399+Sc1WsNsaL1so40uwY+2nJypQ=
+			Xe7rKQ+M+cyiNP6AUG8Wlx0G1PA8DCG0SFubZMHloEM=
 			</data>
 		</dict>
 		<key>Modules/AirwallexRisk.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			bKTrZWdmJM+pSIdgVW3BLqAmFZYNqIX9CWz/drniggs=
+			SgM5Xkv9o+GA0ClWSlf93HPMa/b5Invmae4GvhXhRh8=
 			</data>
 		</dict>
 		<key>Modules/AirwallexRisk.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			WyePX9eTY2YrnP0399+Sc1WsNsaL1so40uwY+2nJypQ=
+			Xe7rKQ+M+cyiNP6AUG8Wlx0G1PA8DCG0SFubZMHloEM=
 			</data>
 		</dict>
 		<key>Modules/AirwallexRisk.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			EwegIJiFidm1MGxFUrIAZcWfvCzzgOYW94aQDxhP9Ns=
+			FI8defxTg4BOQeMCRVOjcpCSSI3DaTSVpivrRHsp9Bk=
 			</data>
 		</dict>
 	</dict>

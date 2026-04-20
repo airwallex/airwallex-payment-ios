@@ -14,6 +14,12 @@
 #import <OCMock/OCMock.h>
 #import <XCTest/XCTest.h>
 
+@interface AWXAnalyticsLogger (Testing)
+
+- (Environment)trackerEnvironment;
+
+@end
+
 @interface AWXAnalyticsLoggerTest : XCTestCase
 
 @property (nonatomic, strong) id tracker;
@@ -234,6 +240,22 @@
 
     // Verify logging works without a bound session
     OCMVerify(times(1), [_tracker infoWithEventName:actionName extraInfo:@{@"eventType": @"action"}]);
+}
+
+- (void)testTrackerEnvironment {
+    AWXAnalyticsLogger *logger = [AWXAnalyticsLogger new];
+    AirwallexSDKMode originalMode = Airwallex.mode;
+
+    [Airwallex setMode:AirwallexSDKDemoMode];
+    XCTAssertEqual([logger trackerEnvironment], EnvironmentDemo);
+    [Airwallex setMode:AirwallexSDKStagingMode];
+    XCTAssertEqual([logger trackerEnvironment], EnvironmentStaging);
+    [Airwallex setMode:AirwallexSDKProductionMode];
+    XCTAssertEqual([logger trackerEnvironment], EnvironmentProd);
+    [Airwallex setMode:AirwallexSDKPreviewMode];
+    XCTAssertEqual([logger trackerEnvironment], EnvironmentPreview);
+
+    [Airwallex setMode:originalMode];
 }
 
 - (void)testBindSessionResetsAdditionalInfo {

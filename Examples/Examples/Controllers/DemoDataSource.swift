@@ -22,6 +22,11 @@ struct DemoDataSource {
                 CheckoutMode.oneOff: "4012000300001003",
                 CheckoutMode.recurring: "4035501000000008",
                 CheckoutMode.recurringWithIntent: "4012000300001003"
+            ],
+            AirwallexSDKMode.previewMode: [
+                CheckoutMode.oneOff: "4012000300000005",
+                CheckoutMode.recurring: "4012000300000021",
+                CheckoutMode.recurringWithIntent: "4012000300000005"
             ]
         ]
         
@@ -48,6 +53,11 @@ struct DemoDataSource {
             AirwallexSDKMode.stagingMode: [
                 CheckoutMode.oneOff: "4012000300000088",
                 CheckoutMode.recurring: "5307837360544518",
+                CheckoutMode.recurringWithIntent: "4012000300000088"
+            ],
+            AirwallexSDKMode.previewMode: [
+                CheckoutMode.oneOff: "4012000300000088",
+                CheckoutMode.recurring: "5425233430109903",
                 CheckoutMode.recurringWithIntent: "4012000300000088"
             ]
         ]
@@ -83,6 +93,8 @@ struct DemoDataSource {
             "merchant.demo.com.airwallex.paymentacceptance"
         case .productionMode:
             "merchant.prod.com.airwallex.paymentacceptance"
+        case .previewMode:
+            "merchant.sandbox.com.airwallex.paymentacceptance"
         }
     }
     
