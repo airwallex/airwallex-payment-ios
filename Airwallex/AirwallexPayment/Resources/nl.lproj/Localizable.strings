@@ -1,0 +1,41 @@
+/* card validator error message */
+"Card not supported for payment" = "Kaart wordt niet ondersteund voor betaling";
+
+/* card validator error message */
+"Card number is invalid" = "Kaartnummer is ongeldig";
+
+/* card validator error message */
+"Card number is required" = "Kaartnummer is vereist";
+
+/* card validator error message */
+"Card number must contain only digits" = "Kaartnummer mag alleen cijfers bevatten";
+
+/* card validator error message */
+"Card\U2019s expiration date is invalid" = "Vervaldatum van de kaart is ongeldig";
+
+/* card validator error message */
+"Expiry date is required" = "Vervaldatum is vereist";
+
+/* card validator error message */
+"Invalid card number" = "Ongeldig kaartnummer";
+
+/* card validator error message */
+"Invalid CVC / CVV" = "Ongeldige CVC / CVV";
+
+/* card validator error message */
+"Invalid expires date" = "Ongeldige vervaldatum";
+
+/* card validator error message */
+"Invalid name on card" = "Ongeldige naam op kaart";
+
+/* card validator error message */
+"Please enter your card name" = "Voer de naam op de kaart in";
+
+/* card validator error message */
+"Security code is invalid" = "Beveiligingscode is ongeldig";
+
+/* card validator error message */
+"Security code is required" = "Beveiligingscode is vereist";
+
+/* card validator error message */
+"Security code must contain only digits" = "Beveiligingscode mag alleen cijfers bevatten";

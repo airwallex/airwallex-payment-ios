@@ -1,0 +1,41 @@
+/* card validator error message */
+"Card not supported for payment" = "Kad tidak disokong untuk pembayaran";
+
+/* card validator error message */
+"Card number is invalid" = "Nombor kad tidak sah";
+
+/* card validator error message */
+"Card number is required" = "Nombor kad diperlukan";
+
+/* card validator error message */
+"Card number must contain only digits" = "Nombor kad mesti mengandungi digit sahaja";
+
+/* card validator error message */
+"Card\U2019s expiration date is invalid" = "Tarikh luput kad tidak sah";
+
+/* card validator error message */
+"Expiry date is required" = "Tarikh luput diperlukan";
+
+/* card validator error message */
+"Invalid card number" = "Nombor kad tidak sah";
+
+/* card validator error message */
+"Invalid CVC / CVV" = "CVC / CVV tidak sah";
+
+/* card validator error message */
+"Invalid expires date" = "Tarikh luput tidak sah";
+
+/* card validator error message */
+"Invalid name on card" = "Nama pada kad tidak sah";
+
+/* card validator error message */
+"Please enter your card name" = "Sila masukkan nama pada kad";
+
+/* card validator error message */
+"Security code is invalid" = "Kod keselamatan tidak sah";
+
+/* card validator error message */
+"Security code is required" = "Kod keselamatan diperlukan";
+
+/* card validator error message */
+"Security code must contain only digits" = "Kod keselamatan mesti mengandungi digit sahaja";

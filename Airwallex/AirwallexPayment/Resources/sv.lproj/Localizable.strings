@@ -1,0 +1,41 @@
+/* card validator error message */
+"Card not supported for payment" = "Kortet stöds inte för betalning";
+
+/* card validator error message */
+"Card number is invalid" = "Kortnumret är ogiltigt";
+
+/* card validator error message */
+"Card number is required" = "Kortnummer krävs";
+
+/* card validator error message */
+"Card number must contain only digits" = "Kortnumret får bara innehålla siffror";
+
+/* card validator error message */
+"Card\U2019s expiration date is invalid" = "Kortets utgångsdatum är ogiltigt";
+
+/* card validator error message */
+"Expiry date is required" = "Utgångsdatum krävs";
+
+/* card validator error message */
+"Invalid card number" = "Ogiltigt kortnummer";
+
+/* card validator error message */
+"Invalid CVC / CVV" = "Ogiltig CVC / CVV";
+
+/* card validator error message */
+"Invalid expires date" = "Ogiltigt utgångsdatum";
+
+/* card validator error message */
+"Invalid name on card" = "Ogiltigt namn på kortet";
+
+/* card validator error message */
+"Please enter your card name" = "Ange namnet på kortet";
+
+/* card validator error message */
+"Security code is invalid" = "Säkerhetskoden är ogiltig";
+
+/* card validator error message */
+"Security code is required" = "Säkerhetskod krävs";
+
+/* card validator error message */
+"Security code must contain only digits" = "Säkerhetskoden får bara innehålla siffror";
