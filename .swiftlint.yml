@@ -44,5 +44,8 @@ large_tuple:
   warning: 4
   error: 5
 
+type_name:
+  max_length: 50
+
 trailing_whitespace:
   ignores_empty_lines: true

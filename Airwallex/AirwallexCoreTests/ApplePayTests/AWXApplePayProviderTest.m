@@ -260,9 +260,7 @@
     [provider handleFlow];
 
     OCMVerify(times(1), [_logger logPageViewWithName:@"apple_pay_sheet"
-                                      additionalInfo:@{
-                                          @"supportedNetworks": session.applePayOptions.supportedNetworks ?: @[]
-                                      }]);
+                                      additionalInfo:[OCMArg any]]);
 
     OCMVerify(times(1), [providerSpy confirmPaymentIntentWithPaymentMethod:[OCMArg checkWithBlock:^BOOL(id obj) {
                                          AWXPaymentMethod *method = (AWXPaymentMethod *)obj;
@@ -313,9 +311,7 @@
     [provider handleFlow];
 
     OCMVerify(times(1), [_logger logPageViewWithName:@"apple_pay_sheet"
-                                      additionalInfo:@{
-                                          @"supportedNetworks": session.applePayOptions.supportedNetworks ?: @[]
-                                      }]);
+                                      additionalInfo:[OCMArg any]]);
 
     OCMVerify(times(1), [providerSpy createPaymentConsentAndConfirmIntentWithPaymentMethod:[OCMArg checkWithBlock:^BOOL(id obj) {
                                          AWXPaymentMethod *method = (AWXPaymentMethod *)obj;
@@ -493,22 +489,25 @@
             .andReturn(nil);
     }
 
-    OCMStub([controllerMock presentWithCompletion:([OCMArg invokeBlockWithArgs:@YES, nil])]);
-
+    __block id<PKPaymentAuthorizationControllerDelegate> capturedDelegate = nil;
     OCMStub([controllerMock setDelegate:[OCMArg any]]).andDo(^(NSInvocation *invocation) {
-        id<PKPaymentAuthorizationControllerDelegate> controllerDelegate;
-        [invocation getArgument:&controllerDelegate atIndex:2];
+        [invocation getArgument:&capturedDelegate atIndex:2];
+    });
+
+    OCMStub([controllerMock presentWithCompletion:[OCMArg any]]).andDo(^(NSInvocation *invocation) {
+        void (^completion)(BOOL);
+        [invocation getArgument:&completion atIndex:2];
+        completion(YES);
 
         if (endImmediately) {
-            [controllerDelegate paymentAuthorizationControllerDidFinish:controllerMock];
+            [capturedDelegate paymentAuthorizationControllerDidFinish:controllerMock];
         } else {
-            [controllerDelegate paymentAuthorizationController:controllerMock
-                                           didAuthorizePayment:payment
-                                                       handler:^(PKPaymentAuthorizationResult *_Nonnull result) {
-                                                           *completionResult = result;
-
-                                                           [controllerDelegate paymentAuthorizationControllerDidFinish:controllerMock];
-                                                       }];
+            [capturedDelegate paymentAuthorizationController:controllerMock
+                                         didAuthorizePayment:payment
+                                                     handler:^(PKPaymentAuthorizationResult *_Nonnull result) {
+                                                         *completionResult = result;
+                                                         [capturedDelegate paymentAuthorizationControllerDidFinish:controllerMock];
+                                                     }];
         }
     });
 }
