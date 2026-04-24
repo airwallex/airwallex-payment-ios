@@ -376,6 +376,7 @@ package extension PaymentSessionHandler {
             handleFailure("Invalid session (payment intent required)".asError())
             return
         }
+        assert(unifiedSession.paymentConsentOptions == nil, "If you want to generate a new consent from an existing one, confirm using the payment consent object instead of just the consent ID.")
         do {
             try AWXCardProvider.validate(
                 consentId: consentId,
