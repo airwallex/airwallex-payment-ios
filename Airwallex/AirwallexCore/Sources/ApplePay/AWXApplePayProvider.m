@@ -324,7 +324,7 @@ static NSString *NSStringFromPaymentState(PaymentState state) {
 
         strongSelf.paymentState = NotStarted;
         [[AWXAnalyticsLogger shared] logPageViewWithName:@"apple_pay_sheet" additionalInfo:strongSelf.extraEventInfo];
-        [self log:@"Show apple pay"];
+        [strongSelf log:@"Show apple pay"];
     }];
 }
 
