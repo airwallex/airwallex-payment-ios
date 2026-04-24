@@ -21,6 +21,7 @@ jobs:
       - name: Log version
         run: 'echo "Dispatching for version: ${{ inputs.tag }}"'
       - name: Wait for CocoaPods CDN propagation
+        if: ${{ github.event_name == 'workflow_call' }}
         run: |
           echo "Waiting 20 minutes for CocoaPods CDN to propagate..."
           sleep 1200
