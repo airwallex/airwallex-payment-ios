@@ -402,6 +402,47 @@
             "fixedbinaryorder": 2
           },
           {
+            "kind": "Var",
+            "name": "preview",
+            "printedName": "preview",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(AirTracker.Environment.Type) -> AirTracker.Environment",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Environment",
+                    "printedName": "AirTracker.Environment",
+                    "usr": "c:@M@AirTracker@E@Environment"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "AirTracker.Environment.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Environment",
+                        "printedName": "AirTracker.Environment",
+                        "usr": "c:@M@AirTracker@E@Environment"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "c:@M@AirTracker@E@Environment@EnvironmentPreview",
+            "mangledName": "$s10AirTracker11EnvironmentO7previewyA2CmF",
+            "moduleName": "AirTracker",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "fixedbinaryorder": 3
+          },
+          {
             "kind": "Constructor",
             "name": "init",
             "printedName": "init(rawValue:)",
@@ -920,7 +961,7 @@
     {
       "filePath": "\/Users\/vagrant\/git\/AirTracker\/Logging\/APIClient.swift",
       "kind": "IntegerLiteral",
-      "offset": 873,
+      "offset": 946,
       "length": 1,
       "value": "2"
     },
@@ -965,6 +1006,13 @@
       "offset": 549,
       "length": 4,
       "value": "2"
+    },
+    {
+      "filePath": "\/Users\/vagrant\/git\/AirTracker\/Config.swift",
+      "kind": "IntegerLiteral",
+      "offset": 563,
+      "length": 7,
+      "value": "3"
     },
     {
       "filePath": "\/Users\/vagrant\/git\/AirTracker\/Tracker.swift",

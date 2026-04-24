@@ -312,7 +312,7 @@ private extension SettingsViewController {
     
     func setupOptionForEnvironment() {
         let env = settings.environment
-        var environmentOptions = [ AirwallexSDKMode.productionMode, AirwallexSDKMode.demoMode, AirwallexSDKMode.stagingMode]
+        var environmentOptions = [ AirwallexSDKMode.productionMode, AirwallexSDKMode.demoMode, AirwallexSDKMode.previewMode, AirwallexSDKMode.stagingMode]
 #if DEBUG
         if !CommandLine.arguments.contains("-production") {
             environmentOptions.remove(at: 0)
@@ -620,7 +620,7 @@ private extension SettingsViewController {
             
             var customerFetcher: APIClient
             switch settings.environment {
-            case .demoMode, .stagingMode:
+            case .demoMode, .stagingMode, .previewMode:
                 let baseURL = DemoStoreAPIClient.baseURLForEnvironment(settings.environment)
                 customerFetcher = DemoStoreAPIClient(baseURL: baseURL)
             case .productionMode:

@@ -77,6 +77,13 @@
     XCTAssertNil(ClassToHandleFlowForPaymentMethodType(type));
 }
 
+- (void)testFormatAirwallexSDKMode {
+    XCTAssertEqualObjects(FormatAirwallexSDKMode(AirwallexSDKDemoMode), @"demo");
+    XCTAssertEqualObjects(FormatAirwallexSDKMode(AirwallexSDKStagingMode), @"staging");
+    XCTAssertEqualObjects(FormatAirwallexSDKMode(AirwallexSDKProductionMode), @"production");
+    XCTAssertEqualObjects(FormatAirwallexSDKMode(AirwallexSDKPreviewMode), @"preview");
+}
+
 - (void)testCardBrands {
     XCTAssertEqualObjects(AWXCardBrandVisa, @"visa");
     XCTAssertEqualObjects(AWXCardBrandAmex, @"amex");

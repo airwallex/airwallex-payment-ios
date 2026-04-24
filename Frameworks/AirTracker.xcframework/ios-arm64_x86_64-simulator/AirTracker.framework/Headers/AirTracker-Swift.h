@@ -383,6 +383,7 @@ typedef SWIFT_ENUM(NSInteger, Environment, open) {
   EnvironmentStaging = 0,
   EnvironmentDemo = 1,
   EnvironmentProd = 2,
+  EnvironmentPreview = 3,
 };
 
 SWIFT_CLASS("_TtC10AirTracker7Tracker")
@@ -788,6 +789,7 @@ typedef SWIFT_ENUM(NSInteger, Environment, open) {
   EnvironmentStaging = 0,
   EnvironmentDemo = 1,
   EnvironmentProd = 2,
+  EnvironmentPreview = 3,
 };
 
 SWIFT_CLASS("_TtC10AirTracker7Tracker")

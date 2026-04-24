@@ -165,7 +165,7 @@ pod install
 When your app starts, configure the SDK with `mode`.
 
 ``` swift
-Airwallex.setMode(.demoMode) // .demoMode, .stagingMode, .productionMode
+Airwallex.setMode(.demoMode) // .demoMode, .previewMode, .stagingMode, .productionMode
 ```
 ---
 #### Customer ID 

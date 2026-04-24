@@ -17,6 +17,7 @@ import _SwiftConcurrencyShims
   case production
   case demo
   case staging
+  case preview
   public init?(rawValue: Swift.Int)
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
