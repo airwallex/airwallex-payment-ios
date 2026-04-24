@@ -182,6 +182,8 @@ static NSString *NSStringFromPaymentState(PaymentState state) {
 
 - (void)paymentAuthorizationControllerDidFinish:(nonnull PKPaymentAuthorizationController *)controller {
     [[AWXAnalyticsLogger shared] logActionWithName:@"apple_pay_finished" additionalInfo:self.extraEventInfo];
+    self.authorizationController = nil;
+    objc_setAssociatedObject(self.authorizationController, kAWXApplePayProviderAssociatedObjectKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     void (^dismissCompletionBlock)(void);
     switch (self.paymentState) {
     case NotPresented:
@@ -381,6 +383,8 @@ static NSString *NSStringFromPaymentState(PaymentState state) {
 - (void)handlePresentationFail {
     if (!_didHandlePresentationFail) {
         self.didHandlePresentationFail = YES;
+        self.authorizationController = nil;
+        objc_setAssociatedObject(self.authorizationController, kAWXApplePayProviderAssociatedObjectKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         NSString *message = @"Failed to present Apple Pay Controller.";
         NSError *error = [NSError errorWithDomain:AWXSDKErrorDomain
                                              code:-1
