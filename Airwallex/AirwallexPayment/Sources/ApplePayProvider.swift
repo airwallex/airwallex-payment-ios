@@ -183,13 +183,13 @@ class ApplePayProvider: PaymentProvider {
             delegate?.provider(self, didCompleteWith: .failure, error: error)
 
             if let currentController {
-                self.currentController = nil
                 objc_setAssociatedObject(
                     currentController as Any,
                     &kApplePayContextAssociatedObjectKey,
                     nil,
                     .OBJC_ASSOCIATION_RETAIN_NONATOMIC
                 )
+                self.currentController = nil
             }
         }
     }
@@ -197,13 +197,13 @@ class ApplePayProvider: PaymentProvider {
     func handleControllerDidFinish() {
         Task { @MainActor in
             await currentController?.dismiss()
-            currentController = nil
             objc_setAssociatedObject(
                 currentController as Any,
                 &kApplePayContextAssociatedObjectKey,
                 nil,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )
+            currentController = nil
             AnalyticsLogger.log(action: .applePayFinished, extraInfo: extraEventInfo)
             switch paymentState {
             case .notPresented:
