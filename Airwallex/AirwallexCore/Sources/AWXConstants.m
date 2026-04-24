@@ -66,6 +66,8 @@ NSString *FormatAirwallexSDKMode(AirwallexSDKMode mode) {
         return @"staging";
     case AirwallexSDKProductionMode:
         return @"production";
+    case AirwallexSDKPreviewMode:
+        return @"preview";
     }
 }
 

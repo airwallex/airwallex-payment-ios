@@ -6,5 +6,5 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
-AIRWALLEX_VERSION = 6.4.0
+AIRWALLEX_VERSION = 6.4.1
 SWIFT_PACKAGE_NAME = Airwallex

@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/AirTracker-Swift.h</key>
 		<data>
-		52Ni6lUIRD5SdF/ziOyJ5T6U9SY=
+		1wwmREetLpQXM1z3dJsIg1dEpHo=
 		</data>
 		<key>Headers/AirTracker.h</key>
 		<data>
@@ -18,11 +18,11 @@
 		</data>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		qRQ4c4AbhmAdZNSgodYEmidnU5w=
+		XKLoGlgabpg3A1zs01ur2KQdNRo=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		Rk6nwJqHd8wjnuKyZPZ3Df2MDWE=
+		hkEbWTe+rt8X5atcqnqyrfjhE/4=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -30,19 +30,19 @@
 		</data>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		Rk6nwJqHd8wjnuKyZPZ3Df2MDWE=
+		hkEbWTe+rt8X5atcqnqyrfjhE/4=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		Fyk5ZOCuKeDcVY01fh3Kb4hjy6M=
+		t8BlUOT8DHPymel1+7MKWQJq3UM=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		qRQ4c4AbhmAdZNSgodYEmidnU5w=
+		XKLoGlgabpg3A1zs01ur2KQdNRo=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		5AdpgZd8mjNaWPGaFIo0WYWrW8Q=
+		Z4G5saJAE3Px4davfEezTRPHJvA=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -50,11 +50,11 @@
 		</data>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		5AdpgZd8mjNaWPGaFIo0WYWrW8Q=
+		Z4G5saJAE3Px4davfEezTRPHJvA=
 		</data>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		y4Nb5Xy6mYcDv/NPPnBn39dwoqo=
+		bsA+C3Y6P3+OuNALtVPWUcSSP4w=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -71,7 +71,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			JKbUP/u76IhPH7J0IRBg/T9WNjMRvbYNSNNeyzI0Upk=
+			VE5S2bWJ1BvLB+G4CyEkeU43eYQRqLaaD3BEF7U4P6A=
 			</data>
 		</dict>
 		<key>Headers/AirTracker.h</key>
@@ -85,14 +85,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			9jfOY/3pV0S4x6NHHX176EmYmA07vWZVOJS8gSan594=
+			AISy+lrgxAJ7p8O4eEi5NTkOiaHGLwRcwzzdTJRxu+E=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			NkyrE1cQP4xHhQURy7Bljg/B2d0IzlwnrweOHPU/PHM=
+			lFlLhBwzYOAkcX6/D2TmQBqJaDsjS5q90C9mpHh/hLQ=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
@@ -106,28 +106,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			NkyrE1cQP4xHhQURy7Bljg/B2d0IzlwnrweOHPU/PHM=
+			lFlLhBwzYOAkcX6/D2TmQBqJaDsjS5q90C9mpHh/hLQ=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			H/Ub9sFrJwQZR+OCKDe7gGKCRD1qV0f6UEDiy3krLyc=
+			q+2hFXZXiyRwmo2xkeakOEM7X+MAZmY/6ToYzmG1Pds=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			9jfOY/3pV0S4x6NHHX176EmYmA07vWZVOJS8gSan594=
+			AISy+lrgxAJ7p8O4eEi5NTkOiaHGLwRcwzzdTJRxu+E=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ToHrDDlwf6Iyx/NTXiJtzTVOiD30/swG+KSN2b++R6c=
+			xU/akusX/m/GQgfAeJd8FhcRGl2rPucjI6SaLJf20HE=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
@@ -141,14 +141,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			ToHrDDlwf6Iyx/NTXiJtzTVOiD30/swG+KSN2b++R6c=
+			xU/akusX/m/GQgfAeJd8FhcRGl2rPucjI6SaLJf20HE=
 			</data>
 		</dict>
 		<key>Modules/AirTracker.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			lvm3+gq2fYuiaqgp7baoKMu9AJwkQt0SBv9au11GLZA=
+			1oxzkh+cer4tJOAwRhd3aT0lmuaw1ZJjHZPCVdccJvU=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

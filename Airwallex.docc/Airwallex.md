@@ -5,7 +5,7 @@ The Airwallex iOS SDK is a flexible tool that enables you to integrate payment m
 
 - [Installation](https://github.com/airwallex/airwallex-payment-ios?tab=readme-ov-file#installation)
 - [Required Setup](https://github.com/airwallex/airwallex-payment-ios?tab=readme-ov-file#required-setup)
-- [UI Integration - Hosted Payment Page](https://github.com/airwallex/airwallex-payment-ios?tab=readme-ov-file#ui-integration---hpp-hosted-payment-page)
+- [UI Integration - Hosted Payment Page](https://github.com/airwallex/airwallex-payment-ios?tab=readme-ov-file#ui-integration---hosted-payment-page-hpp)
 - [UI Integration - Embedded Element](https://github.com/airwallex/airwallex-payment-ios?tab=readme-ov-file#ui-integration---embedded)
 - [API Integration](https://github.com/airwallex/airwallex-payment-ios?tab=readme-ov-file#low-level-api-integration)
 
