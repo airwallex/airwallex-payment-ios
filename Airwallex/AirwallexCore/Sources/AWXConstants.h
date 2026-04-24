@@ -14,7 +14,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define AIRWALLEX_VERSION (@"6.4.1")
+#define AIRWALLEX_VERSION (@"6.4.2")
 #define AIRWALLEX_API_VERSION (@"2021-11-25")
 
 typedef NSString *AWXCardBrand NS_TYPED_ENUM;
@@ -43,7 +43,8 @@ typedef NS_OPTIONS(NSUInteger, AWXRequiredBillingContactFields) {
 typedef NS_CLOSED_ENUM(NSInteger, AirwallexSDKMode) {
     AirwallexSDKDemoMode,
     AirwallexSDKStagingMode,
-    AirwallexSDKProductionMode
+    AirwallexSDKProductionMode,
+    AirwallexSDKPreviewMode
 };
 
 typedef NS_CLOSED_ENUM(NSUInteger, AirwallexPaymentStatus) {

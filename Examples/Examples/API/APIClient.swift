@@ -46,7 +46,7 @@ extension APIClient {
 extension Airwallex {
     static var apiClient: APIClient {
         switch Airwallex.mode() {
-        case .demoMode, .stagingMode:
+        case .demoMode, .stagingMode, .previewMode:
             return DemoStoreAPIClient()
         case .productionMode:
             return DirectAPIClient()
@@ -87,6 +87,8 @@ class DemoStoreAPIClient: APIClient, CustomerFetchable {
             "https://demo-pacheckoutdemo.airwallex.com"
         case .stagingMode:
             "https://staging-pacheckoutdemo.airwallex.com"
+        case .previewMode:
+            "https://pacheckoutdemo.sandbox.airwallex.com"
         case .productionMode:
             // Our demo does not support production. Please validate it by connecting your own backend.
             nil

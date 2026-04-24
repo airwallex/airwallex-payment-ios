@@ -96,6 +96,9 @@
         [extraInfo setValuesForKeysWithDictionary:additionalInfo];
     }
     [_tracker errorWithEventName:eventName extraInfo:extraInfo];
+    if (self.verbose) {
+        [self log:@"error_name: %@, extraInfo: %@", eventName, extraInfo];
+    }
 }
 
 - (void)logErrorWithName:(NSString *)eventName
@@ -116,7 +119,7 @@
     if (errorResponse.message.length > 0) {
         extraInfo[@"message"] = errorResponse.message;
     }
-    [_tracker errorWithEventName:eventName extraInfo:extraInfo];
+    [self logErrorWithName:eventName additionalInfo:extraInfo];
 }
 
 - (void)logError:(NSError *)error withEventName:(NSString *)eventName {
@@ -125,7 +128,7 @@
     if (error.localizedDescription.length > 0) {
         extraInfo[@"message"] = error.localizedDescription;
     }
-    [_tracker errorWithEventName:eventName extraInfo:extraInfo];
+    [self logErrorWithName:eventName additionalInfo:extraInfo];
 }
 
 - (void)logActionWithName:(NSString *)actionName {
@@ -188,6 +191,8 @@
         return EnvironmentStaging;
     case AirwallexSDKProductionMode:
         return EnvironmentProd;
+    case AirwallexSDKPreviewMode:
+        return EnvironmentPreview;
     }
 }
 

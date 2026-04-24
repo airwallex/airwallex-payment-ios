@@ -25,6 +25,9 @@ package enum AnalyticEvent {
         case value
         case eventType
         case supportedNetworks
+        case providerId
+        case duration
+        case status
         case expressCheckout // boolean value
         case launchType // dropin, component, embedded_element, api
         case layout // tab, accordion, none
@@ -60,6 +63,8 @@ package enum AnalyticEvent {
         case paymentSuccess = "payment_success"
         case paymentFailed = "payment_failed"
         case paymentInProgress = "payment_in_progress"
+        case applePayAuthorized = "apple_pay_authorized"
+        case applePayFinished = "apple_pay_finished"
     }
 }
 
