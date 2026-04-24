@@ -182,8 +182,6 @@ static NSString *NSStringFromPaymentState(PaymentState state) {
 
 - (void)paymentAuthorizationControllerDidFinish:(nonnull PKPaymentAuthorizationController *)controller {
     [[AWXAnalyticsLogger shared] logActionWithName:@"apple_pay_finished" additionalInfo:self.extraEventInfo];
-    objc_setAssociatedObject(controller, kAWXApplePayProviderAssociatedObjectKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    self.authorizationController = nil;
     void (^dismissCompletionBlock)(void);
     switch (self.paymentState) {
     case NotPresented:
@@ -222,6 +220,8 @@ static NSString *NSStringFromPaymentState(PaymentState state) {
         [controller dismissWithCompletion:dismissCompletionBlock];
         break;
     }
+    objc_setAssociatedObject(controller, kAWXApplePayProviderAssociatedObjectKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    self.authorizationController = nil;
 }
 
 #pragma mark - Private methods
