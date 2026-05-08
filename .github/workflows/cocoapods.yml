@@ -27,4 +27,5 @@ jobs:
     uses: ./.github/workflows/repo-dispatch-on-release.yml
     with:
       tag: ${{ github.event.release.tag_name }}
+      wait_minutes: 20
     secrets: inherit
