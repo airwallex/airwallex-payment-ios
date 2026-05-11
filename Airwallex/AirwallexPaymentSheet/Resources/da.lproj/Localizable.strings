@@ -1,0 +1,145 @@
+/* add card section - section title
+consent section - add a new card */
+"Add new" = "Tilføj nyt";
+
+"Apple Pay" = "Apple Pay";
+
+/* title for bank selection */
+"Bank" = "Bank";
+
+/* Billing Address - title */
+"Billing Address" = "Faktureringsadresse";
+
+/* add card section - billing info */
+"Billing country or region" = "Faktureringsland eller -region";
+
+/* consent section - alert cancel button to delete a consent */
+"Cancel" = "Annuller";
+
+"Card" = "Kort";
+
+/* Card Info Cell - title */
+"Card Information" = "Kortoplysninger";
+
+/* user input validation */
+"Card\U2019s expiration date is invalid" = "Kortets udløbsdato er ugyldig";
+
+/* consent section - unselect consent and go back to consent list */
+"Change" = "Skift";
+
+/* consent section - choose a saved card */
+"Choose a card" = "Vælg et kort";
+
+/* billing city placeholder */
+"City" = "By";
+
+/* close button for alert */
+"Close" = "Luk";
+
+/* checkout button title for recurring payment */
+"Confirm" = "Bekræft";
+
+/* consent section - cvc field placeholder
+user input - cvc placeholder */
+"CVC" = "CVC";
+
+/* add card section - billing field */
+"Email" = "E-mail";
+
+/* user input validation */
+"Expiry date is required" = "Udløbsdato er påkrævet";
+
+/* add card section - UnionPay warning message */
+"For UnionPay, only credit cards can be saved. Click \U201CPay\U201D to proceed with a one time payment or use another card if you would like to save it for future use." = "For UnionPay kan kun kreditkort gemmes. Klik på \U201CBetal\U201D for at fortsætte med en engangsbetaling, eller brug et andet kort, hvis du vil gemme det til fremtidig brug.";
+
+/* user input validation */
+"Invalid email" = "Ugyldig e-mail";
+
+/* user input validation */
+"Invalid phone number" = "Ugyldigt telefonnummer";
+
+/* schema section - invalid schema data */
+"Invalid schema" = "Ugyldigt skema";
+
+/* user input validation */
+"Invalid state" = "Ugyldig region";
+
+/* add card section - button to switch to consent list */
+"Keep using saved cards" = "Fortsæt med at bruge gemte kort";
+
+/* add card section - billing field */
+"Name on card" = "Navn på kort";
+
+/* payment section separator */
+"Or pay with" = "Eller betal med";
+
+/* checkout button title for one-off payment */
+"Pay" = "Betal";
+
+/* title for payment sheet */
+"Payment Methods" = "Betalingsmetoder";
+
+/* add card section - billing field */
+"Phone number" = "Telefonnummer";
+
+/* user input validation */
+"Please enter your city" = "Indtast din by";
+
+/* country selection view error hint
+user input validation */
+"Please enter your country" = "Indtast dit land";
+
+/* user input validation */
+"Please enter your first name" = "Indtast dit fornavn";
+
+/* user input validation */
+"Please enter your last name" = "Indtast dit efternavn";
+
+/* user input validation */
+"Please enter your name on card" = "Indtast navnet på kortet";
+
+/* user input validation */
+"Please enter your street" = "Indtast din gade";
+
+/* user input validation - bank selection view error hint */
+"Please select a bank" = "Vælg en bank";
+
+/* billing postal code placeholder */
+"Postal code" = "Postnummer";
+
+/* consent section - alert confirm button to remove a consent */
+"Remove" = "Fjern";
+
+/* consent section - alert title for delete a consent */
+"Remove %@?" = "Fjern %@?";
+
+/* Billing Address - reuse toggle */
+"Same as shipping address" = "Samme som leveringsadresse";
+
+/* add card section - toggle for card saving */
+"Save my card for future payments" = "Gem mit kort til fremtidige betalinger";
+
+/* schema section - title of Bank Selection form */
+"Select your Bank" = "Vælg din bank";
+
+/* bank selection placeholder
+country selection view placeholder */
+"Select..." = "Vælg...";
+
+/* billing state placeholder */
+"State" = "Region";
+
+/* billing street placeholder */
+"Street" = "Gade";
+
+/* consent section - alert message for delete a consent */
+"This option will be permanently removed from your saved payment methods." = "Denne mulighed vil blive permanent fjernet fra dine gemte betalingsmetoder.";
+
+/* alert message for delete MIT consent */
+"This card is used for other payments you\U2019ve set up with %@. Please contact %@ to update the payment method for these payments before removing this card." = "Dette kort bruges til andre betalinger, du har oprettet med %@. Kontakt %@ for at opdatere betalingsmetoden for disse betalinger, før du fjerner dette kort.";
+
+/* schema payment redirect reminder */
+"You will be redirected to complete your payment upon confirmation." = "Du vil blive omdirigeret for at fuldføre din betaling efter bekræftelse.";
+
+/* Apple Pay section - instruction text */
+"Click the Apple Pay button below to securely complete your purchase." = "Klik på Apple Pay-knappen nedenfor for at gennemføre dit køb sikkert.";

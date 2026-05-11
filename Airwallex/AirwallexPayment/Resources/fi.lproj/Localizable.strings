@@ -1,0 +1,41 @@
+/* card validator error message */
+"Card not supported for payment" = "Korttia ei tueta maksamiseen";
+
+/* card validator error message */
+"Card number is invalid" = "Kortin numero on virheellinen";
+
+/* card validator error message */
+"Card number is required" = "Kortin numero on pakollinen";
+
+/* card validator error message */
+"Card number must contain only digits" = "Kortin numeron tulee sisältää vain numeroita";
+
+/* card validator error message */
+"Card\U2019s expiration date is invalid" = "Kortin viimeinen voimassaolopäivä on virheellinen";
+
+/* card validator error message */
+"Expiry date is required" = "Viimeinen voimassaolopäivä on pakollinen";
+
+/* card validator error message */
+"Invalid card number" = "Virheellinen kortin numero";
+
+/* card validator error message */
+"Invalid CVC / CVV" = "Virheellinen CVC / CVV";
+
+/* card validator error message */
+"Invalid expires date" = "Virheellinen viimeinen voimassaolopäivä";
+
+/* card validator error message */
+"Invalid name on card" = "Virheellinen nimi kortilla";
+
+/* card validator error message */
+"Please enter your card name" = "Syötä nimi kortilla";
+
+/* card validator error message */
+"Security code is invalid" = "Turvakoodi on virheellinen";
+
+/* card validator error message */
+"Security code is required" = "Turvakoodi on pakollinen";
+
+/* card validator error message */
+"Security code must contain only digits" = "Turvakoodin tulee sisältää vain numeroita";

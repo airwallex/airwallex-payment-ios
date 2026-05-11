@@ -1,0 +1,41 @@
+/* card validator error message */
+"Card not supported for payment" = "Karta nie jest obsługiwana do płatności";
+
+/* card validator error message */
+"Card number is invalid" = "Numer karty jest nieprawidłowy";
+
+/* card validator error message */
+"Card number is required" = "Numer karty jest wymagany";
+
+/* card validator error message */
+"Card number must contain only digits" = "Numer karty może zawierać tylko cyfry";
+
+/* card validator error message */
+"Card\U2019s expiration date is invalid" = "Data ważności karty jest nieprawidłowa";
+
+/* card validator error message */
+"Expiry date is required" = "Data ważności jest wymagana";
+
+/* card validator error message */
+"Invalid card number" = "Nieprawidłowy numer karty";
+
+/* card validator error message */
+"Invalid CVC / CVV" = "Nieprawidłowy CVC / CVV";
+
+/* card validator error message */
+"Invalid expires date" = "Nieprawidłowa data ważności";
+
+/* card validator error message */
+"Invalid name on card" = "Nieprawidłowe imię i nazwisko na karcie";
+
+/* card validator error message */
+"Please enter your card name" = "Wprowadź imię i nazwisko na karcie";
+
+/* card validator error message */
+"Security code is invalid" = "Kod bezpieczeństwa jest nieprawidłowy";
+
+/* card validator error message */
+"Security code is required" = "Kod bezpieczeństwa jest wymagany";
+
+/* card validator error message */
+"Security code must contain only digits" = "Kod bezpieczeństwa może zawierać tylko cyfry";

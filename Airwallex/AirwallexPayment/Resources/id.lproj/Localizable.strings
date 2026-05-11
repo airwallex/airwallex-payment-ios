@@ -1,0 +1,41 @@
+/* card validator error message */
+"Card not supported for payment" = "Kartu tidak didukung untuk pembayaran";
+
+/* card validator error message */
+"Card number is invalid" = "Nomor kartu tidak valid";
+
+/* card validator error message */
+"Card number is required" = "Nomor kartu wajib diisi";
+
+/* card validator error message */
+"Card number must contain only digits" = "Nomor kartu hanya boleh berisi angka";
+
+/* card validator error message */
+"Card\U2019s expiration date is invalid" = "Tanggal kedaluwarsa kartu tidak valid";
+
+/* card validator error message */
+"Expiry date is required" = "Tanggal kedaluwarsa wajib diisi";
+
+/* card validator error message */
+"Invalid card number" = "Nomor kartu tidak valid";
+
+/* card validator error message */
+"Invalid CVC / CVV" = "CVC / CVV tidak valid";
+
+/* card validator error message */
+"Invalid expires date" = "Tanggal kedaluwarsa tidak valid";
+
+/* card validator error message */
+"Invalid name on card" = "Nama pada kartu tidak valid";
+
+/* card validator error message */
+"Please enter your card name" = "Masukkan nama pada kartu";
+
+/* card validator error message */
+"Security code is invalid" = "Kode keamanan tidak valid";
+
+/* card validator error message */
+"Security code is required" = "Kode keamanan wajib diisi";
+
+/* card validator error message */
+"Security code must contain only digits" = "Kode keamanan hanya boleh berisi angka";

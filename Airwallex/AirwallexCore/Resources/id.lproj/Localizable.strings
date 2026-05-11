@@ -1,0 +1,21 @@
+/* close button for UIAlertController
+close button for alert
+close button on navigation bar */
+"Close" = "Tutup";
+
+/* CVC / CVV placeholder */
+"CVC / CVV" = "CVC / CVV";
+
+/* No comment provided by engineer. */
+"Enter CVC/CVV for\n%@" = "Masukkan CVC/CVV untuk\n%@";
+
+/* string description when decimal number is zero */
+"Free" = "Gratis";
+
+/* Pay now - pay button */
+"Pay now" = "Bayar sekarang";
+
+/* total amount of payment session */
+"Total %@" = "Total %@";
+
+"Enter CVC/CVV" = "Masukkan CVC/CVV";

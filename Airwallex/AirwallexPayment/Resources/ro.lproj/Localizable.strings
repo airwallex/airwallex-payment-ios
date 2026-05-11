@@ -1,0 +1,41 @@
+/* card validator error message */
+"Card not supported for payment" = "Cardul nu este acceptat pentru plată";
+
+/* card validator error message */
+"Card number is invalid" = "Numărul cardului este invalid";
+
+/* card validator error message */
+"Card number is required" = "Numărul cardului este obligatoriu";
+
+/* card validator error message */
+"Card number must contain only digits" = "Numărul cardului trebuie să conțină doar cifre";
+
+/* card validator error message */
+"Card\U2019s expiration date is invalid" = "Data de expirare a cardului este invalidă";
+
+/* card validator error message */
+"Expiry date is required" = "Data de expirare este obligatorie";
+
+/* card validator error message */
+"Invalid card number" = "Număr de card invalid";
+
+/* card validator error message */
+"Invalid CVC / CVV" = "CVC / CVV invalid";
+
+/* card validator error message */
+"Invalid expires date" = "Dată de expirare invalidă";
+
+/* card validator error message */
+"Invalid name on card" = "Nume pe card invalid";
+
+/* card validator error message */
+"Please enter your card name" = "Introduceți numele de pe card";
+
+/* card validator error message */
+"Security code is invalid" = "Codul de securitate este invalid";
+
+/* card validator error message */
+"Security code is required" = "Codul de securitate este obligatoriu";
+
+/* card validator error message */
+"Security code must contain only digits" = "Codul de securitate trebuie să conțină doar cifre";

@@ -20,31 +20,12 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         return view
     }()
     
-    private lazy var reuseButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var reuseButton: CheckBoxButton = {
+        let button = CheckBoxButton()
         button.setTitle(
             NSLocalizedString("Same as shipping address", bundle: .paymentSheet, comment: "Billing Address - reuse toggle"),
             for: .normal
         )
-        button.setTitleColor(.awxColor(.textPrimary), for: .normal)
-        button.titleLabel?.font = .awxFont(.caption2)
-        
-        let config = UIImage.SymbolConfiguration(pointSize: 16)
-        let normalImage = UIImage(systemName: "square", withConfiguration: config)!
-            .withTintColor(.awxColor(.borderPerceivable), renderingMode: .alwaysOriginal)
-        
-        let selectedImage = UIImage(systemName: "checkmark.square.fill", withConfiguration: config)!
-            .withTintColor(.awxColor(.backgroundInteractive), renderingMode: .alwaysOriginal)
-        
-        button.setImage(normalImage, for: .normal)
-        button.setImage(selectedImage, for: .selected)
-        button.setImage(selectedImage, for: [.selected, .highlighted])
-        
-        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -4, bottom: 0, right: 4)
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: -4)
-        
         button.addTarget(self, action: #selector(reuseButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -110,7 +91,7 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private var cancellables = Set<AnyCancellable>()
     
     private(set) var viewModel: BillingInfoCellViewModel?

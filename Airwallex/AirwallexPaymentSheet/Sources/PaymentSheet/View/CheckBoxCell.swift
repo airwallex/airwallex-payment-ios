@@ -52,27 +52,8 @@ class CheckBoxCell: UICollectionViewCell, ViewConfigurable, ViewReusable {
         return view
     }()
     
-    private lazy var button: UIButton = {
-        let button = UIButton(type: .custom)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(.awxColor(.textPrimary), for: .normal)
-        button.titleLabel?.font = .awxFont(.caption2)
-        
-        let config = UIImage.SymbolConfiguration(pointSize: 16)
-        let normalImage = UIImage(systemName: "square", withConfiguration: config)!
-            .withTintColor(.awxColor(.borderPerceivable), renderingMode: .alwaysOriginal)
-        
-        let selectedImage = UIImage(systemName: "checkmark.square.fill", withConfiguration: config)!
-            .withTintColor(.awxColor(.backgroundInteractive), renderingMode: .alwaysOriginal)
-        
-        button.setImage(normalImage, for: .normal)
-        button.setImage(selectedImage, for: .selected)
-        button.setImage(selectedImage, for: [.selected, .highlighted])
-        
-        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -4, bottom: 0, right: 4)
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: -4)
-        
+    private lazy var button: CheckBoxButton = {
+        let button = CheckBoxButton()
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         return button
     }()
@@ -98,7 +79,7 @@ class CheckBoxCell: UICollectionViewCell, ViewConfigurable, ViewReusable {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private(set) var viewModel: CheckBoxCellViewModel?
     
     func setup(_ viewModel: CheckBoxCellViewModel) {
