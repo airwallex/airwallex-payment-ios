@@ -67,7 +67,9 @@ class WebViewController: UIViewController {
         NSLayoutConstraint.activate(constraints)
 
         cancellable = webView.publisher(for: \.title)
-            .assign(to: \.title, on: self)
+            .sink { [weak self] title in
+                self?.title = title
+            }
 
         if !url.isEmpty {
             load()
