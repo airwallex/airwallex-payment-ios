@@ -115,11 +115,17 @@ extension WebViewController: WKNavigationDelegate {
             return
         }
 
-        let customSchemes = ["weixin://wap/pay?", "alipay://", "alipayhk://", "airwallexcheckout://", "alipays://", "kakaotalk://"]
+        let customSchemes = ["weixin://wap/pay?", "alipay://", "alipayhk://", "airwallexcheckout://", "alipays://", "kakaotalk://", "octopus://payment?"]
 
         if customSchemes.contains(where: { absoluteString.hasPrefix($0) }),
             let url = URL(string: absoluteString) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            UIApplication.shared.open(url, options: [:]) { completed in
+                if !completed {
+                    print("failed to open: \(url.absoluteString)")
+                }
+            }
+            decisionHandler(.cancel)
+            return
         }
 
         decisionHandler(.allow)
