@@ -47,3 +47,18 @@ tags:
 # Visual evidence for the regression report (HPP rendered with Card form, currency-
 # formatted Pay button, Apple Pay button, alternative LPMs, etc.).
 - takeScreenshot: webview_checkout_renders_ios
+
+# --- Digital wallet button: tap-level smoke ---
+# Apple Pay is the iOS-native wallet. Assert the button is present + tappable +
+# the checkout-ui click handler runs without crashing WKWebView. We do NOT assert
+# the PKPaymentAuthorizationViewController sheet actually opens — that requires
+# a simulator with a PassKit test card seeded (`xcrun simctl spawn booted defaults
+# write com.apple.PassKit.PaymentPassMaintenance LimitedNetworkInterval -int 0` +
+# add card via PassKit test endpoint). See Android README "Digital wallet sheet
+# coverage" for the full pattern.
+- assertVisible: "Apple Pay"
+- tapOn: "Apple Pay"
+- extendedWaitUntil:
+    visible: "Select payment method"
+    timeout: 5000
+- assertVisible: "Apple Pay"
