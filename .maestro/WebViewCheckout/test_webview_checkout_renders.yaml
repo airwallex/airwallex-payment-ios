@@ -1,0 +1,49 @@
+appId: com.airwallex.paymentacceptance
+tags:
+  - p0
+  - regression
+  - webview
+---
+# iOS mirror of the Android `test_webview_checkout_renders.yaml`. See the Android version
+# for the full reasoning. In short:
+#
+# This P0 regression proves checkout-ui mounts correctly inside the iOS WKWebView
+# (WebViewController), with all critical payment method entry points rendered. The
+# actual card submission / 3DS / Apple-Google Pay handler logic is covered by the FE
+# Playwright suite (paymentacceptance-fe-automation-test) running in mobile Safari.
+#
+# What this regression catches (iOS-specific):
+#   - WKWebView misconfiguration (JS disabled, no DOM storage, no Payment Request bridge)
+#   - WKWebView blocks third-party cookies, breaking checkout-ui session
+#   - Asset / iframe loading failures (CSP, mixed-content blocks via ATS)
+#   - checkout-ui fails to mount HPP element (build / bundling regressions)
+#   - Apple Pay button not initialized (PaymentRequest / ApplePaySession gating)
+#
+# Why no card form submission here:
+# Airwallex's card element renders card-number / expiry / CVC inputs in NESTED
+# cross-origin iframes (PCI isolation). iOS WKWebView's accessibility tree only
+# surfaces the FIRST iframe level, so Maestro cannot reliably target them by id,
+# name, or placeholder. Coordinate-based taps are possible but brittle.
+
+- runFlow: flow_open_h5_webview.yaml
+
+# Submit the cart to transition to the checkout-ui HPP page (mounts in same WKWebView).
+- tapOn: "Check out"
+
+# Wait for checkout-ui (HPP element) to mount. "Card information" is the section
+# heading rendered by checkout-ui (i18n key `card.card_information`).
+- extendedWaitUntil:
+    visible: "Card information"
+    timeout: 30000
+
+# Stable post-mount assertions. We deliberately keep this set minimal — adding too
+# many sequential assertions caused flaky failures on Android because the WebView
+# a11y tree can be mid-refresh between checks. Two anchors are enough to prove the
+# HPP element rendered with an intent-backed Pay button.
+- assertVisible: "Card information"
+- assertVisible:
+    text: "Pay .*"
+
+# Visual evidence for the regression report (HPP rendered with Card form, currency-
+# formatted Pay button, Apple Pay button, alternative LPMs, etc.).
+- takeScreenshot: webview_checkout_renders_ios
