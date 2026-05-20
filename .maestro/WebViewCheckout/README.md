@@ -42,12 +42,9 @@ xcrun simctl boot "iPhone 15" 2>/dev/null || true
 maestro test .maestro/WebViewCheckout/test_webview_checkout_renders.yaml
 ```
 
-> **Note:** the iOS half of this suite was authored alongside the Android half and
-> validated for syntax (`maestro check-syntax`), but the actual run-on-simulator pass
-> happened on Android only during initial bring-up. The next step is to install the
-> iOS sample app to a simulator and confirm the same green result there — selectors
-> are mirrored from the Android suite to use anchors that exist in the same
-> checkout-ui markup, so we expect parity.
+> **Status:** verified passing on `iPhone 16 / iOS 18.6` simulator with Xcode 16.4
+> (May 2026). 9-step flow finishes in ~70s end-to-end, including the Apple Pay
+> tap-level smoke. See JIRA ACE-597 for the run screenshot.
 
 ## iOS-specific differences vs Android
 
@@ -70,8 +67,69 @@ those inner inputs by id, name, or placeholder. Coordinate taps work for a singl
 device but break under any layout change. See Android README for the long-form
 explanation and the three options for unblocking full card-flow automation.
 
+## Apple Pay sheet coverage
+
+The P0 test asserts the Apple Pay button is **rendered + tappable + the
+checkout-ui click handler runs without crashing WKWebView**. It does NOT
+assert that the native `PKPaymentAuthorizationViewController` (Apple Pay
+sheet) actually appears.
+
+### Why the default sim build can't show the sheet
+
+We tried during bring-up. The sequence verified on `iPhone 16 / iOS 18.6`:
+
+1. `PaymentCoordinator::canMakePayments() -> 1` ✅ — WebKit confirms Apple
+   Pay capability is on, JS gate passes.
+2. checkout-ui calls `new PaymentRequest({ supportedNetworks: ["visa",...],
+   merchantIdentifier: "merchant.demo.com.airwallex.paymentacceptance" })`.
+3. PassKit refuses to present the sheet with
+   `Error Domain=PKPassKitErrorDomain Code=4 "No entitlement for merchant
+   identifier: (null)"`.
+
+The root cause is that we built `Examples.app` with code signing disabled
+(`CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""`), which strips
+the `com.apple.developer.in-app-payments` entitlement from the binary.
+Re-signing ad-hoc with `codesign -s - --entitlements
+Examples.entitlements` puts the entitlement back, but iOS 18 Simulator's
+AMFI rejects the launch (POSIX error 153) because `in-app-payments` is a
+**restricted entitlement** that must be paired with an Apple Developer
+provisioning profile bound to a real team that owns the listed merchant
+IDs — and we don't have such a profile checked in.
+
+### How to extend the test once a provisioned build exists
+
+1. Sign `Examples.app` with the Airwallex team's provisioning profile that
+   includes `merchant.demo.com.airwallex.paymentacceptance` (or any of the
+   four merchant IDs already declared in `Examples.entitlements`).
+2. Install to a simulator with a sandbox PassKit card added via
+   `xcrun simctl spawn booted defaults write
+   com.apple.PassKit.PaymentPassMaintenance LimitedNetworkInterval -int 0`
+   followed by adding a test card through Settings → Wallet & Apple Pay.
+3. Append after the Apple Pay tap step in
+   `test_webview_checkout_renders.yaml`:
+
+   ```yaml
+   - tapOn: "Apple Pay"
+   - extendedWaitUntil:
+       visible: "Pay with Touch ID"   # PKPaymentAuthorizationViewController title
+       timeout: 10000
+   - takeScreenshot: apay_sheet_visible
+   - tapOn: "Cancel"                  # Dismiss without committing
+   ```
+
+### Why we left this out of the merged regression
+
+The provisioning profile + test card setup requires Apple Developer team
+access we don't currently provision on CI runners, and the failure mode
+that "sheet doesn't appear" would catch (PaymentRequest bridge broken in
+WKWebView) is already caught at the tap level — if the bridge were
+broken, the click handler would throw and our
+`assertVisible: "Select payment method"` post-condition would fail.
+
+When PA provisions an Apple Developer team for CI, this becomes a
+one-PR follow-up.
+
 ## Future work / not blocking ACE-597
 
-- Run on a booted iPhone 15 simulator in CI (`manual_first` per ticket scope).
-- Add an Apple Pay sheet smoke test that injects a test wallet via
-  `PKPaymentRequest.fake(simulator: true)`.
+- Run on a booted iPhone 16 simulator in CI (`manual_first` per ticket scope).
+- Apple Pay sheet appearance assertion (see above — requires team provisioning).
