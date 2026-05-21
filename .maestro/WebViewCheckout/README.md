@@ -18,9 +18,10 @@ behaviour to the FE Playwright suite, which already runs those scenarios under
 ## Files
 
 ```
-flow_open_h5_webview.yaml          # reusable: cold-launch sample app → H5 demo → /shopping-cart
-test_webview_checkout_renders.yaml # P0: assert checkout-ui mounts + Pay button shows
-README.md                          # this file
+flow_open_h5_webview.yaml             # reusable: cold-launch sample app → H5 demo → /shopping-cart
+test_webview_checkout_renders.yaml    # P0: assert checkout-ui mounts + Pay button shows
+test_webview_card_3ds_success.yaml    # P1: full card flow incl. 3DS challenge (test card 4012000300000088)
+README.md                             # this file
 ```
 
 ## Run
@@ -39,12 +40,22 @@ README.md                          # this file
 export PATH="$HOME/.maestro/bin:$PATH"
 xcrun simctl boot "iPhone 15" 2>/dev/null || true
 
+# P0: WebView mount + Pay button
 maestro test .maestro/WebViewCheckout/test_webview_checkout_renders.yaml
+
+# P1: Full card flow incl. 3DS challenge (test card 4012000300000088, OTP 1234)
+maestro --device "$(xcrun simctl list devices booted -j | python3 -c 'import json,sys; print(next(iter(json.load(sys.stdin)["devices"].values()))[0]["udid"])')" test .maestro/WebViewCheckout/test_webview_card_3ds_success.yaml
 ```
 
 > **Status:** verified passing on `iPhone 16 / iOS 18.6` simulator with Xcode 16.4
-> (May 2026). 9-step flow finishes in ~70s end-to-end, including the Apple Pay
-> tap-level smoke. See JIRA ACE-597 for the run screenshot.
+> (May 2026).
+>
+> | Test | Time | Stability |
+> |---|---|---|
+> | `test_webview_checkout_renders.yaml` | ~70s | 1/1 green (incl. Apple Pay tap-level smoke) |
+> | `test_webview_card_3ds_success.yaml` | ~69s | 2/2 green (test card `4012000300000088` Y-Y-SUCCESS, OTP `1234`) |
+>
+> See JIRA ACE-597 for the run screenshots.
 
 ## iOS-specific differences vs Android
 
@@ -58,14 +69,34 @@ maestro test .maestro/WebViewCheckout/test_webview_checkout_renders.yaml
 | Digital wallet button visibility | Google Pay reliably in a11y tree | Apple Pay reliably in a11y tree |
 | Pay button label | `"Pay 100.00 CNY"` | same (checkout-ui i18n) |
 
-## Iframe limitation
+## Iframe handling — iOS works, Android needs an adb workaround
 
-Same as Android: Airwallex's card element renders card-number / expiry / CVC in
-nested cross-origin iframes (`checkout.airwallex.com`). iOS `WKWebView`'s
-accessibility tree only surfaces the first iframe level, so Maestro cannot reach
-those inner inputs by id, name, or placeholder. Coordinate taps work for a single
-device but break under any layout change. See Android README for the long-form
-explanation and the three options for unblocking full card-flow automation.
+Airwallex's card element renders card-number / expiry / CVC in nested
+cross-origin iframes (`checkout.airwallex.com`). The two platforms behave
+differently:
+
+| | iOS `WKWebView` | Android `WebView` |
+|---|---|---|
+| Inner iframe inputs surfaced in a11y tree? | ✅ Yes (iOS 18+) | ✅ Yes |
+| Maestro `tapOn { label: "Credit or debit card number" }` focuses PAN? | ✅ Yes | ⚠️ no native label, must use `point:` |
+| Maestro `inputText: "401200..."` updates React state? | ✅ Yes | ❌ DOM updates but React `onChange` never fires |
+
+That's why **iOS can be fully driven by Maestro**
+(`test_webview_card_3ds_success.yaml`) while **Android drops to raw
+`adb shell input` events** for everything iframe-internal — see the
+[Android README](../../../airwallex-payment-android/.maestro/WebViewCheckout/README.md#iframe-limitation--the-adb-shell-input-workaround)
+for the workaround's full design.
+
+iOS-specific subtleties this test handles:
+
+- The keyboard accessory bar's Done/Next buttons do NOT navigate iframe focus
+  (sandboxed), so we use explicit coordinate taps between fields.
+- Tapping `Pay 100.00 CNY` while the keyboard is up only dismisses the keyboard;
+  a SECOND tap actually fires the click.
+- The 3DS Challenge iframe is hosted on Cardinal Commerce (different origin
+  from `checkout.airwallex.com`), so its text content is NOT exposed via
+  WKWebView a11y. We use coordinate taps + `notVisible: "Cancel authentication"`
+  as the "challenge finished" signal.
 
 ## Apple Pay sheet coverage
 
@@ -133,3 +164,5 @@ one-PR follow-up.
 
 - Run on a booted iPhone 16 simulator in CI (`manual_first` per ticket scope).
 - Apple Pay sheet appearance assertion (see above — requires team provisioning).
+- Card-save + consent-reuse extension of `test_webview_card_3ds_success.yaml`
+  (one extra render assertion + a second Pay using the saved card row).
