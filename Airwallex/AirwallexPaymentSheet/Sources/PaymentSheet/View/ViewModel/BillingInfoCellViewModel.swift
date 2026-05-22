@@ -49,6 +49,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
     
     init(itemIdentifier: String,
          prefilledAddress: AWXAddress?,
+         defaultCountryCode: String? = nil,
          reusePrefilledAddress: Bool = true,
          countrySelectionHandler: @escaping () -> Void,
          toggleReuseSelection: @escaping () -> Void,
@@ -57,6 +58,8 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         var country: AWXCountry?
         if let countryCode = prefilledAddress?.countryCode {
             country = AWXCountry(code: countryCode)
+        } else if let defaultCountryCode {
+            country = AWXCountry(code: defaultCountryCode)
         }
         
         canReusePrefilledAddress = prefilledAddress?.isComplete ?? false
