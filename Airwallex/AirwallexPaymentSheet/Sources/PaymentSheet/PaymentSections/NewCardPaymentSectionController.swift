@@ -487,6 +487,7 @@ private extension NewCardPaymentSectionController {
         BillingInfoCellViewModel(
             itemIdentifier: .billingFieldAddress,
             prefilledAddress: session.billing?.address,
+            defaultCountryCode: session.countryCode,
             reusePrefilledAddress: reuseShippingAddress,
             countrySelectionHandler: { [weak self] in
                 self?.triggerCountrySelection()
@@ -587,6 +588,8 @@ private extension NewCardPaymentSectionController {
             var country: AWXCountry?
             if let countryCode = session.billing?.address?.countryCode {
                 country = AWXCountry(code: countryCode)
+            } else {
+                country = AWXCountry(code: session.countryCode)
             }
             viewModelForCountryCode = CountrySelectionCellViewModel(
                 country: country,
