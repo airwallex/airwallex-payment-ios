@@ -6,10 +6,10 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
+import AirwallexCore
+@testable import AirwallexPaymentSheet
 import UIKit
 import XCTest
-@testable import AirwallexPaymentSheet
-import AirwallexCore
 
 class BillingInfoCellViewModelTests: XCTestCase {
     
@@ -33,7 +33,7 @@ class BillingInfoCellViewModelTests: XCTestCase {
             reusePrefilledAddress: true,
             countrySelectionHandler: {},
             toggleReuseSelection: {},
-            cellReconfigureHandler: {_,_ in}
+            cellReconfigureHandler: { _, _ in }
         )
         XCTAssertEqual(viewModel.itemIdentifier, mockIdentifier)
         XCTAssertEqual(viewModel.canReusePrefilledAddress, true)
@@ -51,7 +51,7 @@ class BillingInfoCellViewModelTests: XCTestCase {
             reusePrefilledAddress: false,
             countrySelectionHandler: {},
             toggleReuseSelection: {},
-            cellReconfigureHandler: {_,_ in}
+            cellReconfigureHandler: { _, _ in }
         )
         XCTAssertEqual(viewModel.itemIdentifier, mockIdentifier)
         XCTAssertEqual(viewModel.canReusePrefilledAddress, true)
@@ -71,7 +71,7 @@ class BillingInfoCellViewModelTests: XCTestCase {
             reusePrefilledAddress: true,
             countrySelectionHandler: {},
             toggleReuseSelection: {},
-            cellReconfigureHandler: {_,_ in}
+            cellReconfigureHandler: { _, _ in }
         )
         XCTAssertEqual(viewModel.itemIdentifier, mockIdentifier)
         XCTAssertEqual(viewModel.canReusePrefilledAddress, false)
@@ -89,7 +89,7 @@ class BillingInfoCellViewModelTests: XCTestCase {
             reusePrefilledAddress: false,
             countrySelectionHandler: {},
             toggleReuseSelection: {},
-            cellReconfigureHandler: {_,_ in}
+            cellReconfigureHandler: { _, _ in }
         )
         XCTAssertEqual(viewModel.itemIdentifier, mockIdentifier)
         XCTAssertEqual(viewModel.canReusePrefilledAddress, false)
@@ -102,6 +102,48 @@ class BillingInfoCellViewModelTests: XCTestCase {
         XCTAssertNil(viewModel.errorHintForBillingFields)
     }
     
+    func testInit_WithDefaultCountryCode() {
+        let viewModel = BillingInfoCellViewModel(
+            itemIdentifier: mockIdentifier,
+            prefilledAddress: nil,
+            defaultCountryCode: "US",
+            reusePrefilledAddress: false,
+            countrySelectionHandler: {},
+            toggleReuseSelection: {},
+            cellReconfigureHandler: { _, _ in }
+        )
+        XCTAssertEqual(viewModel.itemIdentifier, mockIdentifier)
+        XCTAssertEqual(viewModel.canReusePrefilledAddress, false)
+        XCTAssertEqual(viewModel.shouldReusePrefilledAddress, false)
+        XCTAssertEqual(viewModel.countryConfigurer.country?.countryCode, "US")
+        XCTAssertNil(viewModel.stateConfigurer.text)
+        XCTAssertNil(viewModel.cityConfigurer.text)
+        XCTAssertNil(viewModel.streetConfigurer.text)
+        XCTAssertNil(viewModel.zipConfigurer.text)
+        XCTAssertNil(viewModel.errorHintForBillingFields)
+    }
+
+    func testInit_DefaultCountryCode_OverriddenByAddress() {
+        let viewModel = BillingInfoCellViewModel(
+            itemIdentifier: mockIdentifier,
+            prefilledAddress: mockAddress,
+            defaultCountryCode: "US",
+            reusePrefilledAddress: true,
+            countrySelectionHandler: {},
+            toggleReuseSelection: {},
+            cellReconfigureHandler: { _, _ in }
+        )
+        XCTAssertEqual(viewModel.itemIdentifier, mockIdentifier)
+        XCTAssertEqual(viewModel.canReusePrefilledAddress, true)
+        XCTAssertEqual(viewModel.shouldReusePrefilledAddress, true)
+        XCTAssertEqual(viewModel.countryConfigurer.country?.countryCode, "AU")
+        XCTAssertEqual(viewModel.stateConfigurer.text, mockAddress.state)
+        XCTAssertEqual(viewModel.cityConfigurer.text, mockAddress.city)
+        XCTAssertEqual(viewModel.streetConfigurer.text, mockAddress.street)
+        XCTAssertEqual(viewModel.zipConfigurer.text, mockAddress.postcode)
+        XCTAssertNil(viewModel.errorHintForBillingFields)
+    }
+
     func testInit_IncompleteAddress() {
         mockAddress.countryCode = nil
         var viewModel = BillingInfoCellViewModel(
@@ -110,7 +152,7 @@ class BillingInfoCellViewModelTests: XCTestCase {
             reusePrefilledAddress: true,
             countrySelectionHandler: {},
             toggleReuseSelection: {},
-            cellReconfigureHandler: {_,_ in}
+            cellReconfigureHandler: { _, _ in }
         )
         XCTAssertEqual(viewModel.itemIdentifier, mockIdentifier)
         XCTAssertEqual(viewModel.canReusePrefilledAddress, false)
@@ -128,7 +170,7 @@ class BillingInfoCellViewModelTests: XCTestCase {
             reusePrefilledAddress: false,
             countrySelectionHandler: {},
             toggleReuseSelection: {},
-            cellReconfigureHandler: {_,_ in}
+            cellReconfigureHandler: { _, _ in }
         )
         XCTAssertEqual(viewModel.itemIdentifier, mockIdentifier)
         XCTAssertEqual(viewModel.canReusePrefilledAddress, false)
@@ -148,7 +190,7 @@ class BillingInfoCellViewModelTests: XCTestCase {
             reusePrefilledAddress: true,
             countrySelectionHandler: {},
             toggleReuseSelection: {},
-            cellReconfigureHandler: {_,_ in}
+            cellReconfigureHandler: { _, _ in }
         )
         
         let address = viewModel.billingAddressFromCollectedInfo()
@@ -168,7 +210,7 @@ class BillingInfoCellViewModelTests: XCTestCase {
             reusePrefilledAddress: true,
             countrySelectionHandler: {},
             toggleReuseSelection: {},
-            cellReconfigureHandler: {_,_ in}
+            cellReconfigureHandler: { _, _ in }
         )
         viewModel.updateValidStatusForCheckout()
         XCTAssertFalse(viewModel.countryConfigurer.isValid)
@@ -200,7 +242,7 @@ class BillingInfoCellViewModelTests: XCTestCase {
             reusePrefilledAddress: true,
             countrySelectionHandler: {},
             toggleReuseSelection: {},
-            cellReconfigureHandler: {_,_ in}
+            cellReconfigureHandler: { _, _ in }
         )
         XCTAssertNoThrow(try viewModel.validate())
         
