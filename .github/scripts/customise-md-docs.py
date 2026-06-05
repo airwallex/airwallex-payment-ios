@@ -433,22 +433,92 @@ def enrich_body(body: str, doc: dict) -> str:
     return body
 
 
+def parse_metadata_comment(metadata: str) -> dict:
+    """Parse the JSON payload inside the leading <!-- ... --> comment."""
+    if not metadata:
+        return {}
+
+    inner = metadata.strip()
+    if inner.startswith("<!--"):
+        inner = inner[len("<!--") :]
+    if inner.endswith("-->"):
+        inner = inner[: -len("-->")]
+
+    try:
+        return json.loads(inner.strip())
+    except ValueError:
+        return {}
+
+
+def format_availability(entries: list | None) -> str:
+    """Convert DocC availability entries to a compact human/agent-readable string.
+
+    Examples:
+      "iOS: 2.0.0 -"          -> "iOS 2.0.0+"
+      "iOS: 2.0.0 - 5.0.0"    -> "iOS 2.0.0–5.0.0"
+    """
+    parts: list[str] = []
+    for entry in entries or []:
+        if ":" not in entry:
+            continue
+        platform, _, versions = entry.partition(":")
+        platform = platform.strip()
+        bounds = [segment.strip() for segment in versions.split("-")]
+        introduced = bounds[0] if bounds else ""
+        deprecated = bounds[1] if len(bounds) > 1 else ""
+
+        if introduced and deprecated:
+            parts.append(f"{platform} {introduced}–{deprecated}")
+        elif introduced:
+            parts.append(f"{platform} {introduced}+")
+        else:
+            parts.append(platform)
+    return ", ".join(parts)
+
+
+def metadata_summary_line(meta: dict) -> str:
+    """Build a one-line visible summary from parsed metadata (role + availability)."""
+    if not meta:
+        return ""
+
+    segments: list[str] = []
+    role = meta.get("role") or (meta.get("symbol") or {}).get("kind")
+    if role:
+        segments.append(f"**{role}**")
+
+    availability = format_availability(meta.get("availability"))
+    if availability:
+        segments.append(availability)
+
+    return " · ".join(segments)
+
+
 def enrich_markdown_file(md_path: Path, json_path: Path) -> bool:
-    if not json_path.is_file():
-        return False
-
-    with json_path.open(encoding="utf-8") as handle:
-        doc = json.load(handle)
-
     original = md_path.read_text(encoding="utf-8")
     metadata, body = split_markdown(original)
-    enriched_body = enrich_body(body, doc)
+    new_body = body
 
-    if enriched_body == body:
+    # Merge abstracts, deprecation notes, and topic sections from sibling JSON.
+    if json_path.is_file():
+        try:
+            with json_path.open(encoding="utf-8") as handle:
+                doc = json.load(handle)
+        except ValueError:
+            doc = {}
+        if doc:
+            new_body = enrich_body(new_body, doc)
+
+    # Surface role + availability from the leading comment as a visible line so it
+    # survives markdown rendering (HTML comments are stripped) and is read by agents.
+    summary = metadata_summary_line(parse_metadata_comment(metadata))
+    if summary and summary not in new_body:
+        new_body = insert_after_title(new_body, summary)
+
+    if new_body == body:
         return False
 
     md_path.write_text(
-        (metadata + "\n\n" if metadata else "") + enriched_body,
+        (metadata + "\n\n" if metadata else "") + new_body,
         encoding="utf-8",
     )
     return True
