@@ -66,5 +66,5 @@ jobs:
             echo "No markdown changes to commit"
             exit 0
           fi
-          git commit -m "Deploy to md-doc from @ ${{ github.repository }}@${{ github.ref_name }}."
+          git commit -m "Deploy to md-doc from @ ${GITHUB_SHA:0:7}."
           git push origin md-doc
