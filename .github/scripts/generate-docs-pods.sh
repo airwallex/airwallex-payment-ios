@@ -30,18 +30,19 @@ fi
 echo "Building documentation for version: $VERSION"
 
 docc_supports_markdown_output() {
-    if xcrun docc convert --help 2>&1 | grep -q "enable-experimental-markdown-output"; then
-        return 0
-    fi
-    # docbuild accepts OTHER_DOCC_FLAGS on Xcode 16+ even when `docc convert --help` omits the flag
-    local xcode_major
-    xcode_major=$(xcodebuild -version 2>/dev/null | sed -n '1s/Xcode //p' | cut -d. -f1)
-    [ -n "$xcode_major" ] && [ "$xcode_major" -ge 16 ]
+    xcrun docc convert --help 2>&1 | grep -q "enable-experimental-markdown-output"
 }
 
 DOCC_FLAGS=""
-if [ "${REQUIRE_MARKDOWN_DOCS:-}" = "true" ] || docc_supports_markdown_output; then
+if docc_supports_markdown_output; then
     DOCC_FLAGS="--enable-experimental-markdown-output --enable-experimental-markdown-output-manifest"
+fi
+
+if [ "${REQUIRE_MARKDOWN_DOCS:-}" = "true" ] && [ -z "$DOCC_FLAGS" ]; then
+    echo "✗ Error: DocC markdown output is not available in this Xcode version"
+    echo "  Requires Xcode 26.4+ (see: xcrun docc convert --help | grep markdown)"
+    echo "  For CI, use runs-on: macos-26 and xcode-version: '26.4' or newer in deploy-md-docs.yml"
+    exit 1
 fi
 
 # Prepare 

@@ -10,14 +10,15 @@ permissions:
 
 jobs:
   generate-md-docs:
-    runs-on: macos-15
+    # DocC --enable-experimental-markdown-output requires Xcode 26.4+ (not available in 16.4)
+    runs-on: macos-26
     steps:
       - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744  # 3.6.0
 
       - name: Select latest Xcode
         uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd #v1.6.0
         with:
-          xcode-version: 16.4
+          xcode-version: '26.4'
 
       - name: Install CocoaPods dependencies
         run: pod install
