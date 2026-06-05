@@ -49,6 +49,7 @@ if [ "$MARKDOWN_COUNT" -eq 0 ]; then
 fi
 
 "$SCRIPT_DIR/enrich-markdown-from-doccarchive.py" "$ARCHIVE" "$OUTPUT_DIR"
+"$SCRIPT_DIR/sanitize-markdown-paths.py" "$OUTPUT_DIR"
 
 # Generate a package-list index similar to Dokka for downstream tooling.
 PACKAGE_LIST="$OUTPUT_DIR/package-list"
