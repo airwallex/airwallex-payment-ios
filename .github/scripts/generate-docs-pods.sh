@@ -29,9 +29,15 @@ fi
 
 echo "Building documentation for version: $VERSION"
 
+DOCC_FLAGS=""
+if xcrun docc convert --help 2>&1 | grep -q "enable-experimental-markdown-output"; then
+    DOCC_FLAGS="--enable-experimental-markdown-output --enable-experimental-markdown-output-manifest"
+fi
+
 # Prepare 
 rm -rf DerivedData/*
 rm -rf docs/*
+rm -rf md-docs
 mkdir -p docs
 
 # Check if Airwallex.docc has been added as compile source to Pods project
@@ -63,7 +69,8 @@ xcodebuild docbuild \
     -scheme Airwallex \
     -destination "generic/platform=iOS" \
     -derivedDataPath DerivedData \
-    -configuration Release
+    -configuration Release \
+    OTHER_DOCC_FLAGS="$DOCC_FLAGS"
 
 # Move the new DocC archive to the its final place
 mv "DerivedData/Build/Products/Release-iphoneos/Airwallex/Airwallex.doccarchive" "docs/Airwallex.doccarchive"
@@ -83,13 +90,19 @@ cat > docs/redirect/index.html << EOF
 </head>
 EOF
 
+if [ -n "$DOCC_FLAGS" ]; then
+    "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/extract-markdown-from-doccarchive.sh" docs/Airwallex.doccarchive md-docs
+fi
+
 echo "Documentation generated in ./docs/html"
 echo "Redirect index.html created in ./docs/redirect/"
 
 # Commit and push to reference-doc branch
-echo "Committing and pushing documentation changes..."
-git add docs/
-git commit -m "doc: $VERSION"
-git push origin reference-doc
+if [ "${CI:-}" != "true" ]; then
+    echo "Committing and pushing documentation changes..."
+    git add docs/
+    git commit -m "doc: $VERSION"
+    git push origin reference-doc
 
-echo "✓ Documentation committed and pushed to reference-doc branch"
+    echo "✓ Documentation committed and pushed to reference-doc branch"
+fi
