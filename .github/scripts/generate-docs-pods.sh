@@ -29,8 +29,18 @@ fi
 
 echo "Building documentation for version: $VERSION"
 
+docc_supports_markdown_output() {
+    if xcrun docc convert --help 2>&1 | grep -q "enable-experimental-markdown-output"; then
+        return 0
+    fi
+    # docbuild accepts OTHER_DOCC_FLAGS on Xcode 16+ even when `docc convert --help` omits the flag
+    local xcode_major
+    xcode_major=$(xcodebuild -version 2>/dev/null | sed -n '1s/Xcode //p' | cut -d. -f1)
+    [ -n "$xcode_major" ] && [ "$xcode_major" -ge 16 ]
+}
+
 DOCC_FLAGS=""
-if xcrun docc convert --help 2>&1 | grep -q "enable-experimental-markdown-output"; then
+if [ "${REQUIRE_MARKDOWN_DOCS:-}" = "true" ] || docc_supports_markdown_output; then
     DOCC_FLAGS="--enable-experimental-markdown-output --enable-experimental-markdown-output-manifest"
 fi
 
@@ -92,6 +102,16 @@ EOF
 
 if [ -n "$DOCC_FLAGS" ]; then
     "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/extract-markdown-from-doccarchive.sh" docs/Airwallex.doccarchive md-docs
+elif [ "${REQUIRE_MARKDOWN_DOCS:-}" = "true" ]; then
+    echo "✗ Error: Markdown output is required but DocC markdown flags are not available"
+    exit 1
+fi
+
+if [ "${REQUIRE_MARKDOWN_DOCS:-}" = "true" ]; then
+    if [ -z "$(find md-docs -name '*.md' -print -quit 2>/dev/null)" ]; then
+        echo "✗ Error: REQUIRE_MARKDOWN_DOCS is set but no .md files were produced in md-docs/"
+        exit 1
+    fi
 fi
 
 echo "Documentation generated in ./docs/html"

@@ -25,6 +25,7 @@ jobs:
       - name: Generate documentation
         env:
           CI: true
+          REQUIRE_MARKDOWN_DOCS: true
         run: |
           if [ -n "${{ github.event.release.tag_name }}" ]; then
             VERSION="${{ github.event.release.tag_name }}"
@@ -39,6 +40,7 @@ jobs:
           name: markdown-docs
           path: md-docs/
           retention-days: 1
+          if-no-files-found: error
 
   update-md-doc:
     needs: generate-md-docs
