@@ -329,6 +329,7 @@
 		D8D36F1A2E5C5CB0005618D4 /* InfoCollectorTextFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EC92E5C5CB0005618D4 /* InfoCollectorTextFieldViewModel.swift */; };
 		D8D36F1B2E5C5CB0005618D4 /* BankSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36ECB2E5C5CB0005618D4 /* BankSelectionViewModel.swift */; };
 		D8D36F1C2E5C5CB0005618D4 /* BillingInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36ECC2E5C5CB0005618D4 /* BillingInfoCellViewModel.swift */; };
+		A1FA77400100000000000002 /* AddressFieldLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FA77400100000000000001 /* AddressFieldLabel.swift */; };
 		D8D36F1D2E5C5CB0005618D4 /* CardInfoCollectorCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36ECD2E5C5CB0005618D4 /* CardInfoCollectorCellViewModel.swift */; };
 		D8D36F1E2E5C5CB0005618D4 /* CardNumberTextFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36ECE2E5C5CB0005618D4 /* CardNumberTextFieldViewModel.swift */; };
 		D8D36F1F2E5C5CB0005618D4 /* CountrySelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36ECF2E5C5CB0005618D4 /* CountrySelectionViewModel.swift */; };
@@ -747,6 +748,7 @@
 		D8D36EC92E5C5CB0005618D4 /* InfoCollectorTextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCollectorTextFieldViewModel.swift; sourceTree = "<group>"; };
 		D8D36ECB2E5C5CB0005618D4 /* BankSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankSelectionViewModel.swift; sourceTree = "<group>"; };
 		D8D36ECC2E5C5CB0005618D4 /* BillingInfoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillingInfoCellViewModel.swift; sourceTree = "<group>"; };
+		A1FA77400100000000000001 /* AddressFieldLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressFieldLabel.swift; sourceTree = "<group>"; };
 		D8D36ECD2E5C5CB0005618D4 /* CardInfoCollectorCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardInfoCollectorCellViewModel.swift; sourceTree = "<group>"; };
 		D8D36ECE2E5C5CB0005618D4 /* CardNumberTextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNumberTextFieldViewModel.swift; sourceTree = "<group>"; };
 		D8D36ECF2E5C5CB0005618D4 /* CountrySelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountrySelectionViewModel.swift; sourceTree = "<group>"; };
@@ -1573,6 +1575,7 @@
 		D8D36ED12E5C5CB0005618D4 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				A1FA77400100000000000001 /* AddressFieldLabel.swift */,
 				D8D36ECB2E5C5CB0005618D4 /* BankSelectionViewModel.swift */,
 				D8D36ECC2E5C5CB0005618D4 /* BillingInfoCellViewModel.swift */,
 				D8D36ECD2E5C5CB0005618D4 /* CardInfoCollectorCellViewModel.swift */,
@@ -2356,6 +2359,7 @@
 				D8D36F1A2E5C5CB0005618D4 /* InfoCollectorTextFieldViewModel.swift in Sources */,
 				D8D36F1B2E5C5CB0005618D4 /* BankSelectionViewModel.swift in Sources */,
 				D8D36F1C2E5C5CB0005618D4 /* BillingInfoCellViewModel.swift in Sources */,
+				A1FA77400100000000000002 /* AddressFieldLabel.swift in Sources */,
 				D8D36F1D2E5C5CB0005618D4 /* CardInfoCollectorCellViewModel.swift in Sources */,
 				D83449222F58446D0087BF54 /* BottomSheetInteractiveDismissTransition.swift in Sources */,
 				D8D36F1E2E5C5CB0005618D4 /* CardNumberTextFieldViewModel.swift in Sources */,

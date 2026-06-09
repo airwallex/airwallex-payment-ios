@@ -85,7 +85,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         stateConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .state,
             text: prefilledAddress?.state,
-            placeholder: NSLocalizedString("State", bundle: .paymentSheet, comment: "billing state placeholder"),
+            placeholder: AddressFieldLabel.state(for: country?.countryCode),
             isEnabled: !reusePrefilledAddress,
             clearButtonMode: .whileEditing,
             returnKeyType: .next,
@@ -94,7 +94,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         cityConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .city,
             text: prefilledAddress?.city,
-            placeholder: NSLocalizedString("City", bundle: .paymentSheet, comment: "billing city placeholder"),
+            placeholder: AddressFieldLabel.city(for: country?.countryCode),
             isEnabled: !reusePrefilledAddress,
             clearButtonMode: .whileEditing,
             returnKeyType: .next,
@@ -103,7 +103,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         zipConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .zipcode,
             text: prefilledAddress?.postcode,
-            placeholder: NSLocalizedString("Postal code", bundle: .paymentSheet, comment: "billing postal code placeholder"),
+            placeholder: AddressFieldLabel.postcode(for: country?.countryCode),
             isEnabled: !reusePrefilledAddress,
             clearButtonMode: .whileEditing,
             returnKeyType: .next,
@@ -144,6 +144,13 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         }
         set {
             countryConfigurer.country = newValue
+            let code = newValue?.countryCode
+            stateConfigurer.placeholder = AddressFieldLabel.state(for: code)
+            cityConfigurer.placeholder = AddressFieldLabel.city(for: code)
+            zipConfigurer.placeholder = AddressFieldLabel.postcode(for: code)
+            stateConfigurer.reconfigureHandler(stateConfigurer, false)
+            cityConfigurer.reconfigureHandler(cityConfigurer, false)
+            zipConfigurer.reconfigureHandler(zipConfigurer, false)
         }
     }
 }
