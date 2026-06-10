@@ -1,13 +1,14 @@
 name: Deploy Docs
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - reference-doc
   workflow_dispatch:
   workflow_call:
 
 permissions:
   contents: write
-  pages: write
+  pages: write 
 
 jobs:
 
@@ -26,30 +27,21 @@ jobs:
       with:
         xcode-version: 16.4
 
-    - name: Install CocoaPods dependencies
-      run: pod install
-
     - name: Determine version to deploy
       id: deploy-version
       run: |
-        if [ -n "${{ github.event.release.tag_name }}" ]; then
-          VERSION="${{ github.event.release.tag_name }}"
-        else
-          VERSION=$(grep -E '^\s*s\.version\s*=' Airwallex.podspec | sed -E 's/.*"([^"]+)".*/\1/')
-        fi
-        echo "Using version: $VERSION"
+        # Extract version from docs/redirect/index.html
+        VERSION=$(grep -o '/airwallex-payment-ios/[^"]\+' docs/redirect/index.html | sed -E 's#.*/airwallex-payment-ios/([^/]+).*#\1#')
+        echo "Using version from docs/redirect/index.html: $VERSION"
         echo "version=$VERSION" >> $GITHUB_OUTPUT
-
-    - name: Generate documentation
-      run: ./.github/scripts/generate-docs-pods.sh "${{ steps.deploy-version.outputs.version }}"
-
+        
     - name: Deploy to current version 🚀
       uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e #v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./docs/html
         destination_dir: ./${{ steps.deploy-version.outputs.version }}
-
+        
     - name: Deploy to root 🚀
       uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e #v4
       with:
