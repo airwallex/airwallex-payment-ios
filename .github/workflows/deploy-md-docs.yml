@@ -25,7 +25,6 @@ jobs:
 
       - name: Generate documentation
         env:
-          CI: true
           REQUIRE_MARKDOWN_DOCS: true
         run: |
           if [ -n "${{ github.event.release.tag_name }}" ]; then

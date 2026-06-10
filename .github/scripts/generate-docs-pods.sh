@@ -34,15 +34,15 @@ docc_supports_markdown_output() {
 }
 
 DOCC_FLAGS=""
-if docc_supports_markdown_output; then
-    DOCC_FLAGS="--enable-experimental-markdown-output --enable-experimental-markdown-output-manifest"
-fi
-
-if [ "${REQUIRE_MARKDOWN_DOCS:-}" = "true" ] && [ -z "$DOCC_FLAGS" ]; then
-    echo "✗ Error: DocC markdown output is not available in this Xcode version"
-    echo "  Requires Xcode 26.4+ (see: xcrun docc convert --help | grep markdown)"
-    echo "  For CI, use runs-on: macos-26 and xcode-version: '26.4' or newer in deploy-md-docs.yml"
-    exit 1
+if [ "${REQUIRE_MARKDOWN_DOCS:-}" = "true" ]; then
+    if docc_supports_markdown_output; then
+        DOCC_FLAGS="--enable-experimental-markdown-output --enable-experimental-markdown-output-manifest"
+    else
+        echo "✗ Error: DocC markdown output is not available in this Xcode version"
+        echo "  Requires Xcode 26.4+ (see: xcrun docc convert --help | grep markdown)"
+        echo "  For CI, use runs-on: macos-26 and xcode-version: '26.4' or newer in deploy-md-docs.yml"
+        exit 1
+    fi
 fi
 
 # Prepare 
@@ -118,12 +118,12 @@ fi
 echo "Documentation generated in ./docs/html"
 echo "Redirect index.html created in ./docs/redirect/"
 
-# Commit and push to reference-doc branch
-if [ "${CI:-}" != "true" ]; then
-    echo "Committing and pushing documentation changes..."
-    git add docs/
-    git commit -m "doc: $VERSION"
-    git push origin reference-doc
+# # Commit and push to reference-doc branch
+# if [ "${CI:-}" != "true" ]; then
+#     echo "Committing and pushing documentation changes..."
+#     git add docs/
+#     git commit -m "doc: $VERSION"
+#     git push origin reference-doc
 
-    echo "✓ Documentation committed and pushed to reference-doc branch"
-fi
+#     echo "✓ Documentation committed and pushed to reference-doc branch"
+# fi
