@@ -1,0 +1,83 @@
+appId: com.airwallex.paymentacceptance
+---
+# Full card flow on iOS WKWebView — 4012000300000088 (Y-Y-SUCCESS):
+#   DDC + 3DS challenge SUCCESS (OTP = 1234)
+# 3DS challenge iframe is hosted on Cardinal Commerce (different origin
+# from checkout.airwallex.com), so its text content is NOT exposed via
+# iOS a11y. We use coordinate taps + screenshots to drive that step.
+- runFlow: /Users/shirly.chen/repos/airwallex-payment-ios/.maestro/WebViewCheckout/flow_open_h5_webview.yaml
+- tapOn: "Check out"
+- extendedWaitUntil:
+    visible: "Card information"
+    timeout: 30000
+
+- tapOn:
+    label: "Credit or debit card number"
+- inputText: "4012000300000088"
+
+- tapOn:
+    point: "31%, 49%"
+- inputText: "1155"
+
+- tapOn:
+    point: "69%, 49%"
+- inputText: "153"
+- takeScreenshot: ios_card_01_filled
+
+- tapOn:
+    point: "50%, 52%"
+- waitForAnimationToEnd:
+    timeout: 1500
+- tapOn:
+    point: "50%, 52%"
+- takeScreenshot: ios_card_02_pay_clicked
+
+# Wait for challenge modal to slide in + iframe to load.
+- extendedWaitUntil:
+    visible: "Cancel authentication"
+    timeout: 60000
+- waitForAnimationToEnd:
+    timeout: 8000
+- takeScreenshot: ios_card_03_challenge_loaded
+
+# Tap OTP input by coordinate (visually at ~50%, 62% on iPhone 16).
+- tapOn:
+    point: "50%, 62%"
+- waitForAnimationToEnd:
+    timeout: 1500
+- inputText: "1234"
+- takeScreenshot: ios_card_04_otp_typed
+
+# Submit button coords differ by keyboard state:
+#   keyboard UP   → (71%, 46%)
+#   keyboard DOWN → (82%, 81%)
+# Try both, with waits.
+- tapOn:
+    point: "71%, 46%"
+- waitForAnimationToEnd:
+    timeout: 2000
+- takeScreenshot: ios_card_05_submit_kbdUp
+
+- tapOn:
+    point: "82%, 81%"
+- waitForAnimationToEnd:
+    timeout: 2000
+- takeScreenshot: ios_card_06_submit_kbdDown
+
+- tapOn:
+    point: "82%, 81%"
+- takeScreenshot: ios_card_07_submit_final
+
+# Wait for challenge modal to disappear (= 3DS done).
+- extendedWaitUntil:
+    notVisible: "Cancel authentication"
+    timeout: 60000
+- takeScreenshot: ios_card_08_post_3ds
+
+# Native pop-back to H5DemoActivity success view with real payment intent.
+- extendedWaitUntil:
+    visible: "Thanks for your order!"
+    timeout: 30000
+- assertVisible: "Your payment is complete!"
+- assertVisible: "Continue shopping"
+- takeScreenshot: ios_card_09_SUCCESS
