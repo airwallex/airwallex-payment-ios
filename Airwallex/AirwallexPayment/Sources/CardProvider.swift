@@ -21,6 +21,7 @@ class CardProvider: PaymentProvider {
             try AWXCardProvider.validateMethodTypeAndSession(paymentMethodType: paymentMethod, session: session)
             return true
         } catch {
+            print(error)// wpdebug
             return false
         }
     }
