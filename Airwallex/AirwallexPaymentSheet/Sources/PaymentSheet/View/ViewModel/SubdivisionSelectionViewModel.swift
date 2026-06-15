@@ -17,9 +17,19 @@ class SubdivisionSelectionViewModel: InfoCollectorTextFieldViewModel, OptionSele
 
     var selection: SubdivisionOption? {
         didSet {
-            text = selection?.label
+            text = Self.displayText(for: selection)
             handleDidEndEditing(reconfigureStrategy: .always)
         }
+    }
+
+    /// Wraps the selected option's label with a Left-to-Right Isolate (U+2066) so the
+    /// underlying `UITextField` doesn't right-align bilingual sub_labels (e.g. AE's
+    /// "أبو ظبي — Abu Dhabi"). UITextField resolves `textAlignment = .natural` against the
+    /// bidi base direction (detected from the first strong char), while the matching
+    /// `UITableViewCell.textLabel` in the picker resolves it against the interface
+    /// direction — the LRI marker forces both to render with the same LTR-anchored layout.
+    private static func displayText(for selection: SubdivisionOption?) -> String? {
+        selection.map { "\u{2066}\($0.label)" }
     }
 
     var icon: UIImage? { nil }
@@ -48,7 +58,7 @@ class SubdivisionSelectionViewModel: InfoCollectorTextFieldViewModel, OptionSele
         super.init(
             fieldName: fieldName,
             textFieldType: .state,
-            text: selection?.label,
+            text: Self.displayText(for: selection),
             placeholder: placeholder,
             isRequired: true,
             isEnabled: isEnabled,

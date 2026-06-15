@@ -461,7 +461,7 @@ private extension NewCardPaymentSectionController {
     func triggerSubdivisionSelection() {
         guard let viewModel = viewModelForBillingAddress,
               let stateSpec = viewModel.currentFields.first(where: { $0.kind == .state }),
-              let options = stateSpec.options else {
+              let options = stateSpec.subdivision else {
             assert(false)
             return
         }

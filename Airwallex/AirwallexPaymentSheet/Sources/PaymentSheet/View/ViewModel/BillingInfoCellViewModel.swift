@@ -47,9 +47,6 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
     /// Address fields visible for the currently-selected country, in render order.
     private(set) var currentFields: [AddressFieldSpec] = []
 
-    /// Invoked when the set/order of visible address fields changes — the cell uses this to rebuild its layout.
-    var onAddressFieldsChanged: (() -> Void)?
-
     var errorHintForBillingFields: String? {
         activeConfigurers.first { !$0.isValid && $0.errorHint != nil }?.errorHint
     }
@@ -139,7 +136,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         address.countryCode = selectedCountry?.countryCode
         // Only emit fields the country's rule actually declares. Sending e.g. an empty
         // `postcode` for HK (which has no %Z in its `fmt`) or an empty `state` for GB would
-        // be both noisy and potentially rejected by the API.
+        // be both noisy.
         for spec in currentFields {
             switch spec.kind {
             case .street:
@@ -176,10 +173,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         set {
             countryConfigurer.country = newValue
             applyCountryRules(newValue?.countryCode, shouldClearFieldText: true)
-            onAddressFieldsChanged?()
-            for configurer in addressFieldConfigurers {
-                configurer.reconfigureHandler(configurer, false)
-            }
+            cellReconfigureHandler(itemIdentifier, true)
         }
     }
 
@@ -193,31 +187,10 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         // resurface if the user later switches back through a country that hides them. Mirrors
         // web's `clearAddressFields` (index.tsx:52-56).
         if shouldClearFieldText {
-            streetConfigurer.text = nil
-            stateTextConfigurer.text = nil
-            cityConfigurer.text = nil
-            zipConfigurer.text = nil
-        }
-
-        // Switch state field between text-input and dropdown modes based on whether the rule has `sub_keys`.
-        let stateSpec = fields.first { $0.kind == .state }
-        if let options = stateSpec?.options {
-            // Pre-select the dropdown from the prefilled state string (via the same exact-
-            // match-against-value-or-label rule as web's `getMappedState`). Country changes
-            // don't pass an `initialStateValue`, so the dropdown resets to nil on switch.
-            let preselected = options.option(matching: initialStateValue)
-            stateDropdownConfigurer = SubdivisionSelectionViewModel(
-                options: options,
-                selection: preselected,
-                placeholder: stateSpec.map(label(for:)),
-                isEnabled: !shouldReusePrefilledAddress,
-                handleUserInteraction: subdivisionSelectionHandler,
-                reconfigureHandler: { [cellReconfigureHandler, itemIdentifier] _, refresh in
-                    cellReconfigureHandler(itemIdentifier, refresh)
-                }
-            )
-        } else {
-            stateDropdownConfigurer = nil
+            streetConfigurer.resetTextAndValidationStatus()
+            stateTextConfigurer.resetTextAndValidationStatus()
+            cityConfigurer.resetTextAndValidationStatus()
+            zipConfigurer.resetTextAndValidationStatus()
         }
 
         for spec in fields {
@@ -226,7 +199,23 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
             case .street:
                 streetConfigurer.placeholder = placeholder
             case .state:
-                if stateDropdownConfigurer == nil {
+                if let options = spec.subdivision {
+                    // Pre-select the dropdown from the prefilled state string (via the same exact-
+                    // match-against-value-or-label rule as web's `getMappedState`). Country changes
+                    // don't pass an `initialStateValue`, so the dropdown resets to nil on switch.
+                    let preselected = options.option(matching: initialStateValue)
+                    stateDropdownConfigurer = SubdivisionSelectionViewModel(
+                        options: options,
+                        selection: preselected,
+                        placeholder: placeholder,
+                        isEnabled: !shouldReusePrefilledAddress,
+                        handleUserInteraction: subdivisionSelectionHandler,
+                        reconfigureHandler: { [cellReconfigureHandler, itemIdentifier] _, refresh in
+                            cellReconfigureHandler(itemIdentifier, refresh)
+                        }
+                    )
+                } else {
+                    stateDropdownConfigurer = nil
                     stateTextConfigurer.placeholder = placeholder
                 }
             case .city:

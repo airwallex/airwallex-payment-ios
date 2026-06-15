@@ -327,7 +327,7 @@ class BillingInfoCellViewModelTests: XCTestCase {
         )
         XCTAssertNotNil(viewModel.stateDropdownConfigurer)
         XCTAssertTrue(viewModel.stateConfigurer === viewModel.stateDropdownConfigurer)
-        XCTAssertEqual(viewModel.currentFields.first { $0.kind == .state }?.options?.isEmpty, false)
+        XCTAssertEqual(viewModel.currentFields.first { $0.kind == .state }?.subdivision?.isEmpty, false)
     }
 
     func testStateConfigurer_TextModeWhenCountryHasStateButNoSubKeys() {
@@ -345,7 +345,7 @@ class BillingInfoCellViewModelTests: XCTestCase {
         XCTAssertNil(viewModel.stateDropdownConfigurer)
         XCTAssertTrue(viewModel.stateConfigurer === viewModel.stateTextConfigurer)
         XCTAssertEqual(viewModel.currentFields.first { $0.kind == .state }?.nameType, "island")
-        XCTAssertNil(viewModel.currentFields.first { $0.kind == .state }?.options)
+        XCTAssertNil(viewModel.currentFields.first { $0.kind == .state }?.subdivision)
     }
 
     func testStateConfigurer_TextModeFallbackWhenCountryHasNoStateField() {
@@ -389,7 +389,7 @@ class BillingInfoCellViewModelTests: XCTestCase {
 
     func testSelectedCountry_SwitchTextToDropdownMode() {
         // Start in text mode (SC) → switch to AU. A fresh dropdown VM should be built with the
-        // new country's options and stateConfigurer should resolve to it.
+        // new country's subdivision and stateConfigurer should resolve to it.
         let viewModel = BillingInfoCellViewModel(
             itemIdentifier: mockIdentifier,
             prefilledAddress: nil,
@@ -409,7 +409,7 @@ class BillingInfoCellViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.stateConfigurer === viewModel.stateDropdownConfigurer)
         // Country changes don't carry an initialStateValue, so the dropdown starts unselected.
         XCTAssertNil(viewModel.stateDropdownConfigurer?.selection)
-        // And the options reflect AU's sub_keys.
+        // And the subdivision reflect AU's sub_keys.
         let auOptions = viewModel.stateDropdownConfigurer?.options.map(\.value) ?? []
         XCTAssertTrue(auOptions.contains("NSW"))
         XCTAssertTrue(auOptions.contains("VIC"))

@@ -63,7 +63,7 @@ package struct AddressFieldSpec {
     package let nameType: String?
     /// Non-nil only when `kind == .state` and the country has a `sub_keys` list — renders the
     /// state field as a dropdown.
-    package let options: [SubdivisionOption]?
+    package let subdivision: [SubdivisionOption]?
     /// Non-nil only when `kind == .postcode` and the country has a `zip` regex — used to
     /// validate user input.
     package let regex: NSRegularExpression?
@@ -102,8 +102,8 @@ package final class AddressRuleProvider {
         let kinds = visibleKinds(in: rule?.fmt)
         if kinds.isEmpty {
             return [
-                AddressFieldSpec(kind: .street, width: .full, nameType: nil, options: nil, regex: nil),
-                AddressFieldSpec(kind: .city, width: .full, nameType: nil, options: nil, regex: nil),
+                AddressFieldSpec(kind: .street, width: .full, nameType: nil, subdivision: nil, regex: nil),
+                AddressFieldSpec(kind: .city, width: .full, nameType: nil, subdivision: nil, regex: nil),
             ]
         }
         let ordered = Self.layoutOrder.filter { kinds.contains($0) }
@@ -113,7 +113,7 @@ package final class AddressRuleProvider {
                 kind: kind,
                 width: width,
                 nameType: nameType(for: kind, rule: rule),
-                options: kind == .state ? subdivisionOptions(from: rule) : nil,
+                subdivision: kind == .state ? subdivisionOptions(from: rule) : nil,
                 regex: kind == .postcode ? compileZipRegex(rule?.zip) : nil
             )
         }
@@ -145,7 +145,7 @@ package final class AddressRuleProvider {
             guard let value, !value.trimmed.isEmpty else { return false }
             switch spec.kind {
             case .state:
-                if let options = spec.options, options.option(matching: value) == nil {
+                if let options = spec.subdivision, options.option(matching: value) == nil {
                     return false
                 }
             case .postcode:

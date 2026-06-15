@@ -80,8 +80,6 @@ class ApplePayProvider: PaymentProvider {
             try AWXApplePayProvider.validate(paymentMethodType: paymentMethod, session: session)
             return true
         } catch {
-            // wpdebug
-            print(error)
             return false
         }
     }

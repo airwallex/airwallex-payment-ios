@@ -140,9 +140,6 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         viewModel.updateFieldsLayeringForErrorStatus = { [weak self] in
             self?.setNeedsLayout()
         }
-        viewModel.onAddressFieldsChanged = { [weak self] in
-            self?.rebuildAddressFields()
-        }
         reuseButton.isHidden = !viewModel.canReusePrefilledAddress
         reuseButton.isSelected = viewModel.shouldReusePrefilledAddress
 
@@ -163,7 +160,7 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         return viewModel.currentFields.compactMap { spec -> UIResponder? in
             switch spec.kind {
             case .street: return streetTextField
-            case .state:  return spec.options != nil ? stateDropdownView : stateTextField
+            case .state:  return spec.subdivision != nil ? stateDropdownView : stateTextField
             case .city:   return cityTextField
             case .postcode: return zipCodeTextField
             }
@@ -286,7 +283,7 @@ private extension BillingInfoCell {
     func view(for spec: AddressFieldSpec) -> UIView {
         switch spec.kind {
         case .street: return streetTextField
-        case .state:  return spec.options != nil ? stateDropdownView : stateTextField
+        case .state:  return spec.subdivision != nil ? stateDropdownView : stateTextField
         case .city:   return cityTextField
         case .postcode: return zipCodeTextField
         }
@@ -303,7 +300,7 @@ private extension BillingInfoCell {
             case .street:
                 streetTextField.setup(viewModel.streetConfigurer)
             case .state:
-                if spec.options != nil, let dropdown = viewModel.stateDropdownConfigurer {
+                if spec.subdivision != nil, let dropdown = viewModel.stateDropdownConfigurer {
                     stateDropdownView.setup(dropdown)
                 } else {
                     stateTextField.setup(viewModel.stateConfigurer)
@@ -320,7 +317,7 @@ private extension BillingInfoCell {
             viewModel.currentFields.compactMap { spec in
                 switch spec.kind {
                 case .street:    return (streetTextField, viewModel.streetConfigurer)
-                case .state:     return spec.options != nil ? nil : (stateTextField, viewModel.stateConfigurer)
+                case .state:     return spec.subdivision != nil ? nil : (stateTextField, viewModel.stateConfigurer)
                 case .city:      return (cityTextField, viewModel.cityConfigurer)
                 case .postcode:  return (zipCodeTextField, viewModel.zipConfigurer)
                 }
