@@ -15,6 +15,10 @@ package struct AddressRule: Decodable {
     package let zip: String?
     package let subKeys: [String]?
     package let subLabels: [String]?
+    /// Latin transliterations of `subKeys`, when the keys themselves are in a non-Latin script
+    /// (CN, JP, KR, AE, EG, …). Used by `option(matching:)` to accept Latin-only input like
+    /// `"Abu Dhabi"` against an Arabic sub_key.
+    package let subLatinNames: [String]?
     package let stateNameType: String?
     package let localityNameType: String?
     package let zipNameType: String?
@@ -35,22 +39,31 @@ package enum AddressFieldWidth {
 package struct SubdivisionOption: Hashable {
     package let value: String
     package let label: String
+    /// Latin transliteration of `value`, if the rule provided one (`sub_latin_names`). Lets
+    /// `option(matching:)` accept Latin-only input for countries whose `sub_keys` are in a
+    /// non-Latin script (e.g. AE's `"Abu Dhabi"` matches the sub_key `"أبو ظبي"`).
+    package let latinName: String?
 
-    package init(value: String, label: String) {
+    package init(value: String, label: String, latinName: String? = nil) {
         self.value = value
         self.label = label
+        self.latinName = latinName
     }
 }
 
 package extension Array where Element == SubdivisionOption {
     /// Map a free-form state string (from a prefilled address or external API) to the matching
-    /// option, mirroring web's `getMappedState` in `util.ts`. Case-insensitive exact match
-    /// against the option's `value` (sub_key) or `label` (sub_label). Returns `nil` when no
-    /// option matches — i.e. the input doesn't correspond to any known subdivision for this
-    /// country, so it cannot pre-select the dropdown.
+    /// option. Goes beyond web's `getMappedState` by also matching against the Latin
+    /// transliteration (`sub_latin_names`) so that Latin-only input lands on countries with
+    /// non-Latin `sub_keys`. Case-insensitive exact match against the option's `value` (sub_key),
+    /// `label` (sub_label), or `latinName`. Returns `nil` when no option matches.
     func option(matching stateString: String?) -> SubdivisionOption? {
         guard let needle = stateString?.trimmed.lowercased(), !needle.isEmpty else { return nil }
-        return first { $0.value.lowercased() == needle || $0.label.lowercased() == needle }
+        return first {
+            $0.value.lowercased() == needle
+                || $0.label.lowercased() == needle
+                || $0.latinName?.lowercased() == needle
+        }
     }
 }
 
@@ -95,6 +108,12 @@ package final class AddressRuleProvider {
     package func rule(for countryCode: String?) -> AddressRule? {
         guard let code = countryCode?.uppercased(), !code.isEmpty else { return nil }
         return rules[code]
+    }
+
+    /// Every country code present in the bundled `address.json`. Useful for diagnostics and
+    /// for tests that need to walk the entire rule set.
+    package var allCountryCodes: [String] {
+        Array(rules.keys)
     }
 
     package func fields(for countryCode: String?) -> [AddressFieldSpec] {
@@ -194,8 +213,13 @@ package final class AddressRuleProvider {
     private func subdivisionOptions(from rule: AddressRule?) -> [SubdivisionOption]? {
         guard let keys = rule?.subKeys, !keys.isEmpty else { return nil }
         let labels = rule?.subLabels ?? []
+        let latinNames = rule?.subLatinNames ?? []
         return keys.enumerated().map { index, key in
-            SubdivisionOption(value: key, label: index < labels.count ? labels[index] : key)
+            SubdivisionOption(
+                value: key,
+                label: index < labels.count ? labels[index] : key,
+                latinName: index < latinNames.count ? latinNames[index] : nil
+            )
         }
     }
 
