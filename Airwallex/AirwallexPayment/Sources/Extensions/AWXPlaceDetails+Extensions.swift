@@ -18,15 +18,11 @@ public extension AWXPlaceDetails {
 }
 
 public extension AWXAddress {
+    /// True iff every field the country's address rule declares (`fmt`) is non-empty.
+    /// E.g. HK has no postcode in its rule, GB has no state, AE has only state — so the
+    /// legacy "every field non-empty" check would have rejected otherwise-valid prefilled
+    /// addresses. See `AddressRuleProvider.isComplete(_:)`.
     var isComplete: Bool {
-        guard let countryCode, !countryCode.trimmed.isEmpty,
-              countryCode.trimmed.isValidCountryCode,
-              let postcode, !postcode.trimmed.isEmpty,
-              let street, !street.trimmed.isEmpty,
-              let city, !city.trimmed.isEmpty,
-              let state, !state.trimmed.isEmpty else {
-            return false
-        }
-        return true
+        AddressRuleProvider().isValid(self)
     }
 }

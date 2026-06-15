@@ -45,6 +45,9 @@ class NewCardPaymentSectionController: NSObject, PaymentSectionController {
     private let switchToConsentPaymentAction: () -> Void
     private var shouldSaveCard = false
     private var shouldReuseShippingAddress: Bool
+    /// Shared address-rule provider for this section. Kept as a stored property so the JSON
+    /// is parsed at most once per section, and so the billing view model uses the same instance.
+    private let addressRuleProvider = AddressRuleProvider()
     
     private lazy var viewModelForAccordionKey = PaymentMethodCellViewModel(
         name: methodType.name,
@@ -87,8 +90,12 @@ class NewCardPaymentSectionController: NSObject, PaymentSectionController {
         self.methodProvider = methodProvider
         self.paymentUIContext = paymentUIContext
         self.switchToConsentPaymentAction = switchToConsentPaymentAction
-        self.shouldReuseShippingAddress = methodProvider.session.billing?.address?.isComplete ?? false
+        self.shouldReuseShippingAddress = false
         super.init()
+        // `addressRuleProvider` is a stored property, so it's only accessible after `super.init()`.
+        self.shouldReuseShippingAddress = methodProvider.session.billing?.address.map {
+            addressRuleProvider.isValid($0)
+        } ?? false
         createViewModelForRequiredFields()
         if let session = session as? Session {
             self.shouldSaveCard = supportCardSaving && session.autoSaveCardForFuturePayments
@@ -450,6 +457,22 @@ private extension NewCardPaymentSectionController {
         let nav = UINavigationController(rootViewController: controller)
         UIViewController.topMost?.present(nav, animated: true)
     }
+
+    func triggerSubdivisionSelection() {
+        guard let viewModel = viewModelForBillingAddress,
+              let stateSpec = viewModel.currentFields.first(where: { $0.kind == .state }),
+              let options = stateSpec.options else {
+            assert(false)
+            return
+        }
+        context.endEditing()
+        let controller = SubdivisionListViewController()
+        controller.delegate = self
+        controller.items = options
+        controller.selectedOption = viewModel.stateDropdownConfigurer?.selection
+        let nav = UINavigationController(rootViewController: controller)
+        UIViewController.topMost?.present(nav, animated: true)
+    }
     
     func toggleReuseShippingAddress() {
         shouldReuseShippingAddress.toggle()
@@ -489,8 +512,12 @@ private extension NewCardPaymentSectionController {
             prefilledAddress: session.billing?.address,
             defaultCountryCode: session.countryCode,
             reusePrefilledAddress: reuseShippingAddress,
+            ruleProvider: addressRuleProvider,
             countrySelectionHandler: { [weak self] in
                 self?.triggerCountrySelection()
+            },
+            subdivisionSelectionHandler: { [weak self] in
+                self?.triggerSubdivisionSelection()
             },
             toggleReuseSelection: { [weak self] in
                 guard let self else { return }
@@ -616,6 +643,13 @@ extension NewCardPaymentSectionController: CountryListViewControllerDelegate {
         } else if let viewModelForCountryCode {
             viewModelForCountryCode.country = country
         }
+    }
+}
+
+extension NewCardPaymentSectionController: SubdivisionListViewControllerDelegate {
+    func subdivisionListViewController(_ controller: SubdivisionListViewController, didSelect option: SubdivisionOption) {
+        controller.dismiss(animated: true)
+        viewModelForBillingAddress?.stateDropdownConfigurer?.selection = option
     }
 }
     

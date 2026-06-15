@@ -10,63 +10,86 @@ import Foundation
 #if canImport(AirwallexCore)
 import AirwallexCore
 #endif
+#if canImport(AirwallexPayment)
+import AirwallexPayment
+#endif
 
 class BillingInfoCellViewModel: CellViewModelIdentifiable {
-    
+
     let itemIdentifier: String
-    
+
     /// determin if we should display reuse toggle to user
     var canReusePrefilledAddress: Bool
     /// if determin the value of the reuse toggle
     var shouldReusePrefilledAddress: Bool
-    
+
     var toggleReuseSelection: () -> Void
-    
+
     var countryConfigurer: CountrySelectionViewModel!
-    
+
     var streetConfigurer: InfoCollectorTextFieldViewModel!
-    
-    var stateConfigurer: InfoCollectorTextFieldViewModel!
-    
-    var cityConfigurer: InfoCollectorTextFieldViewModel!
-    
-    var zipConfigurer: InfoCollectorTextFieldViewModel!
-    
-    var errorHintForBillingFields: String? {
-        let arr: [InfoCollectorTextFieldViewModel] = [
-            countryConfigurer,
-            streetConfigurer,
-            stateConfigurer,
-            cityConfigurer,
-            zipConfigurer,
-        ]
-        return arr.first { !$0.isValid && $0.errorHint != nil }?.errorHint
+
+    /// Free-text state field used when the country has no `sub_keys`.
+    var stateTextConfigurer: InfoCollectorTextFieldViewModel!
+
+    /// State dropdown used when the country has `sub_keys`. Non-nil only in dropdown mode.
+    var stateDropdownConfigurer: SubdivisionSelectionViewModel?
+
+    /// Currently-active state field — dropdown if present, otherwise the free-text fallback.
+    var stateConfigurer: InfoCollectorTextFieldViewModel {
+        stateDropdownConfigurer ?? stateTextConfigurer
     }
-    
+
+    var cityConfigurer: InfoCollectorTextFieldViewModel!
+
+    var zipConfigurer: InfoCollectorTextFieldViewModel!
+
+    /// Address fields visible for the currently-selected country, in render order.
+    private(set) var currentFields: [AddressFieldSpec] = []
+
+    /// Invoked when the set/order of visible address fields changes — the cell uses this to rebuild its layout.
+    var onAddressFieldsChanged: (() -> Void)?
+
+    var errorHintForBillingFields: String? {
+        activeConfigurers.first { !$0.isValid && $0.errorHint != nil }?.errorHint
+    }
+
     var updateFieldsLayeringForErrorStatus: (() -> Void)?
-    
+
+    private let ruleProvider: AddressRuleProvider
+    private let subdivisionSelectionHandler: () -> Void
+    private let cellReconfigureHandler: CellReconfigureHandler
+
     // MARK: -
-    
+
     init(itemIdentifier: String,
          prefilledAddress: AWXAddress?,
          defaultCountryCode: String? = nil,
          reusePrefilledAddress: Bool = true,
+         ruleProvider: AddressRuleProvider = AddressRuleProvider(),
          countrySelectionHandler: @escaping () -> Void,
+         subdivisionSelectionHandler: @escaping () -> Void = {},
          toggleReuseSelection: @escaping () -> Void,
          cellReconfigureHandler: @escaping CellReconfigureHandler) {
-        let reusePrefilledAddress = (prefilledAddress?.isComplete ?? false) && reusePrefilledAddress
         var country: AWXCountry?
         if let countryCode = prefilledAddress?.countryCode {
             country = AWXCountry(code: countryCode)
         } else if let defaultCountryCode {
             country = AWXCountry(code: defaultCountryCode)
         }
-        
-        canReusePrefilledAddress = prefilledAddress?.isComplete ?? false
+        let rule = ruleProvider.rule(for: country?.countryCode)
+        assert(rule != nil)
+        let isPrefilledComplete = prefilledAddress.map { ruleProvider.isValid($0) } ?? false
+        let reusePrefilledAddress = isPrefilledComplete && reusePrefilledAddress
+
+        canReusePrefilledAddress = isPrefilledComplete
         shouldReusePrefilledAddress = reusePrefilledAddress
         self.toggleReuseSelection = toggleReuseSelection
         self.itemIdentifier = itemIdentifier
-        
+        self.ruleProvider = ruleProvider
+        self.subdivisionSelectionHandler = subdivisionSelectionHandler
+        self.cellReconfigureHandler = cellReconfigureHandler
+
         countryConfigurer = CountrySelectionViewModel(
             country: country,
             isEnabled: !reusePrefilledAddress,
@@ -82,10 +105,10 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
             returnKeyType: .next,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )
-        stateConfigurer = InfoCollectorTextFieldViewModel(
+        stateTextConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .state,
             text: prefilledAddress?.state,
-            placeholder: AddressFieldLabel.state(for: country?.countryCode),
+            placeholder: NSLocalizedString("State", bundle: .paymentSheet, comment: "billing state placeholder"),
             isEnabled: !reusePrefilledAddress,
             clearButtonMode: .whileEditing,
             returnKeyType: .next,
@@ -94,7 +117,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         cityConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .city,
             text: prefilledAddress?.city,
-            placeholder: AddressFieldLabel.city(for: country?.countryCode),
+            placeholder: NSLocalizedString("City", bundle: .paymentSheet, comment: "billing city placeholder"),
             isEnabled: !reusePrefilledAddress,
             clearButtonMode: .whileEditing,
             returnKeyType: .next,
@@ -103,69 +126,179 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         zipConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .zipcode,
             text: prefilledAddress?.postcode,
-            placeholder: AddressFieldLabel.postcode(for: country?.countryCode),
+            placeholder: NSLocalizedString("Postal code", bundle: .paymentSheet, comment: "billing postal code placeholder"),
             isEnabled: !reusePrefilledAddress,
             clearButtonMode: .whileEditing,
             returnKeyType: .next,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )
+
+        applyCountryRules(country?.countryCode, shouldClearFieldText: false, initialStateValue: prefilledAddress?.state)
     }
-    
+
     func billingAddressFromCollectedInfo() -> AWXAddress {
         let address = AWXAddress()
         address.countryCode = selectedCountry?.countryCode
-        address.state = stateConfigurer.text ?? ""
+        if let dropdown = stateDropdownConfigurer {
+            address.state = dropdown.selection?.value ?? ""
+        } else {
+            address.state = stateTextConfigurer.text ?? ""
+        }
         address.city = cityConfigurer.text ?? ""
         address.street = streetConfigurer.text ?? ""
         address.postcode = zipConfigurer.text
         return address
     }
-    
+
     func updateValidStatusForCheckout() {
-        let fieldConfigurers = [
-            countryConfigurer,
-            streetConfigurer,
-            stateConfigurer,
-            cityConfigurer,
-            zipConfigurer,
-        ]
-        for configurer in fieldConfigurers {
+        for configurer in activeConfigurers {
             //  force configurer to check valid status if user left this field untouched
-            configurer?.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
+            configurer.handleDidEndEditing(reconfigureStrategy: .onValidationChange)
         }
         if let updateFieldsLayeringForErrorStatus {
             updateFieldsLayeringForErrorStatus()
         }
     }
-    
+
     var selectedCountry: AWXCountry? {
         get {
             countryConfigurer.country
         }
         set {
             countryConfigurer.country = newValue
-            let code = newValue?.countryCode
-            stateConfigurer.placeholder = AddressFieldLabel.state(for: code)
-            cityConfigurer.placeholder = AddressFieldLabel.city(for: code)
-            zipConfigurer.placeholder = AddressFieldLabel.postcode(for: code)
-            stateConfigurer.reconfigureHandler(stateConfigurer, false)
-            cityConfigurer.reconfigureHandler(cityConfigurer, false)
-            zipConfigurer.reconfigureHandler(zipConfigurer, false)
+            applyCountryRules(newValue?.countryCode, shouldClearFieldText: true)
+            onAddressFieldsChanged?()
+            for configurer in addressFieldConfigurers {
+                configurer.reconfigureHandler(configurer, false)
+            }
         }
+    }
+
+    // MARK: - Country rules
+
+    private func applyCountryRules(_ countryCode: String?, shouldClearFieldText: Bool, initialStateValue: String? = nil) {
+        let fields = ruleProvider.fields(for: countryCode)
+        currentFields = fields
+
+        // Switch state field between text-input and dropdown modes based on whether the rule has `sub_keys`.
+        let stateSpec = fields.first { $0.kind == .state }
+        if let options = stateSpec?.options {
+            // Pre-select the dropdown from the prefilled state string (via the same exact-
+            // match-against-value-or-label rule as web's `getMappedState`). Country changes
+            // don't pass an `initialStateValue`, so the dropdown resets to nil on switch.
+            let preselected = options.option(matching: initialStateValue)
+            stateDropdownConfigurer = SubdivisionSelectionViewModel(
+                options: options,
+                selection: preselected,
+                placeholder: stateSpec.map(label(for:)),
+                isEnabled: !shouldReusePrefilledAddress,
+                handleUserInteraction: subdivisionSelectionHandler,
+                reconfigureHandler: { [cellReconfigureHandler, itemIdentifier] _, refresh in
+                    cellReconfigureHandler(itemIdentifier, refresh)
+                }
+            )
+        } else {
+            stateDropdownConfigurer = nil
+        }
+
+        for spec in fields {
+            let placeholder = label(for: spec)
+            switch spec.kind {
+            case .street:
+                if shouldClearFieldText { streetConfigurer.text = nil }
+                streetConfigurer.placeholder = placeholder
+            case .state:
+                if stateDropdownConfigurer == nil {
+                    if shouldClearFieldText { stateTextConfigurer.text = nil }
+                    stateTextConfigurer.placeholder = placeholder
+                }
+            case .city:
+                if shouldClearFieldText { cityConfigurer.text = nil }
+                cityConfigurer.placeholder = placeholder
+            case .postcode:
+                if shouldClearFieldText { zipConfigurer.text = nil }
+                zipConfigurer.placeholder = placeholder
+                let message = invalidMessage(for: placeholder)
+                zipConfigurer.inputValidator = RegexInputValidator(
+                    regex: spec.regex,
+                    isRequired: true,
+                    requiredMessage: message,
+                    invalidMessage: message
+                )
+            }
+        }
+    }
+
+    /// Resolve the `*_name_type` hint on the spec to a localized placeholder via `Bundle.paymentSheet`'s
+    /// strings table. Address-rule data lives in AirwallexPayment; its localized UI labels stay
+    /// with the sheet's other UI strings.
+    private func label(for spec: AddressFieldSpec) -> String {
+        let key: String
+        switch spec.kind {
+        case .street:
+            key = "Street"
+        case .state:
+            switch spec.nameType?.lowercased() {
+            case "province": key = "Province"
+            case "prefecture": key = "Prefecture"
+            case "do_si": key = "Do Si"
+            case "county": key = "County"
+            case "parish": key = "Parish"
+            case "department": key = "Department"
+            case "district": key = "District"
+            case "emirate": key = "Emirate"
+            case "oblast": key = "Oblast"
+            case "area": key = "Area"
+            case "island": key = "Island"
+            default: key = "State"
+            }
+        case .city:
+            switch spec.nameType?.lowercased() {
+            case "post_town": key = "Town"
+            case "district": key = "District"
+            case "suburb": key = "Suburb"
+            default: key = "City"
+            }
+        case .postcode:
+            switch spec.nameType?.lowercased() {
+            case "zip": key = "ZIP code"
+            case "pin": key = "Pin"
+            case "eircode": key = "Eircode"
+            default: key = "Postal code"
+            }
+        }
+        return NSLocalizedString(key, bundle: .paymentSheet, comment: "billing address field placeholder")
+    }
+
+    private func invalidMessage(for label: String) -> String {
+        String(
+            format: NSLocalizedString("Invalid %@", bundle: .paymentSheet, comment: "user input validation"),
+            label.lowercased()
+        )
+    }
+
+    /// Address-field configurers (excluding country) for currently-visible fields, in render order.
+    private var addressFieldConfigurers: [InfoCollectorTextFieldViewModel] {
+        currentFields.map { spec in
+            switch spec.kind {
+            case .street: return streetConfigurer
+            case .state: return stateConfigurer
+            case .city: return cityConfigurer
+            case .postcode: return zipConfigurer
+            }
+        }
+    }
+
+    /// All currently-visible configurers including country. Used for validation and error-hint surfacing.
+    private var activeConfigurers: [InfoCollectorTextFieldViewModel] {
+        [countryConfigurer] + addressFieldConfigurers
     }
 }
 
 extension BillingInfoCellViewModel: ViewModelValidatable {
     func validate() throws {
-        let fieldConfigurers = [
-            countryConfigurer,
-            streetConfigurer,
-            stateConfigurer,
-            cityConfigurer,
-            zipConfigurer,
-        ]
-        for configurer in fieldConfigurers {
-            try configurer?.validate()
+        for configurer in activeConfigurers {
+            try configurer.validate()
         }
     }
 }
