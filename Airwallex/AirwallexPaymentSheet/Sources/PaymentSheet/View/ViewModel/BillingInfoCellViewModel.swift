@@ -77,8 +77,6 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         } else if let defaultCountryCode {
             country = AWXCountry(code: defaultCountryCode)
         }
-        let rule = ruleProvider.rule(for: country?.countryCode)
-        assert(rule != nil)
         let isPrefilledComplete = prefilledAddress.map { ruleProvider.isValid($0) } ?? false
         let reusePrefilledAddress = isPrefilledComplete && reusePrefilledAddress
 
@@ -139,14 +137,25 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
     func billingAddressFromCollectedInfo() -> AWXAddress {
         let address = AWXAddress()
         address.countryCode = selectedCountry?.countryCode
-        if let dropdown = stateDropdownConfigurer {
-            address.state = dropdown.selection?.value ?? ""
-        } else {
-            address.state = stateTextConfigurer.text ?? ""
+        // Only emit fields the country's rule actually declares. Sending e.g. an empty
+        // `postcode` for HK (which has no %Z in its `fmt`) or an empty `state` for GB would
+        // be both noisy and potentially rejected by the API.
+        for spec in currentFields {
+            switch spec.kind {
+            case .street:
+                address.street = streetConfigurer.text
+            case .state:
+                if let dropdown = stateDropdownConfigurer {
+                    address.state = dropdown.selection?.value
+                } else {
+                    address.state = stateTextConfigurer.text
+                }
+            case .city:
+                address.city = cityConfigurer.text
+            case .postcode:
+                address.postcode = zipConfigurer.text
+            }
         }
-        address.city = cityConfigurer.text ?? ""
-        address.street = streetConfigurer.text ?? ""
-        address.postcode = zipConfigurer.text
         return address
     }
 
@@ -180,6 +189,16 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         let fields = ruleProvider.fields(for: countryCode)
         currentFields = fields
 
+        // Clear every text field up front so values entered for the previous country don't
+        // resurface if the user later switches back through a country that hides them. Mirrors
+        // web's `clearAddressFields` (index.tsx:52-56).
+        if shouldClearFieldText {
+            streetConfigurer.text = nil
+            stateTextConfigurer.text = nil
+            cityConfigurer.text = nil
+            zipConfigurer.text = nil
+        }
+
         // Switch state field between text-input and dropdown modes based on whether the rule has `sub_keys`.
         let stateSpec = fields.first { $0.kind == .state }
         if let options = stateSpec?.options {
@@ -205,18 +224,14 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
             let placeholder = label(for: spec)
             switch spec.kind {
             case .street:
-                if shouldClearFieldText { streetConfigurer.text = nil }
                 streetConfigurer.placeholder = placeholder
             case .state:
                 if stateDropdownConfigurer == nil {
-                    if shouldClearFieldText { stateTextConfigurer.text = nil }
                     stateTextConfigurer.placeholder = placeholder
                 }
             case .city:
-                if shouldClearFieldText { cityConfigurer.text = nil }
                 cityConfigurer.placeholder = placeholder
             case .postcode:
-                if shouldClearFieldText { zipConfigurer.text = nil }
                 zipConfigurer.placeholder = placeholder
                 let message = invalidMessage(for: placeholder)
                 zipConfigurer.inputValidator = RegexInputValidator(

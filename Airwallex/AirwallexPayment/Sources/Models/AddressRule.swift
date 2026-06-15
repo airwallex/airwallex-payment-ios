@@ -74,7 +74,7 @@ package final class AddressRuleProvider {
     private let bundle: Bundle
 
     /// Lazy so a fresh provider doesn't pay the JSON-decode cost until something actually
-    /// looks up a rule — useful for short-lived instances (e.g. inside `AWXAddress.isComplete`).
+    /// looks up a rule — useful for short-lived instances (e.g. inside `AWXAddress.isValid`).
     private lazy var rules: [String: AddressRule] = {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase

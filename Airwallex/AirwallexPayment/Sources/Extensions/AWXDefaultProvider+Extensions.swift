@@ -202,8 +202,7 @@ extension AWXCardProvider {
             }
             // Only require the fields the country's address rule declares: HK has no postcode,
             // GB has no state, AE has only state, etc. Hard-requiring all of them would reject
-            // otherwise-valid billing data. For dropdown-state countries the value must also
-            // map to a known option (mirrors `AddressRuleProvider.isComplete`).
+            // otherwise-valid billing data. This validation is not as strict as `AddressRule.isValid()`
             for spec in AddressRuleProvider().fields(for: countryCode) {
                 let value: String?
                 let fieldName: String

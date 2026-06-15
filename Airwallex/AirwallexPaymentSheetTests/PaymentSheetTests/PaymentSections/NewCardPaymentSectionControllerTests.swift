@@ -228,10 +228,12 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         XCTAssert(addressCell.viewModel?.canReusePrefilledAddress == true)
         XCTAssert(addressCell.viewModel?.shouldReusePrefilledAddress == true)
         XCTAssertEqual(addressCell.viewModel?.countryConfigurer.country?.countryCode, mockShippingInfo.address?.countryCode)
-        XCTAssertEqual(addressCell.viewModel?.stateConfigurer.text, mockShippingInfo.address?.state)
+        // AU's state is a dropdown — the dropdown's `selection.value` mirrors the prefilled
+        // sub_key, while `stateConfigurer.text` would be the localized sub_label.
+        XCTAssertEqual(addressCell.viewModel?.stateDropdownConfigurer?.selection?.value, mockShippingInfo.address?.state)
         XCTAssertEqual(addressCell.viewModel?.cityConfigurer.text, mockShippingInfo.address?.city)
         XCTAssertEqual(addressCell.viewModel?.zipConfigurer.text, mockShippingInfo.address?.postcode)
-        
+
         guard let emailCell = sectionController.context.cellForItem(sectionController.sectionItem(.billingFieldEmail)) as? InfoCollectorCell else {
             XCTFail()
             return
@@ -282,11 +284,11 @@ class NewCardPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         // can not fully reuse incomplete address info - the reuse toggle is invisible
         // but will still prefill with shipping info
         XCTAssertEqual(addressCell.viewModel?.countryConfigurer.country?.countryCode, mockShippingInfo.address?.countryCode)
-        XCTAssertEqual(addressCell.viewModel?.stateConfigurer.text, mockShippingInfo.address?.state)
+        XCTAssertEqual(addressCell.viewModel?.stateDropdownConfigurer?.selection?.value, mockShippingInfo.address?.state)
         XCTAssertEqual(addressCell.viewModel?.cityConfigurer.text, mockShippingInfo.address?.city)
         XCTAssertEqual(addressCell.viewModel?.zipConfigurer.text, mockShippingInfo.address?.postcode)
     }
-        
+
     func testReuseShippingInfo_ReuseToggle() {
         mockMethodProvider.session.requiredBillingContactFields = [.address]
         mockManager.performUpdates()
