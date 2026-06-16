@@ -217,6 +217,67 @@ class InfoCollectorTextFieldViewModelTests: XCTestCase {
         XCTAssertTrue(reconfigureCalled)
     }
     
+    func testResetTextAndValidationStatus_ClearsTextAndValidationState() {
+        var reconfigureCount = 0
+        let viewModel = InfoCollectorTextFieldViewModel(
+            text: "some text",
+            reconfigureHandler: { _, _ in reconfigureCount += 1 }
+        )
+        // Push the VM into an invalid state with an error hint.
+        viewModel.isValid = false
+        viewModel.errorHint = "Required"
+        XCTAssertEqual(viewModel.text, "some text")
+        XCTAssertFalse(viewModel.isValid)
+        XCTAssertEqual(viewModel.errorHint, "Required")
+
+        viewModel.resetTextAndValidationStatus()
+
+        XCTAssertNil(viewModel.text)
+        XCTAssertTrue(viewModel.isValid)
+        XCTAssertNil(viewModel.errorHint)
+        XCTAssertEqual(reconfigureCount, 0, "default reconfigure=false must not fire the handler")
+    }
+
+    func testResetTextAndValidationStatus_WithReconfigureTrue_FiresHandler() {
+        var captured: (viewModel: InfoCollectorTextFieldViewModel, refresh: Bool)?
+        let viewModel = InfoCollectorTextFieldViewModel(
+            text: "some text",
+            reconfigureHandler: { vm, refresh in
+                captured = (vm, refresh)
+            }
+        )
+        viewModel.isValid = false
+        viewModel.errorHint = "Required"
+
+        viewModel.resetTextAndValidationStatus(reconfigure: true)
+
+        XCTAssertNil(viewModel.text)
+        XCTAssertTrue(viewModel.isValid)
+        XCTAssertNil(viewModel.errorHint)
+        XCTAssertNotNil(captured)
+        XCTAssertTrue(captured?.viewModel === viewModel, "handler receives the VM itself")
+        XCTAssertEqual(captured?.refresh, true, "handler is invoked with refresh=true")
+    }
+
+    func testResetTextAndValidationStatus_FromAlreadyCleanState_IsIdempotent() {
+        var reconfigureCount = 0
+        let viewModel = InfoCollectorTextFieldViewModel(
+            reconfigureHandler: { _, _ in reconfigureCount += 1 }
+        )
+        XCTAssertNil(viewModel.text)
+        XCTAssertTrue(viewModel.isValid)
+        XCTAssertNil(viewModel.errorHint)
+
+        viewModel.resetTextAndValidationStatus(reconfigure: true)
+
+        XCTAssertNil(viewModel.text)
+        XCTAssertTrue(viewModel.isValid)
+        XCTAssertNil(viewModel.errorHint)
+        // Handler still fires unconditionally when reconfigure: true is requested — the method
+        // doesn't bail out for an already-clean state.
+        XCTAssertEqual(reconfigureCount, 1)
+    }
+
     func testConvenienceInit() {
         let reconfigureHandler: InfoCollectorTextFieldViewModel.ReconfigureHandler = { _, _ in }
         let viewModel = InfoCollectorTextFieldViewModel(
