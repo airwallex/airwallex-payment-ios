@@ -17,9 +17,7 @@ class RegexInputValidatorTests: XCTestCase {
     func testValid_AcceptsMatchingInput() {
         let validator = RegexInputValidator(
             regex: zipUS,
-            isRequired: true,
-            requiredMessage: "Postcode required",
-            invalidMessage: "Invalid postcode"
+            isRequired: true
         )
         XCTAssertNoThrow(try validator.validateUserInput("94110"))
         XCTAssertNoThrow(try validator.validateUserInput("94110-1234"))
@@ -28,9 +26,7 @@ class RegexInputValidatorTests: XCTestCase {
     func testValid_InputIsTrimmedBeforeMatching() {
         let validator = RegexInputValidator(
             regex: zipUS,
-            isRequired: true,
-            requiredMessage: "Postcode required",
-            invalidMessage: "Invalid postcode"
+            isRequired: true
         )
         XCTAssertNoThrow(try validator.validateUserInput("  94110  "))
     }
@@ -38,28 +34,24 @@ class RegexInputValidatorTests: XCTestCase {
     func testInvalid_NonMatchingInputThrowsInvalidMessage() {
         let validator = RegexInputValidator(
             regex: zipUS,
-            isRequired: true,
-            requiredMessage: "Postcode required",
-            invalidMessage: "Invalid postcode"
+            isRequired: true
         )
         XCTAssertThrowsError(try validator.validateUserInput("abc")) { error in
-            XCTAssertEqual(error.localizedDescription, "Invalid postcode")
+            XCTAssertEqual(error.localizedDescription, "Please enter a valid value")
         }
         XCTAssertThrowsError(try validator.validateUserInput("9411")) { error in
-            XCTAssertEqual(error.localizedDescription, "Invalid postcode")
+            XCTAssertEqual(error.localizedDescription, "Please enter a valid value")
         }
     }
 
     func testRequired_EmptyOrNilThrowsRequiredMessage() {
         let validator = RegexInputValidator(
             regex: zipUS,
-            isRequired: true,
-            requiredMessage: "Postcode required",
-            invalidMessage: "Invalid postcode"
+            isRequired: true
         )
         for input in [nil, "", "   "] as [String?] {
             XCTAssertThrowsError(try validator.validateUserInput(input)) { error in
-                XCTAssertEqual(error.localizedDescription, "Postcode required",
+                XCTAssertEqual(error.localizedDescription, "Required",
                                "expected required-message for input \(String(describing: input))")
             }
         }
@@ -69,9 +61,7 @@ class RegexInputValidatorTests: XCTestCase {
         // Required = false → empty/nil short-circuits past the regex check.
         let validator = RegexInputValidator(
             regex: zipUS,
-            isRequired: false,
-            requiredMessage: "Postcode required",
-            invalidMessage: "Invalid postcode"
+            isRequired: false
         )
         XCTAssertNoThrow(try validator.validateUserInput(nil))
         XCTAssertNoThrow(try validator.validateUserInput(""))
@@ -85,9 +75,7 @@ class RegexInputValidatorTests: XCTestCase {
         // construct a validator without a regex, presence is the only check).
         let validator = RegexInputValidator(
             regex: nil,
-            isRequired: true,
-            requiredMessage: "Postcode required",
-            invalidMessage: "Invalid postcode"
+            isRequired: true
         )
         XCTAssertNoThrow(try validator.validateUserInput("anything"))
         XCTAssertNoThrow(try validator.validateUserInput("123abc"))
@@ -98,9 +86,7 @@ class RegexInputValidatorTests: XCTestCase {
     func testNilRegex_NotRequired_AlwaysPasses() {
         let validator = RegexInputValidator(
             regex: nil,
-            isRequired: false,
-            requiredMessage: "",
-            invalidMessage: ""
+            isRequired: false
         )
         XCTAssertNoThrow(try validator.validateUserInput(nil))
         XCTAssertNoThrow(try validator.validateUserInput(""))
@@ -113,9 +99,7 @@ class RegexInputValidatorTests: XCTestCase {
         let regex = try! NSRegularExpression(pattern: "^\(gbPattern)$", options: [.caseInsensitive])
         let validator = RegexInputValidator(
             regex: regex,
-            isRequired: true,
-            requiredMessage: "",
-            invalidMessage: "Invalid"
+            isRequired: true
         )
         XCTAssertNoThrow(try validator.validateUserInput("EC1Y 8SY"))
         XCTAssertNoThrow(try validator.validateUserInput("ec1y 8sy"))

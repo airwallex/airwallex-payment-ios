@@ -198,6 +198,10 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
             switch spec.kind {
             case .street:
                 streetConfigurer.placeholder = placeholder
+                streetConfigurer.inputValidator = RegexInputValidator(
+                    regex: nil,
+                    isRequired: true
+                )
             case .state:
                 if let options = spec.subdivision {
                     // Pre-select the dropdown from the prefilled state string (via the same exact-
@@ -214,20 +218,29 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
                             cellReconfigureHandler(itemIdentifier, refresh)
                         }
                     )
+                    stateDropdownConfigurer?.inputValidator = RegexInputValidator(
+                        regex: nil,
+                        isRequired: true
+                    )
                 } else {
                     stateDropdownConfigurer = nil
                     stateTextConfigurer.placeholder = placeholder
+                    stateTextConfigurer?.inputValidator = RegexInputValidator(
+                        regex: nil,
+                        isRequired: true
+                    )
                 }
             case .city:
                 cityConfigurer.placeholder = placeholder
+                cityConfigurer.inputValidator = RegexInputValidator(
+                    regex: spec.regex,
+                    isRequired: true
+                )
             case .postcode:
                 zipConfigurer.placeholder = placeholder
-                let message = invalidMessage(for: placeholder)
                 zipConfigurer.inputValidator = RegexInputValidator(
                     regex: spec.regex,
-                    isRequired: true,
-                    requiredMessage: message,
-                    invalidMessage: message
+                    isRequired: true
                 )
             }
         }

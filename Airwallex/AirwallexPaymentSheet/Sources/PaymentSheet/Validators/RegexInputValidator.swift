@@ -14,8 +14,8 @@ struct RegexInputValidator: UserInputValidator {
 
     let regex: NSRegularExpression?
     let isRequired: Bool
-    let requiredMessage: String
-    let invalidMessage: String
+    let requiredMessage: String = NSLocalizedString("Required", bundle: .paymentSheet, comment: "Invalid user input")
+    let invalidMessage: String = NSLocalizedString("Please enter a valid value", bundle: .paymentSheet, comment: "Invalid user input")
 
     func validateUserInput(_ text: String?) throws {
         let trimmed = text?.trimmed ?? ""
