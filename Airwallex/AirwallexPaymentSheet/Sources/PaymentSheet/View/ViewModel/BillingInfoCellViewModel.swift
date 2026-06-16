@@ -194,7 +194,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         }
 
         for spec in fields {
-            let placeholder = label(for: spec)
+            let placeholder = spec.localizedLabel
             switch spec.kind {
             case .street:
                 streetConfigurer.placeholder = placeholder
@@ -233,7 +233,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
             case .city:
                 cityConfigurer.placeholder = placeholder
                 cityConfigurer.inputValidator = RegexInputValidator(
-                    regex: spec.regex,
+                    regex: nil,
                     isRequired: true
                 )
             case .postcode:
@@ -244,47 +244,6 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
                 )
             }
         }
-    }
-
-    /// Resolve the `*_name_type` hint on the spec to a localized placeholder via `Bundle.paymentSheet`'s
-    /// strings table. Address-rule data lives in AirwallexPayment; its localized UI labels stay
-    /// with the sheet's other UI strings.
-    private func label(for spec: AddressFieldSpec) -> String {
-        let key: String
-        switch spec.kind {
-        case .street:
-            key = "Street"
-        case .state:
-            switch spec.nameType?.lowercased() {
-            case "province": key = "Province"
-            case "prefecture": key = "Prefecture"
-            case "do_si": key = "Do Si"
-            case "county": key = "County"
-            case "parish": key = "Parish"
-            case "department": key = "Department"
-            case "district": key = "District"
-            case "emirate": key = "Emirate"
-            case "oblast": key = "Oblast"
-            case "area": key = "Area"
-            case "island": key = "Island"
-            default: key = "State"
-            }
-        case .city:
-            switch spec.nameType?.lowercased() {
-            case "post_town": key = "Town"
-            case "district": key = "District"
-            case "suburb": key = "Suburb"
-            default: key = "City"
-            }
-        case .postcode:
-            switch spec.nameType?.lowercased() {
-            case "zip": key = "ZIP code"
-            case "pin": key = "Pin"
-            case "eircode": key = "Eircode"
-            default: key = "Postal code"
-            }
-        }
-        return NSLocalizedString(key, bundle: .paymentSheet, comment: "billing address field placeholder")
     }
 
     /// Address-field configurers (excluding country) for currently-visible fields, in render order.
