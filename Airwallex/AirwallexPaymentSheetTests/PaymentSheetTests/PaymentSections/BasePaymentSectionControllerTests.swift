@@ -30,10 +30,12 @@ import XCTest
         shipping.phoneNumber = "1234567890"
         shipping.email = "abc@123.com"
         let address = AWXAddress()
+        // AU is a dropdown-state country and validates postcode as `\d{4}` — use a sub_key
+        // and a matching postcode so AddressRuleProvider.isValid(self) returns true.
         address.countryCode = "AU"
-        address.postcode = "postcode"
+        address.postcode = "2060"
         address.street = "street"
-        address.state = "state"
+        address.state = "NSW"
         address.city = "city"
         shipping.address = address
         mockShippingInfo = shipping

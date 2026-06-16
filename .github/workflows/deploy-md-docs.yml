@@ -1,0 +1,69 @@
+name: Deploy Markdown Docs
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-md-docs:
+    # DocC --enable-experimental-markdown-output requires Xcode 26.4+ (not available in 16.4)
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744  # 3.6.0
+
+      - name: Select latest Xcode
+        uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd #v1.6.0
+        with:
+          xcode-version: '26.4'
+
+      - name: Install CocoaPods dependencies
+        run: pod install
+
+      - name: Generate documentation
+        env:
+          REQUIRE_MARKDOWN_DOCS: true
+        run: |
+          if [ -n "${{ github.event.release.tag_name }}" ]; then
+            VERSION="${{ github.event.release.tag_name }}"
+          else
+            VERSION=$(grep -E '^\s*s\.version\s*=' Airwallex.podspec | sed -E 's/.*"([^"]+)".*/\1/')
+          fi
+          ./.github/scripts/generate-docs-pods.sh "$VERSION"
+
+      - name: Upload markdown documentation
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: markdown-docs
+          path: md-docs/
+          retention-days: 1
+          if-no-files-found: error
+
+  update-md-doc:
+    needs: generate-md-docs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744  # 3.6.0
+        with:
+          ref: md-doc
+
+      - run: git rm -rf . 2>/dev/null || true
+
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: markdown-docs
+          path: md-docs
+
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add md-docs
+          if git diff --staged --quiet; then
+            echo "No markdown changes to commit"
+            exit 0
+          fi
+          git commit -m "Deploy to md-doc from @ ${GITHUB_SHA:0:7}."
+          git push origin md-doc

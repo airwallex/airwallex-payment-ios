@@ -267,4 +267,13 @@ extension InfoCollectorTextFieldViewModel {
             }
         }
     }
+
+    func resetTextAndValidationStatus(reconfigure: Bool = false) {
+        isValid = true
+        errorHint = nil
+        text = nil
+        if reconfigure {
+            reconfigureHandler(self, true)
+        }
+    }
 }

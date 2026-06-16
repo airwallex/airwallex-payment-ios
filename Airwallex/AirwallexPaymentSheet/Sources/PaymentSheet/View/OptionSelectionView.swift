@@ -19,13 +19,19 @@ protocol OptionSelectionViewConfiguring: InfoCollectorTextFieldConfiguring {
 }
 
 class OptionSelectionView<T: OptionSelectionViewConfiguring>: InfoCollectorTextField<T> {
-    
+
     private let iconWrapper: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+
+    private let indicatorWrapper: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     private let icon: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -86,12 +92,13 @@ private extension OptionSelectionView {
         iconWrapper.addSubview(icon)
         horizontalStack.insertSpacer(12, at: 0)
         horizontalStack.insertArrangedSubview(iconWrapper, at: 1)
+
         var insets = textField.textInsets
         insets.left = 0
         insets.right = 0
         textField.textInsets = insets
-        horizontalStack.addArrangedSubview(indicator)
-        horizontalStack.addSpacer(12)
+        horizontalStack.addArrangedSubview(indicatorWrapper)
+        indicatorWrapper.addSubview(indicator)
 
         addSubview(cover)
         let constraints = [
@@ -99,11 +106,16 @@ private extension OptionSelectionView {
             cover.leadingAnchor.constraint(equalTo: leadingAnchor),
             cover.trailingAnchor.constraint(equalTo: trailingAnchor),
             cover.bottomAnchor.constraint(equalTo: bottomAnchor),
-            
+
             icon.topAnchor.constraint(equalTo: iconWrapper.topAnchor),
             icon.leadingAnchor.constraint(equalTo: iconWrapper.leadingAnchor),
             icon.trailingAnchor.constraint(equalTo: iconWrapper.trailingAnchor, constant: -8),
             icon.bottomAnchor.constraint(equalTo: iconWrapper.bottomAnchor),
+
+            indicator.topAnchor.constraint(equalTo: indicatorWrapper.topAnchor),
+            indicator.leadingAnchor.constraint(equalTo: indicatorWrapper.leadingAnchor, constant: 8),
+            indicator.trailingAnchor.constraint(equalTo: indicatorWrapper.trailingAnchor, constant: -12),
+            indicator.bottomAnchor.constraint(equalTo: indicatorWrapper.bottomAnchor),
         ]
         NSLayoutConstraint.activate(constraints)
     }

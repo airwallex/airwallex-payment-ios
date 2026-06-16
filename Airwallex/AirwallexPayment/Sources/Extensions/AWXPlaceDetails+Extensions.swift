@@ -18,15 +18,8 @@ public extension AWXPlaceDetails {
 }
 
 public extension AWXAddress {
+    @available(*, deprecated)
     var isComplete: Bool {
-        guard let countryCode, !countryCode.trimmed.isEmpty,
-              countryCode.trimmed.isValidCountryCode,
-              let postcode, !postcode.trimmed.isEmpty,
-              let street, !street.trimmed.isEmpty,
-              let city, !city.trimmed.isEmpty,
-              let state, !state.trimmed.isEmpty else {
-            return false
-        }
-        return true
+        AddressRuleProvider().isValid(self)
     }
 }

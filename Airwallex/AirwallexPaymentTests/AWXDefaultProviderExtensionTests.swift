@@ -6,10 +6,10 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import UIKit
-import XCTest
 import AirwallexCore
 @testable import AirwallexPayment
+import UIKit
+import XCTest
 
 class AWXDefaultProviderExtensionTests: XCTestCase {
     
@@ -25,7 +25,6 @@ class AWXDefaultProviderExtensionTests: XCTestCase {
     private var mockMethodType: AWXPaymentMethodType!
     private var mockValidCard: AWXCard!
     private var mockValidBilling: AWXPlaceDetails!
-    
 
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -338,6 +337,73 @@ class AWXDefaultProviderExtensionTests: XCTestCase {
                 }
             }
         }
+    }
+
+    func testCardProviderValidate_RuleDrivenAddress_HK_NoPostcodeRequired() {
+        // HK's `fmt` doesn't include %Z, so the validator should accept a missing postcode.
+        // AWXPlaceDetails.address is @property(copy), so we mutate via `hk.address?.*` to act
+        // on the stored copy, not the local that was passed to the setter.
+        mockMethodType.name = AWXCardKey
+        let provider = AWXCardProvider(delegate: mockProviderDelegate, session: mockSession, paymentMethodType: mockMethodType)
+        mockSession.requiredBillingContactFields = [.address]
+        let hk = AWXPlaceDetails()
+        let address = AWXAddress()
+        address.countryCode = "HK"
+        address.state = "Kowloon"
+        address.city = "Tsim Sha Tsui"
+        address.street = "1 Salisbury Rd"
+        hk.address = address
+        XCTAssertNoThrow(try provider.validate(card: mockValidCard, billing: hk),
+                         "HK has no postcode in fmt — missing postcode is fine")
+
+        // City IS in HK's fmt — clear it and expect a city-required error.
+        hk.address?.city = ""
+        XCTAssertThrowsError(try provider.validate(card: mockValidCard, billing: hk)) { error in
+            guard case AWXCardProvider.ValidationError.invalidBillingInfo = error else {
+                XCTFail("Expected invalidBillingInfo, got \(error)")
+                return
+            }
+        }
+    }
+
+    func testCardProviderValidate_RuleDrivenAddress_GB_NoStateRequired() {
+        // GB's `fmt` doesn't include %S — no state required.
+        mockMethodType.name = AWXCardKey
+        let provider = AWXCardProvider(delegate: mockProviderDelegate, session: mockSession, paymentMethodType: mockMethodType)
+        mockSession.requiredBillingContactFields = [.address]
+        let gb = AWXPlaceDetails()
+        let address = AWXAddress()
+        address.countryCode = "GB"
+        address.city = "London"
+        address.street = "10 Downing Street"
+        address.postcode = "SW1A 2AA"
+        gb.address = address
+        XCTAssertNoThrow(try provider.validate(card: mockValidCard, billing: gb),
+                         "GB has no state in fmt — state can be empty")
+
+        // Postcode IS in GB's fmt — clear it and expect a postcode-required error.
+        gb.address?.postcode = ""
+        XCTAssertThrowsError(try provider.validate(card: mockValidCard, billing: gb)) { error in
+            guard case AWXCardProvider.ValidationError.invalidBillingInfo = error else {
+                XCTFail("Expected invalidBillingInfo, got \(error)")
+                return
+            }
+        }
+    }
+
+    func testCardProviderValidate_RuleDrivenAddress_AE_OnlyStateRequired() {
+        // AE's `fmt` is `%N%n%O%n%A%n%S` → only street + state are required.
+        mockMethodType.name = AWXCardKey
+        let provider = AWXCardProvider(delegate: mockProviderDelegate, session: mockSession, paymentMethodType: mockMethodType)
+        mockSession.requiredBillingContactFields = [.address]
+        let ae = AWXPlaceDetails()
+        let address = AWXAddress()
+        address.countryCode = "AE"
+        address.street = "1 Sheikh Zayed Rd"
+        address.state = "Dubai"
+        ae.address = address
+        XCTAssertNoThrow(try provider.validate(card: mockValidCard, billing: ae),
+                         "AE rule has only %A and %S — city/postcode aren't required")
     }
 
     func testCardProviderValidateWithValidConsent() {
