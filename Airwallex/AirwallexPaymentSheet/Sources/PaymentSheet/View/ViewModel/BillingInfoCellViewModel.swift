@@ -287,13 +287,6 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         return NSLocalizedString(key, bundle: .paymentSheet, comment: "billing address field placeholder")
     }
 
-    private func invalidMessage(for label: String) -> String {
-        String(
-            format: NSLocalizedString("Invalid %@", bundle: .paymentSheet, comment: "user input validation"),
-            label.lowercased()
-        )
-    }
-
     /// Address-field configurers (excluding country) for currently-visible fields, in render order.
     private var addressFieldConfigurers: [InfoCollectorTextFieldViewModel] {
         currentFields.map { spec in
