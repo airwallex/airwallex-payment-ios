@@ -12,17 +12,34 @@ class ContentInsetableTextField: UITextField {
     
     var textInsets: UIEdgeInsets {
         didSet {
+            invalidateIntrinsicContentSize()
             setNeedsLayout()
         }
     }
-    
+
     init(textInsets: UIEdgeInsets = .zero) {
         self.textInsets = textInsets
         super.init(frame: .zero)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override var font: UIFont? {
+        didSet { invalidateIntrinsicContentSize() }
+    }
+
+    // UITextField falls back to the system font when both `text` and
+    // `attributedPlaceholder` are empty, producing a slightly taller intrinsic
+    // height than when content is present. Compute it from the configured font
+    // and insets so the height stays stable regardless of content.
+    override var intrinsicContentSize: CGSize {
+        let lineHeight = (font ?? .systemFont(ofSize: UIFont.systemFontSize)).lineHeight
+        return CGSize(
+            width: UIView.noIntrinsicMetric,
+            height: ceil(lineHeight) + textInsets.top + textInsets.bottom
+        )
     }
     
     // Rect for text already in the field
