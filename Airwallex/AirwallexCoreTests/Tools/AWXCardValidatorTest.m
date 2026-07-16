@@ -202,9 +202,9 @@
 - (void)testIsValidCardLength_Mastercard {
     AWXBrandType brandType = AWXBrandTypeMastercard;
     NSArray *validNumbers = @[
-        @"5000111122223333",
-        @"2200111122223333",
-        @"6700111122223333"
+        @"5100111122223333",
+        @"5500111122223333",
+        @"2200111122223333"
     ];
     for (NSString *cardNumber in validNumbers) {
         AWXBrand *brand = [validator brandForCardNumber:cardNumber];
@@ -213,12 +213,12 @@
     }
 
     NSArray *invalidNumbers = @[
-        @"500011112222333",
-        @"50001111222233334",
+        @"510011112222333",
+        @"51001111222233334",
         @"220011112222333",
         @"22001111222233334",
-        @"670011112222333",
-        @"67001111222233334",
+        @"550011112222333",
+        @"55001111222233334",
     ];
     for (NSString *cardNumber in invalidNumbers) {
         AWXBrand *brand = [validator brandForCardNumber:cardNumber];
@@ -346,10 +346,48 @@
     NSArray<NSNumber *> *candidates = [AWXCardValidator.sharedCardValidator possibleBrandTypesForCardNumber:@"6"];
     XCTAssertEqual(candidates.count, 3);
     candidates = [AWXCardValidator.sharedCardValidator possibleBrandTypesForCardNumber:@"60"];
-    XCTAssertEqual(candidates.count, 1);
+    XCTAssertEqual(candidates.count, 2);
     XCTAssertEqual(candidates.firstObject.unsignedIntValue, AWXBrandTypeDiscover);
     candidates = [AWXCardValidator.sharedCardValidator possibleBrandTypesForCardNumber:@""];
-    XCTAssertEqual(candidates.count, 7);
+    XCTAssertEqual(candidates.count, 8);
+}
+
+- (void)testBrandForCardNumber_Maestro {
+    XCTAssertEqual([validator brandForCardNumber:@"6300000000000000"].type, AWXBrandTypeMaestro);
+    XCTAssertEqual([validator brandForCardNumber:@"4936980000000000"].type, AWXBrandTypeMaestro);
+    // Prefixes previously claimed by Mastercard now resolve to Maestro
+    XCTAssertEqual([validator brandForCardNumber:@"5000000000000000"].type, AWXBrandTypeMaestro);
+    XCTAssertEqual([validator brandForCardNumber:@"5600000000000000"].type, AWXBrandTypeMaestro);
+    XCTAssertEqual([validator brandForCardNumber:@"5900000000000000"].type, AWXBrandTypeMaestro);
+    XCTAssertEqual([validator brandForCardNumber:@"6700000000000000"].type, AWXBrandTypeMaestro);
+    // Mastercard retains the non-overlapping range
+    XCTAssertEqual([validator brandForCardNumber:@"5100000000000000"].type, AWXBrandTypeMastercard);
+    XCTAssertEqual([validator brandForCardNumber:@"5500000000000000"].type, AWXBrandTypeMastercard);
+}
+
+- (void)testIsValidCardLength_Maestro {
+    AWXBrandType brandType = AWXBrandTypeMaestro;
+    NSArray *validNumbers = @[
+        @"630000000000",
+        @"6300000000000",
+        @"6300000000000000",
+        @"6300000000000000000"
+    ];
+    for (NSString *cardNumber in validNumbers) {
+        AWXBrand *brand = [validator brandForCardNumber:cardNumber];
+        XCTAssertEqual(brand.type, brandType);
+        XCTAssertTrue([validator isValidCardLength:cardNumber]);
+    }
+
+    NSArray *invalidNumbers = @[
+        @"63000000000",
+        @"63000000000000000000"
+    ];
+    for (NSString *cardNumber in invalidNumbers) {
+        AWXBrand *brand = [validator brandForCardNumber:cardNumber];
+        XCTAssertEqual(brand.type, brandType);
+        XCTAssertFalse([validator isValidCardLength:cardNumber]);
+    }
 }
 
 @end

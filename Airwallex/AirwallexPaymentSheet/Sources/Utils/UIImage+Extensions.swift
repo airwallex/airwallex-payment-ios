@@ -30,6 +30,8 @@ extension UIImage {
             imageName = "diners"
         case .discover:
             imageName = "discover"
+        case .maestro:
+            imageName = "maestro"
         default:
             imageName = "unknown_card"
         }

@@ -13,6 +13,6 @@ import AirwallexCore
 
 extension AWXBrandType {
     public static var allAvailable: [AWXBrandType] {
-        [.visa, .mastercard, .amex, .unionPay, .JCB, dinersClub, .discover]
+        [.visa, .mastercard, .amex, .unionPay, .JCB, dinersClub, .discover, .maestro]
     }
 }

@@ -13,7 +13,7 @@ import AirwallexCore
 
 class AWXModelExtensionTests: XCTestCase {
     func testSupportedBrands() {
-        let expectedBrands: [AWXBrandType] = [.visa, .mastercard, .amex, .unionPay, .JCB, .dinersClub, .discover]
+        let expectedBrands: [AWXBrandType] = [.visa, .mastercard, .amex, .unionPay, .JCB, .dinersClub, .discover, .maestro]
         XCTAssertEqual(AWXBrandType.allAvailable, expectedBrands, "Supported brands do not match the expected values.")
     }
     
@@ -47,7 +47,8 @@ class AWXModelExtensionTests: XCTestCase {
             .JCB,
             .dinersClub,
             .discover,
-            .unionPay
+            .unionPay,
+            .maestro
         ]
         XCTAssertEqual(AWXCardBrand.allAvailable, expectedBrands, "Card brands do not match the expected values.")
     }
