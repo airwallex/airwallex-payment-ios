@@ -95,10 +95,28 @@ import Combine
         } catch {
             XCTFail()
         }
+        // Maestro is appended because the supported brands include Mastercard
         XCTAssertEqual(provider.selectedMethod?.cardSchemes.map {$0.name },
-                       [AWXCardBrand.amex, AWXCardBrand.visa, AWXCardBrand.mastercard].map { $0.rawValue })
+                       [AWXCardBrand.amex, AWXCardBrand.visa, AWXCardBrand.mastercard, AWXCardBrand.maestro].map { $0.rawValue })
     }
-    
+
+    func testMaestroNotAddedWithoutMastercard() async {
+        MockURLProtocol.mockResponse = (mockData, mockSuccessResponse, nil)
+        provider = SinglePaymentMethodProvider(
+            session: mockSession,
+            name: AWXCardKey,
+            supportedCardBrands: [.visa, .unionPay]
+        )
+        provider.apiClient = mockAPIClient
+        do {
+            try await provider.getPaymentMethodTypes()
+        } catch {
+            XCTFail()
+        }
+        XCTAssertEqual(provider.selectedMethod?.cardSchemes.map { $0.name },
+                       [AWXCardBrand.visa, AWXCardBrand.unionPay].map { $0.rawValue })
+    }
+
     func testFetchPaymentMethod() async {
         MockURLProtocol.mockResponse = (mockData, mockSuccessResponse, nil)
         do {

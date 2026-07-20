@@ -60,7 +60,9 @@
 
 @end
 
-@implementation AWXCardValidator
+@implementation AWXCardValidator {
+    NSArray<AWXBrand *> *_brands;
+}
 
 @synthesize defaultBrand;
 
@@ -86,7 +88,10 @@
 }
 
 - (NSArray<AWXBrand *> *)brands {
-    return @[
+    if (_brands) {
+        return _brands;
+    }
+    NSMutableArray<AWXBrand *> *brands = [NSMutableArray arrayWithArray:@[
         // Unknown
         defaultBrand,
 
@@ -195,18 +200,13 @@
 
         // Mastercard
         [AWXBrand brandWithName:@"Mastercard"
-                     rangeStart:@"50"
-                       rangeEnd:@"59"
+                     rangeStart:@"51"
+                       rangeEnd:@"55"
                          length:16
                            type:AWXBrandTypeMastercard],
         [AWXBrand brandWithName:@"Mastercard"
                      rangeStart:@"22"
                        rangeEnd:@"27"
-                         length:16
-                           type:AWXBrandTypeMastercard],
-        [AWXBrand brandWithName:@"Mastercard"
-                     rangeStart:@"67"
-                       rangeEnd:@"67"
                          length:16
                            type:AWXBrandTypeMastercard],
 
@@ -338,7 +338,22 @@
                        rangeEnd:@"492960"
                          length:13
                            type:AWXBrandTypeVisa]
-    ];
+    ]];
+
+    // Maestro
+    NSArray<NSString *> *maestroPrefixes = @[@"493698", @"50", @"56", @"57", @"58", @"59", @"63", @"67", @"6"];
+    for (NSString *prefix in maestroPrefixes) {
+        for (NSInteger length = 12; length <= 19; length++) {
+            [brands addObject:[AWXBrand brandWithName:@"Maestro"
+                                           rangeStart:prefix
+                                             rangeEnd:prefix
+                                               length:length
+                                                 type:AWXBrandTypeMaestro]];
+        }
+    }
+
+    _brands = [brands copy];
+    return _brands;
 }
 
 - (NSInteger)maxLengthForCardNumber:(NSString *)cardNumber {

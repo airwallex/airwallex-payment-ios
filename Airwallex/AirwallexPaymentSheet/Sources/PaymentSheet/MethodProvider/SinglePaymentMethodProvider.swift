@@ -58,7 +58,11 @@ class SinglePaymentMethodProvider: PaymentMethodProvider {
             method.displayName = NSLocalizedString("Apple Pay", bundle: .paymentSheet, comment: "")
         case AWXCardKey:
             method.displayName = NSLocalizedString("Card", bundle: .paymentSheet, comment: "")
-            let brands = supportedCardBrands ?? AWXCardBrand.allAvailable
+            var brands = supportedCardBrands ?? AWXCardBrand.allAvailable
+            // Maestro is offered wherever Mastercard is supported.
+            if brands.contains(.mastercard) && !brands.contains(.maestro) {
+                brands.append(.maestro)
+            }
             method.cardSchemes = brands.map { AWXCardScheme(name: $0.rawValue) }
         default:
             let response = try await getPaymentMethodTypeDetails(name: name)

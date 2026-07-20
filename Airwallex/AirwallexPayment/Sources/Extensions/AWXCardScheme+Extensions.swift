@@ -41,6 +41,8 @@ public extension AWXCardScheme {
             return .discover
         case AWXCardBrand.unionPay.rawValue:
             return .unionPay
+        case AWXCardBrand.maestro.rawValue:
+            return .maestro
         default:
             return .unknown
         }
