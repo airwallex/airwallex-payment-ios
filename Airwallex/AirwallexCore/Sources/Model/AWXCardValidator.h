@@ -18,7 +18,8 @@ typedef NS_ENUM(NSUInteger, AWXBrandType) {
     AWXBrandTypeDiscover,
     AWXBrandTypeJCB,
     AWXBrandTypeDinersClub,
-    AWXBrandTypeUnionPay
+    AWXBrandTypeUnionPay,
+    AWXBrandTypeMaestro
 };
 
 /**

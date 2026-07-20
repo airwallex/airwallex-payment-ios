@@ -106,4 +106,24 @@
     XCTAssertEqualObjects([card validate], @"Invalid CVC / CVV");
 }
 
+- (void)testMaestroBrandCorrectionFromBin {
+    // Mastercard brand + Maestro BIN -> corrected to Maestro
+    AWXCard *maestro56 = [AWXCard decodeFromJSON:@{@"brand": @"mastercard", @"bin": @"560000"}];
+    XCTAssertEqualObjects(maestro56.brand, @"maestro");
+    AWXCard *maestro67 = [AWXCard decodeFromJSON:@{@"brand": @"mastercard", @"bin": @"670000"}];
+    XCTAssertEqualObjects(maestro67.brand, @"maestro");
+
+    // Mastercard brand + genuine Mastercard BIN -> unchanged
+    AWXCard *mastercard = [AWXCard decodeFromJSON:@{@"brand": @"mastercard", @"bin": @"510000"}];
+    XCTAssertEqualObjects(mastercard.brand, @"mastercard");
+
+    // Non-Mastercard brand -> not checked, unchanged
+    AWXCard *visa = [AWXCard decodeFromJSON:@{@"brand": @"visa", @"bin": @"560000"}];
+    XCTAssertEqualObjects(visa.brand, @"visa");
+
+    // Mastercard brand without BIN -> cannot check, unchanged
+    AWXCard *noBin = [AWXCard decodeFromJSON:@{@"brand": @"mastercard"}];
+    XCTAssertEqualObjects(noBin.brand, @"mastercard");
+}
+
 @end

@@ -146,12 +146,12 @@ class AWXCardValidatorExtensionTests: XCTestCase {
         var candidates = AWXCardValidator.possibleBrandTypes(forCardNumber: "6")
         XCTAssertEqual(candidates.count, 3)
         candidates = AWXCardValidator.possibleBrandTypes(forCardNumber: "60")
-        XCTAssertEqual(candidates.count, 1)
+        XCTAssertEqual(candidates.count, 2)
         XCTAssertEqual(candidates.first, AWXBrandType.discover)
         candidates = AWXCardValidator.possibleBrandTypes(forCardNumber: nil)
-        XCTAssertEqual(candidates.count, 7)
+        XCTAssertEqual(candidates.count, 8)
         candidates = AWXCardValidator.possibleBrandTypes(forCardNumber: "")
-        XCTAssertEqual(candidates.count, 7)
+        XCTAssertEqual(candidates.count, 8)
     }
     
     func testLuhnValidation() {

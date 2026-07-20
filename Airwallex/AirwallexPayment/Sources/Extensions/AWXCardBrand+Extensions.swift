@@ -20,7 +20,8 @@ public extension AWXCardBrand {
             AWXCardBrand.JCB,
             AWXCardBrand.dinersClub,
             AWXCardBrand.discover,
-            AWXCardBrand.unionPay
+            AWXCardBrand.unionPay,
+            AWXCardBrand.maestro
         ]
     }
     
@@ -40,6 +41,8 @@ public extension AWXCardBrand {
             return .discover
         case AWXCardBrand.unionPay:
             return .unionPay
+        case AWXCardBrand.maestro:
+            return .maestro
         default:
             return .unknown
         }

@@ -25,6 +25,7 @@ extern AWXCardBrand const AWXCardBrandDiscover;
 extern AWXCardBrand const AWXCardBrandJCB;
 extern AWXCardBrand const AWXCardBrandDinersClub;
 extern AWXCardBrand const AWXCardBrandUnionPay;
+extern AWXCardBrand const AWXCardBrandMaestro;
 
 typedef NSString *AWXPaymentMethodFlow NS_TYPED_EXTENSIBLE_ENUM;
 extern AWXPaymentMethodFlow const AWXPaymentMethodFlowApp;

@@ -7,6 +7,7 @@
 //
 
 #import "AWXPaymentMethod.h"
+#import "AWXConstants.h"
 
 @implementation AWXPaymentMethod
 
@@ -86,12 +87,26 @@
     method.transactionCurrencies = json[@"transaction_currencies"];
     method.active = [json[@"active"] boolValue];
     method.resources = [AWXResources decodeFromJSON:json[@"resources"]];
-    NSMutableArray *cardSchemes = [NSMutableArray array];
+    NSMutableArray<AWXCardScheme *> *cardSchemes = [NSMutableArray array];
     NSArray *schemes = json[@"card_schemes"];
+    BOOL containsMastercard = NO;
+    BOOL containsMaestro = NO;
     if (schemes && [schemes isKindOfClass:[NSArray class]]) {
         for (NSDictionary *item in schemes) {
-            [cardSchemes addObject:[AWXCardScheme decodeFromJSON:item]];
+            AWXCardScheme *scheme = [AWXCardScheme decodeFromJSON:item];
+            [cardSchemes addObject:scheme];
+            if ([scheme.name caseInsensitiveCompare:AWXCardBrandMastercard] == NSOrderedSame) {
+                containsMastercard = YES;
+            } else if ([scheme.name caseInsensitiveCompare:AWXCardBrandMaestro] == NSOrderedSame) {
+                containsMaestro = YES;
+            }
         }
+    }
+    // The API does not return Maestro as a card scheme; add it wherever Mastercard is supported.
+    if (containsMastercard && !containsMaestro) {
+        AWXCardScheme *maestro = [AWXCardScheme new];
+        maestro.name = AWXCardBrandMaestro;
+        [cardSchemes addObject:maestro];
     }
     method.cardSchemes = cardSchemes;
     return method;

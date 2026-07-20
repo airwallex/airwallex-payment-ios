@@ -37,6 +37,7 @@ AWXCardBrand const AWXCardBrandDiscover = @"discover";
 AWXCardBrand const AWXCardBrandJCB = @"jcb";
 AWXCardBrand const AWXCardBrandDinersClub = @"diners";
 AWXCardBrand const AWXCardBrandUnionPay = @"unionpay";
+AWXCardBrand const AWXCardBrandMaestro = @"maestro";
 
 AWXPaymentMethodFlow const AWXPaymentMethodFlowApp = @"inapp";
 AWXPaymentMethodFlow const AWXPaymentMethodFlowWeb = @"mweb";

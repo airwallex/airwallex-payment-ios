@@ -46,7 +46,7 @@ class CardNumberTextFieldViewModelTests: XCTestCase {
         // card number with multiple possible brands
         let _ = viewModel.textField(textField, shouldChangeCharactersIn: NSRange(location: 0, length: 1), replacementString: "6")
         XCTAssertEqual(viewModel.currentBrand, .discover)// most specific card
-        XCTAssertEqual(Set(viewModel.cardBrands), allPossibleBrands)// all possible candidates
+        XCTAssertEqual(Set(viewModel.cardBrands), [.unionPay, .discover])// supported candidates for prefix "6"
         
         // empty card number
         let _ = viewModel.textField(textField, shouldChangeCharactersIn: NSRange(location: 0, length: 1), replacementString: "")

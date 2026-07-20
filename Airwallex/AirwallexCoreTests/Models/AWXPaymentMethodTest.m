@@ -37,6 +37,32 @@
     XCTAssertFalse(paymentMethodType.hasSchema);
     AWXCardScheme *amexScheme = paymentMethodType.cardSchemes[3];
     XCTAssertEqualObjects(amexScheme.name, @"amex");
+    // Maestro is appended because the fixture contains Mastercard but not Maestro
+    XCTAssertEqual(paymentMethodType.cardSchemes.count, 5);
+    XCTAssertEqualObjects(paymentMethodType.cardSchemes.lastObject.name, @"maestro");
+}
+
+- (void)testMaestroSchemeInjection {
+    // Mastercard present, Maestro absent -> Maestro appended
+    AWXPaymentMethodType *withMastercard = [AWXPaymentMethodType decodeFromJSON:@{
+        @"name": @"card",
+        @"card_schemes": @[@{@"name": @"visa"}, @{@"name": @"mastercard"}]
+    }];
+    XCTAssertEqualObjects([withMastercard.cardSchemes valueForKey:@"name"], (@[@"visa", @"mastercard", @"maestro"]));
+
+    // Maestro already present -> not duplicated
+    AWXPaymentMethodType *withMaestro = [AWXPaymentMethodType decodeFromJSON:@{
+        @"name": @"card",
+        @"card_schemes": @[@{@"name": @"mastercard"}, @{@"name": @"maestro"}]
+    }];
+    XCTAssertEqualObjects([withMaestro.cardSchemes valueForKey:@"name"], (@[@"mastercard", @"maestro"]));
+
+    // No Mastercard -> Maestro not added
+    AWXPaymentMethodType *withoutMastercard = [AWXPaymentMethodType decodeFromJSON:@{
+        @"name": @"card",
+        @"card_schemes": @[@{@"name": @"visa"}, @{@"name": @"unionpay"}]
+    }];
+    XCTAssertEqualObjects([withoutMastercard.cardSchemes valueForKey:@"name"], (@[@"visa", @"unionpay"]));
 }
 
 - (void)testPaymentMethodEncodeWithId {
