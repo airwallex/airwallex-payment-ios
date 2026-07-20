@@ -47,6 +47,8 @@ struct AWXCardBrand
 
 [`discover`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxcardbrand/discover.md)
 
+[`maestro`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxcardbrand/maestro.md)
+
 [`mastercard`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxcardbrand/mastercard.md)
 
 [`unionPay`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxcardbrand/unionpay.md)

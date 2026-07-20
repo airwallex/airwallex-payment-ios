@@ -142,6 +142,7 @@ $docc.location:airwallex/awxbrandtype/hash(into-).md
 $docc.location:airwallex/awxbrandtype/hashvalue.md
 $docc.location:airwallex/awxbrandtype/init(rawvalue-).md
 $docc.location:airwallex/awxbrandtype/jcb.md
+$docc.location:airwallex/awxbrandtype/maestro.md
 $docc.location:airwallex/awxbrandtype/mastercard.md
 $docc.location:airwallex/awxbrandtype/rawrepresentable-implementations.md
 $docc.location:airwallex/awxbrandtype/unionpay.md
@@ -183,6 +184,7 @@ $docc.location:airwallex/awxcardbrand/hash(into-).md
 $docc.location:airwallex/awxcardbrand/hashvalue.md
 $docc.location:airwallex/awxcardbrand/init(rawvalue-).md
 $docc.location:airwallex/awxcardbrand/jcb.md
+$docc.location:airwallex/awxcardbrand/maestro.md
 $docc.location:airwallex/awxcardbrand/mastercard.md
 $docc.location:airwallex/awxcardbrand/unionpay.md
 $docc.location:airwallex/awxcardbrand/visa.md

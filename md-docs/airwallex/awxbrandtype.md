@@ -37,6 +37,8 @@ enum AWXBrandType
 
 [`AWXBrandType.discover`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxbrandtype/discover.md)
 
+[`AWXBrandType.maestro`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxbrandtype/maestro.md)
+
 [`AWXBrandType.mastercard`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxbrandtype/mastercard.md)
 
 [`AWXBrandType.unionPay`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxbrandtype/unionpay.md)
