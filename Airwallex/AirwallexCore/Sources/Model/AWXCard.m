@@ -8,6 +8,7 @@
 
 #import "AWXCard.h"
 #import "AWXCardValidator.h"
+#import "AWXConstants.h"
 
 @implementation AWXCard
 
@@ -59,6 +60,13 @@
     card.cvcCheck = json[@"cvc_check"];
     card.avsCheck = json[@"avs_check"];
     card.numberType = json[@"number_type"];
+    // The API reports Maestro cards under the Mastercard brand; correct it locally from the BIN.
+    if ([card.brand caseInsensitiveCompare:AWXCardBrandMastercard] == NSOrderedSame && card.bin.length > 0) {
+        AWXBrand *detectedBrand = [[AWXCardValidator sharedCardValidator] brandForCardNumber:card.bin];
+        if (detectedBrand.type == AWXBrandTypeMaestro) {
+            card.brand = AWXCardBrandMaestro;
+        }
+    }
     return card;
 }
 
