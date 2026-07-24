@@ -26,17 +26,12 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font  = .awxFont(.body2)
         view.textColor = .awxColor(.textPrimary)
-        view.text = NSLocalizedString("Billing Address", bundle: .paymentSheet, comment: "Billing Address - title")
         return view
     }()
 
     private lazy var reuseButton: UIButton = {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(
-            NSLocalizedString("Same as shipping address", bundle: .paymentSheet, comment: "Billing Address - reuse toggle"),
-            for: .normal
-        )
         button.setTitleColor(.awxColor(.textPrimary), for: .normal)
         button.titleLabel?.font = .awxFont(.caption2)
 
@@ -137,6 +132,11 @@ class BillingInfoCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
 
     func setup(_ viewModel: BillingInfoCellViewModel) {
         self.viewModel = viewModel
+        titleLabel.text = NSLocalizedString("Billing Address", bundle: .paymentSheet.language(viewModel.language), comment: "Billing Address - title")
+        reuseButton.setTitle(
+            NSLocalizedString("Same as shipping address", bundle: .paymentSheet.language(viewModel.language), comment: "Billing Address - reuse toggle"),
+            for: .normal
+        )
         viewModel.updateFieldsLayeringForErrorStatus = { [weak self] in
             self?.setNeedsLayout()
         }

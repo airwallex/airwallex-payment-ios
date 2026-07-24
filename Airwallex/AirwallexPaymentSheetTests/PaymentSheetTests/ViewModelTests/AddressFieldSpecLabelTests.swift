@@ -20,16 +20,16 @@ class AddressFieldSpecLabelTests: XCTestCase {
     /// Localized lookup in the same bundle the production code uses — avoids hard-coding
     /// English so a future translation update doesn't break these tests.
     private func localized(_ key: String) -> String {
-        NSLocalizedString(key, bundle: .paymentSheet, comment: "")
+        NSLocalizedString(key, bundle: .paymentSheet.language(.english), comment: "")
     }
 
     // MARK: - Street
 
     func testStreet_AlwaysResolvesToStreetRegardlessOfNameType() {
-        XCTAssertEqual(spec(.street).localizedLabel, localized("Street"))
+        XCTAssertEqual(spec(.street).localizedLabel(language: .english), localized("Street"))
         // nameType is `nil` for `.street` in production, but the extension shouldn't read it
         // even if a future change populates it.
-        XCTAssertEqual(spec(.street, nameType: "prefecture").localizedLabel, localized("Street"))
+        XCTAssertEqual(spec(.street, nameType: "prefecture").localizedLabel(language: .english), localized("Street"))
     }
 
     // MARK: - State
@@ -49,20 +49,20 @@ class AddressFieldSpecLabelTests: XCTestCase {
             ("island", "Island"),
         ]
         for (nameType, expectedKey) in cases {
-            XCTAssertEqual(spec(.state, nameType: nameType).localizedLabel, localized(expectedKey),
+            XCTAssertEqual(spec(.state, nameType: nameType).localizedLabel(language: .english), localized(expectedKey),
                            "state nameType \(nameType) should map to \(expectedKey)")
         }
     }
 
     func testState_NameTypeMatchIsCaseInsensitive() {
-        XCTAssertEqual(spec(.state, nameType: "PREFECTURE").localizedLabel, localized("Prefecture"))
-        XCTAssertEqual(spec(.state, nameType: "Do_Si").localizedLabel, localized("Do Si"))
+        XCTAssertEqual(spec(.state, nameType: "PREFECTURE").localizedLabel(language: .english), localized("Prefecture"))
+        XCTAssertEqual(spec(.state, nameType: "Do_Si").localizedLabel(language: .english), localized("Do Si"))
     }
 
     func testState_FallsBackToStateForNilOrUnknownNameType() {
-        XCTAssertEqual(spec(.state, nameType: nil).localizedLabel, localized("State"))
-        XCTAssertEqual(spec(.state, nameType: "unknown_thing").localizedLabel, localized("State"))
-        XCTAssertEqual(spec(.state, nameType: "").localizedLabel, localized("State"))
+        XCTAssertEqual(spec(.state, nameType: nil).localizedLabel(language: .english), localized("State"))
+        XCTAssertEqual(spec(.state, nameType: "unknown_thing").localizedLabel(language: .english), localized("State"))
+        XCTAssertEqual(spec(.state, nameType: "").localizedLabel(language: .english), localized("State"))
     }
 
     // MARK: - City
@@ -74,14 +74,14 @@ class AddressFieldSpecLabelTests: XCTestCase {
             ("suburb", "Suburb"),
         ]
         for (nameType, expectedKey) in cases {
-            XCTAssertEqual(spec(.city, nameType: nameType).localizedLabel, localized(expectedKey),
+            XCTAssertEqual(spec(.city, nameType: nameType).localizedLabel(language: .english), localized(expectedKey),
                            "city nameType \(nameType) should map to \(expectedKey)")
         }
     }
 
     func testCity_FallsBackToCityForNilOrUnknownNameType() {
-        XCTAssertEqual(spec(.city, nameType: nil).localizedLabel, localized("City"))
-        XCTAssertEqual(spec(.city, nameType: "unknown").localizedLabel, localized("City"))
+        XCTAssertEqual(spec(.city, nameType: nil).localizedLabel(language: .english), localized("City"))
+        XCTAssertEqual(spec(.city, nameType: "unknown").localizedLabel(language: .english), localized("City"))
     }
 
     // MARK: - Postcode
@@ -93,14 +93,14 @@ class AddressFieldSpecLabelTests: XCTestCase {
             ("eircode", "Eircode"),
         ]
         for (nameType, expectedKey) in cases {
-            XCTAssertEqual(spec(.postcode, nameType: nameType).localizedLabel, localized(expectedKey),
+            XCTAssertEqual(spec(.postcode, nameType: nameType).localizedLabel(language: .english), localized(expectedKey),
                            "postcode nameType \(nameType) should map to \(expectedKey)")
         }
     }
 
     func testPostcode_FallsBackToPostalCodeForNilOrUnknownNameType() {
-        XCTAssertEqual(spec(.postcode, nameType: nil).localizedLabel, localized("Postal code"))
-        XCTAssertEqual(spec(.postcode, nameType: "unknown").localizedLabel, localized("Postal code"))
+        XCTAssertEqual(spec(.postcode, nameType: nil).localizedLabel(language: .english), localized("Postal code"))
+        XCTAssertEqual(spec(.postcode, nameType: "unknown").localizedLabel(language: .english), localized("Postal code"))
     }
 
     // MARK: - End-to-end via AddressRuleProvider
@@ -109,24 +109,24 @@ class AddressFieldSpecLabelTests: XCTestCase {
     /// catches drift between the JSON's `*_name_type` strings and the switch's case strings.
     func testEndToEnd_RuleProviderSpecsResolveToExpectedLabels() {
         let provider = AddressRuleProvider()
-        XCTAssertEqual(provider.fields(for: "JP").first { $0.kind == .state }?.localizedLabel,
+        XCTAssertEqual(provider.fields(for: "JP").first { $0.kind == .state }?.localizedLabel(language: .english),
                        localized("Prefecture"))
-        XCTAssertEqual(provider.fields(for: "CN").first { $0.kind == .state }?.localizedLabel,
+        XCTAssertEqual(provider.fields(for: "CN").first { $0.kind == .state }?.localizedLabel(language: .english),
                        localized("Province"))
-        XCTAssertEqual(provider.fields(for: "AE").first { $0.kind == .state }?.localizedLabel,
+        XCTAssertEqual(provider.fields(for: "AE").first { $0.kind == .state }?.localizedLabel(language: .english),
                        localized("Emirate"))
-        XCTAssertEqual(provider.fields(for: "GB").first { $0.kind == .city }?.localizedLabel,
+        XCTAssertEqual(provider.fields(for: "GB").first { $0.kind == .city }?.localizedLabel(language: .english),
                        localized("Town"))
-        XCTAssertEqual(provider.fields(for: "AU").first { $0.kind == .city }?.localizedLabel,
+        XCTAssertEqual(provider.fields(for: "AU").first { $0.kind == .city }?.localizedLabel(language: .english),
                        localized("Suburb"))
-        XCTAssertEqual(provider.fields(for: "IE").first { $0.kind == .postcode }?.localizedLabel,
+        XCTAssertEqual(provider.fields(for: "IE").first { $0.kind == .postcode }?.localizedLabel(language: .english),
                        localized("Eircode"))
-        XCTAssertEqual(provider.fields(for: "IN").first { $0.kind == .postcode }?.localizedLabel,
+        XCTAssertEqual(provider.fields(for: "IN").first { $0.kind == .postcode }?.localizedLabel(language: .english),
                        localized("Pin"))
-        XCTAssertEqual(provider.fields(for: "US").first { $0.kind == .postcode }?.localizedLabel,
+        XCTAssertEqual(provider.fields(for: "US").first { $0.kind == .postcode }?.localizedLabel(language: .english),
                        localized("ZIP code"))
         // SC has state_name_type "island" but no sub_keys — still resolves to Island.
-        XCTAssertEqual(provider.fields(for: "SC").first { $0.kind == .state }?.localizedLabel,
+        XCTAssertEqual(provider.fields(for: "SC").first { $0.kind == .state }?.localizedLabel(language: .english),
                        localized("Island"))
     }
 }

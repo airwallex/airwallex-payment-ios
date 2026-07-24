@@ -446,6 +446,18 @@ AWXUIContext.launchPayment(
 | `applePayButton` | Customize Apple Pay button appearance (e.g. `buttonType`, `disableCardArt`) | — |
 | `checkoutButton` | Customize checkout button (e.g. `title`) | — |
 
+#### Select the Payment UI Language
+
+Set `lang` on the session before presenting a payment sheet or creating an embedded payment element. Use a best-effort BCP-47 language identifier; the same resolved language is used for SDK-owned text and localized payment-method responses.
+
+```swift
+session.lang = "fr"
+```
+
+Regional and script variants such as `"ja-JP"` and `"zh-Hant"` are negotiated against the languages shipped by the SDK. Nil or empty values use the host application's preferred localization, and unsupported values fall back to English. Recreate the payment sheet or embedded element after changing `lang`.
+
+The legacy Core-owned CVC verification screen continues to use the application's preferred language.
+
 #### Handle Payment Result
 
 Handle the payment result in the callback of `AWXPaymentResultDelegate`.

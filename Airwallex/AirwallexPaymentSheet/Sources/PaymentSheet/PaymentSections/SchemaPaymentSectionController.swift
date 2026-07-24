@@ -29,7 +29,10 @@ class SchemaPaymentSectionController: NSObject, PaymentSectionController {
     private var paymentSessionHandler: PaymentSessionHandlerProtocol?
     private var methodProvider: PaymentMethodProvider
     let paymentUIContext: PaymentSheetUIContext
-    
+    private var language: AWXPaymentLanguage {
+        paymentUIContext.language
+    }
+
     // data from method details API
     private var schema: AWXSchema?
     private var bankList: [AWXBank]?
@@ -132,7 +135,7 @@ class SchemaPaymentSectionController: NSObject, PaymentSectionController {
             return cell
         case .redirectReminder:
             let cell = context.dequeueReusableCell(PaymentReminderCell.self, for: sectionItem, indexPath: indexPath)
-            cell.setup(.schema)
+            cell.setup(.schema, language: language)
             return cell
         case .bankName:
             let cell = context.dequeueReusableCell(BankSelectionCell.self, for: sectionItem, indexPath: indexPath)
@@ -175,7 +178,7 @@ class SchemaPaymentSectionController: NSObject, PaymentSectionController {
                 //  check schema
                 let schema = response.schemas.first { $0.transactionMode == session.transactionMode() }
                 guard let schema, !schema.fields.isEmpty else {
-                    throw NSLocalizedString("Invalid schema", bundle: .paymentSheet, comment: "schema section - invalid schema data").asError()
+                    throw NSLocalizedString("Invalid schema", bundle: .paymentSheet.language(language), comment: "schema section - invalid schema data").asError()
                 }
                 self.schema = schema
                 
@@ -190,6 +193,7 @@ class SchemaPaymentSectionController: NSObject, PaymentSectionController {
                         bankSelectionViewModel = BankSelectionCellViewModel(
                             bank: banks.count == 1 ? banks.first! : nil,
                             itemIdentifier: .bankName,
+                            language: language,
                             handleUserInteraction: { [weak self] in
                                 self?.handleBankSelection()
                             },
@@ -211,6 +215,7 @@ class SchemaPaymentSectionController: NSObject, PaymentSectionController {
                         fieldName: field.name,
                         textFieldType: field.textFieldType,
                         title: field.displayName,
+                        language: language,
                         returnActionHandler: { [weak self] itemIdentifier, _ in
                             guard let self else { return false }
                             let success = self.context.activateNextRespondableCell(
@@ -239,7 +244,10 @@ class SchemaPaymentSectionController: NSObject, PaymentSectionController {
                                     viewModel.text = prefix
                                 }
                             }
-                            viewModel.inputValidator = PrefixPhoneNumberValidator(prefix: prefix)
+                            viewModel.inputValidator = PrefixPhoneNumberValidator(
+                                prefix: prefix,
+                                language: language
+                            )
                         } else {
                             viewModel.text = self.session.billing?.phoneNumber
                         }
@@ -250,7 +258,10 @@ class SchemaPaymentSectionController: NSObject, PaymentSectionController {
                             viewModel.text = self.session.billing?.fullName
                         }
                     }
-                    if let validator = SchemaFieldValidator(field: field) {
+                    if let validator = SchemaFieldValidator(
+                        field: field,
+                        language: language
+                    ) {
                         viewModel.inputValidator = validator
                     }
                     
@@ -268,7 +279,10 @@ class SchemaPaymentSectionController: NSObject, PaymentSectionController {
                 schema = nil
                 bankList = nil
                 task = nil
-                UIViewController.topMost?.showAlert(message: error.localizedDescription)
+                UIViewController.topMost?.showAlert(
+                    message: error.localizedDescription,
+                    language: language
+                )
                 debugLog("Failed to get schema for selected method. Error: \(error.localizedDescription)")
             }
         }
@@ -381,7 +395,8 @@ private extension SchemaPaymentSectionController {
         guard let bankList else { return }
         let controller = BankListViewController(
             banks: bankList,
-            imageLoader: paymentUIContext.imageLoader
+            imageLoader: paymentUIContext.imageLoader,
+            language: language
         ) { [weak self] bank in
             guard let self else { return }
             self.bankSelectionViewModel?.bank = bank

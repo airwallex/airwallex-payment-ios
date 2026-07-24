@@ -32,7 +32,9 @@ class PaymentSheetUIContext: PaymentUIContextProviding {
 
     var hasPaymentUI: Bool { true }
 
-    init(delegate: AWXPaymentResultDelegate? = nil) {
+    init(language: AWXPaymentLanguage = .english,
+         delegate: AWXPaymentResultDelegate? = nil) {
+        self.language = language
         self.delegate = delegate
     }
 
@@ -63,6 +65,9 @@ class PaymentSheetUIContext: PaymentUIContextProviding {
 
     /// Configuration for the checkout button.
     var checkoutButtonConfiguration = AWXPaymentElement.Configuration.CheckoutButton()
+
+    /// Language scoped to this payment UI instance.
+    let language: AWXPaymentLanguage
 
     /// Whether Apple Pay pinned at top.
     var showsApplePayAsPrimaryButton: Bool {
@@ -110,8 +115,8 @@ extension PaymentSectionController {
     var checkoutButtonTitle: String {
         paymentUIContext.checkoutButtonConfiguration.title
             ?? (session.shouldShowPayAsCta
-                ? NSLocalizedString("Pay", bundle: .paymentSheet, comment: "checkout button title for one-off payment")
-                : NSLocalizedString("Confirm", bundle: .paymentSheet, comment: "checkout button title for recurring payment"))
+                ? NSLocalizedString("Pay", bundle: .paymentSheet.language(paymentUIContext.language), comment: "checkout button title for one-off payment")
+                : NSLocalizedString("Confirm", bundle: .paymentSheet.language(paymentUIContext.language), comment: "checkout button title for recurring payment"))
     }
 
     func prepareForEmbeddedCheckout(paymentMethod: String, handler: PaymentSessionHandlerProtocol?) {

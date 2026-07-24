@@ -164,7 +164,10 @@ class PaymentViewController: AWXViewController {
                 }
             } catch {
                 debugLog("failed to get payment method list: \(error)")
-                showAlert(message: error.localizedDescription) { _ in
+                showAlert(
+                    message: error.localizedDescription,
+                    language: paymentUIContext.language
+                ) { _ in
                     guard self.methodProvider.methods.isEmpty else {
                         return
                     }
@@ -215,7 +218,7 @@ extension PaymentViewController: AWXPageViewTrackable {
 extension PaymentViewController: CollectionViewSectionProvider {
     
     private var listTitle: String {
-        let defaultTitle = NSLocalizedString("Payment Methods", bundle: .paymentSheet, comment: "title for payment sheet")
+        let defaultTitle = NSLocalizedString("Payment Methods", bundle: .paymentSheet.language(paymentUIContext.language), comment: "title for payment sheet")
         if methodProvider is SinglePaymentMethodProvider {
             // Single-method: use the selected method name instead of the generic list title.
             return methodProvider.selectedMethod?.displayName ?? defaultTitle

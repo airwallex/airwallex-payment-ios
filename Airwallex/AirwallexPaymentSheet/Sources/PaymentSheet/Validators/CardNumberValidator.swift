@@ -15,8 +15,19 @@ import AirwallexPayment
 struct CardNumberValidator: UserInputValidator {
     
     let supportedCardSchemes: [AWXCardScheme]
+    let language: AWXPaymentLanguage
+
+    init(supportedCardSchemes: [AWXCardScheme],
+         language: AWXPaymentLanguage = .english) {
+        self.supportedCardSchemes = supportedCardSchemes
+        self.language = language
+    }
     
     func validateUserInput(_ text: String?) throws {
-        try AWXCardValidator.validate(number: text, supportedSchemes: supportedCardSchemes)
+        try AWXCardValidator.validate(
+            number: text,
+            supportedSchemes: supportedCardSchemes,
+            language: language
+        )
     }
 }

@@ -232,6 +232,7 @@ extension IntegrationDemoListViewController {
             applePayOptions: DemoDataSource.applePayOptions,
             autoCapture: ExamplesKeys.autoCapture,
             billing: shippingAddress,
+            lang: "zh_CN_Hant",
             paymentConsentOptions: consentOptions,
             requiredBillingContactFields: getRequiredBillingContactFields(),
             returnURL: ExamplesKeys.returnUrl

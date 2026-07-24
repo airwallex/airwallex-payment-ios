@@ -10,6 +10,9 @@ import UIKit
 #if canImport(AirwallexCore)
 import AirwallexCore
 #endif
+#if canImport(AirwallexPayment)
+import AirwallexPayment
+#endif
 
 class InfoCollectorCellViewModel<T: Hashable & Sendable>: InfoCollectorTextFieldViewModel, CellViewModelIdentifiable {
     
@@ -20,6 +23,7 @@ class InfoCollectorCellViewModel<T: Hashable & Sendable>: InfoCollectorTextField
          fieldName: String = "",
          textFieldType: AWXTextFieldType = .default,
          title: String? = nil,
+         language: AWXPaymentLanguage = .english,
          text: String? = nil,
          attributedText: NSAttributedString? = nil,
          placeholder: String? = nil,
@@ -53,6 +57,7 @@ class InfoCollectorCellViewModel<T: Hashable & Sendable>: InfoCollectorTextField
             returnKeyType: returnKeyType,
             customInputFormatter: customInputFormatter,
             customInputValidator: customInputValidator,
+            language: language,
             editingEventObserver: editingEventObserver,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )

@@ -6,6 +6,12 @@
 //
 
 import UIKit
+#if canImport(AirwallexCore)
+import AirwallexCore
+#endif
+#if canImport(AirwallexPayment)
+import AirwallexPayment
+#endif
 
 protocol SearchableListItem {
     /// Stable identifier used to mark the currently-selected row.
@@ -20,6 +26,8 @@ extension SearchableListItem {
 }
 
 class SearchableListViewController<Item: SearchableListItem>: UITableViewController, UISearchResultsUpdating {
+
+    var language: AWXPaymentLanguage = .english
 
     var items: [Item] = [] {
         didSet {
@@ -37,11 +45,7 @@ class SearchableListViewController<Item: SearchableListItem>: UITableViewControl
         let controller = UISearchController(searchResultsController: nil)
         controller.searchResultsUpdater = self
         controller.obscuresBackgroundDuringPresentation = false
-        controller.searchBar.placeholder = NSLocalizedString(
-            "Search",
-            bundle: .paymentSheet,
-            comment: "search placeholder in searchable list"
-        )
+        controller.searchBar.placeholder = NSLocalizedString("Search", bundle: .paymentSheet.language(language), comment: "search placeholder in searchable list")
         return controller
     }()
 
@@ -57,11 +61,7 @@ class SearchableListViewController<Item: SearchableListItem>: UITableViewControl
         navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
 
-        let closeTitle = NSLocalizedString(
-            "Close",
-            bundle: .paymentSheet,
-            comment: "close button on navigation bar"
-        )
+        let closeTitle = NSLocalizedString("Close", bundle: .paymentSheet.language(language), comment: "close button on navigation bar")
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: closeTitle,
             style: .plain,

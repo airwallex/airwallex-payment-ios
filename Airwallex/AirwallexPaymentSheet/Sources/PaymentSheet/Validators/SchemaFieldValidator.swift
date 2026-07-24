@@ -16,24 +16,26 @@ struct SchemaFieldValidator: UserInputValidator {
     
     let validation: AWXFieldValidation
     let displayName: String?
+    let language: AWXPaymentLanguage
     
-    init?(field: AWXField) {
+    init?(field: AWXField, language: AWXPaymentLanguage = .english) {
         guard let validation = field.validations,
               validation.regex != nil || validation.max > 0 else {
             return nil
         }
         self.validation = validation
         self.displayName = field.displayName.isEmpty ? nil : field.displayName
+        self.language = language
     }
     
     func validateUserInput(_ text: String?) throws {
         guard let text else {
-            throw NSLocalizedString("Invalid user input", bundle: .paymentSheet, comment: "invalid user input").asError()
+            throw NSLocalizedString("Invalid user input", bundle: .paymentSheet.language(language), comment: "invalid user input").asError()
         }
         
         if validation.max > 0 {
             guard text.count <= validation.max else {
-                throw NSLocalizedString("Input is too long.", bundle: .paymentSheet, comment: "invalid user input").asError()
+                throw NSLocalizedString("Input is too long.", bundle: .paymentSheet.language(language), comment: "invalid user input").asError()
             }
         }
         
@@ -48,10 +50,10 @@ struct SchemaFieldValidator: UserInputValidator {
                 
                 guard fullMatch else {
                     if let displayName {
-                        let localizedFormat = NSLocalizedString("Invalid %@", bundle: .paymentSheet, comment: "user input validation")
+                        let localizedFormat = NSLocalizedString("Invalid %@", bundle: .paymentSheet.language(language), comment: "user input validation")
                         throw String(format: localizedFormat, displayName.lowercased()).asError()
                     } else {
-                        throw NSLocalizedString("Invalid user input", bundle: .paymentSheet, comment: "invalid user input").asError()
+                        throw NSLocalizedString("Invalid user input", bundle: .paymentSheet.language(language), comment: "invalid user input").asError()
                     }
                 }
             } catch let error as ErrorMessage {

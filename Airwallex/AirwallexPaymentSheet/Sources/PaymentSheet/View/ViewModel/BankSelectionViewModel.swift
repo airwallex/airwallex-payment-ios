@@ -21,7 +21,7 @@ class BankSelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectionVi
         }
     }
     
-    private let errorMessage = NSLocalizedString("Please select a bank", bundle: .paymentSheet, comment: "user input validation - bank selection view error hint")
+    private let errorMessage: String
     
     // MARK: - OptionSelectionViewConfiguring
     var icon: UIImage? { nil }
@@ -37,15 +37,17 @@ class BankSelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectionVi
     var handleUserInteraction: () -> Void
     
     init(bank: AWXBank? = nil,
+         language: AWXPaymentLanguage = .english,
          handleUserInteraction: @escaping () -> Void,
          reconfigureHandler: @escaping ReconfigureHandler) {
         self.bank = bank
+        self.errorMessage = NSLocalizedString("Please select a bank", bundle: .paymentSheet.language(language), comment: "user input validation - bank selection view error hint")
         self.handleUserInteraction = handleUserInteraction
         super.init(
             fieldName: AWXField.Name.bankName,
-            title: NSLocalizedString("Bank", bundle: .paymentSheet, comment: "title for bank selection"),
+            title: NSLocalizedString("Bank", bundle: .paymentSheet.language(language), comment: "title for bank selection"),
             text: bank?.displayName,
-            placeholder: NSLocalizedString("Select...", bundle: .paymentSheet, comment: "bank selection placeholder"),
+            placeholder: NSLocalizedString("Select...", bundle: .paymentSheet.language(language), comment: "bank selection placeholder"),
             isRequired: true,
             reconfigureHandler: reconfigureHandler
         )
@@ -65,11 +67,13 @@ class BankSelectionCellViewModel: BankSelectionViewModel, CellViewModelIdentifia
     let itemIdentifier: String
     init(bank: AWXBank? = nil,
          itemIdentifier: String,
+         language: AWXPaymentLanguage = .english,
          handleUserInteraction: @escaping () -> Void,
          cellReconfigureHandler: @escaping CellReconfigureHandler) {
         self.itemIdentifier = itemIdentifier
         super.init(
             bank: bank,
+            language: language,
             handleUserInteraction: handleUserInteraction,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )

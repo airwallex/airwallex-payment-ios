@@ -15,6 +15,7 @@ import AirwallexPayment
 class CardInfoCollectorCellViewModel: CellViewModelIdentifiable {
     
     var itemIdentifier: String
+    let language: AWXPaymentLanguage
     
     var cardNumberConfigurer: CardNumberTextFieldViewModel!
     var expireDataConfigurer: InfoCollectorTextFieldViewModel!
@@ -34,12 +35,15 @@ class CardInfoCollectorCellViewModel: CellViewModelIdentifiable {
     // MARK: -
     init(itemIdentifier: String,
          cardSchemes: [AWXCardScheme],
+         language: AWXPaymentLanguage = .english,
          returnActionHandler: CellReturnActionHandler?,
          reconfigureHandler: @escaping CellReconfigureHandler,
          cardNumberDidEndEditing: @escaping () -> Void) {
         self.itemIdentifier = itemIdentifier
+        self.language = language
         cardNumberConfigurer = CardNumberTextFieldViewModel(
             supportedCardSchemes: cardSchemes,
+            language: language,
             editingEventObserver: UserEditingEventObserver { event, _ in
                 switch event {
                 case .editingDidBegin:
@@ -59,7 +63,9 @@ class CardInfoCollectorCellViewModel: CellViewModelIdentifiable {
             placeholder: "MM / YY",
             clearButtonMode: .whileEditing,
             customInputFormatter: CardExpiryFormatter(),
-            customInputValidator: CardExpiryValidator(),
+            customInputValidator: CardExpiryValidator(
+                language: language
+            ),
             editingEventObserver: BeginEditingEventObserver {
                 RiskLogger.log(.inputCardExpiry, screen: .createCard)
             },
@@ -73,10 +79,14 @@ class CardInfoCollectorCellViewModel: CellViewModelIdentifiable {
                 }
                 return returnActionHandler(self.itemIdentifier, textField)
             },
-            cvcValidator: CardCVCValidator { [weak self] in
-                guard let self else { return AWXCardValidator.cvcLength(for: .unknown) }
-                return AWXCardValidator.cvcLength(for: self.cardNumberConfigurer.currentBrand)
-            },
+            cvcValidator: CardCVCValidator(
+                maxLengthGetter: { [weak self] in
+                    guard let self else { return AWXCardValidator.cvcLength(for: .unknown) }
+                    return AWXCardValidator.cvcLength(for: self.cardNumberConfigurer.currentBrand)
+                },
+                language: language
+            ),
+            language: language,
             editingEventObserver: BeginEditingEventObserver {
                 RiskLogger.log(.inputCardCVC, screen: .createCard)
             },

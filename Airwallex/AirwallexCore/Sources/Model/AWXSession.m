@@ -21,7 +21,7 @@
 - (instancetype)init {
     if (self = [super init]) {
         self.requiredBillingContactFields = AWXRequiredBillingContactFieldName;
-        self.lang = [[[NSBundle mainBundle] preferredLocalizations] firstObject] ?: NSLocale.currentLocale.languageCode;
+        self.lang = [NSBundle preferredLocalizationsFromArray:NSBundle.resourceBundle.localizations forPreferences:NSBundle.mainBundle.localizations].firstObject ?: @"en";
     }
 
     return self;

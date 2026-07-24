@@ -10,6 +10,9 @@ import UIKit
 #if canImport(AirwallexCore)
 import AirwallexCore
 #endif
+#if canImport(AirwallexPayment)
+import AirwallexPayment
+#endif
 
 protocol UserInputValidator {
     func validateUserInput(_ text: String?) throws
@@ -100,6 +103,7 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
          returnActionHandler: ReturnActionHandler? = nil,
          customInputFormatter: UserInputFormatter? = nil,
          customInputValidator: UserInputValidator? = nil,
+         language: AWXPaymentLanguage = .english,
          editingEventObserver: EditingEventObserver? = nil,
          reconfigureHandler: @escaping ReconfigureHandler) {
         self.fieldName = fieldName
@@ -127,7 +131,8 @@ class InfoCollectorTextFieldViewModel: NSObject, InfoCollectorTextFieldConfiguri
             self.inputValidator = InfoCollectorDefaultValidator(
                 fieldType: textFieldType,
                 isRequired: isRequired,
-                title: title
+                title: title,
+                language: language
             )
         }
         if let customInputFormatter {
@@ -227,15 +232,17 @@ extension InfoCollectorTextFieldViewModel: UITextFieldDelegate {
 extension InfoCollectorTextFieldViewModel {
     convenience init(returnActionHandler: ReturnActionHandler? = nil,
                      cvcValidator: CardCVCValidator,
+                     language: AWXPaymentLanguage = .english,
                      editingEventObserver: EditingEventObserver,
                      reconfigureHandler: @escaping ReconfigureHandler) {
         self.init(
             textFieldType: .CVC,
-            placeholder: NSLocalizedString("CVC", bundle: .paymentSheet, comment: "user input - cvc placeholder"),
+            placeholder: NSLocalizedString("CVC", bundle: .paymentSheet.language(language), comment: "user input - cvc placeholder"),
             clearButtonMode: .whileEditing,
             returnActionHandler: returnActionHandler,
             customInputFormatter: cvcValidator,
             customInputValidator: cvcValidator,
+            language: language,
             editingEventObserver: editingEventObserver,
             reconfigureHandler: reconfigureHandler
         )

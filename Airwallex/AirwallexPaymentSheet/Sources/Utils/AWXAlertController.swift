@@ -7,6 +7,12 @@
 //
 
 import UIKit
+#if canImport(AirwallexCore)
+import AirwallexCore
+#endif
+#if canImport(AirwallexPayment)
+import AirwallexPayment
+#endif
 
 class AWXAlertController: UIAlertController {
     
@@ -25,12 +31,13 @@ extension UIViewController {
     func showAlert(
         title: String? = nil,
         message: String? = nil,
+        language: AWXPaymentLanguage = .english,
         action: ((UIAlertAction) -> Void)? = nil
     ) {
         let alert = AWXAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(
             UIAlertAction(
-                title: NSLocalizedString("Close", bundle: .paymentSheet, comment: "close button for alert"),
+                title: NSLocalizedString("Close", bundle: .paymentSheet.language(language), comment: "close button for alert"),
                 style: .cancel,
                 handler: action
             )

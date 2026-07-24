@@ -13,6 +13,28 @@ import AirwallexCore
 
 private let localizationComment = "session validation"
 
+package func resolvePaymentLanguage(_ lang: String?) -> AWXPaymentLanguage {
+    let trimmedLanguage = lang?.trimmingCharacters(in: .whitespacesAndNewlines)
+    let preferences: [String]
+    if let trimmedLanguage, !trimmedLanguage.isEmpty {
+        preferences = [trimmedLanguage]
+    } else {
+        preferences = Bundle.main.preferredLocalizations
+    }
+    let localization = Bundle.preferredLocalizations(
+        from: Bundle.payment.localizations,
+        forPreferences: preferences
+    ).first
+    return localization.flatMap(AWXPaymentLanguage.init(rawValue:)) ?? .english
+}
+
+package extension AWXSession {
+    /// Resolves the raw preference without changing `lang`.
+    var resolvedPaymentLanguage: AWXPaymentLanguage {
+        resolvePaymentLanguage(lang)
+    }
+}
+
 public extension AWXSession {
     enum ValidationError: LocalizedError, CustomNSError {
         case invalidPaymentIntent(String)

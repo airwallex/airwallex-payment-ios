@@ -257,4 +257,48 @@ class AWXCardValidatorExtensionTests: XCTestCase {
             }
         }
     }
+
+    func testPaymentLocalizationTablesHaveConsistentKeysAndFormats() throws {
+        let bundle = Bundle.payment
+        let english = try localizationTable(in: bundle, localization: "en")
+
+        for localization in bundle.localizations {
+            let table = try localizationTable(in: bundle, localization: localization)
+            XCTAssertEqual(Set(table.keys), Set(english.keys), "Localization keys differ for \(localization)")
+            for key in english.keys {
+                XCTAssertEqual(
+                    table[key]?.components(separatedBy: "%@").count,
+                    english[key]?.components(separatedBy: "%@").count,
+                    "Format placeholders differ for \(key) in \(localization)"
+                )
+            }
+        }
+    }
+
+    func testLanguageBundleSupportsRegionalAndScriptVariants() {
+        XCTAssertEqual(
+            NSLocalizedString(
+                "Invalid card number",
+                bundle: Bundle.payment.language(.portugueseBrazil),
+                comment: ""
+            ),
+            "Número do cartão inválido"
+        )
+        XCTAssertEqual(
+            NSLocalizedString(
+                "Invalid card number",
+                bundle: Bundle.payment.language(.chineseTraditional),
+                comment: ""
+            ),
+            "卡號無效"
+        )
+    }
+
+    private func localizationTable(in bundle: Bundle, localization: String) throws -> [String: String] {
+        let localizedBundle = try XCTUnwrap(
+            bundle.path(forResource: localization, ofType: "lproj").flatMap(Bundle.init(path:))
+        )
+        let path = try XCTUnwrap(localizedBundle.path(forResource: "Localizable", ofType: "strings"))
+        return try XCTUnwrap(NSDictionary(contentsOfFile: path) as? [String: String])
+    }
 }

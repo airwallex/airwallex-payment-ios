@@ -38,7 +38,7 @@ import Foundation
     /// Indicates whether card saving is enabled by default.
     /// Defaults to YES.
     @objc public let autoSaveCardForFuturePayments: Bool
-    
+
     /// Creates a new unified Session for payment processing.
     ///
     /// This initializer supports both one-off and recurring payment scenarios through a single API.
@@ -66,8 +66,8 @@ import Foundation
     ///                         - true: Only show new payment method entry
     ///                         - false: Show saved payment methods (if available)
     ///                         Default: false.
-    ///   - lang: Language code for UI localization (e.g., "en", "zh-Hans", "ja").
-    ///          If nil, uses the system's current language. Default: system language.
+    ///   - lang: Preferred BCP-47 language identifier for SDK UI and localized payment responses.
+    ///           Nil preserves the default initialized by `AWXSession`.
     ///   - paymentMethods: Array of payment method identifiers to limit which methods are displayed.
     ///                    Useful for restricting to specific payment types (e.g., ["card", "wechatpay"]).
     ///                    If nil, all available methods for the region are shown. Default: nil.
@@ -99,12 +99,13 @@ import Foundation
         self.paymentConsentOptions = paymentConsentOptions
         self.autoCapture = autoCapture
         self.autoSaveCardForFuturePayments = autoSaveCardForFuturePayments
-        
         super.init()
+        if let lang {
+            self.lang = lang
+        }
         self.countryCode = countryCode
         self.hidePaymentConsents = hidePaymentConsents
         self.returnURL = returnURL
-        self.lang = lang ?? Locale.current.languageCode ?? "en"
         self.billing = billing
         self.requiredBillingContactFields = requiredBillingContactFields
         self.applePayOptions = applePayOptions
@@ -126,7 +127,8 @@ import Foundation
     ///   - autoSaveCardForFuturePayments: Whether to automatically save card details for future payments. Default: true.
     ///   - billing: Pre-filled billing address information. Default: nil.
     ///   - hidePaymentConsents: Whether to hide previously saved payment methods. Default: false.
-    ///   - lang: Language code for UI localization. Default: system language.
+    ///   - lang: Preferred BCP-47 language identifier for SDK UI and localized payment responses.
+    ///           Nil preserves the default initialized by `AWXSession`.
     ///   - paymentMethods: Array of payment method identifiers to limit display. Default: nil.
     ///   - paymentConsentOptions: Configuration for recurring payments. Default: nil.
     ///   - requiredBillingContactFields: Which billing contact fields are mandatory. Default: .name.
@@ -149,12 +151,13 @@ import Foundation
         self.paymentConsentOptions = paymentConsentOptions
         self.autoCapture = autoCapture
         self.autoSaveCardForFuturePayments = autoSaveCardForFuturePayments
-
         super.init()
+        if let lang {
+            self.lang = lang
+        }
         self.countryCode = countryCode
         self.hidePaymentConsents = hidePaymentConsents
         self.returnURL = returnURL
-        self.lang = lang ?? Locale.current.languageCode ?? "en"
         self.billing = billing
         self.requiredBillingContactFields = requiredBillingContactFields
         self.applePayOptions = applePayOptions
@@ -304,7 +307,7 @@ extension Session {
         }
         
         // Create new instance with extracted parameters
-        return Session(
+        let convertedSession = Session(
             paymentIntent: intent,
             countryCode: session.countryCode,
             applePayOptions: session.applePayOptions,
@@ -318,6 +321,7 @@ extension Session {
             requiredBillingContactFields: session.requiredBillingContactFields,
             returnURL: session.returnURL
         )
+        return convertedSession
     }
     
     /// Converts the current `Session` instance to a legacy `AWXSession` object.

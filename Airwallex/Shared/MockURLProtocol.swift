@@ -13,11 +13,13 @@ class MockURLProtocol: URLProtocol {
     static var mockResponse: (Data?, URLResponse?, Error?)?
     static var mockResponseMap: [String: (Data?, URLResponse?, Error?)]?
     static var responseDelay: UInt64 = UInt64.random(in: 1_000...2_000)
+    static var lastRequest: URLRequest?
     
     static func resetMockResponses() {
         mockResponse = nil
         mockResponseMap = nil
         responseDelay = UInt64.random(in: 1_000...2_000)
+        lastRequest = nil
     }
     
     override class func canInit(with request: URLRequest) -> Bool {
@@ -29,6 +31,7 @@ class MockURLProtocol: URLProtocol {
     }
 
     override func startLoading() {
+        Self.lastRequest = request
         if let (data, response, error) = Self.mockResponse {
             communicateClient(data, response, error)
         } else if let url = request.url, let (data, response, error) = Self.mockResponseMap?[url.path] {

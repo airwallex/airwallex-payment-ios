@@ -10,6 +10,9 @@ import Foundation
 #if canImport(AirwallexCore)
 import AirwallexCore
 #endif
+#if canImport(AirwallexPayment)
+import AirwallexPayment
+#endif
 
 class CardNumberTextFieldViewModel: InfoCollectorTextFieldViewModel, CardBrandViewConfiguring {
     let supportedBrands: [AWXBrandType]
@@ -49,6 +52,7 @@ class CardNumberTextFieldViewModel: InfoCollectorTextFieldViewModel, CardBrandVi
     private let formatter: CardNumberFormatter
     
     init(supportedCardSchemes: [AWXCardScheme],
+         language: AWXPaymentLanguage = .english,
          editingEventObserver: EditingEventObserver?,
          reconfigureHandler: @escaping ReconfigureHandler) {
         supportedBrands = supportedCardSchemes.compactMap { $0.brandType == .unknown ? nil : $0.brandType }
@@ -58,7 +62,10 @@ class CardNumberTextFieldViewModel: InfoCollectorTextFieldViewModel, CardBrandVi
             placeholder: "1234 1234 1234 1234",
             clearButtonMode: .whileEditing,
             customInputFormatter: formatter,
-            customInputValidator: CardNumberValidator(supportedCardSchemes: supportedCardSchemes),
+            customInputValidator: CardNumberValidator(
+                supportedCardSchemes: supportedCardSchemes,
+                language: language
+            ),
             editingEventObserver: editingEventObserver,
             reconfigureHandler: reconfigureHandler
         )
