@@ -91,7 +91,7 @@
     AWXPaymentConsent *consent = [AWXPaymentConsent new];
     AWXPaymentMethod *method = [AWXPaymentMethod new];
     AWXCard *card = [AWXCard new];
-    card.numberType = @"PAN";
+    card.numberType = @"AIRWALLEX_NETWORK_TOKEN";
     method.card = card;
     consent.Id = @"consentID";
     consent.paymentMethod = method;

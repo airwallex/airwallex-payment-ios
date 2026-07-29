@@ -69,6 +69,7 @@
 }
 
 - (void)confirmPaymentIntentWithPaymentConsent:(AWXPaymentConsent *)paymentConsent {
+    NSAssert(![paymentConsent.paymentMethod.card.numberType isEqualToString:@"PAN"], @"Do not use AWXCardProvider directly. Use PaymentSessionHandler.confirmConsentPayment instead.");
     [self confirmPaymentIntentWithPaymentConsentId:paymentConsent.Id];
 }
 

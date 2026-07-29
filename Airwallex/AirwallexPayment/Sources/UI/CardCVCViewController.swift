@@ -306,6 +306,8 @@ final class CardCVCViewController: UIViewController {
                 navigationController.popViewController(animated: true)
                 completion()
             }
+        } else {
+            completion()
         }
     }
 }
