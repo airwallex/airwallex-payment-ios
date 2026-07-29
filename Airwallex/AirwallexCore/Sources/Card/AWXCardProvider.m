@@ -8,7 +8,6 @@
 
 #import "AWXCardProvider.h"
 #import "AWXAPIClient.h"
-#import "AWXCardCVCViewController.h"
 #import "AWXDevice.h"
 #import "AWXPaymentConsent.h"
 #import "AWXPaymentIntentRequest.h"
@@ -17,7 +16,6 @@
 #import "AWXPaymentMethodRequest.h"
 #import "AWXPaymentMethodResponse.h"
 #import "AWXSession.h"
-#import "AWXUtils.h"
 #import "NSObject+Logging.h"
 
 @implementation AWXCardProvider
@@ -71,37 +69,7 @@
 }
 
 - (void)confirmPaymentIntentWithPaymentConsent:(AWXPaymentConsent *)paymentConsent {
-    // Get the host view controller from the delegate
-    UIViewController *hostViewController = nil;
-    if ([self.delegate respondsToSelector:@selector(hostViewController)]) {
-        hostViewController = [self.delegate hostViewController];
-    }
-
-    if (!hostViewController) {
-        @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                       reason:@"hostViewController of AWXProviderDelegate is not provided"
-                                     userInfo:nil];
-    }
-
-    // Check payment method type
-    if ([paymentConsent.paymentMethod.card.numberType isEqualToString:@"PAN"]) {
-        AWXCardCVCViewController *controller = [[AWXCardCVCViewController alloc] initWithNibName:nil bundle:nil];
-        controller.session = self.session;
-        controller.paymentConsent = paymentConsent;
-        controller.cvcCallback = ^(NSString *_Nonnull cvc, BOOL cancelled) {
-            if (cancelled) {
-                [self.delegate provider:self didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
-            } else {
-                paymentConsent.paymentMethod.card.cvc = cvc;
-                [self confirmPaymentIntentWithPaymentMethod:paymentConsent.paymentMethod paymentConsent:paymentConsent];
-            }
-        };
-        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
-        navigationController.modalInPresentation = YES;
-        [hostViewController presentViewController:navigationController animated:YES completion:nil];
-    } else {
-        [self confirmPaymentIntentWithPaymentConsentId:paymentConsent.Id];
-    }
+    [self confirmPaymentIntentWithPaymentConsentId:paymentConsent.Id];
 }
 
 - (void)confirmPaymentIntentWithPaymentConsentId:(NSString *)paymentConsentId {

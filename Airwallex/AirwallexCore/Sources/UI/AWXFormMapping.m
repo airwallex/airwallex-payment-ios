@@ -8,7 +8,6 @@
 
 #import "AWXFormMapping.h"
 #import "AWXForm.h"
-#import "AWXUtils.h"
 
 @implementation AWXFormMapping
 

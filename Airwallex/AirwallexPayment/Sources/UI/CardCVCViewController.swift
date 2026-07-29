@@ -48,7 +48,7 @@ final class CardCVCViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .awxColor(.textSecondary)
-        label.font = .awxFont(.body2)
+        label.font = .awxFont(.headline1)
         return label
     }()
 
@@ -183,18 +183,18 @@ final class CardCVCViewController: UIViewController {
             contentView.widthAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.widthAnchor),
             contentView.heightAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.heightAnchor).priority(.defaultHigh - 20),
 
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
 
-            totalLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+            totalLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
             totalLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
             totalLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
 
             cvcFieldContainer.topAnchor.constraint(equalTo: totalLabel.bottomAnchor, constant: 16),
             cvcFieldContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
             cvcFieldContainer.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.328),
-            cvcFieldContainer.heightAnchor.constraint(equalToConstant: 60),
+            cvcFieldContainer.heightAnchor.constraint(equalToConstant: 52),
 
             cvcTextField.leadingAnchor.constraint(equalTo: cvcFieldContainer.leadingAnchor, constant: 16),
             cvcTextField.trailingAnchor.constraint(equalTo: cvcFieldContainer.trailingAnchor, constant: -16),

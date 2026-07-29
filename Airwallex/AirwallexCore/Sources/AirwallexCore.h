@@ -21,7 +21,6 @@ FOUNDATION_EXPORT const unsigned char AirwallexCoreVersionString[];
 #import "AWXApplePayOptions.h"
 #import "AWXApplePayProvider.h"
 #import "AWXCard.h"
-#import "AWXCardCVCViewController.h"
 #import "AWXCardProvider.h"
 #import "AWXCardScheme.h"
 #import "AWXCardValidator.h"
