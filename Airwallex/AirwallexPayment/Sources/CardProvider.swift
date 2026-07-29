@@ -10,6 +10,7 @@
 import AirwallexCore
 #endif
 import Foundation
+import UIKit
 
 class CardProvider: PaymentProvider {
     
@@ -134,10 +135,11 @@ class CardProvider: PaymentProvider {
         }
         
         let cvc: String = try await withCheckedThrowingContinuation { continuation in
-            let controller = AWXCardCVCViewController(nibName: nil, bundle: nil)
-            controller.session = session
-            controller.paymentConsent = consent
-            controller.cvcCallback = { cvc, cancelled in
+            let controller = CardCVCViewController(
+                card: consent?.paymentMethod?.card,
+                totalAmountText: session.totalAmountText,
+                language: session.resolvedPaymentLanguage
+            ) { cvc, cancelled in
                 if cancelled {
                     continuation.resume(throwing: CancellationError())
                 } else {

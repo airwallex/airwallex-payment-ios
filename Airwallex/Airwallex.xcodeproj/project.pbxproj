@@ -140,6 +140,7 @@
 		D81983D62D6F12BD008008A3 /* AirwallexCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085BD3C823CC62B4002E8F27 /* AirwallexCore.framework */; platformFilter = ios; };
 		D81983E82D6F1438008008A3 /* AirwallexRisk.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1803AC8D2C59DB4300BC9FBF /* AirwallexRisk.xcframework */; };
 		D81C742F2F7E1974000EDC74 /* AWX3DSServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D81C742E2F7E1974000EDC74 /* AWX3DSServiceTests.m */; };
+		D82346F4301996AF005EE91D /* NSLayoutConstraint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36EEB2E5C5CB0005618D4 /* NSLayoutConstraint+Extensions.swift */; };
 		D8269FB22DB7701300E179EB /* AWXApplePayProviderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37D527EAFD9F00CFC2EF /* AWXApplePayProviderTest.m */; };
 		D8269FB32DB7701300E179EB /* PKContactRequestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE9BA292806D923005B70C3 /* PKContactRequestTest.m */; };
 		D8269FB42DB7701300E179EB /* AWXPaymentIntentSummaryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A37F527ED65C200CFC2EF /* AWXPaymentIntentSummaryTest.m */; };
@@ -271,6 +272,7 @@
 		D8BD9E172D0191BF0045A892 /* Airwallex.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E0D2D0191BF0045A892 /* Airwallex.xcassets */; };
 		D8BD9E182D0191BF0045A892 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D8BD9E102D0191BF0045A892 /* PrivacyInfo.xcprivacy */; };
 		D8C49F0F2F6D3D5600D83B87 /* AWXUIContext+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C49F0E2F6D3D5600D83B87 /* AWXUIContext+Configuration.swift */; };
+		D8C7C0012F4A000000000002 /* CardCVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C7C0012F4A000000000001 /* CardCVCViewController.swift */; };
 		D8D36E732E5C5CAC005618D4 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36E562E5C5CAC005618D4 /* Array+Extensions.swift */; };
 		D8D36E742E5C5CAC005618D4 /* AWXBrandType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36E572E5C5CAC005618D4 /* AWXBrandType+Extensions.swift */; };
 		D8D36E752E5C5CAC005618D4 /* AWXCard+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D36E582E5C5CAC005618D4 /* AWXCard+Extensions.swift */; };
@@ -669,6 +671,7 @@
 		D8BD9E0D2D0191BF0045A892 /* Airwallex.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Airwallex.xcassets; sourceTree = "<group>"; };
 		D8BD9E102D0191BF0045A892 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		D8C49F0E2F6D3D5600D83B87 /* AWXUIContext+Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AWXUIContext+Configuration.swift"; sourceTree = "<group>"; };
+		D8C7C0012F4A000000000001 /* CardCVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCVCViewController.swift; sourceTree = "<group>"; };
 		D8D36E472E5C5CAC005618D4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D8D36E482E5C5CAC005618D4 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D8D36E492E5C5CAC005618D4 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1443,10 +1446,13 @@
 		D8D36E6A2E5C5CAC005618D4 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				D8D36EEB2E5C5CB0005618D4 /* NSLayoutConstraint+Extensions.swift */,
 				D8D36EED2E5C5CB0005618D4 /* UIColor+Extensions.swift */,
+				D8D36EE92E5C5CB0005618D4 /* Font+Extensions.swift */,
 				D8D36E682E5C5CAC005618D4 /* LoadingSpinnerView.swift */,
 				D8D36EEC2E5C5CB0005618D4 /* Palette.swift */,
 				D8D36E692E5C5CAC005618D4 /* UIViewController+Extensions.swift */,
+				D8C7C0012F4A000000000001 /* CardCVCViewController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1651,9 +1657,7 @@
 				D8D36EE62E5C5CB0005618D4 /* AWXSchema+Extensions.swift */,
 				D8D36EE72E5C5CB0005618D4 /* Bundle+PaymentSheet.swift */,
 				D8D36EE82E5C5CB0005618D4 /* CGFloat+Extensions.swift */,
-				D8D36EE92E5C5CB0005618D4 /* Font+Extensions.swift */,
 				D8D36EEA2E5C5CB0005618D4 /* ImageLoader.swift */,
-				D8D36EEB2E5C5CB0005618D4 /* NSLayoutConstraint+Extensions.swift */,
 				D8D36EEE2E5C5CB0005618D4 /* UIImage+Extensions.swift */,
 				D8D36EEF2E5C5CB0005618D4 /* UIStackView+Extensions.swift */,
 				D8D36EF02E5C5CB0005618D4 /* UITextField+Extensions.swift */,
@@ -2403,7 +2407,6 @@
 				D8D36F332E5C5CB0005618D4 /* AWXSchema+Extensions.swift in Sources */,
 				D8D36F342E5C5CB0005618D4 /* Bundle+PaymentSheet.swift in Sources */,
 				D8D36F352E5C5CB0005618D4 /* CGFloat+Extensions.swift in Sources */,
-				D8D36F362E5C5CB0005618D4 /* Font+Extensions.swift in Sources */,
 				D8D36F372E5C5CB0005618D4 /* ImageLoader.swift in Sources */,
 				D83449242F5844750087BF54 /* BottomSheetTransitioningDelegate.swift in Sources */,
 				D8D36F382E5C5CB0005618D4 /* NSLayoutConstraint+Extensions.swift in Sources */,
@@ -2438,8 +2441,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D82346F4301996AF005EE91D /* NSLayoutConstraint+Extensions.swift in Sources */,
 				D8FA52882EFA64240010E912 /* UIColor+Extensions.swift in Sources */,
 				D8FA4FC62EFA48D70010E912 /* Palette.swift in Sources */,
+				D8D36F362E5C5CB0005618D4 /* Font+Extensions.swift in Sources */,
+				D8C7C0012F4A000000000002 /* CardCVCViewController.swift in Sources */,
 				D8D36E732E5C5CAC005618D4 /* Array+Extensions.swift in Sources */,
 				D8D36E742E5C5CAC005618D4 /* AWXBrandType+Extensions.swift in Sources */,
 				D8D36E752E5C5CAC005618D4 /* AWXCard+Extensions.swift in Sources */,

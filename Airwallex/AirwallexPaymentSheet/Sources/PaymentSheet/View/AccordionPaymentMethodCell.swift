@@ -7,6 +7,9 @@
 //
 
 import UIKit
+#if canImport(AirwallexPayment)
+import AirwallexPayment
+#endif
 
 class AccordionPaymentMethodCell: UICollectionViewCell, ViewConfigurable, ViewReusable {
     

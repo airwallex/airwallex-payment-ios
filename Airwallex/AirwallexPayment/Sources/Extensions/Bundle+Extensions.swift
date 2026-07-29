@@ -13,7 +13,7 @@ private class BundleProvider {
 }
 
 extension Bundle {
-    static var payment: Bundle {
+    package static var payment: Bundle {
 #if SWIFT_PACKAGE
         return .module
 #else
