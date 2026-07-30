@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *countryCode;
 
 /**
- Preferred BCP-47 language identifier for SDK UI and localized payment responses.
+ Preferred BCP-47 language identifier for SDK UI.
  */
 @property (nonatomic, copy, nullable) NSString *lang;
 

@@ -449,7 +449,7 @@ AWXUIContext.launchPayment(
 
 #### Select the Payment UI Language
 
-Set `lang` on the session before presenting a payment sheet or creating an embedded payment element. Use a best-effort BCP-47 language identifier; the same resolved language is used for SDK-owned copy and some API responses.
+Set `lang` on the session before presenting a payment sheet or creating an embedded payment element. Use a best-effort BCP-47 language identifier to control the language used for SDK UI.
 
 ```swift
 session.lang = "fr"

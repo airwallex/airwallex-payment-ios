@@ -66,7 +66,7 @@ import Foundation
     ///                         - true: Only show new payment method entry
     ///                         - false: Show saved payment methods (if available)
     ///                         Default: false.
-    ///   - lang: Preferred BCP-47 language identifier for SDK UI and localized payment responses.
+    ///   - lang: Preferred BCP-47 language identifier for SDK UI.
     ///           Nil preserves the default initialized by `AWXSession`.
     ///   - paymentMethods: Array of payment method identifiers to limit which methods are displayed.
     ///                    Useful for restricting to specific payment types (e.g., ["card", "wechatpay"]).
@@ -127,7 +127,7 @@ import Foundation
     ///   - autoSaveCardForFuturePayments: Whether to automatically save card details for future payments. Default: true.
     ///   - billing: Pre-filled billing address information. Default: nil.
     ///   - hidePaymentConsents: Whether to hide previously saved payment methods. Default: false.
-    ///   - lang: Preferred BCP-47 language identifier for SDK UI and localized payment responses.
+    ///   - lang: Preferred BCP-47 language identifier for SDK UI.
     ///           Nil preserves the default initialized by `AWXSession`.
     ///   - paymentMethods: Array of payment method identifiers to limit display. Default: nil.
     ///   - paymentConsentOptions: Configuration for recurring payments. Default: nil.

@@ -441,7 +441,7 @@ AWXUIContext.launchPayment(
 
 #### 选择支付 UI 语言
 
-在展示支付列表或创建嵌入式支付组件之前，请设置 session 的 `lang`。请使用符合 BCP-47 标准的语言标识符；SDK 本地文案和网络返回的文案都将使用同一个语言。
+在展示支付列表或创建嵌入式支付组件之前，请设置 session 的 `lang`。请使用符合 BCP-47 标准的语言标识符来控制 SDK UI 的语言。
 
 ```swift
 session.lang = "fr"
