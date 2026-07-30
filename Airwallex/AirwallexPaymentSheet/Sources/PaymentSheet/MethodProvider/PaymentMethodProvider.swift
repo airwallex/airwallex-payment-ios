@@ -27,6 +27,9 @@ enum PaymentMethodProviderUpdateType {
     
     /// The current payment session containing transaction details.
     var session: AWXSession { get }
+
+    /// The language resolved when this provider was created.
+    var language: AWXPaymentLanguage { get }
     
     /// A publisher that sends updates related to payment methods and consents.
     var updatePublisher: PassthroughSubject<PaymentMethodProviderUpdateType, Never> { get }
@@ -79,7 +82,7 @@ extension PaymentMethodProvider {
         let request = AWXGetAvailableBanksRequest()
         request.paymentMethodType = name
         request.countryCode = session.countryCode
-        request.lang = session.lang
+        request.lang = language.rawValue
         let response = try await apiClient.send(request)
         return response as! AWXGetAvailableBanksResponse
     }

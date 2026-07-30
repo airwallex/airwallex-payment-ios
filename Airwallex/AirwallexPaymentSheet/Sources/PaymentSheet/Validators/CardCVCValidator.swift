@@ -20,20 +20,29 @@ struct CardCVCValidator: UserInputValidator, UserInputFormatter {
     
     private let fixedLength: Int?
     private let lengthGetter: (() -> Int)?
+    private let language: AWXPaymentLanguage
     
-    init(maxLength: Int) {
+    init(maxLength: Int,
+         language: AWXPaymentLanguage = .english) {
         self.fixedLength = maxLength
         self.lengthGetter = nil
+        self.language = language
     }
     
-    init(maxLengthGetter: @escaping (() -> Int)) {
+    init(maxLengthGetter: @escaping (() -> Int),
+         language: AWXPaymentLanguage = .english) {
         self.fixedLength = nil
         self.lengthGetter = maxLengthGetter
+        self.language = language
     }
     
     func validateUserInput(_ text: String?) throws {
         let cvcLength = lengthGetter?() ?? fixedLength ?? AWXCardValidator.cvcLength(for: .unknown)
-        try AWXCardValidator.validate(cvc: text, requiredLength: cvcLength)
+        try AWXCardValidator.validate(
+            cvc: text,
+            requiredLength: cvcLength,
+            language: language
+        )
     }
     
     func formatUserInput(_ textField: UITextField,
@@ -48,9 +57,10 @@ struct CardCVCValidator: UserInputValidator, UserInputFormatter {
 }
 
 extension CardCVCValidator {
-    init(cardName: String) {
+    init(cardName: String,
+         language: AWXPaymentLanguage = .english) {
         let brand = AWXCardValidator.shared().brand(forCardName: cardName)
         let cvcLength = AWXCardValidator.cvcLength(for: brand?.type ?? .unknown)
-        self.init(maxLength: cvcLength)
+        self.init(maxLength: cvcLength, language: language)
     }
 }

@@ -27,7 +27,6 @@ FOUNDATION_EXPORT const unsigned char AirwallexCoreVersionString[];
 #import "AWXCardValidator.h"
 #import "AWXCodable.h"
 #import "AWXConstants.h"
-#import "AWXCountry.h"
 #import "AWXDefaultActionProvider.h"
 #import "AWXDefaultProvider.h"
 #import "AWXDevice.h"

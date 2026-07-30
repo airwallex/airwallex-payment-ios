@@ -7,6 +7,12 @@
 //
 
 import UIKit
+#if canImport(AirwallexCore)
+import AirwallexCore
+#endif
+#if canImport(AirwallexPayment)
+import AirwallexPayment
+#endif
 
 class PaymentReminderCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
     enum Style {
@@ -57,14 +63,18 @@ class PaymentReminderCell: UICollectionViewCell, ViewReusable, ViewConfigurable 
     var viewModel: Style?
 
     func setup(_ viewModel: Style) {
+        setup(viewModel, language: .english)
+    }
+
+    func setup(_ viewModel: Style, language: AWXPaymentLanguage) {
         self.viewModel = viewModel
         switch viewModel {
         case .applePay:
             imageView.image = UIImage(named: "redirectApplepay", in: .paymentSheet, compatibleWith: nil)
-            label.text = NSLocalizedString("Click the Apple Pay button below to securely complete your purchase.", bundle: .paymentSheet, comment: "apple pay reminder")
+            label.text = NSLocalizedString("Click the Apple Pay button below to securely complete your purchase.", bundle: .paymentSheet.language(language), comment: "apple pay reminder")
         case .schema:
             imageView.image = UIImage(named: "redirect", in: .paymentSheet, compatibleWith: nil)
-            label.text = NSLocalizedString("You will be redirected to complete your payment upon confirmation.", bundle: .paymentSheet, comment: "schema payment redirect reminder")
+            label.text = NSLocalizedString("You will be redirected to complete your payment upon confirmation.", bundle: .paymentSheet.language(language), comment: "schema payment redirect reminder")
         }
     }
 

@@ -56,6 +56,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
     private let ruleProvider: AddressRuleProvider
     private let subdivisionSelectionHandler: () -> Void
     private let cellReconfigureHandler: CellReconfigureHandler
+    let language: AWXPaymentLanguage
 
     // MARK: -
 
@@ -64,15 +65,16 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
          defaultCountryCode: String? = nil,
          reusePrefilledAddress: Bool = true,
          ruleProvider: AddressRuleProvider = AddressRuleProvider(),
+         language: AWXPaymentLanguage = .english,
          countrySelectionHandler: @escaping () -> Void,
          subdivisionSelectionHandler: @escaping () -> Void = {},
          toggleReuseSelection: @escaping () -> Void,
          cellReconfigureHandler: @escaping CellReconfigureHandler) {
         var country: AWXCountry?
         if let countryCode = prefilledAddress?.countryCode {
-            country = AWXCountry(code: countryCode)
+            country = AWXCountry(code: countryCode, language: language)
         } else if let defaultCountryCode {
-            country = AWXCountry(code: defaultCountryCode)
+            country = AWXCountry(code: defaultCountryCode, language: language)
         }
         let isPrefilledComplete = prefilledAddress.map { ruleProvider.isValid($0) } ?? false
         let reusePrefilledAddress = isPrefilledComplete && reusePrefilledAddress
@@ -82,49 +84,55 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         self.toggleReuseSelection = toggleReuseSelection
         self.itemIdentifier = itemIdentifier
         self.ruleProvider = ruleProvider
+        self.language = language
         self.subdivisionSelectionHandler = subdivisionSelectionHandler
         self.cellReconfigureHandler = cellReconfigureHandler
 
         countryConfigurer = CountrySelectionViewModel(
             country: country,
             isEnabled: !reusePrefilledAddress,
+            language: language,
             handleUserInteraction: countrySelectionHandler,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )
         streetConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .street,
             text: prefilledAddress?.street,
-            placeholder: NSLocalizedString("Street", bundle: .paymentSheet, comment: "billing street placeholder"),
+            placeholder: NSLocalizedString("Street", bundle: .paymentSheet.language(language), comment: "billing street placeholder"),
             isEnabled: !reusePrefilledAddress,
             clearButtonMode: .whileEditing,
             returnKeyType: .next,
+            language: language,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )
         stateTextConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .state,
             text: prefilledAddress?.state,
-            placeholder: NSLocalizedString("State", bundle: .paymentSheet, comment: "billing state placeholder"),
+            placeholder: NSLocalizedString("State", bundle: .paymentSheet.language(language), comment: "billing state placeholder"),
             isEnabled: !reusePrefilledAddress,
             clearButtonMode: .whileEditing,
             returnKeyType: .next,
+            language: language,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )
         cityConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .city,
             text: prefilledAddress?.city,
-            placeholder: NSLocalizedString("City", bundle: .paymentSheet, comment: "billing city placeholder"),
+            placeholder: NSLocalizedString("City", bundle: .paymentSheet.language(language), comment: "billing city placeholder"),
             isEnabled: !reusePrefilledAddress,
             clearButtonMode: .whileEditing,
             returnKeyType: .next,
+            language: language,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )
         zipConfigurer = InfoCollectorTextFieldViewModel(
             textFieldType: .zipcode,
             text: prefilledAddress?.postcode,
-            placeholder: NSLocalizedString("Postal code", bundle: .paymentSheet, comment: "billing postal code placeholder"),
+            placeholder: NSLocalizedString("Postal code", bundle: .paymentSheet.language(language), comment: "billing postal code placeholder"),
             isEnabled: !reusePrefilledAddress,
             clearButtonMode: .whileEditing,
             returnKeyType: .next,
+            language: language,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )
 
@@ -194,13 +202,14 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
         }
 
         for spec in fields {
-            let placeholder = spec.localizedLabel
+            let placeholder = spec.localizedLabel(language: language)
             switch spec.kind {
             case .street:
                 streetConfigurer.placeholder = placeholder
                 streetConfigurer.inputValidator = RegexInputValidator(
                     regex: nil,
-                    isRequired: true
+                    isRequired: true,
+                    language: language
                 )
             case .state:
                 if let options = spec.subdivision {
@@ -213,6 +222,7 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
                         selection: preselected,
                         placeholder: placeholder,
                         isEnabled: !shouldReusePrefilledAddress,
+                        language: language,
                         handleUserInteraction: subdivisionSelectionHandler,
                         reconfigureHandler: { [cellReconfigureHandler, itemIdentifier] _, refresh in
                             cellReconfigureHandler(itemIdentifier, refresh)
@@ -220,27 +230,31 @@ class BillingInfoCellViewModel: CellViewModelIdentifiable {
                     )
                     stateDropdownConfigurer?.inputValidator = RegexInputValidator(
                         regex: nil,
-                        isRequired: true
+                        isRequired: true,
+                        language: language
                     )
                 } else {
                     stateDropdownConfigurer = nil
                     stateTextConfigurer.placeholder = placeholder
                     stateTextConfigurer?.inputValidator = RegexInputValidator(
                         regex: nil,
-                        isRequired: true
+                        isRequired: true,
+                        language: language
                     )
                 }
             case .city:
                 cityConfigurer.placeholder = placeholder
                 cityConfigurer.inputValidator = RegexInputValidator(
                     regex: nil,
-                    isRequired: true
+                    isRequired: true,
+                    language: language
                 )
             case .postcode:
                 zipConfigurer.placeholder = placeholder
                 zipConfigurer.inputValidator = RegexInputValidator(
                     regex: spec.regex,
-                    isRequired: true
+                    isRequired: true,
+                    language: language
                 )
             }
         }

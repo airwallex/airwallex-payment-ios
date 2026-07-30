@@ -169,7 +169,8 @@ extension AWXCardProvider {
             try AWXCardValidator.validate(
                 card: card,
                 nameRequired: session.requiredBillingContactFields.contains(.name),
-                supportedSchemes: cardSchemes
+                supportedSchemes: cardSchemes,
+                language: session.resolvedPaymentLanguage
             )
         } catch {
             throw ValidationError.invalidCardInfo(underlyingError: error)

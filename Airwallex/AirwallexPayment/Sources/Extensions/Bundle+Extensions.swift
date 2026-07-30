@@ -24,4 +24,17 @@ extension Bundle {
         return bundle
 #endif
     }
+
+    /// Returns the strings-only bundle for the requested payment UI language.
+    package func language(_ language: AWXPaymentLanguage) -> Bundle {
+        if let path = path(forResource: language.rawValue, ofType: "lproj"),
+           let bundle = Bundle(path: path) {
+            return bundle
+        }
+        if let path = path(forResource: "en", ofType: "lproj"),
+           let bundle = Bundle(path: path) {
+            return bundle
+        }
+        return self
+    }
 }

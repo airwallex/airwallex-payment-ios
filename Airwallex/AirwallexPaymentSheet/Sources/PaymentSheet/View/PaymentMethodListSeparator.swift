@@ -7,6 +7,12 @@
 //
 
 import UIKit
+#if canImport(AirwallexCore)
+import AirwallexCore
+#endif
+#if canImport(AirwallexPayment)
+import AirwallexPayment
+#endif
 
 class PaymentMethodListSeparator: UICollectionReusableView, ViewReusable {
     
@@ -31,7 +37,6 @@ class PaymentMethodListSeparator: UICollectionReusableView, ViewReusable {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.textColor = .awxColor(.textSecondary)
         view.font = .awxFont(.body2)
-        view.text = NSLocalizedString("Or pay with", bundle: .paymentSheet, comment: "payment section separator")
         return view
     }()
     
@@ -51,7 +56,10 @@ class PaymentMethodListSeparator: UICollectionReusableView, ViewReusable {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    func setup(language: AWXPaymentLanguage) {
+        (label as? UILabel)?.text = NSLocalizedString("Or pay with", bundle: .paymentSheet.language(language), comment: "payment section separator")
+    }
 }
 
 private extension PaymentMethodListSeparator {

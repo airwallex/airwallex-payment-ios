@@ -37,6 +37,8 @@ class MockMethodProvider: PaymentMethodProvider {
         session.paymentIntent?.currency = "AUD"
         return session
     }()
+
+    var language: AWXPaymentLanguage = .english
     
     var updatePublisher = PassthroughSubject<PaymentMethodProviderUpdateType, Never>()
     

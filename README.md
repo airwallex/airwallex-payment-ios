@@ -59,6 +59,7 @@ Table of contents
       - [Launch Card Payment Directly](#launch-card-payment-directly)
       - [Launch Payment Method by Name](#launch-payment-method-by-name)
       - [Configuration Options](#configuration-options)
+      - [Select the Payment UI Language](#select-the-payment-ui-language)
       - [Handle Payment Result](#handle-payment-result)
     - [UI Integration - Embedded](#ui-integration---embedded)
       - [Create Embedded Payment Sheet](#create-embedded-payment-sheet)
@@ -445,6 +446,16 @@ AWXUIContext.launchPayment(
 | `supportedCardBrands` | Accepted card brands (only applies to `.addCard`) | All available brands |
 | `applePayButton` | Customize Apple Pay button appearance (e.g. `buttonType`, `disableCardArt`) | — |
 | `checkoutButton` | Customize checkout button (e.g. `title`) | — |
+
+#### Select the Payment UI Language
+
+Set `lang` on the session before presenting a payment sheet or creating an embedded payment element. Use a best-effort BCP-47 language identifier to control the language used for SDK UI.
+
+```swift
+session.lang = "fr"
+```
+
+Regional and script variants such as `"ja-JP"` and `"zh-Hant"` are negotiated against the languages shipped by the SDK. Nil or empty values use the host application's preferred localization, and unsupported values fall back to English. Recreate the payment sheet or embedded element after changing `lang`.
 
 #### Handle Payment Result
 

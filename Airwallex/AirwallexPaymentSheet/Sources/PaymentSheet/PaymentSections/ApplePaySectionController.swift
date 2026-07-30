@@ -98,7 +98,7 @@ class ApplePaySectionController: PaymentSectionController {
             return cell
         case .applePayReminder:
             let cell = context.dequeueReusableCell(PaymentReminderCell.self, for: sectionItem, indexPath: indexPath)
-            cell.setup(.applePay)
+            cell.setup(.applePay, language: paymentUIContext.language)
             return cell
         case .applePayButton:
             let cell = context.dequeueReusableCell(ApplePayCell.self, for: sectionItem, indexPath: indexPath)
@@ -135,11 +135,13 @@ class ApplePaySectionController: PaymentSectionController {
     
     func supplementaryView(for elementKind: String,
                            at indexPath: IndexPath) -> UICollectionReusableView {
-        context.dequeueReusableSupplementaryView(
+        let view = context.dequeueReusableSupplementaryView(
             ofKind: elementKind,
             viewClass: PaymentMethodListSeparator.self,
             indexPath: indexPath
         )
+        view.setup(language: paymentUIContext.language)
+        return view
     }
     
     func layout(environment: any NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
