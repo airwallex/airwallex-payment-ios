@@ -72,6 +72,13 @@ struct ExamplesKeys {
     @Storage("expressCheckout", defaultValue: true)
     static var expressCheckout: Bool
 
+    @OptionalStorage("airwallex_sdk_lang")
+    static var sdkLang: String?
+
+    static let sdkLanguageOptions: [String] = [
+        "de", "en", "es", "fr", "ja", "ko", "pt-BR", "pt-PT", "ru", "th", "zh-Hans", "zh-Hant"
+    ]
+
     static var allSettings: AllSettings {
         get {
             AllSettings(
@@ -93,7 +100,8 @@ struct ExamplesKeys {
                 returnUrl: ExamplesKeys.returnUrl,
                 paymentLayout: ExamplesKeys.paymentLayout,
                 preferUnifiedSession: ExamplesKeys.preferUnifiedSession,
-                expressCheckout: ExamplesKeys.expressCheckout
+                expressCheckout: ExamplesKeys.expressCheckout,
+                sdkLang: ExamplesKeys.sdkLang
             )
         }
         set {
@@ -117,6 +125,7 @@ struct ExamplesKeys {
             ExamplesKeys.paymentLayout = newValue.paymentLayout
             ExamplesKeys.preferUnifiedSession = newValue.preferUnifiedSession
             ExamplesKeys.expressCheckout = newValue.expressCheckout
+            ExamplesKeys.sdkLang = newValue.sdkLang
         }
     }
     
@@ -142,7 +151,8 @@ struct ExamplesKeys {
         var paymentLayout: AWXUIContext.PaymentLayout
         var preferUnifiedSession: Bool
         var expressCheckout: Bool
-        
+        var sdkLang: String?
+
         init(environment: AirwallexSDKMode,
              nextTriggerByType: AirwallexNextTriggerByType,
              requiresName: Bool,
@@ -161,7 +171,8 @@ struct ExamplesKeys {
              returnUrl: String,
              paymentLayout: AWXUIContext.PaymentLayout,
              preferUnifiedSession: Bool,
-             expressCheckout: Bool) {
+             expressCheckout: Bool,
+             sdkLang: String? = nil) {
             self.environment = environment
             self.nextTriggerByType = nextTriggerByType
             self.requiresName = requiresName
@@ -181,6 +192,7 @@ struct ExamplesKeys {
             self.paymentLayout = paymentLayout
             self.preferUnifiedSession = preferUnifiedSession
             self.expressCheckout = expressCheckout
+            self.sdkLang = sdkLang
         }
         
         var description: String {
@@ -204,6 +216,7 @@ struct ExamplesKeys {
                 ├── Payment Layout: \(paymentLayout)
                 ├── Prefer Unified Session: \(preferUnifiedSession)
                 ├── Express Checkout: \(expressCheckout)
+                ├── SDK Language: \(sdkLang ?? "Default")
                 """
         }
     }

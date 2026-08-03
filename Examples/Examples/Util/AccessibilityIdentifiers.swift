@@ -14,6 +14,7 @@ enum AccessibilityIdentifiers {
         static let optionButtonForEnvironment = "optionButtonForEnvironment"
         static let optionButtonForNextTriggerBy = "optionButtonForNextTriggerBy"
         static let optionButtonForLayout = "optionButtonForLayout"
+        static let optionButtonForLanguage = "optionButtonForLanguage"
         static let textFieldForCustomerID = "textFieldForCustomerID"
         static let actionButtonForCustomerID = "actionButtonForCustomerID"
         static let toggleFor3DS = "toggleFor3DS"
