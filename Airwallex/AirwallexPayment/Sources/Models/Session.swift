@@ -67,7 +67,6 @@ import Foundation
     ///                         - false: Show saved payment methods (if available)
     ///                         Default: false.
     ///   - lang: Preferred BCP-47 language identifier for SDK UI.
-    ///           Nil preserves the default initialized by `AWXSession`.
     ///   - paymentMethods: Array of payment method identifiers to limit which methods are displayed.
     ///                    Useful for restricting to specific payment types (e.g., ["card", "wechatpay"]).
     ///                    If nil, all available methods for the region are shown. Default: nil.
@@ -100,9 +99,7 @@ import Foundation
         self.autoCapture = autoCapture
         self.autoSaveCardForFuturePayments = autoSaveCardForFuturePayments
         super.init()
-        if let lang {
-            self.lang = lang
-        }
+        self.lang = lang
         self.countryCode = countryCode
         self.hidePaymentConsents = hidePaymentConsents
         self.returnURL = returnURL
@@ -128,7 +125,6 @@ import Foundation
     ///   - billing: Pre-filled billing address information. Default: nil.
     ///   - hidePaymentConsents: Whether to hide previously saved payment methods. Default: false.
     ///   - lang: Preferred BCP-47 language identifier for SDK UI.
-    ///           Nil preserves the default initialized by `AWXSession`.
     ///   - paymentMethods: Array of payment method identifiers to limit display. Default: nil.
     ///   - paymentConsentOptions: Configuration for recurring payments. Default: nil.
     ///   - requiredBillingContactFields: Which billing contact fields are mandatory. Default: .name.
@@ -152,9 +148,7 @@ import Foundation
         self.autoCapture = autoCapture
         self.autoSaveCardForFuturePayments = autoSaveCardForFuturePayments
         super.init()
-        if let lang {
-            self.lang = lang
-        }
+        self.lang = lang
         self.countryCode = countryCode
         self.hidePaymentConsents = hidePaymentConsents
         self.returnURL = returnURL

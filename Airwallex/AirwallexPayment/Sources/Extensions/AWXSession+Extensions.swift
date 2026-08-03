@@ -15,16 +15,17 @@ private let localizationComment = "session validation"
 
 package func resolvePaymentLanguage(_ lang: String?) -> AWXPaymentLanguage {
     let trimmedLanguage = lang?.trimmingCharacters(in: .whitespacesAndNewlines)
-    let preferences: [String]
+
+    var preferences = Bundle.main.preferredLocalizations
     if let trimmedLanguage, !trimmedLanguage.isEmpty {
-        preferences = [trimmedLanguage]
-    } else {
-        preferences = Bundle.main.preferredLocalizations
+        preferences.insert(trimmedLanguage, at: 0)
     }
+
     let localization = Bundle.preferredLocalizations(
         from: Bundle.payment.localizations,
         forPreferences: preferences
     ).first
+
     return localization.flatMap(AWXPaymentLanguage.init(rawValue:)) ?? .english
 }
 

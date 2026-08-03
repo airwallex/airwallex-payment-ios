@@ -60,7 +60,7 @@ final class SessionTests: XCTestCase {
         XCTAssertEqual(session.countryCode, mockCountryCode)
         XCTAssertEqual(session.returnURL, mockReturnURL)
         XCTAssertFalse(session.hidePaymentConsents)
-        XCTAssertEqual(session.lang, defaultCoreLanguage)
+        XCTAssertNil(session.lang)
         XCTAssertEqual(session.requiredBillingContactFields, .name)
         XCTAssertNil(session.billing)
         XCTAssertNil(session.applePayOptions)
@@ -104,16 +104,6 @@ final class SessionTests: XCTestCase {
         XCTAssertEqual(session.applePayOptions, applePayOptions)
         XCTAssertEqual(session.paymentMethods, mockPaymentMethods)
     }
-
-    func testInit_withNilLangPreservesCoreDefault() {
-        let session = Session(
-            paymentIntent: mockPaymentIntent,
-            countryCode: mockCountryCode,
-            lang: nil
-        )
-
-        XCTAssertEqual(session.lang, defaultCoreLanguage)
-    }
     
     // MARK: - PaymentIntentProvider Initialization Tests
 
@@ -140,7 +130,7 @@ final class SessionTests: XCTestCase {
         XCTAssertEqual(session.countryCode, mockCountryCode)
         XCTAssertEqual(session.returnURL, mockReturnURL)
         XCTAssertFalse(session.hidePaymentConsents)
-        XCTAssertEqual(session.lang, defaultCoreLanguage)
+        XCTAssertNil(session.lang)
         XCTAssertEqual(session.requiredBillingContactFields, .name)
         XCTAssertNil(session.billing)
         XCTAssertNil(session.applePayOptions)

@@ -232,7 +232,7 @@ extension IntegrationDemoListViewController {
             applePayOptions: DemoDataSource.applePayOptions,
             autoCapture: ExamplesKeys.autoCapture,
             billing: shippingAddress,
-//            lang: "fr", // use BCP-47 identifier to enforce a language
+//            lang: "zh-HK", // use BCP-47 identifier to enforce a language
             paymentConsentOptions: consentOptions,
             requiredBillingContactFields: getRequiredBillingContactFields(),
             returnURL: ExamplesKeys.returnUrl
