@@ -146,6 +146,7 @@ class GetPaymentMethodsViewController: UITableViewController {
         request.pageNum = 0
         request.pageSize = 1000
         request.flow = AWXPaymentMethodFlow.app.rawValue
+        request.lang = ExamplesKeys.sdkLang
         return try await awxClient.send(request) as! AWXGetPaymentMethodTypesResponse
     }
     

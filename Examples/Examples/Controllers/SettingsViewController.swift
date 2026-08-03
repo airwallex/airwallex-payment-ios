@@ -76,6 +76,13 @@ class SettingsViewController: UIViewController {
         view.accessibilityIdentifier = AccessibilityIdentifiers.SettingsScreen.optionButtonForLayout
         return view
     }()
+
+    private lazy var optionForLanguage: ConfigActionView = {
+        let view = ConfigActionView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.accessibilityIdentifier = AccessibilityIdentifiers.SettingsScreen.optionButtonForLanguage
+        return view
+    }()
     
     private lazy var switchForForce3DS: ConfigSwitchView = {
         let view = ConfigSwitchView()
@@ -267,7 +274,8 @@ private extension SettingsViewController {
         stack.addArrangedSubview(fieldForCurrency)
         stack.addArrangedSubview(fieldForCountryCode)
         stack.addArrangedSubview(fieldForReturnURL)
-        
+        stack.addArrangedSubview(optionForLanguage)
+
         stack.addArrangedSubview(regionLabel)
         stack.addArrangedSubview(versionLabel)
         
@@ -305,6 +313,7 @@ private extension SettingsViewController {
         setupOptionForEnvironment()
         setupOptionForNextTrigger()
         setupOptionForPaymentLayout()
+        setupOptionForLanguage()
         setupSwitches()
         setupCustomerIDGenerator()
         setupFields()
@@ -393,6 +402,31 @@ private extension SettingsViewController {
             }
         )
         optionForPaymentLayout.setup(viewModel)
+    }
+
+    func setupOptionForLanguage() {
+        let options = ExamplesKeys.sdkLanguageOptions + ["Default"]
+        let configValue = settings.sdkLang ?? "Default"
+
+        let viewModel = ConfigActionViewModel(
+            configName: "Language",
+            configValue: configValue,
+            primaryAction: { [weak self] optionView in
+                guard let self else { return }
+                self.showOptions(options, sender: optionView) { index, _ in
+                    let newValue: String?
+                    if index < ExamplesKeys.sdkLanguageOptions.count {
+                        newValue = ExamplesKeys.sdkLanguageOptions[index]
+                    } else {
+                        newValue = nil
+                    }
+                    guard self.settings.sdkLang != newValue else { return }
+                    self.settings.sdkLang = newValue
+                    self.setupOptionForLanguage()
+                }
+            }
+        )
+        optionForLanguage.setup(viewModel)
     }
     
     func setupSwitches() {
