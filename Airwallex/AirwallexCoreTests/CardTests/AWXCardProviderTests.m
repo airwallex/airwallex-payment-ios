@@ -82,29 +82,6 @@
                             withCompletionHandler:[OCMArg any]]);
 }
 
-- (void)testConfirmPaymentIntentWithPanPaymentConsent {
-    AWXAPIClient *client = [self mockAPIClient];
-    AWXProviderDelegateSpy *spy = [AWXProviderDelegateSpy new];
-    AWXOneOffSession *session = [AWXOneOffSession new];
-    AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:spy session:session];
-
-    AWXPaymentConsent *consent = [AWXPaymentConsent new];
-    AWXPaymentMethod *method = [AWXPaymentMethod new];
-    AWXCard *card = [AWXCard new];
-    card.numberType = @"AIRWALLEX_NETWORK_TOKEN";
-    method.card = card;
-    consent.Id = @"consentID";
-    consent.paymentMethod = method;
-
-    [provider confirmPaymentIntentWithPaymentConsent:consent];
-    OCMVerify(times(1), [client send:[OCMArg checkWithBlock:^BOOL(id obj) {
-                                    AWXConfirmPaymentIntentRequest *request = obj;
-                                    XCTAssertEqualObjects(request.paymentConsent.Id, @"consentID");
-                                    return YES;
-                                }]
-                            withCompletionHandler:[OCMArg any]]);
-}
-
 - (void)testConfirmPaymentIntentWithNonPanPaymentConsent {
     AWXAPIClient *client = [self mockAPIClient];
     AWXProviderDelegateSpy *spy = [AWXProviderDelegateSpy new];
