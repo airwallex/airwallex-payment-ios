@@ -42,7 +42,6 @@ extension XCTestCase {
     func launchAppAndEnsureSettings(_ app: XCUIApplication,
                                     checkoutMode: CheckoutMode,
                                     customerID: String = "",
-                                    env: SettingsScreen.Environment = .demo,
                                     force3DS: Bool = false,
                                     nextTriggerByCustomer: Bool? = nil,
                                     preferUnifiedSession: Bool = true,
@@ -57,6 +56,9 @@ extension XCTestCase {
         UIIntegrationDemoScreen.ensureCheckoutMode(checkoutMode)
         UIIntegrationDemoScreen.openSettings()
         SettingsScreen.validate()
+        let env = SettingsScreen.Environment(
+            rawValue: ProcessInfo.processInfo.environment[UITestingEnvironmentVariable.environment] ?? ""
+        ) ?? .demo
         SettingsScreen.ensureEnvironment(env)
         SettingsScreen.ensureLayoutMode(useTabLayout: useTabLayout)
         if let nextTriggerByCustomer {
