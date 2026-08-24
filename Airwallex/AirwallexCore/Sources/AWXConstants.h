@@ -67,12 +67,6 @@ typedef NS_CLOSED_ENUM(NSUInteger, AirwallexMerchantTriggerReason) {
     AirwallexMerchantTriggerReasonScheduled
 };
 
-typedef NS_CLOSED_ENUM(NSUInteger, AWXFormType) {
-    AWXFormTypeText,
-    AWXFormTypeListCell,
-    AWXFormTypeButton
-};
-
 typedef NS_ENUM(NSUInteger, AWXTextFieldType) {
     AWXTextFieldTypeDefault,
     AWXTextFieldTypeFirstName,

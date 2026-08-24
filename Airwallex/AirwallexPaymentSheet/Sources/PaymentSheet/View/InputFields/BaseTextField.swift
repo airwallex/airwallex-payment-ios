@@ -7,6 +7,9 @@
 //
 
 import UIKit
+#if canImport(AirwallexPayment)
+import AirwallexPayment
+#endif
 #if canImport(AirwallexCore)
 import AirwallexCore
 #endif

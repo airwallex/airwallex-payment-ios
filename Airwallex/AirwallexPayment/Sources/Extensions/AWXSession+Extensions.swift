@@ -34,6 +34,11 @@ package extension AWXSession {
     var resolvedPaymentLanguage: AWXPaymentLanguage {
         resolvePaymentLanguage(lang)
     }
+
+    /// Formatted session amount with currency code (e.g. for CVC total label).
+    var totalAmountText: String {
+        amount().string(withCurrencyCode: currency())
+    }
 }
 
 public extension AWXSession {

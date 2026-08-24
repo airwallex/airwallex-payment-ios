@@ -383,12 +383,11 @@ class CardProviderTests: XCTestCase {
         try? await Task.sleep(nanoseconds: 100_000_000)
         try await MainActor.run {
             XCTAssertNotNil(mockDelegate.presentedViewControllerSpy)
-            guard let cvcController = mockDelegate.presentedViewControllerSpy?.children.first as? AWXCardCVCViewController,
-                  let cvcCallback = cvcController.cvcCallback else {
+            guard let cvcController = mockDelegate.presentedViewControllerSpy?.children.first as? CardCVCViewController else {
                 throw "cvc input not work as expected".asError()
             }
             mockDelegate.dismiss(animated: false)
-            cvcCallback("123", false)
+            cvcController.onComplete("123", false)
         }
         await task
         
@@ -431,12 +430,11 @@ class CardProviderTests: XCTestCase {
         try? await Task.sleep(nanoseconds: 100_000_000)
         try await MainActor.run {
             XCTAssertNotNil(mockDelegate.presentedViewControllerSpy)
-            guard let cvcController = mockDelegate.presentedViewControllerSpy?.children.first as? AWXCardCVCViewController,
-                  let cvcCallback = cvcController.cvcCallback else {
+            guard let cvcController = mockDelegate.presentedViewControllerSpy?.children.first as? CardCVCViewController else {
                 throw "cvc input not work as expected".asError()
             }
             mockDelegate.dismiss(animated: false)
-            cvcCallback("123", true)
+            cvcController.onComplete("123", true)
         }
         await task
         
@@ -493,12 +491,11 @@ class CardProviderTests: XCTestCase {
         try? await Task.sleep(nanoseconds: 100_000_000)
         try await MainActor.run {
             XCTAssertNotNil(mockDelegate.presentedViewControllerSpy)
-            guard let cvcController = mockDelegate.presentedViewControllerSpy?.children.first as? AWXCardCVCViewController,
-                  let cvcCallback = cvcController.cvcCallback else {
+            guard let cvcController = mockDelegate.presentedViewControllerSpy?.children.first as? CardCVCViewController else {
                 throw "cvc input not work as expected".asError()
             }
             mockDelegate.dismiss(animated: false)
-            cvcCallback("123", false)
+            cvcController.onComplete("123", false)
         }
         await task
         
@@ -552,12 +549,11 @@ class CardProviderTests: XCTestCase {
         try? await Task.sleep(nanoseconds: 100_000_000)
         try await MainActor.run {
             XCTAssertNotNil(mockDelegate.presentedViewControllerSpy)
-            guard let cvcController = mockDelegate.presentedViewControllerSpy?.children.first as? AWXCardCVCViewController,
-                  let cvcCallback = cvcController.cvcCallback else {
+            guard let cvcController = mockDelegate.presentedViewControllerSpy?.children.first as? CardCVCViewController else {
                 throw "cvc input not work as expected".asError()
             }
             mockDelegate.dismiss(animated: false)
-            cvcCallback("123", true)
+            cvcController.onComplete("123", true)
         }
         await task
         

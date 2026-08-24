@@ -16,7 +16,6 @@
 #import "AWXPaymentMethod.h"
 #import "AWXSession+Request.h"
 #import "AWXSession.h"
-#import "AWXUtils.h"
 #import "NSObject+Logging.h"
 #import "PKContact+Request.h"
 #import "PKPaymentToken+Request.h"

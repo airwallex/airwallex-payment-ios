@@ -6,7 +6,6 @@
 //  Copyright © 2022 Airwallex. All rights reserved.
 //
 
-#import "AWXCardCVCViewController.h"
 #import "AWXCardProvider.h"
 #import "AWXDevice.h"
 #import "AWXPaymentConsent.h"
@@ -83,27 +82,6 @@
                             withCompletionHandler:[OCMArg any]]);
 }
 
-- (void)testConfirmPaymentIntentWithPanPaymentConsent {
-    id mockViewController = OCMClassMock([UIViewController class]);
-    AWXProviderDelegateSpy *spy = [AWXProviderDelegateSpy new];
-    spy.hostVC = mockViewController;
-    AWXOneOffSession *session = [AWXOneOffSession new];
-    AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:spy session:session];
-
-    AWXPaymentConsent *consent = [AWXPaymentConsent new];
-    AWXPaymentMethod *method = [AWXPaymentMethod new];
-    AWXCard *card = [AWXCard new];
-    card.numberType = @"PAN";
-    method.card = card;
-    consent.Id = @"consentID";
-    consent.paymentMethod = method;
-
-    [provider confirmPaymentIntentWithPaymentConsent:consent];
-    OCMVerify(times(1), [mockViewController presentViewController:[OCMArg isKindOfClass:[UINavigationController class]]
-                                                         animated:YES
-                                                       completion:nil]);
-}
-
 - (void)testConfirmPaymentIntentWithNonPanPaymentConsent {
     AWXAPIClient *client = [self mockAPIClient];
     AWXProviderDelegateSpy *spy = [AWXProviderDelegateSpy new];
@@ -122,38 +100,6 @@
                                     return YES;
                                 }]
                             withCompletionHandler:[OCMArg any]]);
-}
-
-- (void)testClose {
-    id mockDelegate = OCMClassMock([AWXProviderDelegateSpy class]);
-    AWXOneOffSession *session = [AWXOneOffSession new];
-    AWXCardProvider *provider = [[AWXCardProvider alloc] initWithDelegate:mockDelegate session:session];
-    AWXCardCVCViewController *paymentVC = [[AWXCardCVCViewController alloc] initWithNibName:nil bundle:nil];
-    paymentVC.cvcCallback = ^(NSString *_Nonnull cvc, BOOL cancelled) {
-        if (cancelled) {
-            [mockDelegate provider:provider didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil];
-        }
-    };
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:paymentVC];
-
-    // Set up the mock to return a hostViewController
-    id hostVCMock = OCMClassMock([UIViewController class]);
-    OCMStub([mockDelegate hostViewController]).andReturn(hostVCMock);
-    OCMStub([hostVCMock presentedViewController]).andReturn(navController);
-
-    // Set expectations for delegate method calls
-    OCMExpect([mockDelegate provider:provider didCompleteWithStatus:AirwallexPaymentStatusCancel error:nil]);
-
-    // Call the method
-    [paymentVC performSelector:@selector(close:) withObject:UIControl.new];
-
-    // Verify the results with a small delay to allow for animation completion block
-    XCTestExpectation *expectation = [self expectationWithDescription:@"Dismissal"];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        OCMVerifyAll(mockDelegate);
-        [expectation fulfill];
-    });
-    [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 
 - (void)testConfirmPaymentIntentWithCardNoSave {

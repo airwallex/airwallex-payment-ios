@@ -6,10 +6,9 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
+@testable import AirwallexPayment
 import UIKit
 import XCTest
-@testable import AirwallexPayment
-@testable import AirwallexPaymentSheet
 
 class NSLayoutConstraintExtensionTests: XCTestCase {
 

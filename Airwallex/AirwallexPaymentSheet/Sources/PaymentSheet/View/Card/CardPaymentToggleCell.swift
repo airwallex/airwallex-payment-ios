@@ -7,6 +7,9 @@
 //
 
 import UIKit
+#if canImport(AirwallexPayment)
+import AirwallexPayment
+#endif
 
 struct CardPaymentToggleCellViewModel {
     let title: String

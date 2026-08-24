@@ -9,7 +9,6 @@
 #import "AWXPaymentIntent+Summary.h"
 #import "AWXPlaceDetails+PKContact.h"
 #import "AWXSession+Request.h"
-#import "AWXUtils.h"
 
 @implementation AWXSession (Request)
 

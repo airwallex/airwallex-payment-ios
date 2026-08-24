@@ -9,7 +9,6 @@
 #import "AWXRedirectActionProvider.h"
 #import "AWXAnalyticsLogger.h"
 #import "AWXPaymentIntentResponse.h"
-#import "AWXUtils.h"
 #import "NSObject+Logging.h"
 
 @implementation AWXRedirectActionProvider

@@ -7,6 +7,9 @@
 //
 
 import UIKit
+#if canImport(AirwallexPayment)
+import AirwallexPayment
+#endif
 
 class LabelCell: UICollectionViewCell, ViewReusable {
     let label: UILabel = {

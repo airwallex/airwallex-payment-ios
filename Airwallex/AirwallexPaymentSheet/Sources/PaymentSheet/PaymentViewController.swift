@@ -113,7 +113,7 @@ class PaymentViewController: AWXViewController {
         self.navigationItem.largeTitleDisplayMode = .never
         view.backgroundColor = .awxColor(.backgroundPrimary)
         if navigationController?.viewControllers.first === self {
-            let image = UIImage(named: "close", in: .paymentSheet)?
+            let image = UIImage(named: "close", in: .resource())?
                 .withTintColor(.awxColor(.iconPrimary), renderingMode: .alwaysTemplate)
             navigationItem.leftBarButtonItem = UIBarButtonItem(
                 image: image,

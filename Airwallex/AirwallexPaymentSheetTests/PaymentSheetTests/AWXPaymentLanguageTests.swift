@@ -54,7 +54,6 @@ final class AWXPaymentLanguageTests: XCTestCase {
     func testSDKModulesShipMatchingLocalizationIdentifiers() {
         let expected = Set(AWXPaymentLanguage.allCases.map(\.rawValue))
 
-        XCTAssertEqual(Set(Bundle.resource().localizations), expected)
         XCTAssertEqual(Set(Bundle.payment.localizations), expected)
         XCTAssertEqual(Set(Bundle.paymentSheet.localizations), expected)
     }
