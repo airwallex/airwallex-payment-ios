@@ -77,12 +77,19 @@ class PaymentMethodTabSectionController: SectionController {
     }
     
     func layout(environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+        // TODO: When the minimum deployment target is iOS 17+, update layout to use `.uniformAcrossSiblings(estimate:)` as height dimension so sibling items share a uniform height.
+        let itemHeight = PaymentMethodCell.estimatedItemHeight(
+            displayNames: methodTypes.map(\.displayName)
+        )
         let layoutSize = NSCollectionLayoutSize(
-            widthDimension: .absolute(92),
-            heightDimension: .absolute(70)
+            widthDimension: .absolute(PaymentMethodCell.itemWidth),
+            heightDimension: .absolute(itemHeight)
         )
         let item = NSCollectionLayoutItem(layoutSize: layoutSize)
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: layoutSize, subitems: [item])
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: layoutSize,
+            subitems: [item]
+        )
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         section.contentInsets = .init(horizontal: paymentUIContext.isEmbedded ? 0 : 16).bottom(8)
