@@ -10,6 +10,9 @@ import UIKit
 #if canImport(AirwallexCore)
 import AirwallexCore
 #endif
+#if canImport(AirwallexPayment)
+import AirwallexPayment
+#endif
 
 @objc public protocol AWXShippingViewControllerDelegate: AnyObject {
     func shippingViewController(_ controller: AWXShippingViewController,
@@ -22,10 +25,22 @@ import AirwallexCore
 
     @objc public var shipping: AWXPlaceDetails?
 
-    public init(shipping: AWXPlaceDetails? = nil,
-                delegate: (any AWXShippingViewControllerDelegate)? = nil) {
+    /// Language resolved when this standalone shipping UI is created.
+    let language: AWXPaymentLanguage
+
+    @objc public convenience init(
+        shipping: AWXPlaceDetails? = nil,
+        delegate: (any AWXShippingViewControllerDelegate)? = nil
+    ) {
+        self.init(shipping: shipping, delegate: delegate, lang: nil)
+    }
+
+    @objc public init(shipping: AWXPlaceDetails? = nil,
+                      delegate: (any AWXShippingViewControllerDelegate)? = nil,
+                      lang: String?) {
         self.shipping = shipping
         self.delegate = delegate
+        self.language = resolvePaymentLanguage(lang)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -55,32 +70,35 @@ import AirwallexCore
 
     private lazy var firstNameVM = InfoCollectorTextFieldViewModel(
         textFieldType: .firstName,
-        title: NSLocalizedString("First name", bundle: .paymentSheet, comment: "shipping field title"),
+        title: NSLocalizedString("First name", bundle: .paymentSheet.language(language), comment: "shipping field title"),
         text: shipping?.firstName,
         isRequired: true,
         clearButtonMode: .whileEditing,
         returnKeyType: .next,
+        language: language,
         reconfigureHandler: { [weak self] vm, _ in self?.firstNameField.setup(vm) }
     )
 
     private lazy var lastNameVM = InfoCollectorTextFieldViewModel(
         textFieldType: .lastName,
-        title: NSLocalizedString("Last name", bundle: .paymentSheet, comment: "shipping field title"),
+        title: NSLocalizedString("Last name", bundle: .paymentSheet.language(language), comment: "shipping field title"),
         text: shipping?.lastName,
         isRequired: true,
         clearButtonMode: .whileEditing,
         returnKeyType: .next,
+        language: language,
         reconfigureHandler: { [weak self] vm, _ in self?.lastNameField.setup(vm) }
     )
 
     private lazy var countryVM: CountrySelectionViewModel = {
         var country: AWXCountry?
         if let code = shipping?.address?.countryCode, !code.isEmpty {
-            country = AWXCountry(code: code)
+            country = AWXCountry(code: code, language: language)
         }
         return CountrySelectionViewModel(
             country: country,
-            title: NSLocalizedString("Country / Region", bundle: .paymentSheet, comment: "shipping field title"),
+            title: NSLocalizedString("Country / Region", bundle: .paymentSheet.language(language), comment: "shipping field title"),
+            language: language,
             handleUserInteraction: { [weak self] in self?.presentCountryPicker() },
             reconfigureHandler: { [weak self] vm, _ in self?.countryField.setup(vm as! CountrySelectionViewModel) }
         )
@@ -88,61 +106,67 @@ import AirwallexCore
 
     private lazy var stateVM = InfoCollectorTextFieldViewModel(
         textFieldType: .state,
-        title: NSLocalizedString("State", bundle: .paymentSheet, comment: "shipping field title"),
+        title: NSLocalizedString("State", bundle: .paymentSheet.language(language), comment: "shipping field title"),
         text: shipping?.address?.state,
         isRequired: true,
         clearButtonMode: .whileEditing,
         returnKeyType: .next,
+        language: language,
         reconfigureHandler: { [weak self] vm, _ in self?.stateField.setup(vm) }
     )
 
     private lazy var cityVM = InfoCollectorTextFieldViewModel(
         textFieldType: .city,
-        title: NSLocalizedString("City", bundle: .paymentSheet, comment: "shipping field title"),
+        title: NSLocalizedString("City", bundle: .paymentSheet.language(language), comment: "shipping field title"),
         text: shipping?.address?.city,
         isRequired: true,
         clearButtonMode: .whileEditing,
         returnKeyType: .next,
+        language: language,
         reconfigureHandler: { [weak self] vm, _ in self?.cityField.setup(vm) }
     )
 
     private lazy var streetVM = InfoCollectorTextFieldViewModel(
         textFieldType: .street,
-        title: NSLocalizedString("Street", bundle: .paymentSheet, comment: "shipping field title"),
+        title: NSLocalizedString("Street", bundle: .paymentSheet.language(language), comment: "shipping field title"),
         text: shipping?.address?.street,
         isRequired: true,
         clearButtonMode: .whileEditing,
         returnKeyType: .next,
+        language: language,
         reconfigureHandler: { [weak self] vm, _ in self?.streetField.setup(vm) }
     )
 
     private lazy var zipcodeVM = InfoCollectorTextFieldViewModel(
         textFieldType: .zipcode,
-        title: NSLocalizedString("Zip code (optional)", bundle: .paymentSheet, comment: "shipping field title"),
+        title: NSLocalizedString("Zip code (optional)", bundle: .paymentSheet.language(language), comment: "shipping field title"),
         text: shipping?.address?.postcode,
         isRequired: false,
         clearButtonMode: .whileEditing,
         returnKeyType: .next,
+        language: language,
         reconfigureHandler: { [weak self] vm, _ in self?.zipcodeField.setup(vm) }
     )
 
     private lazy var emailVM = InfoCollectorTextFieldViewModel(
         textFieldType: .email,
-        title: NSLocalizedString("Email (optional)", bundle: .paymentSheet, comment: "shipping field title"),
+        title: NSLocalizedString("Email (optional)", bundle: .paymentSheet.language(language), comment: "shipping field title"),
         text: shipping?.email,
         isRequired: false,
         clearButtonMode: .whileEditing,
         returnKeyType: .next,
+        language: language,
         reconfigureHandler: { [weak self] vm, _ in self?.emailField.setup(vm) }
     )
 
     private lazy var phoneVM = InfoCollectorTextFieldViewModel(
         textFieldType: .phoneNumber,
-        title: NSLocalizedString("Phone number (optional)", bundle: .paymentSheet, comment: "shipping field title"),
+        title: NSLocalizedString("Phone number (optional)", bundle: .paymentSheet.language(language), comment: "shipping field title"),
         text: shipping?.phoneNumber,
         isRequired: false,
         clearButtonMode: .whileEditing,
         returnKeyType: .done,
+        language: language,
         reconfigureHandler: { [weak self] vm, _ in self?.phoneField.setup(vm) }
     )
 
@@ -204,20 +228,20 @@ extension AWXShippingViewController: AWXPageViewTrackable {
 private extension AWXShippingViewController {
 
     func setupUI() {
-        title = NSLocalizedString("Shipping", bundle: .paymentSheet, comment: "title of shipping view controller")
+        title = NSLocalizedString("Shipping", bundle: .paymentSheet.language(language), comment: "title of shipping view controller")
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .automatic
         view.backgroundColor = .awxColor(.backgroundPrimary)
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: NSLocalizedString("Save", bundle: .paymentSheet, comment: "save button on navigation bar"),
+            title: NSLocalizedString("Save", bundle: .paymentSheet.language(language), comment: "save button on navigation bar"),
             style: .plain,
             target: self,
             action: #selector(savePressed)
         )
 
         if navigationController?.viewControllers.first === self {
-            let image = UIImage(named: "close", in: .paymentSheet)?
+            let image = UIImage(named: "close", in: .resource())?
                 .withTintColor(.awxColor(.iconPrimary), renderingMode: .alwaysTemplate)
             navigationItem.leftBarButtonItem = UIBarButtonItem(
                 image: image,
@@ -308,7 +332,7 @@ private extension AWXShippingViewController {
         }
 
         if let errorHint = allVMs.first(where: { !$0.isValid })?.errorHint {
-            showAlert(message: errorHint)
+            showAlert(message: errorHint, language: language)
             return
         }
 
@@ -337,6 +361,7 @@ extension AWXShippingViewController: CountryListViewControllerDelegate {
 
     func presentCountryPicker() {
         let countryListVC = CountryListViewController()
+        countryListVC.language = language
         countryListVC.delegate = self
         countryListVC.selectedCountry = countryVM.country
         let nav = UINavigationController(rootViewController: countryListVC)

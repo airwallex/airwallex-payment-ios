@@ -217,6 +217,7 @@ extension IntegrationDemoListViewController {
             applePayOptions: DemoDataSource.applePayOptions,
             autoCapture: ExamplesKeys.autoCapture,
             billing: shippingAddress,
+            lang: ExamplesKeys.sdkLang,
             paymentConsentOptions: consentOptions,
             requiredBillingContactFields: getRequiredBillingContactFields(),
             returnURL: ExamplesKeys.returnUrl
@@ -232,6 +233,7 @@ extension IntegrationDemoListViewController {
             applePayOptions: DemoDataSource.applePayOptions,
             autoCapture: ExamplesKeys.autoCapture,
             billing: shippingAddress,
+            lang: ExamplesKeys.sdkLang,
             paymentConsentOptions: consentOptions,
             requiredBillingContactFields: getRequiredBillingContactFields(),
             returnURL: ExamplesKeys.returnUrl
@@ -300,6 +302,8 @@ extension IntegrationDemoListViewController {
         paymentSession.returnURL = ExamplesKeys.returnUrl
         // update required billing contact fields
         paymentSession.requiredBillingContactFields = getRequiredBillingContactFields()
+        // Preferred BCP-47 language identifier for SDK UI.
+        paymentSession.lang = ExamplesKeys.sdkLang
         return paymentSession
     }
     

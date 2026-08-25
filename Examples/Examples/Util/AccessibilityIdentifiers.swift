@@ -14,6 +14,7 @@ enum AccessibilityIdentifiers {
         static let optionButtonForEnvironment = "optionButtonForEnvironment"
         static let optionButtonForNextTriggerBy = "optionButtonForNextTriggerBy"
         static let optionButtonForLayout = "optionButtonForLayout"
+        static let optionButtonForLanguage = "optionButtonForLanguage"
         static let textFieldForCustomerID = "textFieldForCustomerID"
         static let actionButtonForCustomerID = "actionButtonForCustomerID"
         static let toggleFor3DS = "toggleFor3DS"
@@ -33,4 +34,5 @@ enum UITestingEnvironmentVariable {
     static let customerID_2 = "UI_TESTING_CUSTOMER_ID_2"
     static let customerID_3 = "UI_TESTING_CUSTOMER_ID_3"
     static let mockApplePayToken = "UI_TESTING_MOCK_APPLEPAY_TOKEN"
+    static let environment = "ENVIRONMENT"
 }

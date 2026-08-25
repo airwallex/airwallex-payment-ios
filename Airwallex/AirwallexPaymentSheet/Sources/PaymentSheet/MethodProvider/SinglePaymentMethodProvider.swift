@@ -22,6 +22,7 @@ class SinglePaymentMethodProvider: PaymentMethodProvider {
          name: String,
          supportedCardBrands: [AWXCardBrand]? = nil) {
         self.session = session
+        self.language = session.resolvedPaymentLanguage
         self.name = name
         self.supportedCardBrands = supportedCardBrands
     }
@@ -42,6 +43,8 @@ class SinglePaymentMethodProvider: PaymentMethodProvider {
     var consents = [AWXPaymentConsent]()
     
     let session: AWXSession
+
+    let language: AWXPaymentLanguage
     
     var apiClient = AWXAPIClient(configuration: .shared())
     
@@ -55,9 +58,9 @@ class SinglePaymentMethodProvider: PaymentMethodProvider {
         method.resources = AWXResources()
         switch name {
         case AWXApplePayKey:
-            method.displayName = NSLocalizedString("Apple Pay", bundle: .paymentSheet, comment: "")
+            method.displayName = NSLocalizedString("Apple Pay", bundle: .paymentSheet.language(language), comment: "")
         case AWXCardKey:
-            method.displayName = NSLocalizedString("Card", bundle: .paymentSheet, comment: "")
+            method.displayName = NSLocalizedString("Card", bundle: .paymentSheet.language(language), comment: "")
             var brands = supportedCardBrands ?? AWXCardBrand.allAvailable
             // Maestro is offered wherever Mastercard is supported.
             if brands.contains(.mastercard) && !brands.contains(.maestro) {
@@ -87,7 +90,7 @@ class SinglePaymentMethodProvider: PaymentMethodProvider {
             let request = AWXGetPaymentMethodTypeRequest()
             request.name = name
             request.transactionMode = session.transactionMode()
-            request.lang = session.lang
+            request.lang = language.rawValue
             let task = Task {
                 try await (session as? Session)?.ensurePaymentIntent()
                 return try await apiClient.send(request) as! AWXGetPaymentMethodTypeResponse

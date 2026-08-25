@@ -388,11 +388,13 @@ private extension AWXUIContext {
             AWXTheme.shared().tintColor = configuration.appearance.tintColor
         }
 
-        let paymentUIContext = PaymentSheetUIContext(delegate: paymentResultDelegate)
+        let paymentUIContext = PaymentSheetUIContext(
+            language: methodProvider.language,
+            delegate: paymentResultDelegate
+        )
         paymentUIContext.layout = configuration.layout
         paymentUIContext.applePayButtonConfiguration = configuration.applePayButton
         paymentUIContext.checkoutButtonConfiguration = configuration.checkoutButton
-
         switch configuration.launchStyle {
         case .push:
             guard let nav = hostingVC.navigationController else {

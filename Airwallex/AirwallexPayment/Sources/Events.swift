@@ -39,6 +39,7 @@ package enum AnalyticEvent {
     package enum PageView: String {
         case paymentMethodList = "payment_method_list"
         case applePaySheet = "apple_pay_sheet"
+        case cvcScreen = "cvc_screen"// when cvc required for consent payment in API integration
     }
     
     package struct PaymentMethodView: RawRepresentable {

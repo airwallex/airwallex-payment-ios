@@ -7,6 +7,9 @@
 //
 
 import Combine
+#if canImport(AirwallexPayment)
+import AirwallexPayment
+#endif
 import UIKit
 
 class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
@@ -16,7 +19,6 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = .awxFont(.body2)
         view.textColor = .awxColor(.textPrimary)
-        view.text = NSLocalizedString("Card Information", bundle: .paymentSheet, comment: "Card Info Cell - title")
         return view
     }()
     
@@ -62,6 +64,7 @@ class CardInfoCollectorCell: UICollectionViewCell, ViewReusable, ViewConfigurabl
     
     func setup(_ viewModel: CardInfoCollectorCellViewModel) {
         self.viewModel = viewModel
+        titleLabel.text = NSLocalizedString("Card Information", bundle: .paymentSheet.language(viewModel.language), comment: "Card Info Cell - title")
         
         viewModel.cardNumberConfigurer.returnActionHandler = { [weak self] _ in
             self?.expiresTextField.becomeFirstResponder() ?? false

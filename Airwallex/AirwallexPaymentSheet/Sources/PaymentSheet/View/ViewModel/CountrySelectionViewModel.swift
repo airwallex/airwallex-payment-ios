@@ -40,6 +40,7 @@ class CountrySelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectio
          title: String? = nil,
          isEnabled: Bool = true,
          hideErrorHintLabel: Bool = true,
+         language: AWXPaymentLanguage = .english,
          handleUserInteraction: @escaping () -> Void,
          reconfigureHandler: @escaping ReconfigureHandler) {
         self.country = country
@@ -48,20 +49,17 @@ class CountrySelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectio
             fieldName: fieldName,
             title: title,
             text: country?.countryName,
-            placeholder: NSLocalizedString("Select...", bundle: .paymentSheet, comment: "country selection view placeholder"),
+            placeholder: NSLocalizedString("Select...", bundle: .paymentSheet.language(language), comment: "country selection view placeholder"),
             isRequired: true,
             isEnabled: isEnabled,
             hideErrorHintLabel: hideErrorHintLabel,
+            language: language,
             reconfigureHandler: reconfigureHandler
         )
         inputValidator = BlockValidator { [weak self] _ in
             guard let self else { return }
             guard self.country != nil else {
-                throw NSLocalizedString(
-                    "Please enter your country",
-                    bundle: .paymentSheet,
-                    comment: "country selection view error hint"
-                ).asError()
+                throw NSLocalizedString("Please enter your country", bundle: .paymentSheet.language(language), comment: "country selection view error hint").asError()
             }
         }
     }
@@ -80,6 +78,7 @@ class CountrySelectionCellViewModel: CountrySelectionViewModel, CellViewModelIde
          fieldName: String = "country",
          title: String? = nil,
          isEnabled: Bool = true,
+         language: AWXPaymentLanguage = .english,
          handleUserInteraction: @escaping () -> Void,
          cellReconfigureHandler: @escaping CellReconfigureHandler) {
         self.itemIdentifier = itemIdentifier
@@ -89,6 +88,7 @@ class CountrySelectionCellViewModel: CountrySelectionViewModel, CellViewModelIde
             title: title,
             isEnabled: isEnabled,
             hideErrorHintLabel: false,
+            language: language,
             handleUserInteraction: handleUserInteraction,
             reconfigureHandler: { cellReconfigureHandler(itemIdentifier, $1) }
         )

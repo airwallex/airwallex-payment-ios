@@ -7,9 +7,6 @@
 //
 
 import UIKit
-#if canImport(AirwallexCore)
-import AirwallexCore
-#endif
 #if canImport(AirwallexPayment)
 @_spi(AWX) import AirwallexPayment
 #endif
@@ -38,7 +35,7 @@ class CountryListViewController: SearchableListViewController<AWXCountry> {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        items = AWXCountry.allCountries()
+        items = AWXCountry.allCountries(language: language)
         onSelect = { [weak self] country in
             guard let self else { return }
             self.delegate?.countryListViewController(self, didSelect: country)

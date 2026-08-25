@@ -54,7 +54,7 @@ public class AWXPaymentElement: NSObject {
     // MARK: - Private Properties
 
     private let methodProvider: PaymentMethodProvider
-    let paymentUIContext = PaymentSheetUIContext()
+    let paymentUIContext: PaymentSheetUIContext
     private lazy var collectionViewManager: CollectionViewManager = {
         let listConfiguration = UICollectionViewCompositionalLayoutConfiguration()
         listConfiguration.interSectionSpacing = 16
@@ -172,6 +172,7 @@ public class AWXPaymentElement: NSObject {
         configuration: Configuration = Configuration()
     ) {
         self.methodProvider = methodProvider
+        self.paymentUIContext = PaymentSheetUIContext(language: methodProvider.language)
         self.delegate = delegate
         self.configuration = configuration
         super.init()

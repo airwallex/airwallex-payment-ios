@@ -137,6 +137,28 @@ class PaymentSheetUIContextTests: XCTestCase {
         XCTAssertTrue(loader1 === loader2)
     }
 
+    func testLocalizedString_UsesSelectedLanguagePerContext() {
+        let japaneseContext = PaymentSheetUIContext(language: .japanese)
+        let germanContext = PaymentSheetUIContext(language: .german)
+
+        XCTAssertEqual(
+            NSLocalizedString(
+                "Pay",
+                bundle: .paymentSheet.language(japaneseContext.language),
+                comment: ""
+            ),
+            "支払う"
+        )
+        XCTAssertEqual(
+            NSLocalizedString(
+                "Pay",
+                bundle: .paymentSheet.language(germanContext.language),
+                comment: ""
+            ),
+            "Bezahlen"
+        )
+    }
+
     func testPaymentSessionHandlerFactory_DefaultIsDefaultFactory() {
         XCTAssertTrue(sut.paymentSessionHandlerFactory is DefaultPaymentSessionHandlerFactory)
     }

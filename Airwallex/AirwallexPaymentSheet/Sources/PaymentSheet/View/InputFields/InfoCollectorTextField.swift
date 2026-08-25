@@ -7,6 +7,9 @@
 //
 
 import UIKit
+#if canImport(AirwallexPayment)
+import AirwallexPayment
+#endif
 
 protocol InfoCollectorTextFieldConfiguring: BaseTextFieldConfiguring {
     /// Indicates whether this information is required.

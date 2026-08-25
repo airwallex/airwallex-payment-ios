@@ -7,6 +7,9 @@
 //
 
 import UIKit
+#if canImport(AirwallexPayment)
+import AirwallexPayment
+#endif
 
 #if canImport(AirwallexCore)
 import AirwallexCore
@@ -35,7 +38,19 @@ struct PaymentMethodCellViewModel: CellViewModelIdentifiable, CardBrandViewConfi
 }
 
 class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
-    
+
+    private enum Layout {
+        static let itemWidth: CGFloat = 92
+        static let horizontalPadding: CGFloat = 16
+        static let topPadding: CGFloat = 16
+        static let bottomPadding: CGFloat = 8
+        static let verticalPadding: CGFloat = topPadding + bottomPadding
+        static let logoWidth: CGFloat = 30
+        static let logoHeight: CGFloat = 20
+        static let stackSpacing: CGFloat = 8
+        static let maxLabelLines = 2
+    }
+
     private let roundedBG: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -59,6 +74,8 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = UIFont.awxFont(.caption2)
         view.textColor = .awxColor(.textLink)
+        view.numberOfLines = Layout.maxLabelLines
+        view.textAlignment = .center
         return view
     }()
     
@@ -66,7 +83,7 @@ class PaymentMethodCell: UICollectionViewCell, ViewReusable, ViewConfigurable {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .vertical
-        view.spacing = 8
+        view.spacing = Layout.stackSpacing
         view.alignment = .center
         return view
     }()
@@ -112,13 +129,58 @@ private extension PaymentMethodCell {
         stack.addArrangedSubview(label)
         
         let constraints = [
-            logo.widthAnchor.constraint(equalToConstant: 30),
-            logo.heightAnchor.constraint(equalToConstant: 20),
-            
+            logo.widthAnchor.constraint(equalToConstant: Layout.logoWidth),
+            logo.heightAnchor.constraint(equalToConstant: Layout.logoHeight),
+
             stack.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            stack.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 4),
-            stack.widthAnchor.constraint(lessThanOrEqualTo: contentView.widthAnchor, constant: -16),
+            stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Layout.topPadding),
+            stack.widthAnchor.constraint(
+                lessThanOrEqualTo: contentView.widthAnchor,
+                constant: -Layout.horizontalPadding
+            ),
+            stack.heightAnchor.constraint(
+                lessThanOrEqualTo: contentView.heightAnchor,
+                constant: -Layout.verticalPadding
+            )
         ]
         NSLayoutConstraint.activate(constraints)
+    }
+}
+
+extension PaymentMethodCell {
+    static let itemWidth = Layout.itemWidth
+
+    private static let sizingLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = Layout.maxLabelLines
+        label.textAlignment = .center
+        label.font = UIFont.awxFont(.caption2)
+        return label
+    }()
+
+    private static func estimatedLabelHeight(for text: String, width: CGFloat) -> CGFloat {
+        sizingLabel.text = text
+        return sizingLabel.sizeThatFits(
+            CGSize(width: width, height: .greatestFiniteMagnitude)
+        ).height
+    }
+
+    static func estimatedItemHeight(
+        displayNames: [String],
+        itemWidth: CGFloat = Layout.itemWidth
+    ) -> CGFloat {
+        let labelWidth = itemWidth - Layout.horizontalPadding
+        let font = UIFont.awxFont(.caption2)
+        let labelHeight = displayNames
+            .map { estimatedLabelHeight(for: $0, width: labelWidth) }
+            .max() ?? font.lineHeight
+
+        return ceil(
+            Layout.topPadding
+            + Layout.logoHeight
+            + Layout.stackSpacing
+            + labelHeight
+            + Layout.bottomPadding
+        )
     }
 }

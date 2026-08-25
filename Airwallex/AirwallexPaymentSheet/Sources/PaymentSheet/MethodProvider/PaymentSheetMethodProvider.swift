@@ -16,6 +16,7 @@ import Foundation
 final class PaymentSheetMethodProvider: PaymentMethodProvider {
     
     let session: AWXSession
+    let language: AWXPaymentLanguage
     let updatePublisher = PassthroughSubject<PaymentMethodProviderUpdateType, Never>()
     var selectedMethod: AWXPaymentMethodType? {
         didSet {
@@ -40,6 +41,7 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
          apiClient: AWXAPIClient = AWXAPIClient.init(configuration: .shared()),
          isApplePaySelectable: Bool = false) {
         self.session = session
+        self.language = session.resolvedPaymentLanguage
         self.apiClient = apiClient
         self.isApplePaySelectable = isApplePaySelectable
     }
@@ -80,7 +82,7 @@ final class PaymentSheetMethodProvider: PaymentMethodProvider {
         let request = AWXGetPaymentMethodTypeRequest()
         request.name = name
         request.transactionMode = session.transactionMode()
-        request.lang = session.lang
+        request.lang = language.rawValue
         return try await apiClient.send(request) as! AWXGetPaymentMethodTypeResponse
     }
     
@@ -101,7 +103,7 @@ private extension PaymentSheetMethodProvider {
         request.transactionCurrency = session.currency()
         request.transactionMode = session.transactionMode()
         request.countryCode = session.countryCode
-        request.lang = session.lang
+        request.lang = language.rawValue
         request.pageNum = 0
         request.pageSize = 1000
         request.flow = AWXPaymentMethodFlow.app.rawValue

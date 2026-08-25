@@ -6,12 +6,12 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
-import UIKit
-import XCTest
+import AirwallexCore
 @testable import AirwallexPayment
 @testable import AirwallexPaymentSheet
-import AirwallexCore
 import Combine
+import UIKit
+import XCTest
 
 @MainActor class SinglePaymentMethodProviderTests: XCTestCase {
 
@@ -78,8 +78,24 @@ import Combine
         } catch {
             XCTFail()
         }
-        XCTAssertEqual(provider.selectedMethod?.cardSchemes.map {$0.name },
+        XCTAssertEqual(provider.selectedMethod?.cardSchemes.map { $0.name },
                        AWXCardScheme.allAvailable.map { $0.name })
+    }
+
+    func testCardDisplayNameUsesSelectedLanguage() async throws {
+        let session = Session(
+            paymentIntent: AWXPaymentIntent(),
+            countryCode: "AU",
+            lang: "ja-JP"
+        )
+        provider = SinglePaymentMethodProvider(
+            session: session,
+            name: AWXCardKey
+        )
+        try await provider.getPaymentMethodTypes()
+        XCTAssertEqual(provider.methods.first?.displayName, "カード")
+        session.lang = "de"
+        XCTAssertEqual(provider.language, .japanese)
     }
     
     func testSupportedCardBrands() async {
@@ -96,7 +112,7 @@ import Combine
             XCTFail()
         }
         // Maestro is appended because the supported brands include Mastercard
-        XCTAssertEqual(provider.selectedMethod?.cardSchemes.map {$0.name },
+        XCTAssertEqual(provider.selectedMethod?.cardSchemes.map { $0.name },
                        [AWXCardBrand.amex, AWXCardBrand.visa, AWXCardBrand.mastercard, AWXCardBrand.maestro].map { $0.rawValue })
     }
 
@@ -140,7 +156,7 @@ import Combine
         XCTAssertFalse(provider.isApplePayAvailable)
         XCTAssertNil(provider.applePayMethodType)
         XCTAssertEqual(provider.method(named: AWXCardKey), provider.selectedMethod)
-        XCTAssertEqual(provider.selectedMethod?.cardSchemes.map {$0.name },
+        XCTAssertEqual(provider.selectedMethod?.cardSchemes.map { $0.name },
                        AWXCardScheme.allAvailable.map { $0.name })
     }
 
@@ -167,10 +183,12 @@ import Combine
 
         MockURLProtocol.mockResponse = (onlineBankingData, onlineBankingSuccessResponse, nil)
 
+        mockSession.lang = "ja-JP"
         provider = SinglePaymentMethodProvider(
             session: mockSession,
             name: "online_banking"
         )
+        mockSession.lang = "de"
         provider.apiClient = mockAPIClient
 
         updates = [PaymentMethodProviderUpdateType]()
@@ -199,6 +217,15 @@ import Combine
         }
 
         XCTAssertEqual(provider.session, mockSession)
+        XCTAssertEqual(provider.language, .japanese)
+        XCTAssertEqual(
+            MockURLProtocol.lastRequest?.url
+                .flatMap { URLComponents(url: $0, resolvingAgainstBaseURL: false) }?
+                .queryItems?
+                .first { $0.name == "lang" }?
+                .value,
+            "ja"
+        )
         XCTAssertEqual(provider.selectedMethod?.transactionMode, mockSession.transactionMode())
         XCTAssertFalse(provider.isApplePayAvailable)
         XCTAssertNil(provider.applePayMethodType)

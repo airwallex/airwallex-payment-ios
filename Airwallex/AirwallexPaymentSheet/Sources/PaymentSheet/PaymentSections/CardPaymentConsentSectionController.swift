@@ -44,6 +44,9 @@ class CardPaymentConsentSectionController: PaymentSectionController {
 
     let methodProvider: PaymentMethodProvider
     let paymentUIContext: PaymentSheetUIContext
+    private var language: AWXPaymentLanguage {
+        paymentUIContext.language
+    }
 
     private let addNewCardAction: () -> Void
     
@@ -65,8 +68,8 @@ class CardPaymentConsentSectionController: PaymentSectionController {
     )
     
     private lazy var viewModelForConsentToggle = CardPaymentToggleCellViewModel(
-        title: NSLocalizedString("Choose a card", bundle: .paymentSheet, comment: "consent section - choose a saved card"),
-        actionTitle: NSLocalizedString("Add new", bundle: .paymentSheet, comment: "consent section - add a new card"),
+        title: NSLocalizedString("Choose a card", bundle: .paymentSheet.language(language), comment: "consent section - choose a saved card"),
+        actionTitle: NSLocalizedString("Add new", bundle: .paymentSheet.language(language), comment: "consent section - add a new card"),
         buttonAction: { [weak self] in
             guard let self else { return }
             self.addNewCardAction()
@@ -334,11 +337,15 @@ class CardPaymentConsentSectionController: PaymentSectionController {
     }
     
     private func createCVCConfigurer(consent: AWXPaymentConsent) -> InfoCollectorCellViewModel<String> {
-        let validator = CardCVCValidator(cardName: consent.paymentMethod?.card?.brand ?? "")
+        let validator = CardCVCValidator(
+            cardName: consent.paymentMethod?.card?.brand ?? "",
+            language: language
+        )
         let viewModel = InfoCollectorCellViewModel(
             itemIdentifier: String.cvcField,
             textFieldType: .CVC,
-            placeholder: NSLocalizedString("CVC", bundle: .paymentSheet, comment: "consent section - cvc field placeholder"),
+            language: language,
+            placeholder: NSLocalizedString("CVC", bundle: .paymentSheet.language(language), comment: "consent section - cvc field placeholder"),
             customInputFormatter: validator,
             customInputValidator: validator,
             editingEventObserver: BeginEditingEventObserver {
@@ -370,7 +377,7 @@ class CardPaymentConsentSectionController: PaymentSectionController {
                 image: image,
                 text: consentTitle,
                 highlightable: false,
-                actionTitle: NSLocalizedString("Change", bundle: .paymentSheet, comment: "consent section - unselect consent and go back to consent list"),
+                actionTitle: NSLocalizedString("Change", bundle: .paymentSheet.language(language), comment: "consent section - unselect consent and go back to consent list"),
                 actionIcon: nil,
                 buttonAction: { [weak self] in
                     guard let self else { return }
@@ -408,14 +415,14 @@ class CardPaymentConsentSectionController: PaymentSectionController {
 private extension CardPaymentConsentSectionController {
     // actions
     func showAlertForDeleteCITConsent(_ consent: AWXPaymentConsent, consentDescription: String) {
-        let title = NSLocalizedString("Remove %@?", bundle: .paymentSheet, comment: "consent section - alert title for delete a consent")
+        let title = NSLocalizedString("Remove %@?", bundle: .paymentSheet.language(language), comment: "consent section - alert title for delete a consent")
         let alert = AWXAlertController(
             title: String(format: title, consentDescription),
-            message: NSLocalizedString("This option will be permanently removed from your saved payment methods.", bundle: .paymentSheet, comment: "consent section - alert message for delete a consent"),
+            message: NSLocalizedString("This option will be permanently removed from your saved payment methods.", bundle: .paymentSheet.language(language), comment: "consent section - alert message for delete a consent"),
             preferredStyle: .alert
         )
         let deleteAction = UIAlertAction(
-            title: NSLocalizedString("Remove", bundle: .paymentSheet, comment: "consent section - alert confirm button to remove a consent"),
+            title: NSLocalizedString("Remove", bundle: .paymentSheet.language(language), comment: "consent section - alert confirm button to remove a consent"),
             style: .destructive) { [self] _ in
                 Task {
                     context.startLoading(for: section)
@@ -423,7 +430,10 @@ private extension CardPaymentConsentSectionController {
                         try await methodProvider.disable(consent: consent)
                         debugLog("remove consent successfully. ID: \(consent.id)")
                     } catch {
-                        UIViewController.topMost?.showAlert(message: error.localizedDescription)
+                        UIViewController.topMost?.showAlert(
+                            message: error.localizedDescription,
+                            language: language
+                        )
                         debugLog("removing consent failed. ID: \(consent.id)")
                     }
                     context.stopLoading()
@@ -431,7 +441,7 @@ private extension CardPaymentConsentSectionController {
         }
         alert.addAction(deleteAction)
         let cancelAction = UIAlertAction(
-            title: NSLocalizedString("Cancel", bundle: .paymentSheet, comment: "consent section - alert cancel button to delete a consent"),
+            title: NSLocalizedString("Cancel", bundle: .paymentSheet.language(language), comment: "consent section - alert cancel button to delete a consent"),
             style: .cancel
         )
         alert.addAction(cancelAction)
@@ -447,14 +457,14 @@ private extension CardPaymentConsentSectionController {
             guard let merchantName = payload["business_name"] as? String else {
                 throw "business name not found in token \(token)".asError()
             }
-            let message = String(format: NSLocalizedString("This card is used for other payments you've set up with %@. Please contact %@ to update the payment method for these payments before removing this card.", bundle: .paymentSheet, comment: "alert message for delete MIT consent"), merchantName, merchantName)
+            let message = String(format: NSLocalizedString("This card is used for other payments you've set up with %@. Please contact %@ to update the payment method for these payments before removing this card.", bundle: .paymentSheet.language(language), comment: "alert message for delete MIT consent"), merchantName, merchantName)
             let alert = AWXAlertController(
                 title: nil,
                 message: message,
                 preferredStyle: .alert
             )
             let cancelAction = UIAlertAction(
-                title: NSLocalizedString("Cancel", bundle: .paymentSheet, comment: "consent section - alert cancel button to delete a consent"),
+                title: NSLocalizedString("Cancel", bundle: .paymentSheet.language(language), comment: "consent section - alert cancel button to delete a consent"),
                 style: .cancel
             )
             alert.addAction(cancelAction)

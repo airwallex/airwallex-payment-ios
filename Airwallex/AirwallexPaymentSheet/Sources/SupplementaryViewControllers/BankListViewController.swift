@@ -95,6 +95,7 @@ class BankListViewController: UIViewController {
     private let banks: [AWXBank]
     private let imageLoader: ImageLoader
     private let onBankSelected: (AWXBank) -> Void
+    private let language: AWXPaymentLanguage
 
     // Retained to keep the transitioning delegate alive during presentation
     private var bottomSheetTransitioningDelegate: BottomSheetTransitioningDelegate?
@@ -112,9 +113,13 @@ class BankListViewController: UIViewController {
         return table
     }()
 
-    init(banks: [AWXBank], imageLoader: ImageLoader, onBankSelected: @escaping (AWXBank) -> Void) {
+    init(banks: [AWXBank],
+         imageLoader: ImageLoader,
+         language: AWXPaymentLanguage = .english,
+         onBankSelected: @escaping (AWXBank) -> Void) {
         self.banks = banks
         self.imageLoader = imageLoader
+        self.language = language
         self.onBankSelected = onBankSelected
         super.init(nibName: nil, bundle: nil)
 
@@ -141,11 +146,7 @@ class BankListViewController: UIViewController {
 
     private func makeHeaderView() -> UIView {
         let label = UILabel()
-        label.text = NSLocalizedString(
-            "Select your Bank",
-            bundle: .paymentSheet,
-            comment: "title of Bank Selection form"
-        )
+        label.text = NSLocalizedString("Select your Bank", bundle: .paymentSheet.language(language), comment: "title of Bank Selection form")
         label.font = .awxFont(.subtitle1, weight: .medium)
         label.textColor = .awxColor(.textPrimary)
         // tableHeaderView uses frame-based layout; position the label with insets

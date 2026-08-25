@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension NSLayoutConstraint {
+package extension NSLayoutConstraint {
     @discardableResult
     func priority(_ priority: UILayoutPriority) -> NSLayoutConstraint {
         self.priority = priority

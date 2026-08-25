@@ -23,6 +23,12 @@ final class SessionTests: XCTestCase {
     private var mockReturnURL = "https://airwallex.com/return"
     private var mockBillingContactFields: RequiredBillingContactFields = [.name, .address]
     private var mockPaymentMethods = [AWXCardKey, AWXWeChatPayKey]
+    private var defaultCoreLanguage: String {
+        Bundle.preferredLocalizations(
+            from: Bundle.resource().localizations,
+            forPreferences: Bundle.main.localizations
+        ).first ?? "en"
+    }
     
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -54,7 +60,7 @@ final class SessionTests: XCTestCase {
         XCTAssertEqual(session.countryCode, mockCountryCode)
         XCTAssertEqual(session.returnURL, mockReturnURL)
         XCTAssertFalse(session.hidePaymentConsents)
-        XCTAssertEqual(session.lang, Locale.current.languageCode ?? "en")
+        XCTAssertNil(session.lang)
         XCTAssertEqual(session.requiredBillingContactFields, .name)
         XCTAssertNil(session.billing)
         XCTAssertNil(session.applePayOptions)
@@ -124,7 +130,7 @@ final class SessionTests: XCTestCase {
         XCTAssertEqual(session.countryCode, mockCountryCode)
         XCTAssertEqual(session.returnURL, mockReturnURL)
         XCTAssertFalse(session.hidePaymentConsents)
-        XCTAssertEqual(session.lang, Locale.current.languageCode ?? "en")
+        XCTAssertNil(session.lang)
         XCTAssertEqual(session.requiredBillingContactFields, .name)
         XCTAssertNil(session.billing)
         XCTAssertNil(session.applePayOptions)
@@ -429,6 +435,38 @@ final class SessionTests: XCTestCase {
         }
     }
 
+    // MARK: - Language Tests
+
+    func testLanguageResolverNegotiatesSupportedRegionalAndScriptValues() {
+        XCTAssertEqual(resolvePaymentLanguage("ja"), .japanese)
+        XCTAssertEqual(resolvePaymentLanguage("ja-JP"), .japanese)
+        XCTAssertEqual(resolvePaymentLanguage("pt-BR"), .portugueseBrazil)
+        XCTAssertEqual(resolvePaymentLanguage("zh-Hant-TW"), .chineseTraditional)
+    }
+
+    func testLanguageResolverTrimsWithoutMutatingRawSessionLang() {
+        let session = Session(
+            paymentIntent: mockPaymentIntent,
+            countryCode: mockCountryCode,
+            lang: "  ja-JP \n"
+        )
+
+        XCTAssertEqual(session.resolvedPaymentLanguage, .japanese)
+        XCTAssertEqual(session.lang, "  ja-JP \n")
+    }
+
+    func testLanguageResolverUsesAppPreferenceForNilOrEmptyAndEnglishForUnsupported() {
+        let expected = Bundle.preferredLocalizations(
+            from: Bundle.payment.localizations,
+            forPreferences: Bundle.main.preferredLocalizations
+        ).first.flatMap(AWXPaymentLanguage.init(rawValue:)) ?? .english
+
+        XCTAssertEqual(resolvePaymentLanguage(nil), expected)
+        XCTAssertEqual(resolvePaymentLanguage(""), expected)
+        XCTAssertEqual(resolvePaymentLanguage(" \n "), expected)
+        XCTAssertEqual(resolvePaymentLanguage("not-a-supported-language"), .english)
+    }
+
     // MARK: - Convenience Init Tests
     
     func testConvenienceInit_fromSameType() {
@@ -596,6 +634,7 @@ final class SessionTests: XCTestCase {
             countryCode: mockCountryCode,
             autoCapture: false,
             autoSaveCardForFuturePayments: false,
+            lang: "ja-JP",
             returnURL: mockReturnURL
         )
         
@@ -608,6 +647,7 @@ final class SessionTests: XCTestCase {
         XCTAssertEqual(oneOffSession.returnURL, session.returnURL)
         XCTAssertEqual(oneOffSession.autoCapture, session.autoCapture)
         XCTAssertEqual(oneOffSession.autoSaveCardForFuturePayments, session.autoSaveCardForFuturePayments)
+        XCTAssertEqual(oneOffSession.lang, "ja-JP")
     }
     
     func testConvertToLegacySession_recurringWithIntent() async throws {

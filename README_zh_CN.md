@@ -58,6 +58,7 @@ Airwallex iOS SDK 是一款灵活的工具，可让您将支付方式集成到�
       - [仅展示卡支付](#仅展示卡支付)
       - [按名称启动支付方式](#按名称启动支付方式)
       - [配置选项](#配置选项)
+      - [选择支付 UI 语言](#选择支付-ui-语言)
       - [处理支付结果](#处理支付结果)
     - [UI 集成 - 嵌入式](#ui-集成---嵌入式)
       - [创建嵌入式支付列表](#创建嵌入式支付列表)
@@ -437,6 +438,16 @@ AWXUIContext.launchPayment(
 | `supportedCardBrands` | 接受的卡品牌（仅适用于 `.addCard`） | 所有可用品牌 |
 | `applePayButton` | 自定义 Apple Pay 按钮外观（如 `buttonType`、`disableCardArt`） | — |
 | `checkoutButton` | 自定义结账按钮（如 `title`） | — |
+
+#### 选择支付 UI 语言
+
+在展示支付列表或创建嵌入式支付组件之前，请设置 session 的 `lang`。请使用符合 BCP-47 标准的语言标识符来控制 SDK UI 的语言。
+
+```swift
+session.lang = "fr"
+```
+
+SDK 会根据自身支持的语言解析 `"ja-JP"` 和 `"zh-Hant"` 等地区或文字变体。`nil` 或空值会使用应用的首选本地化语言，不支持的值会回退到英语。更改 `lang` 后，需要重新创建支付列表或嵌入式支付组件q。
 
 #### 处理支付结果
 

@@ -7,6 +7,7 @@
 
 import Foundation
 #if canImport(AirwallexPayment)
+import AirwallexCore
 import AirwallexPayment
 #endif
 
@@ -14,9 +15,9 @@ extension AddressFieldSpec {
     /// Localized placeholder for this field, derived from `kind` and `nameType`.
     ///
     /// The extension lives in AirwallexPaymentSheet (not on the type's home module) because
-    /// the strings table it reads from is `Bundle.paymentSheet` — `AirwallexPayment` is kept
+    /// the strings table it reads from is owned by AirwallexPaymentSheet — `AirwallexPayment` is kept
     /// free of UI strings by design.
-    var localizedLabel: String {
+    func localizedLabel(language: AWXPaymentLanguage) -> String {
         let key: String
         switch kind {
         case .street:
@@ -51,6 +52,6 @@ extension AddressFieldSpec {
             default: key = "Postal code"
             }
         }
-        return NSLocalizedString(key, bundle: .paymentSheet, comment: "billing address field placeholder")
+        return NSLocalizedString(key, bundle: .paymentSheet.language(language), comment: "billing address field placeholder")
     }
 }

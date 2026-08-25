@@ -50,6 +50,7 @@ class SubdivisionSelectionViewModel: InfoCollectorTextFieldViewModel, OptionSele
          fieldName: String = "state",
          isEnabled: Bool = true,
          hideErrorHintLabel: Bool = true,
+         language: AWXPaymentLanguage = .english,
          handleUserInteraction: @escaping () -> Void,
          reconfigureHandler: @escaping ReconfigureHandler) {
         self.options = options
@@ -63,16 +64,13 @@ class SubdivisionSelectionViewModel: InfoCollectorTextFieldViewModel, OptionSele
             isRequired: true,
             isEnabled: isEnabled,
             hideErrorHintLabel: hideErrorHintLabel,
+            language: language,
             reconfigureHandler: reconfigureHandler
         )
         inputValidator = BlockValidator { [weak self] _ in
             guard let self else { return }
             guard self.selection != nil else {
-                throw NSLocalizedString(
-                    "Invalid state",
-                    bundle: .paymentSheet,
-                    comment: "subdivision selection view error hint"
-                ).asError()
+                throw NSLocalizedString("Invalid state", bundle: .paymentSheet.language(language), comment: "subdivision selection view error hint").asError()
             }
         }
     }
