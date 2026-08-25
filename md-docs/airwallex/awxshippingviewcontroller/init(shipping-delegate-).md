@@ -13,7 +13,7 @@
     "modules" : [
       "Airwallex"
     ],
-    "preciseIdentifier" : "s:9Airwallex25AWXShippingViewControllerC8shipping8delegateACSo15AWXPlaceDetailsCSg_AA0bcD8Delegate_pSgtcfc"
+    "preciseIdentifier" : "c:@M@Airwallex@objc(cs)AWXShippingViewController(im)initWithShipping:delegate:"
   },
   "title" : "init(shipping:delegate:)"
 }
@@ -24,5 +24,5 @@
 **Initializer**
 
 ```
-@MainActor init(shipping: AWXPlaceDetails? = nil, delegate: (any AWXShippingViewControllerDelegate)? = nil)
+@objc @MainActor convenience init(shipping: AWXPlaceDetails? = nil, delegate: (any AWXShippingViewControllerDelegate)? = nil)
 ```

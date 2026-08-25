@@ -31,6 +31,8 @@
 
 [`init(shipping:delegate:)`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxshippingviewcontroller/init(shipping-delegate-).md)
 
+[`init(shipping:delegate:lang:)`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxshippingviewcontroller/init(shipping-delegate-lang-).md)
+
 ## Instance Properties
 
 [`delegate`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxshippingviewcontroller/delegate.md)

@@ -23,7 +23,7 @@
 
 **Instance Property**
 
-The lang.
+Preferred BCP-47 language identifier for SDK UI.
 
 ```
 var lang: String? { get set }

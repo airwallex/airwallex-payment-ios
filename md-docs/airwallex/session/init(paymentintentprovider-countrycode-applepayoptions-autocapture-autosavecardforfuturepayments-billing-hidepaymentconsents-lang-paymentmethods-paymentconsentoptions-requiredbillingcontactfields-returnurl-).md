@@ -63,7 +63,7 @@ Whether to hide previously saved payment methods. Default: false.
 
 `lang`
 
-Language code for UI localization. Default: system language.
+Preferred BCP-47 language identifier for SDK UI.
 
 `paymentMethods`
 

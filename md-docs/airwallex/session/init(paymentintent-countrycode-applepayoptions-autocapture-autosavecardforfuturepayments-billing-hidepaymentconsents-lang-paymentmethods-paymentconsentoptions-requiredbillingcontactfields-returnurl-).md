@@ -73,8 +73,7 @@ Default: false.
 
 `lang`
 
-Language code for UI localization (e.g., “en”, “zh-Hans”, “ja”).
-If nil, uses the system’s current language. Default: system language.
+Preferred BCP-47 language identifier for SDK UI.
 
 `paymentMethods`
 

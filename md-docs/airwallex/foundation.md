@@ -13,7 +13,7 @@
     "modules" : [
       "Airwallex"
     ],
-    "preciseIdentifier" : "s:m:s:e:c:objc(cs)NSArray(im)mapObjectsUsingBlock:"
+    "preciseIdentifier" : "s:m:s:e:c:objc(cs)NSBundle(cm)sdkBundle"
   },
   "title" : "Foundation"
 }
@@ -27,10 +27,6 @@
 
 [`Bundle`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/foundation/bundle.md)
 
-[`NSArray`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/foundation/nsarray.md)
-
-[`NSCharacterSet`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/foundation/nscharacterset.md)
-
 [`NSDecimalNumber`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/foundation/nsdecimalnumber.md)
 
 [`NSDictionary`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/foundation/nsdictionary.md)
@@ -38,5 +34,3 @@
 [`NSLocale`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/foundation/nslocale.md)
 
 [`NSString`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/foundation/nsstring.md)
-
-[`NSURL`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/foundation/nsurl.md)

@@ -143,8 +143,6 @@ A low-level API handler for managing Airwallex payment sessions.
 
 [`AWXCard`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxcard.md)
 
-[`AWXCardCVCViewController`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxcardcvcviewcontroller.md)
-
 [`AWXCardOptions`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxcardoptions.md)
 
 [`AWXCardProvider`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxcardprovider.md)
@@ -160,8 +158,6 @@ A low-level API handler for managing Airwallex payment sessions.
 [`AWXConfirmPaymentNextAction`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxconfirmpaymentnextaction.md)
 
 [`AWXConfirmThreeDSRequest`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxconfirmthreedsrequest.md)
-
-[`AWXCountry`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxcountry.md)
 
 [`AWXCreatePaymentConsentRequest`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxcreatepaymentconsentrequest.md)
 
@@ -184,10 +180,6 @@ A low-level API handler for managing Airwallex payment sessions.
 [`AWXField`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxfield.md)
 
 [`AWXFieldValidation`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxfieldvalidation.md)
-
-[`AWXForm`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxform.md)
-
-[`AWXFormMapping`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxformmapping.md)
 
 [`AWXGetAvailableBanksRequest`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxgetavailablebanksrequest.md)
 
@@ -380,8 +372,6 @@ A low-level API handler for managing Airwallex payment sessions.
 ## Enumerations
 
 [`AWXBrandType`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxbrandtype.md)
-
-[`AWXFormType`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxformtype.md)
 
 [`AWXSDKErrorCode`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/awxsdkerrorcode.md)
 

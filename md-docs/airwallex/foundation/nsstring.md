@@ -14,7 +14,7 @@
       "Airwallex",
       "Foundation"
     ],
-    "preciseIdentifier" : "s:e:c:objc(cs)NSString(im)convertToDictionary"
+    "preciseIdentifier" : "s:e:c:objc(cs)NSString(im)stringByInsertingBetweenWordsWithString:"
   },
   "title" : "NSString"
 }
@@ -30,8 +30,4 @@ extension NSString
 
 ## Instance Methods
 
-[`convertToDictionary()`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/foundation/nsstring/converttodictionary().md)
-
 [`insertingBetweenWords(with:)`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/foundation/nsstring/insertingbetweenwords(with-).md)
-
-[`removingIllegalCharacters()`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/foundation/nsstring/removingillegalcharacters().md)

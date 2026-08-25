@@ -13,7 +13,7 @@
     "modules" : [
       "Airwallex"
     ],
-    "preciseIdentifier" : "s:m:s:e:c:objc(cs)UIButton(im)setImageAndTitleVerticalAlignmentCenter:imageSize:"
+    "preciseIdentifier" : "s:m:s:e:c:objc(cs)UIColor(cm)colorWithDynamicLightColor:darkColor:"
   },
   "title" : "UIKit"
 }
@@ -25,8 +25,6 @@
 
 ## Extended Classes
 
-[`UIButton`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/uikit/uibutton.md)
-
 [`UIColor`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/uikit/uicolor.md)
 
 [`UIFont`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/uikit/uifont.md)
@@ -34,5 +32,3 @@
 [`UIImage`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/uikit/uiimage.md)
 
 [`UIImageView`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/uikit/uiimageview.md)
-
-[`UIView`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/uikit/uiview.md)

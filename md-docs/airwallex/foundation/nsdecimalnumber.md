@@ -14,7 +14,7 @@
       "Airwallex",
       "Foundation"
     ],
-    "preciseIdentifier" : "s:e:c:objc(cs)NSDecimalNumber(im)string"
+    "preciseIdentifier" : "s:e:c:objc(cs)NSDecimalNumber(im)stringWithCurrencyCode:"
   },
   "title" : "NSDecimalNumber"
 }
@@ -29,9 +29,5 @@ extension NSDecimalNumber
 ```
 
 ## Instance Methods
-
-[`currencySymbol(_:)`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/foundation/nsdecimalnumber/currencysymbol(_-).md)
-
-[`string()`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/foundation/nsdecimalnumber/string().md)
 
 [`string(withCurrencyCode:)`](https://github.com/airwallex/airwallex-payment-ios/blob/md-doc/md-docs/airwallex/foundation/nsdecimalnumber/string(withcurrencycode-).md)
