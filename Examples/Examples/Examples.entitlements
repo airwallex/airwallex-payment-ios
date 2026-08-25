@@ -6,6 +6,8 @@
 	<string>development</string>
 	<key>com.apple.developer.in-app-payments</key>
 	<array>
+		<string>merchant.com.airwallex.checkout</string>
+		<string>merchant.com.airwallex.checkout.internal</string>
 		<string>merchant.demo.com.airwallex.paymentacceptance</string>
 		<string>merchant.prod.com.airwallex.paymentacceptance</string>
 		<string>merchant.staging.com.airwallex.paymentacceptance</string>
