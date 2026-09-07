@@ -7,6 +7,7 @@
 //
 
 import Combine
+import Network
 import UIKit
 @preconcurrency import WebKit
 
@@ -16,6 +17,9 @@ class WebViewController: UIViewController {
     let url: String
     private(set) var referer: String
     var isPopupWebView = false
+
+    /// Set this to `true` if you want to enable proxying network requests in `WKWebView`.
+    let enableProxy = false
 
     init(url: String, referer: String) {
         self.url = url
@@ -48,6 +52,7 @@ class WebViewController: UIViewController {
             let config = WKWebViewConfiguration()
             // Append GOOGLE_PAY_SUPPORTED to user agent for Google Pay isReadyToPay API
             config.applicationNameForUserAgent = "Airwallex-iOS-SDK" + " GOOGLE_PAY_SUPPORTED"
+            applyDebugProxyIfNeeded(to: config)
             webView = WKWebView(frame: .zero, configuration: config)
             webView.uiDelegate = self
             webView.navigationDelegate = self
@@ -107,6 +112,21 @@ class WebViewController: UIViewController {
         
         webView.load(request)
     }
+
+    /// WKWebView ignores the system proxy, so debug builds pin iOS 17+ traffic to Proxyman.
+    /// https://proxyman.com/posts/2024-08-29-Capture-Network-Traffic-from-WKWebView-iOS-18
+    private func applyDebugProxyIfNeeded(to configuration: WKWebViewConfiguration) {
+        if #available(iOS 17.0, *) {
+            guard enableProxy else { return }
+            let httpProxy = ProxyConfiguration(
+                httpCONNECTProxy: NWEndpoint.hostPort(
+                    host: NWEndpoint.Host("127.0.0.1"),// update this to Mac IP from the Proxyman toolbar.
+                    port: NWEndpoint.Port(integerLiteral: 9090)
+                )
+            )
+            configuration.websiteDataStore.proxyConfigurations = [httpProxy]
+        }
+    }
 }
 
 extension WebViewController: WKNavigationDelegate {
@@ -146,6 +166,7 @@ extension WebViewController: WKUIDelegate {
         // Only handle popup requests (when targetFrame is nil)
         guard navigationAction.targetFrame == nil else { return nil }
 
+        applyDebugProxyIfNeeded(to: configuration)
         let popupWebView = WKWebView(frame: .zero, configuration: configuration)
 
         let popupViewController = WebViewController(webView: popupWebView)
