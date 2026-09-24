@@ -11,8 +11,6 @@ import Airwallex
 extension AirwallexSDKMode {
     var displayName: String {
         switch self {
-        case .demoMode:
-            return "Demo"
         case .stagingMode:
             return "Staging"
         case .productionMode:

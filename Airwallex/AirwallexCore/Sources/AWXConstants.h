@@ -42,7 +42,6 @@ typedef NS_OPTIONS(NSUInteger, AWXRequiredBillingContactFields) {
 } NS_SWIFT_NAME(RequiredBillingContactFields);
 
 typedef NS_CLOSED_ENUM(NSInteger, AirwallexSDKMode) {
-    AirwallexSDKDemoMode,
     AirwallexSDKStagingMode,
     AirwallexSDKProductionMode,
     AirwallexSDKPreviewMode

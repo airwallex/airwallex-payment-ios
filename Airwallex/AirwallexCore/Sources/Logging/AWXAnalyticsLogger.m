@@ -185,8 +185,6 @@
 
 - (Environment)trackerEnvironment {
     switch (Airwallex.mode) {
-    case AirwallexSDKDemoMode:
-        return EnvironmentDemo;
     case AirwallexSDKStagingMode:
         return EnvironmentStaging;
     case AirwallexSDKProductionMode:

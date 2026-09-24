@@ -78,7 +78,6 @@
 }
 
 - (void)testFormatAirwallexSDKMode {
-    XCTAssertEqualObjects(FormatAirwallexSDKMode(AirwallexSDKDemoMode), @"demo");
     XCTAssertEqualObjects(FormatAirwallexSDKMode(AirwallexSDKStagingMode), @"staging");
     XCTAssertEqualObjects(FormatAirwallexSDKMode(AirwallexSDKProductionMode), @"production");
     XCTAssertEqualObjects(FormatAirwallexSDKMode(AirwallexSDKPreviewMode), @"preview");

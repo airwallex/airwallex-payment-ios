@@ -46,7 +46,7 @@ extension APIClient {
 extension Airwallex {
     static var apiClient: APIClient {
         switch Airwallex.mode() {
-        case .demoMode, .stagingMode, .previewMode:
+        case .stagingMode, .previewMode:
             return DemoStoreAPIClient()
         case .productionMode:
             return DirectAPIClient()
@@ -83,8 +83,6 @@ class DemoStoreAPIClient: APIClient, CustomerFetchable {
     
     static func baseURLForEnvironment(_ environment: AirwallexSDKMode) -> String? {
         switch environment {
-        case .demoMode:
-            "https://demo-pacheckoutdemo.airwallex.com"
         case .stagingMode:
             "https://staging-pacheckoutdemo.airwallex.com"
         case .previewMode:

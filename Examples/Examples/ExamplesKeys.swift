@@ -12,7 +12,7 @@ import Foundation
 struct ExamplesKeys {
     static let storagePrefix = "airwallexExamples-"
     
-    @RawRepresentableStorage("environment", defaultValue: AirwallexSDKMode.demoMode)
+    @RawRepresentableStorage("environment", defaultValue: AirwallexSDKMode.previewMode)
     static var environment: AirwallexSDKMode
     
     @RawRepresentableStorage("checkoutMode", defaultValue: CheckoutMode.oneOff)
@@ -242,8 +242,8 @@ struct ExamplesKeys {
 #if DEBUG
         if !CommandLine.arguments.contains("-production") {
             if environment == .productionMode {
-                // fallback to demo mode
-                environment = .demoMode
+                // fallback to preview mode
+                environment = .previewMode
             }
         }
 #endif

@@ -246,8 +246,6 @@
     AWXAnalyticsLogger *logger = [AWXAnalyticsLogger new];
     AirwallexSDKMode originalMode = Airwallex.mode;
 
-    [Airwallex setMode:AirwallexSDKDemoMode];
-    XCTAssertEqual([logger trackerEnvironment], EnvironmentDemo);
     [Airwallex setMode:AirwallexSDKStagingMode];
     XCTAssertEqual([logger trackerEnvironment], EnvironmentStaging);
     [Airwallex setMode:AirwallexSDKProductionMode];

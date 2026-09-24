@@ -61,8 +61,6 @@ NSArray<PKPaymentNetwork> *AWXApplePaySupportedNetworks(void) {
 
 NSString *FormatAirwallexSDKMode(AirwallexSDKMode mode) {
     switch (mode) {
-    case AirwallexSDKDemoMode:
-        return @"demo";
     case AirwallexSDKStagingMode:
         return @"staging";
     case AirwallexSDKProductionMode:
