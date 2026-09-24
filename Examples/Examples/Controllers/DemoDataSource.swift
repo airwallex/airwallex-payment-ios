@@ -13,11 +13,6 @@ struct DemoDataSource {
     
     static var testCard: AWXCard? {
         let cardNumber = [
-            AirwallexSDKMode.demoMode: [
-                CheckoutMode.oneOff: "4012000300000005",
-                CheckoutMode.recurring: "4012000300000021",
-                CheckoutMode.recurringWithIntent: "4012000300000005"
-            ],
             AirwallexSDKMode.stagingMode: [
                 CheckoutMode.oneOff: "4012000300001003",
                 CheckoutMode.recurring: "4035501000000008",
@@ -45,11 +40,6 @@ struct DemoDataSource {
     static var testCard3DS: AWXCard? {
         
         let cardNumber = [
-            AirwallexSDKMode.demoMode: [
-                CheckoutMode.oneOff: "4012000300000088",
-                CheckoutMode.recurring: "5425233430109903",
-                CheckoutMode.recurringWithIntent: "4012000300000088"
-            ],
             AirwallexSDKMode.stagingMode: [
                 CheckoutMode.oneOff: "4012000300000088",
                 CheckoutMode.recurring: "5307837360544518",
@@ -89,11 +79,9 @@ struct DemoDataSource {
         switch ExamplesKeys.environment {
         case .stagingMode:
             "merchant.staging.com.airwallex.paymentacceptance"
-        case .demoMode:
-            "merchant.demo.com.airwallex.paymentacceptance"
         case .productionMode:
             "merchant.prod.com.airwallex.paymentacceptance"
-        case .previewMode:
+        case .demoMode, .previewMode:
             "merchant.sandbox.com.airwallex.paymentacceptance"
         }
     }

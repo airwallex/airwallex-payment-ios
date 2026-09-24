@@ -42,7 +42,7 @@ typedef NS_OPTIONS(NSUInteger, AWXRequiredBillingContactFields) {
 } NS_SWIFT_NAME(RequiredBillingContactFields);
 
 typedef NS_CLOSED_ENUM(NSInteger, AirwallexSDKMode) {
-    AirwallexSDKDemoMode,
+    AirwallexSDKDemoMode __deprecated_msg("Demo mode is deprecated, use AirwallexSDKPreviewMode instead"),
     AirwallexSDKStagingMode,
     AirwallexSDKProductionMode,
     AirwallexSDKPreviewMode
