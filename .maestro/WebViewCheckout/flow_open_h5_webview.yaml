@@ -1,0 +1,47 @@
+appId: com.airwallex.paymentacceptance
+# NOTE: We deliberately do NOT override the prefilled URL / Referrer fields. iOS Maestro's
+# inputText for long URL strings is fragile against UITextField autocorrect / smart-quotes
+# substitution, which can silently mutate the URL before submit (mirrored Android issue).
+# The H5DemoViewController prefill targets the demo environment by default, which is
+# equivalent to staging for webview-mount regression purposes. To run against staging,
+# disable smart text features on the iOS simulator (`xcrun simctl spawn booted defaults
+# write -g KeyboardAutocorrection -bool NO`) and re-enable the inputText steps below.
+---
+# Entry point: HomeViewController → "Integrate with HTML5 DEMO" → H5DemoViewController
+# → "Next" → WebViewController (WKWebView) loads checkout-demo.
+
+# Cold-launch so reruns always start from HomeViewController instead of inheriting a
+# stale WebViewController on top of the navigation stack.
+- launchApp:
+    clearState: false
+    stopApp: true
+
+- extendedWaitUntil:
+    visible: "Integrate with HTML5 DEMO"
+    timeout: 30000
+- tapOn: "Integrate with HTML5 DEMO"
+
+- assertVisible: "Launch HTML 5 demo"
+
+# --- IME-typing path (disabled, see comment above) ---
+# - tapOn: "Payment URL"
+# - eraseText: 200
+# - inputText: "https://staging-pacheckoutdemo.airwallex.com/shopping-cart"
+# - tapOn: "Referrer URL"
+# - eraseText: 200
+# - inputText: "https://checkout-staging.airwallex.com"
+# - hideKeyboard
+
+- tapOn: "Next"
+
+# WKWebView is now loading the demo page. Wait for the cart UI before continuing.
+# i18n key shopping_cart.title -> "Order Information"; shopping_cart.submit -> "Check out".
+# "Check out" lives below the fold on most devices, scroll until visible.
+- extendedWaitUntil:
+    visible: "Order Information"
+    timeout: 30000
+- scrollUntilVisible:
+    element: "Check out"
+    direction: DOWN
+    timeout: 10000
+    speed: 50
