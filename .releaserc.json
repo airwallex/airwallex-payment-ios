@@ -1,9 +1,43 @@
 {
-    "branches": ["main"],
-    "repositoryUrl": "git@github.com:airwallex/airwallex-payment-ios",
-    "tagFormat": "${version}",
-    "plugins": [
-        "@semantic-release/commit-analyzer",
-        "@semantic-release/release-notes-generator"
-    ]
+  "branches": ["main"],
+  "repositoryUrl": "https://gitlab.awx.im/acquiring/paymentacceptance-checkout-sdk-ios.git",
+  "tagFormat": "${version}",
+  "plugins": [
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "preset": "conventionalcommits",
+        "releaseRules": [
+          { "type": "chore", "release": "patch" },
+          { "type": "refactor", "release": "patch" }
+        ]
+      }
+    ],
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        "preset": "conventionalcommits"
+      }
+    ],
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "V='${nextRelease.version}'; sed -i -E 's/(s\\.version[[:space:]]*=[[:space:]]*\")[^\"]*/\\1'\"$V\"'/' Airwallex.podspec; sed -i -E 's/(AIRWALLEX_VERSION \\(@\")[^\"]*/\\1'\"$V\"'/' Airwallex/AirwallexCore/Sources/AWXConstants.h; sed -i -E 's/(AIRWALLEX_VERSION[[:space:]]*=[[:space:]]*).*/\\1'\"$V\"'/' Airwallex/Airwallex.xcconfig; for f in README.md README_zh_CN.md; do sed -i -E \"s@(pod 'Airwallex', '~> )[^']*@\\1$V@g\" \"$f\"; sed -i -E \"s@(github\\.io/airwallex-payment-ios/)[^/]*/@\\1$V/@g\" \"$f\"; done"
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "Airwallex.podspec",
+          "Airwallex/AirwallexCore/Sources/AWXConstants.h",
+          "Airwallex/Airwallex.xcconfig",
+          "README.md",
+          "README_zh_CN.md"
+        ],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ],
+    "@semantic-release/gitlab"
+  ]
 }

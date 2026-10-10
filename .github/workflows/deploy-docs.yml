@@ -1,7 +1,12 @@
 name: Deploy Docs
+# Releases are now cut in GitLab CI, which creates a plain `X.Y.Z` tag that is
+# replicated here by the GitLab -> GitHub mirror. A mirrored tag push does NOT
+# raise a `release: published` event, so this workflow triggers on the tag push
+# (the version is then taken from the tag / podspec below).
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
   workflow_dispatch:
   workflow_call:
 

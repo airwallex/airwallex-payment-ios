@@ -149,3 +149,5 @@ Dependencies/
 
 Localization/exported
 Localization/updated
+# Node (release tooling: semantic-release)
+node_modules/
