@@ -162,7 +162,7 @@ pod install
 应用启动时，使用 `mode` 配置 SDK：
 
 ```swift
-Airwallex.setMode(.demoMode) // .demoMode, .previewMode, .stagingMode, .productionMode
+Airwallex.setMode(.previewMode) // .previewMode, .stagingMode, .productionMode
 ```
 
 #### Customer ID

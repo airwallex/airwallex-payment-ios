@@ -247,7 +247,7 @@
     AirwallexSDKMode originalMode = Airwallex.mode;
 
     [Airwallex setMode:AirwallexSDKDemoMode];
-    XCTAssertEqual([logger trackerEnvironment], EnvironmentDemo);
+    XCTAssertEqual([logger trackerEnvironment], EnvironmentPreview);
     [Airwallex setMode:AirwallexSDKStagingMode];
     XCTAssertEqual([logger trackerEnvironment], EnvironmentStaging);
     [Airwallex setMode:AirwallexSDKProductionMode];

@@ -153,7 +153,7 @@
     AirwallexSDKMode originalMode = Airwallex.mode;
 
     [Airwallex setMode:AirwallexSDKDemoMode];
-    XCTAssertEqualObjects(Airwallex.defaultBaseURL.absoluteString, @"https://api-demo.airwallex.com/");
+    XCTAssertEqualObjects(Airwallex.defaultBaseURL.absoluteString, @"https://api.sandbox.airwallex.com/");
 
     [Airwallex setMode:AirwallexSDKStagingMode];
     XCTAssertEqualObjects(Airwallex.defaultBaseURL.absoluteString, @"https://api-staging.airwallex.com/");
@@ -204,7 +204,7 @@
 
 - (void)testRiskEnvironment {
     XCTAssertEqual([AWXAPIClientConfiguration riskEnvironmentForMode:AirwallexSDKProductionMode], AirwallexRiskEnvironmentProduction);
-    XCTAssertEqual([AWXAPIClientConfiguration riskEnvironmentForMode:AirwallexSDKDemoMode], AirwallexRiskEnvironmentDemo);
+    XCTAssertEqual([AWXAPIClientConfiguration riskEnvironmentForMode:AirwallexSDKDemoMode], AirwallexRiskEnvironmentPreview);
     XCTAssertEqual([AWXAPIClientConfiguration riskEnvironmentForMode:AirwallexSDKStagingMode], AirwallexRiskEnvironmentStaging);
     XCTAssertEqual([AWXAPIClientConfiguration riskEnvironmentForMode:AirwallexSDKPreviewMode], AirwallexRiskEnvironmentPreview);
 }

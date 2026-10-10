@@ -22,8 +22,8 @@ enum ApplePaymentSheet {
     
     static func waitForExistence(_ timeout: TimeInterval = .networkRequestTimeout) {
         XCTAssertTrue(cancelButton.waitForExistence(timeout: timeout))
-        XCTAssertTrue(cardButton.exists)
-        XCTAssertTrue(payButton.exists)
+        XCTAssertTrue(cardButton.waitForExistence(timeout: timeout))
+        XCTAssertTrue(payButton.waitForExistence(timeout: timeout))
     }
     
     static func waitForNonExistence(_ timeout: TimeInterval = .networkRequestTimeout) {

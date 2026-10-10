@@ -39,7 +39,7 @@ final class ApplePayTests: XCTestCase {
             customerID: customerId
         )
         UIIntegrationDemoScreen.openDefaultPaymentList()
-        PaymentSheetScreen.waitForExistence(.animationTimeout)
+        PaymentSheetScreen.waitForExistence()
         XCTAssertTrue(PaymentSheetScreen.applePayButton.exists)
         PaymentSheetScreen.applePayButton.robustTap()
         ApplePaymentSheet.waitForExistence()
@@ -90,7 +90,7 @@ final class ApplePayTests: XCTestCase {
             preferUnifiedSession: preferUnifiedSession
         )
         UIIntegrationDemoScreen.openDefaultPaymentList()
-        PaymentSheetScreen.waitForExistence(.animationTimeout)
+        PaymentSheetScreen.waitForExistence()
         XCTAssertTrue(PaymentSheetScreen.applePayButton.exists)
         PaymentSheetScreen.applePayButton.robustTap()
         ApplePaymentSheet.waitForExistence()

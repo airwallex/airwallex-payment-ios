@@ -321,7 +321,7 @@ private extension SettingsViewController {
     
     func setupOptionForEnvironment() {
         let env = settings.environment
-        var environmentOptions = [ AirwallexSDKMode.productionMode, AirwallexSDKMode.demoMode, AirwallexSDKMode.previewMode, AirwallexSDKMode.stagingMode]
+        var environmentOptions = [ AirwallexSDKMode.productionMode, AirwallexSDKMode.previewMode, AirwallexSDKMode.stagingMode]
 #if DEBUG
         if !CommandLine.arguments.contains("-production") {
             environmentOptions.remove(at: 0)

@@ -12,8 +12,8 @@ import XCTest
 enum SettingsScreen {
     
     enum Environment: String {
-        case demo = "Demo"
         case staging = "Staging"
+        case preview = "Preview"
         case production = "Production"
     }
     

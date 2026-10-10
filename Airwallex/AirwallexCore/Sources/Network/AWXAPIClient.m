@@ -15,7 +15,6 @@
 #import "NSObject+Logging.h"
 #import <AirwallexRisk/AirwallexRisk-Swift.h>
 
-static NSString *const AWXAPIDemoBaseURL = @"https://api-demo.airwallex.com/";
 static NSString *const AWXAPIStagingBaseURL = @"https://api-staging.airwallex.com/";
 static NSString *const AWXAPIProductionBaseURL = @"https://api.airwallex.com/";
 static NSString *const AWXAPIPreviewBaseURL = @"https://api.sandbox.airwallex.com/";
@@ -44,9 +43,8 @@ static BOOL _localLogFileEnabled = NO;
         return [NSURL URLWithString:AWXAPIProductionBaseURL];
     case AirwallexSDKStagingMode:
         return [NSURL URLWithString:AWXAPIStagingBaseURL];
-    case AirwallexSDKDemoMode:
-        return [NSURL URLWithString:AWXAPIDemoBaseURL];
     case AirwallexSDKPreviewMode:
+    case AirwallexSDKDemoMode:
         return [NSURL URLWithString:AWXAPIPreviewBaseURL];
     }
 }
@@ -103,9 +101,8 @@ static BOOL _localLogFileEnabled = NO;
         return AirwallexRiskEnvironmentProduction;
     case AirwallexSDKStagingMode:
         return AirwallexRiskEnvironmentStaging;
-    case AirwallexSDKDemoMode:
-        return AirwallexRiskEnvironmentDemo;
     case AirwallexSDKPreviewMode:
+    case AirwallexSDKDemoMode:
         return AirwallexRiskEnvironmentPreview;
     }
 }

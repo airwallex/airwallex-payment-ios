@@ -83,12 +83,10 @@ class DemoStoreAPIClient: APIClient, CustomerFetchable {
     
     static func baseURLForEnvironment(_ environment: AirwallexSDKMode) -> String? {
         switch environment {
-        case .demoMode:
-            "https://demo-pacheckoutdemo.airwallex.com"
+        case .demoMode, .previewMode:
+            "https://pacheckoutdemo.sandbox.airwallex.com"
         case .stagingMode:
             "https://staging-pacheckoutdemo.airwallex.com"
-        case .previewMode:
-            "https://pacheckoutdemo.sandbox.airwallex.com"
         case .productionMode:
             // Our demo does not support production. Please validate it by connecting your own backend.
             nil

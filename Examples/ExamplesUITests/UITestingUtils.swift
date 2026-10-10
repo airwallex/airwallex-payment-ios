@@ -58,7 +58,7 @@ extension XCTestCase {
         SettingsScreen.validate()
         let env = SettingsScreen.Environment(
             rawValue: ProcessInfo.processInfo.environment[UITestingEnvironmentVariable.environment] ?? ""
-        ) ?? .demo
+        ) ?? .preview
         SettingsScreen.ensureEnvironment(env)
         SettingsScreen.ensureLayoutMode(useTabLayout: useTabLayout)
         if let nextTriggerByCustomer {
