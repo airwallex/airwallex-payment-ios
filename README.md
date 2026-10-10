@@ -141,7 +141,7 @@ Airwallex for iOS is also available via [CocoaPods](https://cocoapods.org/).
 Add `Airwallex` for a full integration except WeChat Pay:
 
 ```ruby
-pod 'Airwallex', '~> 6.7.0'
+pod 'Airwallex', '~> 6.8.0'
 ```
 
 Or add only the subspecs you need:
@@ -360,7 +360,7 @@ let session = Session(
 > [!NOTE]
 > This is the **recommended** flow: a complete, prebuilt UI that collects payment and billing details and confirms the payment.
 
-Add the `Airwallex` or `AirwallexPaymentSheet` dependency. At checkout, use [AWXUIContext](https://airwallex.github.io/airwallex-payment-ios/6.7.0/documentation/airwallex/awxuicontext) to present the payment method picker.
+Add the `Airwallex` or `AirwallexPaymentSheet` dependency. At checkout, use [AWXUIContext](https://airwallex.github.io/airwallex-payment-ios/6.8.0/documentation/airwallex/awxuicontext) to present the payment method picker.
 
 ```swift
 let configuration = AWXUIContext.Configuration()
@@ -588,7 +588,7 @@ Add the `Airwallex` or `AirwallexPayment` dependency to build a fully custom UI 
 
 #### Create PaymentSessionHandler
 
-[PaymentSessionHandler](https://airwallex.github.io/airwallex-payment-ios/6.7.0/documentation/airwallex/paymentsessionhandler) is the center of API integration.
+[PaymentSessionHandler](https://airwallex.github.io/airwallex-payment-ios/6.8.0/documentation/airwallex/paymentsessionhandler) is the center of API integration.
 ```swift
 let paymentSessionHandler = PaymentSessionHandler(
     session: "The session created above", 
