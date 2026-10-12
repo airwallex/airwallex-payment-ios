@@ -1,7 +1,7 @@
 <!--
 {
   "availability" : [
-
+    "*: -"
   ],
   "documentType" : "symbol",
   "framework" : "Airwallex",
@@ -21,7 +21,11 @@
 
 # AirwallexSDKMode.demoMode
 
-**Case**
+**Case** · *
+
+## Deprecated
+
+Demo mode is deprecated, use AirwallexSDKPreviewMode instead
 
 ```
 case demoMode
