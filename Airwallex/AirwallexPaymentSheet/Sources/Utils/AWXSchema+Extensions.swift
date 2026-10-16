@@ -30,9 +30,9 @@ extension AWXSchema {
         fields.filter { $0.hidden }
     }
     
-    func parametersForHiddenFields(countryCode: String) -> [String: String] {
+    func parametersForHiddenFields(session: AWXSession) -> [String: Any] {
         let fields = hiddenFields
-        var params = [String: String]()
+        var params = [String: Any]()
         // flow
         if let flowField = fields.first(where: { $0.name == AWXField.Name.flow }) {
             if flowField.candidates.contains(where: { $0.value == AWXPaymentMethodFlow.app.rawValue }) {
@@ -47,9 +47,14 @@ extension AWXSchema {
         }
         // country_code
         if fields.contains(where: { $0.name == AWXField.Name.countryCode }) {
-            params[AWXField.Name.countryCode] = countryCode
+            params[AWXField.Name.countryCode] = session.countryCode
         }
-        
+        // shipping
+        if fields.contains(where: { $0.name == AWXField.Name.shipping }),
+           let shipping = session.billing?.encodeToJSON() {
+            params[AWXField.Name.shipping] = shipping
+        }
+
         return params
     }
 }
@@ -70,7 +75,7 @@ extension AWXField {
         static let flow = "flow"
         static let osType = "osType"
         static let countryCode = "country_code"
-        static let bankName = "bank_name"
+        static let shipping = "shipping"
     }
     
     var textFieldType: AWXTextFieldType {

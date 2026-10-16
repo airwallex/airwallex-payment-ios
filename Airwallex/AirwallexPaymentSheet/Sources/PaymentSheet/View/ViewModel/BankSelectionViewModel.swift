@@ -36,7 +36,8 @@ class BankSelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectionVi
     
     var handleUserInteraction: () -> Void
     
-    init(bank: AWXBank? = nil,
+    init(fieldName: String,
+         bank: AWXBank? = nil,
          language: AWXPaymentLanguage = .english,
          handleUserInteraction: @escaping () -> Void,
          reconfigureHandler: @escaping ReconfigureHandler) {
@@ -44,7 +45,7 @@ class BankSelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectionVi
         self.errorMessage = NSLocalizedString("Please select a bank", bundle: .paymentSheet.language(language), comment: "user input validation - bank selection view error hint")
         self.handleUserInteraction = handleUserInteraction
         super.init(
-            fieldName: AWXField.Name.bankName,
+            fieldName: fieldName,
             title: NSLocalizedString("Bank", bundle: .paymentSheet.language(language), comment: "title for bank selection"),
             text: bank?.displayName,
             placeholder: NSLocalizedString("Select...", bundle: .paymentSheet.language(language), comment: "bank selection placeholder"),
@@ -65,13 +66,15 @@ class BankSelectionViewModel: InfoCollectorTextFieldViewModel, OptionSelectionVi
 
 class BankSelectionCellViewModel: BankSelectionViewModel, CellViewModelIdentifiable {
     let itemIdentifier: String
-    init(bank: AWXBank? = nil,
+    init(fieldName: String,
+         bank: AWXBank? = nil,
          itemIdentifier: String,
          language: AWXPaymentLanguage = .english,
          handleUserInteraction: @escaping () -> Void,
          cellReconfigureHandler: @escaping CellReconfigureHandler) {
         self.itemIdentifier = itemIdentifier
         super.init(
+            fieldName: fieldName,
             bank: bank,
             language: language,
             handleUserInteraction: handleUserInteraction,

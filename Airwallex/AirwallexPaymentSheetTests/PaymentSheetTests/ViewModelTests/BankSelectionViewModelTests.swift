@@ -6,10 +6,10 @@
 //  Copyright © 2025 Airwallex. All rights reserved.
 //
 
+import AirwallexCore
+@testable import AirwallexPaymentSheet
 import UIKit
 import XCTest
-@testable import AirwallexPaymentSheet
-import AirwallexCore
 
 class BankSelectionViewModelTests: XCTestCase {
 
@@ -25,35 +25,39 @@ class BankSelectionViewModelTests: XCTestCase {
     }
     
     func testInit() {
+        let fieldName = "payer_bank"
         let viewModel = BankSelectionViewModel(
+            fieldName: fieldName,
             bank: mockBank,
             handleUserInteraction: {},
-            reconfigureHandler: { _,_ in }
+            reconfigureHandler: { _, _ in }
         )
         
-        XCTAssertEqual(viewModel.fieldName, AWXField.Name.bankName)
+        XCTAssertEqual(viewModel.fieldName, fieldName)
         XCTAssertEqual(viewModel.isRequired, true)
         XCTAssertEqual(viewModel.isEnabled, true)
         XCTAssertEqual(viewModel.hideErrorHintLabel, false)
         XCTAssertEqual(viewModel.bank?.name, mockBank.name)
         
         let cellViewModel = BankSelectionCellViewModel(
+            fieldName: fieldName,
             bank: mockBank,
             itemIdentifier: mockIdentifier,
             handleUserInteraction: {},
-            cellReconfigureHandler: { _,_ in }
+            cellReconfigureHandler: { _, _ in }
         )
         XCTAssertEqual(cellViewModel.bank?.name, mockBank.name)
         XCTAssertEqual(cellViewModel.itemIdentifier, mockIdentifier)
-        XCTAssertEqual(cellViewModel.fieldName, AWXField.Name.bankName)
+        XCTAssertEqual(cellViewModel.fieldName, fieldName)
         XCTAssertEqual(cellViewModel.isRequired, true)
         XCTAssertEqual(cellViewModel.isEnabled, true)
         XCTAssertEqual(cellViewModel.hideErrorHintLabel, false)
     }
     
     func testReconfigureHandler() {
-        var handlerCalled: (String, Bool)? = nil
+        var handlerCalled: (String, Bool)?
         let cellViewModel = BankSelectionCellViewModel(
+            fieldName: "bank_name",
             bank: nil,
             itemIdentifier: mockIdentifier,
             handleUserInteraction: {},
@@ -69,10 +73,11 @@ class BankSelectionViewModelTests: XCTestCase {
     
     func testValidate() {
         let cellViewModel = BankSelectionCellViewModel(
+            fieldName: "bank_name",
             bank: nil,
             itemIdentifier: mockIdentifier,
             handleUserInteraction: {},
-            cellReconfigureHandler: { _,_ in }
+            cellReconfigureHandler: { _, _ in }
         )
         
         XCTAssertTrue(cellViewModel.isValid)
