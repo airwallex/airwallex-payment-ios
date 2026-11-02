@@ -15,7 +15,7 @@ import AirwallexPayment
 // MARK: - Item Identifiers
 private extension String {
     static let accordionKey = "accordionKey"
-    static let bankName = "bankName"
+    static let bankSelection = "bankSelection"
     static let redirectReminder = "redirectReminder"
     static let checkoutButton = "checkoutButton"
 }
@@ -68,8 +68,8 @@ class SchemaPaymentSectionController: NSObject, PaymentSectionController {
             items.append(.accordionKey)
         }
     
-        if bankSelectionViewModel != nil {
-            items.append(.bankName)
+        if let bankSelectionViewModel {
+            items.append(.bankSelection)
         }
     
         if let uiFields = schema?.uiFields {
@@ -137,7 +137,7 @@ class SchemaPaymentSectionController: NSObject, PaymentSectionController {
             let cell = context.dequeueReusableCell(PaymentReminderCell.self, for: sectionItem, indexPath: indexPath)
             cell.setup(.schema, language: language)
             return cell
-        case .bankName:
+        case .bankSelection:
             let cell = context.dequeueReusableCell(BankSelectionCell.self, for: sectionItem, indexPath: indexPath)
             assert(bankSelectionViewModel != nil)
             if let bankSelectionViewModel {
@@ -183,7 +183,7 @@ class SchemaPaymentSectionController: NSObject, PaymentSectionController {
                 self.schema = schema
                 
                 // update bank selection
-                if schema.bankField != nil {
+                if let bankField = schema.bankField {
                     let banks = try await methodProvider.getBankList(name: name).items
                     if banks.isEmpty {
                         bankList = nil
@@ -191,8 +191,9 @@ class SchemaPaymentSectionController: NSObject, PaymentSectionController {
                     } else {
                         bankList = banks
                         bankSelectionViewModel = BankSelectionCellViewModel(
+                            fieldName: bankField.name,
                             bank: banks.count == 1 ? banks.first! : nil,
-                            itemIdentifier: .bankName,
+                            itemIdentifier: .bankSelection,
                             language: language,
                             handleUserInteraction: { [weak self] in
                                 self?.handleBankSelection()
@@ -371,7 +372,7 @@ private extension SchemaPaymentSectionController {
         paymentMethod.appendAdditionalParams(inputContents)
 
         // update hidden fields
-        paymentMethod.appendAdditionalParams(schema.parametersForHiddenFields(countryCode: session.countryCode))
+        paymentMethod.appendAdditionalParams(schema.parametersForHiddenFields(session: session))
 
         return paymentMethod
     }

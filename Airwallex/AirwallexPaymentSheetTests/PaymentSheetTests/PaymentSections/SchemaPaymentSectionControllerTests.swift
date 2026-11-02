@@ -66,7 +66,7 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         XCTAssert(sectionController.items.contains("shopper_name"))
         XCTAssert(sectionController.items.contains("shopper_email"))
         XCTAssert(sectionController.items.contains("shopper_phone"))
-        XCTAssert(sectionController.items.contains(.bankName))
+        XCTAssert(sectionController.items.contains(.bankSelection))
         XCTAssertFalse(sectionController.items.contains(.accordionKey))
     }
     
@@ -113,7 +113,7 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         XCTAssertEqual(phoneNumberCell.viewModel?.text, mockMethodProvider.session.billing?.phoneNumber)
         
         // check bank selection prefill
-        guard let bankCell = sectionController.context.cellForItem(sectionController.sectionItem(.bankName)) as? BankSelectionCell else {
+        guard let bankCell = sectionController.context.cellForItem(sectionController.sectionItem(.bankSelection)) as? BankSelectionCell else {
             XCTFail()
             return
         }
@@ -127,7 +127,7 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
         try? await Task.sleep(nanoseconds: 1000_000_000)
         mockViewController.view.layoutIfNeeded()
 
-        guard let bankCell = sectionController.context.cellForItem(sectionController.sectionItem(.bankName)) as? BankSelectionCell else {
+        guard let bankCell = sectionController.context.cellForItem(sectionController.sectionItem(.bankSelection)) as? BankSelectionCell else {
             XCTFail()
             return
         }
@@ -272,7 +272,7 @@ class SchemaPaymentSectionControllerTests: BasePaymentSectionControllerTests {
 // MARK: - Item Identifiers (mirroring SchemaPaymentSectionController)
 private extension String {
     static let accordionKey = "accordionKey"
-    static let bankName = "bankName"
+    static let bankSelection = "bankSelection"
     static let redirectReminder = "redirectReminder"
     static let checkoutButton = "checkoutButton"
 }

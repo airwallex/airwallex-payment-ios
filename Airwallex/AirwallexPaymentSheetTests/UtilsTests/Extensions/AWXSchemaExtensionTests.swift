@@ -50,8 +50,41 @@ class AWXSchemaExtensionTests: XCTestCase {
 
     func testParametersForHiddenFields() {
         let countryCode = "AU"
-        let params = mockSchema.parametersForHiddenFields(countryCode: countryCode)
-        XCTAssertEqual(params[AWXField.Name.countryCode], countryCode)
+        let session = AWXOneOffSession()
+        session.countryCode = countryCode
+        let params = mockSchema.parametersForHiddenFields(session: session)
+        XCTAssertEqual(params[AWXField.Name.countryCode] as? String, countryCode)
+        XCTAssertNil(params[AWXField.Name.shipping])
+    }
+
+    func testParametersForHiddenFieldsIncludesShippingFromBilling() {
+        let schema = schema(hiddenFieldName: AWXField.Name.shipping)
+        let billing = AWXPlaceDetails()
+        billing.firstName = "Jason"
+        billing.lastName = "Wang"
+        let session = AWXOneOffSession()
+        session.billing = billing
+
+        let params = schema.parametersForHiddenFields(session: session)
+        let shipping = params[AWXField.Name.shipping] as? NSDictionary
+
+        XCTAssertTrue(shipping?.isEqual(billing.encodeToJSON()) == true)
+    }
+
+    func testParametersForHiddenFieldsOmitsShippingWhenBillingIsNil() {
+        let schema = schema(hiddenFieldName: AWXField.Name.shipping)
+        let params = schema.parametersForHiddenFields(session: AWXOneOffSession())
+
+        XCTAssertNil(params[AWXField.Name.shipping])
+    }
+
+    private func schema(hiddenFieldName: String) -> AWXSchema {
+        let field = AWXField()
+        field.name = hiddenFieldName
+        field.hidden = true
+        let schema = AWXSchema()
+        schema.fields = [field]
+        return schema
     }
 
     func testAWXFieldTextFieldType() {
