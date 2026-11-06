@@ -1,9 +1,6 @@
 name: Create GitHub Release
 
-# Releases are now cut in GitLab CI (semantic-release), which creates a GitLab
-# Release and a plain `X.Y.Z` tag. The GitLab -> GitHub mirror replicates the
-# tag (and commits) but NOT the Release object, so this workflow recreates the
-# GitHub Release from the mirrored tag to keep the public Releases tab current.
+# Creates a GitHub Release when a release tag (X.Y.Z) is pushed.
 on:
   push:
     tags:

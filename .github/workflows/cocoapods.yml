@@ -1,10 +1,6 @@
 name: Push release to Cocoapods
 
-# Releases are now cut in GitLab CI, which bumps the version and creates a
-# plain `X.Y.Z` tag. That tag is replicated here by the GitLab -> GitHub mirror,
-# but a mirrored tag push does NOT raise a `release: published` event, so this
-# workflow triggers on the tag push instead. Downstream repo dispatch (Flutter /
-# React Native) is handled on the GitLab side, so it is no longer invoked here.
+# Publishes the pod to CocoaPods trunk when a release tag (X.Y.Z) is pushed.
 on:
   push:
     tags:
