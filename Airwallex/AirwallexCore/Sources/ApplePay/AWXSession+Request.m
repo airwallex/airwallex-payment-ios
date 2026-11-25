@@ -51,6 +51,10 @@
     request.countryCode = self.countryCode;
     request.currencyCode = self.currency;
     request.merchantCapabilities = options.merchantCapabilities;
+    if (![options.supportedNetworks containsObject:PKPaymentNetworkChinaUnionPay]) {
+        // Only UnionPay supports EMV tokens in our Apple Pay integration.
+        request.merchantCapabilities &= ~PKMerchantCapabilityEMV;
+    }
     request.merchantIdentifier = options.merchantIdentifier;
 
     PKPaymentSummaryItem *totalPriceItem = [self paymentSummaryItemWithTotalPriceLabel:options.totalPriceLabel];

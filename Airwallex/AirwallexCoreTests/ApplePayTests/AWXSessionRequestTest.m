@@ -80,6 +80,49 @@
     XCTAssertEqualObjects(request.countryCode, session.countryCode);
 }
 
+- (void)testMakePaymentRequestRemovesEMVWithoutUnionPay {
+    AWXRecurringSession *session = [AWXRecurringSession new];
+    session.countryCode = @"AU";
+    session.currency = @"AUD";
+    session.amount = [NSDecimalNumber one];
+    AWXApplePayOptions *options = [self makeOptions:nil];
+    PKMerchantCapability capabilities = PKMerchantCapability3DS | PKMerchantCapabilityEMV | PKMerchantCapabilityCredit | PKMerchantCapabilityDebit;
+    options.merchantCapabilities = capabilities;
+    session.applePayOptions = options;
+
+    for (NSArray<PKPaymentNetwork> *networks in @[@[PKPaymentNetworkVisa, PKPaymentNetworkMasterCard], @[]]) {
+        options.supportedNetworks = networks;
+        PKPaymentRequest *request = [session makePaymentRequestOrError:nil];
+
+        XCTAssertNotNil(request);
+        XCTAssertEqual(request.merchantCapabilities, PKMerchantCapability3DS | PKMerchantCapabilityCredit | PKMerchantCapabilityDebit);
+        XCTAssertEqualObjects(request.supportedNetworks, networks);
+        XCTAssertEqual(options.merchantCapabilities, capabilities);
+    }
+
+    // Reusing the options with UnionPay must preserve the original EMV capability.
+    options.supportedNetworks = @[PKPaymentNetworkVisa, PKPaymentNetworkChinaUnionPay];
+    PKPaymentRequest *request = [session makePaymentRequestOrError:nil];
+    XCTAssertNotNil(request);
+    XCTAssertEqual(request.merchantCapabilities, capabilities);
+}
+
+- (void)testMakePaymentRequestDoesNotAddEMVForUnionPay {
+    AWXRecurringSession *session = [AWXRecurringSession new];
+    session.countryCode = @"AU";
+    session.currency = @"AUD";
+    session.amount = [NSDecimalNumber one];
+    AWXApplePayOptions *options = [self makeOptions:nil];
+    options.supportedNetworks = @[PKPaymentNetworkChinaUnionPay];
+    options.merchantCapabilities = PKMerchantCapability3DS | PKMerchantCapabilityDebit;
+    session.applePayOptions = options;
+
+    PKPaymentRequest *request = [session makePaymentRequestOrError:nil];
+
+    XCTAssertNotNil(request);
+    XCTAssertEqual(request.merchantCapabilities, PKMerchantCapability3DS | PKMerchantCapabilityDebit);
+}
+
 - (void)testMakePaymentRequestWithRecurringWithIntentSession {
     AWXRecurringWithIntentSession *session = [AWXRecurringWithIntentSession new];
     session.countryCode = @"AU";
