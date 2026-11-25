@@ -96,6 +96,7 @@ class ApplePayProvider: PaymentProvider {
             .duration: Date().timeIntervalSince(startTime),
             .status: "\(paymentState)",
             .supportedNetworks: unifiedSession.applePayOptions?.supportedNetworks ?? [],
+            .merchantCapabilities: unifiedSession.applePayOptions?.merchantCapabilities.rawValue ?? 0,
         ]
     }
 

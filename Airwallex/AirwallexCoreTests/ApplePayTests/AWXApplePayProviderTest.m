@@ -145,7 +145,8 @@
     OCMVerify(times(1), [controllerMock initWithPaymentRequest:[OCMArg any]]);
     OCMVerify(times(1), [_logger logErrorWithName:@"apple_pay_sheet"
                                    additionalInfo:[OCMArg checkWithBlock:^BOOL(NSDictionary *info) {
-                                       return [info[@"message"] isEqualToString:@"Failed to initialize Apple Pay Controller."] && info[@"supportedNetworks"] != nil;
+                                       return [info[@"message"] isEqualToString:@"Failed to initialize Apple Pay Controller."] && info[@"supportedNetworks"] != nil &&
+                                              [info[@"merchantCapabilities"] isEqualToNumber:@(session.applePayOptions.merchantCapabilities)];
                                    }]]);
 }
 
@@ -171,7 +172,8 @@
     OCMVerify(times(1), [controllerMock initWithPaymentRequest:[OCMArg any]]);
     OCMVerify(times(1), [_logger logErrorWithName:@"apple_pay_sheet"
                                    additionalInfo:[OCMArg checkWithBlock:^BOOL(NSDictionary *info) {
-                                       return [info[@"message"] isEqualToString:@"Failed to present Apple Pay Controller."] && info[@"supportedNetworks"] != nil;
+                                       return [info[@"message"] isEqualToString:@"Failed to present Apple Pay Controller."] && info[@"supportedNetworks"] != nil &&
+                                              [info[@"merchantCapabilities"] isEqualToNumber:@(session.applePayOptions.merchantCapabilities)];
                                    }]]);
 }
 
@@ -260,7 +262,9 @@
     [provider handleFlow];
 
     OCMVerify(times(1), [_logger logPageViewWithName:@"apple_pay_sheet"
-                                      additionalInfo:[OCMArg any]]);
+                                      additionalInfo:[OCMArg checkWithBlock:^BOOL(NSDictionary *info) {
+                                          return [info[@"merchantCapabilities"] isEqualToNumber:@(session.applePayOptions.merchantCapabilities)];
+                                      }]]);
 
     OCMVerify(times(1), [providerSpy confirmPaymentIntentWithPaymentMethod:[OCMArg checkWithBlock:^BOOL(id obj) {
                                          AWXPaymentMethod *method = (AWXPaymentMethod *)obj;
@@ -311,7 +315,9 @@
     [provider handleFlow];
 
     OCMVerify(times(1), [_logger logPageViewWithName:@"apple_pay_sheet"
-                                      additionalInfo:[OCMArg any]]);
+                                      additionalInfo:[OCMArg checkWithBlock:^BOOL(NSDictionary *info) {
+                                          return [info[@"merchantCapabilities"] isEqualToNumber:@(session.applePayOptions.merchantCapabilities)];
+                                      }]]);
 
     OCMVerify(times(1), [providerSpy createPaymentConsentAndConfirmIntentWithPaymentMethod:[OCMArg checkWithBlock:^BOOL(id obj) {
                                          AWXPaymentMethod *method = (AWXPaymentMethod *)obj;

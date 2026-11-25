@@ -25,6 +25,7 @@ package enum AnalyticEvent {
         case value
         case eventType
         case supportedNetworks
+        case merchantCapabilities
         case providerId
         case duration
         case status

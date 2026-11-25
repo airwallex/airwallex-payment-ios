@@ -87,6 +87,7 @@ static NSString *NSStringFromPaymentState(PaymentState state) {
         @"duration": @([[NSDate date] timeIntervalSinceDate:self.startTime]),
         @"status": NSStringFromPaymentState(self.paymentState),
         @"supportedNetworks": self.session.applePayOptions.supportedNetworks ?: @[],
+        @"merchantCapabilities": @(self.session.applePayOptions.merchantCapabilities),
     };
 }
 
