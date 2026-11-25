@@ -24,6 +24,7 @@
 **Instance Property**
 
 Apple Pay merchant capabilities. Default value includes 3DS, EMV, Credit and Debit.
+EMV is removed from the payment request when supportedNetworks does not include UnionPay.
 
 ```
 var merchantCapabilities: PKMerchantCapability { get set }
